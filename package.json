@@ -1,0 +1,26 @@
+{
+  "private": true,
+  "name": "skyway-conference-dev",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "webpack-dev-server"
+  },
+  "author": "",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.1",
+    "babel-loader": "^7.1.2",
+    "babel-preset-react": "^6.24.1",
+    "eslint": "^4.16.0",
+    "eslint-plugin-prettier": "^2.5.0",
+    "eslint-plugin-react": "^7.5.1",
+    "prettier": "^1.10.2",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.11.1"
+  },
+  "dependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "skyway-js": "^1.1.3"
+  }
+}
