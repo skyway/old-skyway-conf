@@ -7,8 +7,8 @@ const nodeEnv = process.env.NODE_ENV;
 const config = {
   context: rootPath,
   entry: {
-    index: './src/js/index/main.js',
-    room: './src/js/room/main.js',
+    index: './src/index/main.js',
+    room: './src/room/main.js',
   },
   output: {
     path: `${rootPath}/public`,
@@ -21,10 +21,18 @@ const config = {
         exclude: [/node_modules/],
         use: ['babel-loader'],
       },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          { loader: 'css-loader', options: { importLoaders: 1 } },
+          'postcss-loader'
+        ]
+      },
     ],
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx', '.css']
   },
   plugins: [
     new webpack.DefinePlugin({

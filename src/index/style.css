@@ -1,0 +1,23 @@
+html {
+  background-color: #005ece;
+  color: #039be5;
+  font-size: 18px;
+  font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+}
+
+body {
+  background-image: url(/images/index/bg.jpg);
+  background-size: cover;
+  height: 100vh;
+  margin: 0;
+}
+
+h1, h2, h3 {
+  margin: 0;
+}
+
+.App {
+  &-Footer {
+    position: fixed;
+  }
+}
