@@ -2,10 +2,38 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title></title>
+  <link href="/images/favicon.ico" rel="shortcut icon">
+  <title>SkyWay Conference</title>
 </head>
 <body>
-  <div id="app"></div>
-  <script src="/app.bundle.js"></script>
+  <div>
+    <h1>SkyWay Conference</h1>
+    <p>ブラウザだけでビデオ会議</p>
+    <div>
+      <div>conf.webrtc.ecl.ntt.com/</div>
+      <input type="text" pattern="">
+      <label>
+        <input type="radio" name="type" value="sfu">
+        <p>SFU</p>
+      </label>
+      <label>
+        <input type="radio" name="type" value="mesh">
+        <p>FullMesh</p>
+      </label>
+      <button type="submit">ルーム作成</button>
+    </div>
+    <div>
+      <p>インストールも登録も不要</p>
+      <p>ルームを作成してリンクを共有するだけ</p>
+    </div>
+    <div>
+      <img src="/images/index/icon-plane.png" alt="">
+    </div>
+  </div>
+  <footer>
+    <img src="/images/index/icon-skyway.png" alt="">
+    <p>A Simple and Flexible WebRTC Platform</p>
+  </footer>
+  <script src="/index.bundle.js"></script>
 </body>
 </html>

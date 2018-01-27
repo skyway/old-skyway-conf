@@ -7,7 +7,8 @@ const nodeEnv = process.env.NODE_ENV;
 const config = {
   context: rootPath,
   entry: {
-    app: './src/js/main.js',
+    index: './src/js/index/main.js',
+    room: './src/js/room/main.js',
   },
   output: {
     path: `${rootPath}/public`,

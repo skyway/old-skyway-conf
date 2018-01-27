@@ -9,7 +9,7 @@ class App extends React.Component {
 }
 
 window.p = new Peer({
-  key: 'e19d63f2-664b-447f-bd97-7656c925428b',
+  key: '03ff6219-b58f-4310-9484-e9108e859cdd',
   debug: 2,
 });
 
