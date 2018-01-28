@@ -1,3 +1,3 @@
-import './style.css';
+import './styles/main.css';
 
 console.log(this);
