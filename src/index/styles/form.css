@@ -1,0 +1,55 @@
+.Form {
+  display: flex;
+  width: 600px;
+  height: 50px;
+  margin: 0 auto 20px;
+  padding: 5px 10px;
+  background-color: #fff;
+  border-color: #ccc;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 1px #ccc;
+
+  &_NameInput {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    cursor: text;
+    font-size: .9rem;
+
+    &_Placeholder {
+      color: #aaa;
+    }
+    &_Input {
+      flex: 1 1 auto;
+      border: none;
+    }
+  }
+
+  &_Button {
+    height: 100%;
+    padding: 10px;
+    border-color: #ff6572;
+    background-color: #ff6673;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+}
+
+.FormTypeSelector {
+  text-align: center;
+  font-weight: bold;
+
+  &_Item {
+    display: inline-flex;
+    align-items: baseline;
+    margin-left: 5px;
+    margin-right: 5px;
+
+    &_Text {
+      margin-left: 5px;
+    }
+  }
+}

@@ -1,0 +1,11 @@
+.Copyright {
+  display: flex;
+  align-items: flex-end;
+
+  &_Text {
+    color: #fff;
+    font-size: .6rem;
+    margin-left: 5px;
+    margin-bottom: 2px;
+  }
+}

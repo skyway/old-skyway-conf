@@ -1,41 +1,7 @@
 @import "../../shared/styles/normalize.css";
-
-* {
-  box-sizing: border-box;
-}
-
-h1, h2, h3, p {
-  margin: 0;
-}
-
-html {
-  background-color: #005ece;
-  color: #039be5;
-  font-size: 22px;
-}
-
-body {
-  background-image: url(/images/index/bg.jpg);
-  background-size: cover;
-  height: 100vh;
-  margin: 0;
-}
-
-.Container {
-  width: 980px;
-  margin-right: auto;
-  margin-left: auto;
-  padding-top: 25vh;
-}
-
-.Title {
-  &_Main {
-    text-align: center;
-    font-size: 3rem;
-    font-weight: lighter;
-  }
-  &_Sub {
-    text-align: center;
-    font-size: 1.3rem;
-  }
-}
+@import "./global.css";
+@import "./layout.css";
+@import "./title.css";
+@import "./form.css";
+@import "./desc.css";
+@import "./copyright.css";

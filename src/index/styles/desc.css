@@ -1,0 +1,7 @@
+.Desc {
+  text-align: center;
+
+  &_Text {
+    margin-bottom: 20px;
+  }
+}

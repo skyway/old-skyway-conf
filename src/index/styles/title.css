@@ -1,0 +1,13 @@
+.Title {
+  &_Main {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: lighter;
+  }
+
+  &_Sub {
+    text-align: center;
+    font-size: 1.3rem;
+    margin-top: 20px;
+  }
+}

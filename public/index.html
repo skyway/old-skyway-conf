@@ -6,36 +6,55 @@
   <title>SkyWay Conference</title>
 </head>
 <body>
-  <main class="Container">
+  <main class="L-Main">
     <div class="Title">
       <h1 class="Title_Main">SkyWay Conference</h1>
       <p class="Title_Sub">ブラウザだけでビデオ会議</p>
     </div>
-    <div>
-      <div>conf.webrtc.ecl.ntt.com/</div>
-      <input type="text" pattern="">
-      <label>
-        <input type="radio" name="type" value="sfu">
-        <p>SFU</p>
-      </label>
-      <label>
-        <input type="radio" name="type" value="mesh">
-        <p>FullMesh</p>
-      </label>
-      <button type="submit">ルーム作成</button>
+
+    <div class="L-Form">
+      <form class="Form">
+        <label class="Form_NameInput">
+          <div class="Form_NameInput_Placeholder">
+            <span>conf.webrtc.ecl.ntt.com/#!/</span><span>${type}</span><span>/</span>
+          </div>
+          <input
+            type="text"
+            class="Form_NameInput_Input"
+            placeholder="room-name"
+            required
+            pattern="^[0-9a-z-_]{4,32}$"
+          >
+        </label>
+        <button type="submit" class="Form_Button">ルーム作成</button>
+      </form>
+
+      <div class="FormTypeSelector">
+        <label class="FormTypeSelector_Item">
+          <input type="radio" name="type" value="sfu" checked>
+          <span class="FormTypeSelector_Item_Text">SFU</span>
+        </label>
+        <label class="FormTypeSelector_Item">
+          <input type="radio" name="type" value="mesh">
+          <span class="FormTypeSelector_Item_Text">FullMesh</span>
+        </label>
+      </div>
     </div>
-    <div>
-      <p>インストールも登録も不要</p>
-      <p>ルームを作成してリンクを共有するだけ</p>
-    </div>
-    <div>
-      <img src="/images/index/icon-plane.png" alt="">
+
+    <div class="Desc">
+      <p class="Desc_Text">インストールも登録も不要</p>
+      <p class="Desc_Text">ルームを作成してリンクを共有するだけ</p>
+      <img src="/images/index/icon-plane.png">
     </div>
   </main>
-  <footer>
-    <img src="/images/index/icon-skyway.png" alt="">
-    <p>A Simple and Flexible WebRTC Platform</p>
-  </footer>
+
+  <div class="L-Copyright">
+    <footer class="Copyright">
+      <img src="/images/index/icon-skyway.png" alt="SkyWay">
+      <p class="Copyright_Text">A Simple and Flexible WebRTC Platform</p>
+    </footer>
+  </div>
+
   <script src="/index.bundle.js"></script>
 </body>
 </html>

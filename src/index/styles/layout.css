@@ -1,0 +1,16 @@
+.L-Main {
+  width: 980px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-top: 25vh;
+}
+
+.L-Form {
+  margin: 20px auto 40px;
+}
+
+.L-Copyright {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
