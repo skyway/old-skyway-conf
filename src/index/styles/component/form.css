@@ -5,13 +5,12 @@
   margin: 0 auto 20px;
   padding: 5px 10px;
   background-color: #fff;
-  border-color: #ccc;
-  border-width: 1px;
-  border-style: solid;
+  border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 1px 1px 1px 1px #ccc;
 
   &_NameInput {
+    position: relative;
     flex: 1 1 auto;
     display: flex;
     align-items: center;
@@ -24,6 +23,34 @@
     &_Input {
       flex: 1 1 auto;
       border: none;
+    }
+
+    &_Tip {
+      position: absolute;
+      top: -50px;
+      left: 100px;
+      background-color: #fff;
+      color: #000;
+      width: 250px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: .8rem;
+      box-shadow: 0 5px 10px #ccc;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: -10px;
+        border-top: 15px solid #fff;
+        border-right: 15px solid transparent;
+        border-left: 15px solid transparent;
+      }
+
+      &[data-visible=false] {
+        display: none;
+      }
     }
   }
 

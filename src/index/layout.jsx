@@ -16,6 +16,7 @@ const Layout = ({
       <div className="L-Form">
         <Form
           form={store.formStore}
+          ui={store.uiStore}
           onSubmit={action.onSubmitForm}
         />
       </div>

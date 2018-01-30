@@ -1,16 +1,27 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 
-const Form = ({ form, onSubmit }) => (
+const Form = ({
+  form,
+  ui,
+  onSubmit,
+}) => (
   <React.Fragment>
     <form
       className="Form"
+      noValidate
       onSubmit={ev => {
         ev.preventDefault();
         onSubmit();
       }}
     >
       <label className="Form_NameInput">
+        <div
+          className="Form_NameInput_Tip"
+          data-visible={ui.isFocusInput && form.isNameValid === false}
+        >
+          半角英数字4-32文字のルーム名を入力してください。
+        </div>
         <div className="Form_NameInput_Placeholder">
           <span>conf.webrtc.ecl.ntt.com/#!/</span>
           <span>{form.type}</span>
@@ -20,10 +31,10 @@ const Form = ({ form, onSubmit }) => (
           type="text"
           className="Form_NameInput_Input"
           placeholder="room-name"
-          required
-          pattern="^[0-9a-z-_]{4,32}$"
           value={form.name}
           onChange={ev => form.set('name', ev.currentTarget.value)}
+          onFocus={() => ui.set('isFocusInput', true)}
+          onBlur={() => ui.set('isFocusInput', false)}
         />
       </label>
       <button
