@@ -3,8 +3,9 @@
   "name": "skyway-conference-dev",
   "version": "0.0.0",
   "scripts": {
-    "dev": "webpack-dev-server",
-    "css": "postcss ./src/index/main.css -o ./public/index.bundle.css -w",
+    "dev": "npm run dev:js & npm run dev:css & wait",
+    "dev:js": "webpack-dev-server",
+    "dev:css": "node ./postcss-multi.js -w",
     "lint": "eslint . --fix"
   },
   "author": "",
