@@ -4,57 +4,10 @@
   <meta charset="UTF-8">
   <link href="/images/favicon.ico" rel="shortcut icon">
   <title>SkyWay Conference</title>
+  <link rel="stylesheet" href="/index.bundle.css">
 </head>
 <body>
-  <main class="L-Main">
-    <div class="Title">
-      <h1 class="Title_Main">SkyWay Conference</h1>
-      <p class="Title_Sub">ブラウザだけでビデオ会議</p>
-    </div>
-
-    <div class="L-Form">
-      <form class="Form">
-        <label class="Form_NameInput">
-          <div class="Form_NameInput_Placeholder">
-            <span>conf.webrtc.ecl.ntt.com/#!/</span><span>${type}</span><span>/</span>
-          </div>
-          <input
-            type="text"
-            class="Form_NameInput_Input"
-            placeholder="room-name"
-            required
-            pattern="^[0-9a-z-_]{4,32}$"
-          >
-        </label>
-        <button type="submit" class="Form_Button">ルーム作成</button>
-      </form>
-
-      <div class="FormTypeSelector">
-        <label class="FormTypeSelector_Item">
-          <input type="radio" name="type" value="sfu" checked>
-          <span class="FormTypeSelector_Item_Text">SFU</span>
-        </label>
-        <label class="FormTypeSelector_Item">
-          <input type="radio" name="type" value="mesh">
-          <span class="FormTypeSelector_Item_Text">FullMesh</span>
-        </label>
-      </div>
-    </div>
-
-    <div class="Desc">
-      <p class="Desc_Text">インストールも登録も不要</p>
-      <p class="Desc_Text">ルームを作成してリンクを共有するだけ</p>
-      <img src="/images/index/icon-plane.png">
-    </div>
-  </main>
-
-  <div class="L-Copyright">
-    <footer class="Copyright">
-      <img src="/images/index/icon-skyway.png" alt="SkyWay">
-      <p class="Copyright_Text">A Simple and Flexible WebRTC Platform</p>
-    </footer>
-  </div>
-
+  <div id="app-root"></div>
   <script src="/index.bundle.js"></script>
 </body>
 </html>

@@ -1,0 +1,7 @@
+@import "../shared/styles/normalize";
+@import "./styles/global";
+@import "./styles/layout";
+@import "./styles/component/title";
+@import "./styles/component/form";
+@import "./styles/component/desc";
+@import "./styles/component/copyright";
