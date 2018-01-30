@@ -34,7 +34,8 @@ module.exports = {
     'semi': ['error', 'always'],
     'quotes': ['error', 'single'],
 
-    'react/jsx-uses-vars': 'warn'
+    'react/jsx-uses-vars': 'warn',
+    'react/prop-types': 'off',
   },
   env: {
     browser: true,

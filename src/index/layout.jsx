@@ -5,13 +5,19 @@ import Form from './component/form';
 import Desc from './component/desc';
 import Copyright from './component/copyright';
 
-const Layout = () => (
+const Layout = ({
+  store,
+  action,
+}) => (
   <React.Fragment>
     <main className="L-Main">
       <Title />
 
       <div className="L-Form">
-        <Form />
+        <Form
+          form={store.formStore}
+          onSubmit={action.onSubmitForm}
+        />
       </div>
 
       <Desc />

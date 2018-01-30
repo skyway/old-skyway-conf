@@ -35,6 +35,11 @@
     color: #fff;
     border-radius: 5px;
     cursor: pointer;
+
+    &[disabled] {
+      cursor: not-allowed;
+      opacity: .5;
+    }
   }
 }
 

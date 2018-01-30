@@ -535,6 +535,11 @@ body {
     cursor: pointer;
   }
 
+.Form_Button[disabled] {
+      cursor: not-allowed;
+      opacity: .5;
+    }
+
 .FormTypeSelector {
   text-align: center;
   font-weight: bold;
