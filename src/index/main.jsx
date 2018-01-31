@@ -1,13 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import util from '../shared/util';
-
 import IndexStore from './store';
 import IndexAction from './action';
 import Layout from './layout';
-
-console.log(util);
 
 const store = new IndexStore();
 const action = new IndexAction(store);
