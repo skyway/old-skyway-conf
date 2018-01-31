@@ -5,15 +5,10 @@ module.exports = {
     sourceType: 'module',
     ecmaFeatures: { jsx: true },
   },
-  plugins: [
-    'react',
-  ],
-  extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-  ],
+  plugins: ['react', 'prettier'],
+  extends: ['eslint:recommended', 'plugin:react/recommended', 'prettier'],
   rules: {
-    'strict': ['error', 'global'],
+    strict: ['error', 'global'],
 
     'default-case': 'error',
     'no-self-compare': 'error',
@@ -26,21 +21,30 @@ module.exports = {
     'no-new-require': 'error',
     'no-lonely-if': 'error',
     'no-nested-ternary': 'error',
-    'no-multiple-empty-lines': ['error', { 'max': 2 }],
-    'no-unused-vars': ['error', {'args': 'all', 'argsIgnorePattern': '^_'}],
+    'no-multiple-empty-lines': ['error', { max: 2 }],
+    'no-unused-vars': ['error', { args: 'all', argsIgnorePattern: '^_' }],
     'no-unused-expressions': 'off',
     'no-use-before-define': 'off',
     'prefer-const': 'error',
-    'semi': ['error', 'always'],
-    'quotes': ['error', 'single'],
+    semi: ['error', 'always'],
+    quotes: ['error', 'single'],
 
     'react/jsx-uses-vars': 'warn',
     'react/prop-types': 'off',
+
+    // prettier
+    'prettier/prettier': [
+      'error',
+      {
+        trailingComma: 'es5',
+        singleQuote: true,
+      },
+    ],
   },
   env: {
     browser: true,
     node: true,
     jest: true,
-    es6: true
+    es6: true,
   },
 };

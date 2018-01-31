@@ -8,7 +8,7 @@ class FormStore {
 
       get isNameValid() {
         return /^[0-9a-z_-]{4,32}$/.test(this.name);
-      }
+      },
     });
   }
 

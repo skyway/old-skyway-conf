@@ -8,7 +8,9 @@ const config = require('./postcss.config.js');
 const entries = [];
 for (const [name, src] of Object.entries(config.entry)) {
   const input = path.join(config.context, src);
-  const output = path.join(config.output.path, config.output.filename).replace('[name]', name);
+  const output = path
+    .join(config.output.path, config.output.filename)
+    .replace('[name]', name);
 
   entries.push({ name, input, output });
 }
@@ -18,11 +20,7 @@ const cmds = [];
 for (const entry of entries) {
   const cmd = {
     cmd: './node_modules/.bin/postcss',
-    args: [
-      entry.input,
-      '-o',
-      entry.output,
-    ]
+    args: [entry.input, '-o', entry.output],
   };
 
   if (flags.includes('-w') || flags.includes('--watch')) {
