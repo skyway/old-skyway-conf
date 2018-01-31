@@ -1,4 +1,5 @@
 import { extendObservable } from 'mobx';
+import util from '../../shared/util';
 
 class FormStore {
   constructor() {
@@ -7,7 +8,7 @@ class FormStore {
       type: 'sfu',
 
       get isNameValid() {
-        return /^[0-9a-z_-]{4,32}$/.test(this.name);
+        return util.isValidRoomName(this.name);
       },
     });
   }
