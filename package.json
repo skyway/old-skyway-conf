@@ -6,7 +6,7 @@
     "dev": "npm run dev:js & npm run dev:css & wait",
     "dev:js": "webpack-dev-server",
     "dev:css": "node ./postcss-multi.js -w",
-    "lint": "eslint . --fix"
+    "lint": "eslint . --fix --ext .js --ext .jsx"
   },
   "author": "",
   "devDependencies": {

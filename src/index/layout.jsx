@@ -5,10 +5,7 @@ import Form from './component/form';
 import Desc from './component/desc';
 import Copyright from './component/copyright';
 
-const Layout = ({
-  store,
-  action,
-}) => (
+const Layout = ({ store, action }) => (
   <React.Fragment>
     <main className="L-Main">
       <Title />

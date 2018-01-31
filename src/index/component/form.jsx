@@ -1,11 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 
-const Form = ({
-  form,
-  ui,
-  onSubmit,
-}) => (
+const Form = ({ form, ui, onSubmit }) => (
   <React.Fragment>
     <form
       className="Form"
@@ -41,7 +37,9 @@ const Form = ({
         type="submit"
         className="Form_Button"
         disabled={form.isNameValid === false}
-      >ルーム作成</button>
+      >
+        ルーム作成
+      </button>
     </form>
 
     <div className="FormTypeSelector">

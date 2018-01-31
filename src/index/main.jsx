@@ -13,9 +13,6 @@ const store = new IndexStore();
 const action = new IndexAction(store);
 
 ReactDOM.render(
-  <Layout
-    store={store}
-    action={action}
-  />,
+  <Layout store={store} action={action} />,
   document.getElementById('app-root')
 );
