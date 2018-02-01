@@ -8,18 +8,9 @@ class PeerStore {
       isAudioMuted: false,
       videoDeviceId: '',
       audioDeviceId: '',
-      get videoDevices() {
-        return this._devices.filter(i => i.kind === 'videoinput');
-      },
-      get audioDevices() {
-        return this._devices.filter(i => i.kind === 'audioinput');
-      },
-      _devices: observable.shallowArray([]),
+      videoDevices: observable.shallowArray([]),
+      audioDevices: observable.shallowArray([]),
     });
-  }
-
-  updateUserDevices(devices) {
-    this._devices.replace(devices);
   }
 }
 

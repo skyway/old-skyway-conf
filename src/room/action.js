@@ -1,6 +1,7 @@
-import { reaction } from 'mobx';
+import { reaction, runInAction } from 'mobx';
 
 import Action from '../shared/action';
+import helper from './webrtc-helper';
 // import Peer from 'skyway-js';
 // function _initPeer() {
 //   return new Promise((resolve, reject) => {
@@ -27,56 +28,53 @@ class RoomAction extends Action {
     const { peer } = this.store;
 
     reaction(
-      () => `${peer.videoDeviceId}-${peer.audioDeviceId}`,
-      async () => {
-        const stream = await navigator.mediaDevices
-          .getUserMedia({
-            video: { deviceId: peer.videoDeviceId },
-            audio: { deviceId: peer.audioDeviceId },
-          })
+      () => [peer.videoDeviceId, peer.audioDeviceId],
+      async ([videoDeviceId, audioDeviceId]) => {
+        const stream = await helper
+          .getUserMedia({ videoDeviceId, audioDeviceId })
           .catch(console.error);
 
-        // TODO: check muted or NOT
+        peer.isVideoMuted && helper.toggleMuteVideoTracks(stream, true);
+        peer.isAudioMuted && helper.toggleMuteAudioTracks(stream, true);
+
         peer.stream = stream;
       }
     );
 
     reaction(
       () => peer.isVideoMuted,
-      isMuted => {
-        peer.stream
-          .getVideoTracks()
-          .forEach(track => (track.enabled = !isMuted));
-      }
+      isMuted => helper.toggleMuteVideoTracks(peer.stream, isMuted)
     );
     reaction(
       () => peer.isAudioMuted,
-      isMuted => {
-        peer.stream
-          .getAudioTracks()
-          .forEach(track => (track.enabled = !isMuted));
-      }
+      isMuted => helper.toggleMuteAudioTracks(peer.stream, isMuted)
     );
 
     // TODO: 使ってたデバイスがなくなったら
     navigator.mediaDevices.addEventListener('devicechange', async () => {
-      const devices = await navigator.mediaDevices
-        .enumerateDevices()
+      const { video, audio } = await helper
+        .getUserDevices()
         .catch(console.error);
-      peer.updateUserDevices(devices);
+
+      runInAction(() => {
+        peer.videoDevices = video;
+        peer.audioDevices = audio;
+      });
     });
   }
 
   async onLoad() {
     const { peer } = this.store;
-    const devices = await navigator.mediaDevices
-      .enumerateDevices()
-      .catch(console.error);
-    peer.updateUserDevices(devices);
+    const { video, audio } = await helper.getUserDevices().catch(console.error);
 
-    // temp devices for first gUM()
-    peer.videoDeviceId = peer.videoDevices[0].deviceId;
-    peer.audioDeviceId = peer.audioDevices[0].deviceId;
+    runInAction(() => {
+      peer.videoDevices = video;
+      peer.audioDevices = audio;
+
+      // temp devices for first gUM()
+      peer.videoDeviceId = video[0].deviceId;
+      peer.audioDeviceId = audio[0].deviceId;
+    });
   }
 
   async onChangeVideoDevice(deviceId) {
