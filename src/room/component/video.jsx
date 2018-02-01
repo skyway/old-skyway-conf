@@ -16,6 +16,7 @@ class Video extends React.Component {
         ref={ref => {
           this._ref = ref;
         }}
+        muted={this.props.muted}
         autoPlay
       />
     );

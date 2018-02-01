@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'mobx-react';
 
 import RoomStore from './store';
 import RoomAction from './action';
@@ -17,6 +18,8 @@ const action = new RoomAction(store);
 
 action.onLoad();
 ReactDOM.render(
-  <Layout store={store} action={action} />,
+  <Provider action={action}>
+    <Layout store={store} />
+  </Provider>,
   document.getElementById('app-root')
 );

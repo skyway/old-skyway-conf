@@ -1,25 +1,33 @@
 import React from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 
 import Video from './video';
 
-const Prepare = ({ peer }) => (
+const Prepare = ({ peer, action }) => (
   <div>
-    <Video peer={peer} />
+    <Video peer={peer} muted />
     <div>
-      <select name="video">
-        <option value="">xxx</option>
+      <select onChange={ev => action.onChangeVideoDevice(ev.target.value)}>
+        {peer.videoDevices.map((device, idx) => (
+          <option key={device.deviceId} value={device.deviceId}>
+            {device.label || `Video${idx + 1}`}
+          </option>
+        ))}
       </select>
-      <select name="audio">
-        <option value="">xxx</option>
+      <select onChange={ev => action.onChangeAudioDevice(ev.target.value)}>
+        {peer.audioDevices.map((device, idx) => (
+          <option key={device.deviceId} value={device.deviceId}>
+            {device.label || `Audio${idx + 1}`}
+          </option>
+        ))}
       </select>
     </div>
     <div>
-      <button>カメラミュート</button>
-      <button>マイクミュート</button>
+      <button onClick={() => action.onClickVideoMute()}>カメラミュート</button>
+      <button onClick={() => action.onClickAudioMute()}>マイクミュート</button>
     </div>
-    <button>参加する</button>
+    <button onClick={() => action.onClickJoinRoom()}>参加する</button>
   </div>
 );
 
-export default observer(Prepare);
+export default inject('action')(observer(Prepare));
