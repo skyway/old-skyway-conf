@@ -1,21 +1,17 @@
 import React from 'react';
 
 import Title from './component/title';
-import Form from './component/form';
+import Form from './container/form';
 import Desc from './component/desc';
 import Copyright from './component/copyright';
 
-const Layout = ({ store, action }) => (
+const Layout = () => (
   <React.Fragment>
     <main className="L-Main">
       <Title />
 
       <div className="L-Form">
-        <Form
-          form={store.formStore}
-          ui={store.uiStore}
-          onSubmit={action.onSubmitForm}
-        />
+        <Form />
       </div>
 
       <Desc />

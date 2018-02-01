@@ -6,10 +6,6 @@ class UiStore {
       isFocusInput: false,
     });
   }
-
-  set(key, val) {
-    this[key] = val;
-  }
 }
 
 export default UiStore;

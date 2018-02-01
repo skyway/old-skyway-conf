@@ -12,10 +12,6 @@ class FormStore {
       },
     });
   }
-
-  set(key, val) {
-    this[key] = val;
-  }
 }
 
 export default FormStore;
