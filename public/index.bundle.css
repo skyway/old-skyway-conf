@@ -482,19 +482,27 @@ body {
   right: 20px;
 }
 
-.Title_Main {
-    text-align: center;
-    font-size: 3rem;
-    font-weight: lighter;
+.Copyright {
+  display: flex;
+  align-items: flex-end;
+}
+
+.Copyright_Text {
+    color: #fff;
+    font-size: .6rem;
+    margin-left: 5px;
+    margin-bottom: 2px;
   }
 
-.Title_Sub {
-    text-align: center;
-    font-size: 1.3rem;
-    margin-top: 20px;
+.Desc {
+  text-align: center;
+}
+
+.Desc_Text {
+    margin-bottom: 20px;
   }
 
-.Form {
+.FormMain {
   display: flex;
   width: 600px;
   height: 50px;
@@ -506,7 +514,7 @@ body {
   box-shadow: 1px 1px 1px 1px #ccc;
 }
 
-.Form_NameInput {
+.FormMain_NameInput {
     position: relative;
     flex: 1 1 auto;
     display: flex;
@@ -515,16 +523,16 @@ body {
     font-size: .9rem;
   }
 
-.Form_NameInput_Placeholder {
+.FormMain_NameInput_Placeholder {
       color: #aaa;
     }
 
-.Form_NameInput_Input {
+.FormMain_NameInput_Input {
       flex: 1 1 auto;
       border: none;
     }
 
-.Form_NameInput_Tip {
+.FormMain_NameInput_Tip {
       position: absolute;
       top: -50px;
       left: 100px;
@@ -538,7 +546,7 @@ body {
       box-shadow: 0 5px 10px #ccc;
     }
 
-.Form_NameInput_Tip::before {
+.FormMain_NameInput_Tip::before {
         content: '';
         position: absolute;
         left: 50%;
@@ -548,11 +556,11 @@ body {
         border-left: 15px solid transparent;
       }
 
-.Form_NameInput_Tip[data-visible=false] {
+.FormMain_NameInput_Tip[data-visible=false] {
         display: none;
       }
 
-.Form_Button {
+.FormMain_Button {
     height: 100%;
     padding: 10px;
     border-color: #ff6572;
@@ -562,7 +570,7 @@ body {
     cursor: pointer;
   }
 
-.Form_Button[disabled] {
+.FormMain_Button[disabled] {
       cursor: not-allowed;
       opacity: .5;
     }
@@ -583,22 +591,14 @@ body {
       margin-left: 5px;
     }
 
-.Desc {
-  text-align: center;
-}
-
-.Desc_Text {
-    margin-bottom: 20px;
+.Title_Main {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: lighter;
   }
 
-.Copyright {
-  display: flex;
-  align-items: flex-end;
-}
-
-.Copyright_Text {
-    color: #fff;
-    font-size: .6rem;
-    margin-left: 5px;
-    margin-bottom: 2px;
+.Title_Sub {
+    text-align: center;
+    font-size: 1.3rem;
+    margin-top: 20px;
   }

@@ -1,0 +1,15 @@
+.FormTypeSelector {
+  text-align: center;
+  font-weight: bold;
+
+  &_Item {
+    display: inline-flex;
+    align-items: baseline;
+    margin-left: 5px;
+    margin-right: 5px;
+
+    &_Text {
+      margin-left: 5px;
+    }
+  }
+}

@@ -13,7 +13,7 @@ module.exports = {
     filename: '[name].bundle.css',
   },
   plugins: {
-    'postcss-import': {},
+    'postcss-easy-import': {},
     'postcss-nested': {},
   },
 };

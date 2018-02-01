@@ -19,7 +19,7 @@
     "eslint-plugin-prettier": "^2.5.0",
     "eslint-plugin-react": "^7.5.1",
     "postcss-cli": "^4.1.1",
-    "postcss-import": "^11.0.0",
+    "postcss-easy-import": "^3.0.0",
     "postcss-nested": "^3.0.0",
     "prettier": "^1.10.2",
     "webpack": "^3.10.0",
