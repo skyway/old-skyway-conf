@@ -1,4 +1,6 @@
 import { reaction } from 'mobx';
+
+import Action from '../shared/action';
 // import Peer from 'skyway-js';
 // function _initPeer() {
 //   return new Promise((resolve, reject) => {
@@ -18,9 +20,9 @@ import { reaction } from 'mobx';
 //     window.peer = peer;
 //   });
 // }
-class RoomAction {
+class RoomAction extends Action {
   constructor(store) {
-    this.store = store;
+    super(store);
 
     const { peer } = this.store;
 
@@ -44,15 +46,6 @@ class RoomAction {
         .catch(console.error);
       peer.updateUserDevices(devices);
     });
-  }
-
-  $update(path, value) {
-    const [name, key] = path.split('.');
-    if (!(name && key && name in this.store && key in this.store[name])) {
-      throw new Error(`${name}.${key} is not defined!`);
-    }
-
-    this.store[name][key] = value;
   }
 
   async onLoad() {
