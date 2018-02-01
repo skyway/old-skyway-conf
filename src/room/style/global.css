@@ -1,0 +1,16 @@
+h1, h2, h3, p {
+  margin: 0;
+}
+
+html {
+  background-color: #005ece;
+  color: #039be5;
+  font-size: 18px;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+}

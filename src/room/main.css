@@ -1,1 +1,3 @@
-* { color: tomato; }
+@import "../shared/styles/normalize";
+@import "./style/global";
+@import "./style/layout";

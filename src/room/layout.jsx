@@ -1,9 +1,11 @@
 import React from 'react';
 
-const Layout = () => (
+import Prepare from './component/prepare';
+
+const Layout = ({ store }) => (
   <React.Fragment>
     <main className="L-Main">
-      <div>Loading...</div>
+      <Prepare peer={store.peerStore} />
     </main>
   </React.Fragment>
 );

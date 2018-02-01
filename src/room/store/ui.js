@@ -5,6 +5,7 @@ class UiStore {
     extendObservable(this, {
       roomType,
       roomName,
+      hasError: null,
     });
   }
 
