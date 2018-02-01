@@ -1,11 +1,12 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 
-import Video from './video';
+import Video from '../component/video';
 
 const Prepare = ({ peer, action }) => (
-  <div>
+  <React.Fragment>
     <Video peer={peer} muted />
+
     <div>
       <select onChange={ev => action.onChangeVideoDevice(ev.target.value)}>
         {peer.videoDevices.map((device, idx) => (
@@ -22,12 +23,14 @@ const Prepare = ({ peer, action }) => (
         ))}
       </select>
     </div>
+
     <div>
       <button onClick={() => action.onClickVideoMute()}>カメラミュート</button>
       <button onClick={() => action.onClickAudioMute()}>マイクミュート</button>
     </div>
+
     <button onClick={() => action.onClickJoinRoom()}>参加する</button>
-  </div>
+  </React.Fragment>
 );
 
-export default inject('action')(observer(Prepare));
+export default inject('peer', 'action')(observer(Prepare));

@@ -18,8 +18,8 @@ const action = new RoomAction(store);
 
 action.onLoad();
 ReactDOM.render(
-  <Provider action={action}>
-    <Layout store={store} />
+  <Provider action={action} {...store}>
+    <Layout />
   </Provider>,
   document.getElementById('app-root')
 );

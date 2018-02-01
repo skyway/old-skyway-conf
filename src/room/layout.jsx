@@ -1,11 +1,11 @@
 import React from 'react';
 
-import Prepare from './component/prepare';
+import Prepare from './container/prepare';
 
-const Layout = ({ store }) => (
+const Layout = () => (
   <React.Fragment>
     <main className="L-Main">
-      <Prepare peer={store.peerStore} />
+      <Prepare />
     </main>
   </React.Fragment>
 );

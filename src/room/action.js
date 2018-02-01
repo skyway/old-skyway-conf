@@ -18,49 +18,64 @@ import { reaction } from 'mobx';
 //     window.peer = peer;
 //   });
 // }
+class RoomAction {
+  constructor(store) {
+    this.store = store;
 
-function RoomAction({ uiStore, peerStore }) {
-  uiStore;
-  reaction(
-    () => `${peerStore.videoDeviceId}-${peerStore.audioDeviceId}`,
-    async () => {
-      const stream = await navigator.mediaDevices
-        .getUserMedia({
-          video: { deviceId: peerStore.videoDeviceId },
-          audio: { deviceId: peerStore.audioDeviceId },
-        })
-        .catch(console.error);
-      peerStore.set('stream', stream);
-    }
-  );
+    const { peer } = this.store;
 
-  navigator.mediaDevices.addEventListener('devicechange', async () => {
-    const devices = await navigator.mediaDevices
-      .enumerateDevices()
-      .catch(console.error);
-    peerStore.updateUserDevices(devices);
+    reaction(
+      () => `${peer.videoDeviceId}-${peer.audioDeviceId}`,
+      async () => {
+        const stream = await navigator.mediaDevices
+          .getUserMedia({
+            video: { deviceId: peer.videoDeviceId },
+            audio: { deviceId: peer.audioDeviceId },
+          })
+          .catch(console.error);
+        peer.set('stream', stream);
+      }
+    );
+
     // TODO: 使ってたデバイスがなくなったら
-  });
-
-  return {
-    async onLoad() {
+    navigator.mediaDevices.addEventListener('devicechange', async () => {
       const devices = await navigator.mediaDevices
         .enumerateDevices()
         .catch(console.error);
-      peerStore.updateUserDevices(devices);
-      // temp devices for first gUM()
-      peerStore.set('videoDeviceId', peerStore.videoDevices[0].deviceId);
-      peerStore.set('audioDeviceId', peerStore.audioDevices[0].deviceId);
-    },
+      peer.updateUserDevices(devices);
+    });
+  }
 
-    async onChangeVideoDevice(deviceId) {
-      peerStore.set('videoDeviceId', deviceId);
-    },
+  $update(path, value) {
+    const [name, key] = path.split('.');
+    if (!(name && key && name in this.store && key in this.store[name])) {
+      throw new Error(`${name}.${key} is not defined!`);
+    }
 
-    async onChangeAudioDevice(deviceId) {
-      peerStore.set('audioDeviceId', deviceId);
-    },
-  };
+    this.store[name][key] = value;
+  }
+
+  async onLoad() {
+    const { peer } = this.store;
+    const devices = await navigator.mediaDevices
+      .enumerateDevices()
+      .catch(console.error);
+    peer.updateUserDevices(devices);
+
+    // temp devices for first gUM()
+    peer.videoDeviceId = peer.videoDevices[0].deviceId;
+    peer.audioDeviceId = peer.audioDevices[0].deviceId;
+  }
+
+  async onChangeVideoDevice(deviceId) {
+    const { peer } = this.store;
+    peer.videoDeviceId = deviceId;
+  }
+
+  async onChangeAudioDevice(deviceId) {
+    const { peer } = this.store;
+    peer.audioDeviceId = deviceId;
+  }
 }
 
 export default RoomAction;
