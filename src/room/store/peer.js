@@ -4,6 +4,8 @@ class PeerStore {
   constructor() {
     extendObservable(this, {
       stream: observable.shallowObject({}),
+      isVideoMuted: false,
+      isAudioMuted: false,
       videoDeviceId: '',
       audioDeviceId: '',
       get videoDevices() {
@@ -14,13 +16,6 @@ class PeerStore {
       },
       _devices: observable.shallowArray([]),
     });
-  }
-
-  set(key, val) {
-    if (key in this === false) {
-      throw new Error(`${key} is not defined!`);
-    }
-    this[key] = val;
   }
 
   updateUserDevices(devices) {

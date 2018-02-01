@@ -35,7 +35,26 @@ class RoomAction extends Action {
             audio: { deviceId: peer.audioDeviceId },
           })
           .catch(console.error);
-        peer.set('stream', stream);
+
+        // TODO: check muted or NOT
+        peer.stream = stream;
+      }
+    );
+
+    reaction(
+      () => peer.isVideoMuted,
+      isMuted => {
+        peer.stream
+          .getVideoTracks()
+          .forEach(track => (track.enabled = !isMuted));
+      }
+    );
+    reaction(
+      () => peer.isAudioMuted,
+      isMuted => {
+        peer.stream
+          .getAudioTracks()
+          .forEach(track => (track.enabled = !isMuted));
       }
     );
 
@@ -64,10 +83,23 @@ class RoomAction extends Action {
     const { peer } = this.store;
     peer.videoDeviceId = deviceId;
   }
-
   async onChangeAudioDevice(deviceId) {
     const { peer } = this.store;
     peer.audioDeviceId = deviceId;
+  }
+
+  onClickVideoMute() {
+    const { peer } = this.store;
+    peer.isVideoMuted = !peer.isVideoMuted;
+  }
+  onClickAudioMute() {
+    const { peer } = this.store;
+    peer.isAudioMuted = !peer.isAudioMuted;
+  }
+
+  onClickJoinRoom() {
+    const { ui } = this.store;
+    console.log(`join: ${ui.roomType}/${ui.roomName}`);
   }
 }
 

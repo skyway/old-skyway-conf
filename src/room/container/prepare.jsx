@@ -2,31 +2,21 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 
 import Video from '../component/video';
+import DeviceSelector from '../component/device-selector';
 
 const Prepare = ({ peer, action }) => (
   <React.Fragment>
     <Video peer={peer} muted />
 
-    <div>
-      <select onChange={ev => action.onChangeVideoDevice(ev.target.value)}>
-        {peer.videoDevices.map((device, idx) => (
-          <option key={device.deviceId} value={device.deviceId}>
-            {device.label || `Video${idx + 1}`}
-          </option>
-        ))}
-      </select>
-      <select onChange={ev => action.onChangeAudioDevice(ev.target.value)}>
-        {peer.audioDevices.map((device, idx) => (
-          <option key={device.deviceId} value={device.deviceId}>
-            {device.label || `Audio${idx + 1}`}
-          </option>
-        ))}
-      </select>
-    </div>
+    <DeviceSelector peer={peer} action={action} />
 
     <div>
-      <button onClick={() => action.onClickVideoMute()}>カメラミュート</button>
-      <button onClick={() => action.onClickAudioMute()}>マイクミュート</button>
+      <button onClick={() => action.onClickVideoMute()}>
+        カメラミュート{peer.isVideoMuted ? '解除' : ''}
+      </button>
+      <button onClick={() => action.onClickAudioMute()}>
+        マイクミュート{peer.isAudioMuted ? '解除' : ''}
+      </button>
     </div>
 
     <button onClick={() => action.onClickJoinRoom()}>参加する</button>
