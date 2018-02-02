@@ -1,14 +1,15 @@
 import React from 'react';
 
-import Prepare from './container/prepare';
+import Setting from './container/setting';
 
 const Layout = () => (
   <React.Fragment>
     <main className="L-Main">
-      <div className="L-Prepare">
-        <Prepare />
-      </div>
+      <div>Video</div>
+      <div>Users</div>
     </main>
+    <Setting />
+    <div className="L-RightSide">右メニュー</div>
   </React.Fragment>
 );
 

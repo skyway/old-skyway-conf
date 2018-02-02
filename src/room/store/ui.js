@@ -5,12 +5,9 @@ class UiStore {
     extendObservable(this, {
       roomType,
       roomName,
+      isSetting: true,
       hasError: null,
     });
-  }
-
-  set(key, val) {
-    this[key] = val;
   }
 }
 

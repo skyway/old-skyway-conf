@@ -1,2 +1,21 @@
 .L-Main {
+  display: grid;
+  grid-template-rows: 1fr 180px;
+  height: 100vh;
+}
+
+.L-Popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, .5);
+}
+
+.L-RightSide {
+  position: absolute;
+  right: 20px;
+  top: 20px;
 }
