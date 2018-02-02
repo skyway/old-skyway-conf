@@ -1,26 +1,9 @@
 import { reaction, runInAction } from 'mobx';
 
 import Action from '../shared/action';
-import helper from './webrtc-helper';
-// import Peer from 'skyway-js';
-// function _initPeer() {
-//   return new Promise((resolve, reject) => {
-//     const self = new Peer({
-//       key: '03ff6219-b58f-4310-9484-e9108e859cdd',
-//       debug: 2,
-//     });
-//
-//     self.on('open', () => {
-//       resolve(self);
-//     });
-//     // for onOpen error
-//     self.on('error', err => {
-//       reject(err);
-//     });
-//
-//     window.self = self;
-//   });
-// }
+import webrtc from './webrtc-helper';
+import skyway from './skyway-helper';
+
 class RoomAction extends Action {
   constructor(store) {
     super(store);
@@ -30,12 +13,12 @@ class RoomAction extends Action {
     reaction(
       () => [self.videoDeviceId, self.audioDeviceId],
       async ([videoDeviceId, audioDeviceId]) => {
-        const stream = await helper
+        const stream = await webrtc
           .getUserMedia({ videoDeviceId, audioDeviceId })
           .catch(console.error);
 
-        self.isVideoMuted && helper.toggleMuteVideoTracks(stream, true);
-        self.isAudioMuted && helper.toggleMuteAudioTracks(stream, true);
+        self.isVideoMuted && webrtc.toggleMuteVideoTracks(stream, true);
+        self.isAudioMuted && webrtc.toggleMuteAudioTracks(stream, true);
 
         self.stream = stream;
       }
@@ -43,16 +26,16 @@ class RoomAction extends Action {
 
     reaction(
       () => self.isVideoMuted,
-      isMuted => helper.toggleMuteVideoTracks(self.stream, isMuted)
+      isMuted => webrtc.toggleMuteVideoTracks(self.stream, isMuted)
     );
     reaction(
       () => self.isAudioMuted,
-      isMuted => helper.toggleMuteAudioTracks(self.stream, isMuted)
+      isMuted => webrtc.toggleMuteAudioTracks(self.stream, isMuted)
     );
 
     // TODO: 使ってたデバイスがなくなったら
     navigator.mediaDevices.addEventListener('devicechange', async () => {
-      const { video, audio } = await helper
+      const { video, audio } = await webrtc
         .getUserDevices()
         .catch(console.error);
 
@@ -65,7 +48,7 @@ class RoomAction extends Action {
 
   async onLoad() {
     const { self } = this.store;
-    const { video, audio } = await helper.getUserDevices().catch(console.error);
+    const { video, audio } = await webrtc.getUserDevices().catch(console.error);
 
     runInAction(() => {
       self.videoDevices = video;
@@ -95,10 +78,26 @@ class RoomAction extends Action {
     self.isAudioMuted = !self.isAudioMuted;
   }
 
-  onClickJoinRoom() {
-    const { ui } = this.store;
+  async onClickJoinRoom() {
+    const { ui, self } = this.store;
+
+    const peer = await skyway.initPeer().catch(console.error);
+    const room = peer.joinRoom(`${ui.roomType}/${ui.roomName}`, {
+      mode: ui.roomType,
+      stream: self.stream,
+    });
+
+    room.on('stream', stream => console.log(stream));
+    room.on('removeStream', stream => console.log(stream));
+    room.on('peerLeave', peerId => console.log(peerId));
+    room.on('data', data => console.log(data));
+
+    // TODO: debug
+    window.p = peer;
+    window.r = room;
+
     ui.isSettingOpen = false;
-    console.log(`join: ${ui.roomType}/${ui.roomName}`);
+    console.log(`joined: ${ui.roomType}/${ui.roomName}`);
   }
 }
 
