@@ -86,18 +86,32 @@ class ConfAction extends Action {
       mode: ui.roomType,
       stream: self.stream,
     });
-
-    room.on('stream', stream => console.log(stream));
-    room.on('removeStream', stream => console.log(stream));
-    room.on('peerLeave', peerId => console.log(peerId));
-    room.on('data', data => console.log(data));
-
-    // TODO: debug
-    window.p = peer;
-    window.r = room;
+    this._onRoomJoin(room);
 
     ui.isSettingOpen = false;
-    console.log(`joined: ${ui.roomType}/${ui.roomName}`);
+  }
+
+  _onRoomJoin(room) {
+    room.on('stream', stream => this._onRoomAddStream(stream));
+    room.on('removeStream', stream => this._onRoomRemoveStream(stream));
+    room.on('peerLeave', peerId => this._onRoomPeerLeave(peerId));
+    room.on('data', data => this._onRoomData(data));
+  }
+  _onRoomAddStream(stream) {
+    const { room } = this.store;
+    room.streams.push(stream);
+  }
+  _onRoomRemoveStream(stream) {
+    const { room } = this.store;
+    room.streams.remove(stream);
+  }
+  _onRoomPeerLeave(peerId) {
+    const { room } = this.store;
+    const stream = room.streams.find(stream => stream.peerId === peerId);
+    stream && room.streams.remove(stream);
+  }
+  _onRoomData(data) {
+    console.log('data', data);
   }
 }
 

@@ -11,7 +11,7 @@ const Setting = ({ self, ui, action }) =>
     <Popup>
       <div className="L-Setting">
         <div className="L-Setting_Video">
-          <Video self={self} muted />
+          <Video store={self} muted />
         </div>
 
         <DeviceSelector self={self} action={action} />
