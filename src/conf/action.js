@@ -92,10 +92,15 @@ class ConfAction extends Action {
   }
 
   _onRoomJoin(room) {
+    const { ui, self } = this.store;
+    ui.isRoomJoin = true;
+
     room.on('stream', stream => this._onRoomAddStream(stream));
     room.on('removeStream', stream => this._onRoomRemoveStream(stream));
     room.on('peerLeave', peerId => this._onRoomPeerLeave(peerId));
     room.on('data', data => this._onRoomData(data));
+
+    reaction(() => self.stream, () => room.replaceStream(self.stream));
   }
   _onRoomAddStream(stream) {
     const { room } = this.store;

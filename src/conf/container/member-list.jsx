@@ -4,10 +4,12 @@ import { observer, inject } from 'mobx-react';
 import Video from '../component/video';
 
 // TODO: optimize render perf
-const MemberList = ({ self, room }) => (
+const MemberList = ({ self, room, action }) => (
   <div className="L-MemberList">
     <div className="L-MemberList_Video">
-      <Video store={self} muted />
+      <div onClick={() => action.$update('ui.isSettingOpen', true)}>
+        <Video store={self} muted />
+      </div>
     </div>
     {room.streams.slice().map(stream => (
       <div key={stream.peerId} className="L-MemberList_Video">

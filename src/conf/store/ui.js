@@ -6,6 +6,7 @@ class UiStore {
       roomType,
       roomName,
       isSettingOpen: true,
+      isRoomJoin: false,
       hasError: null,
     });
   }

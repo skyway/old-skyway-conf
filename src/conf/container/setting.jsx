@@ -19,7 +19,11 @@ const Setting = ({ self, ui, action }) =>
         <NameEdit />
 
         <div className="L-Setting_Finish">
-          <button onClick={() => action.onClickJoinRoom()}>設定完了</button>
+          <button onClick={() => {
+            ui.isRoomJoin ? action.$update('ui.isSettingOpen', false) : action.onClickJoinRoom();
+          }}>
+            設定完了
+          </button>
         </div>
       </div>
     </Popup>
