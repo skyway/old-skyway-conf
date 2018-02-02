@@ -12,7 +12,7 @@ const MemberList = ({ self, room, action }) => (
       </div>
     </div>
     {room.streams.slice().map(stream => (
-      <div key={stream.peerId} className="L-MemberList_Video">
+      <div key={stream.id} className="L-MemberList_Video">
         <Video store={{ stream }} />
       </div>
     ))}
