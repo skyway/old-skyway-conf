@@ -6,7 +6,7 @@ module.exports = {
   context: rootPath,
   entry: {
     index: './src/index/main.css',
-    room: './src/room/main.css',
+    conf: './src/conf/main.css',
   },
   output: {
     path: `${rootPath}/public`,

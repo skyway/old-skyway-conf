@@ -4,7 +4,7 @@ import Action from '../shared/action';
 import webrtc from './webrtc-helper';
 import skyway from './skyway-helper';
 
-class RoomAction extends Action {
+class ConfAction extends Action {
   constructor(store) {
     super(store);
 
@@ -101,4 +101,4 @@ class RoomAction extends Action {
   }
 }
 
-export default RoomAction;
+export default ConfAction;

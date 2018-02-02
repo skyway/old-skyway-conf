@@ -8,7 +8,7 @@ const config = {
   context: rootPath,
   entry: {
     index: './src/index/main.jsx',
-    room: './src/room/main.jsx',
+    conf: './src/conf/main.jsx',
   },
   output: {
     path: `${rootPath}/public`,

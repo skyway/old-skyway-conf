@@ -3,7 +3,7 @@ import React from 'react';
 import MemberList from './container/member-list';
 import Setting from './container/setting';
 
-const RoomApp = () => (
+const ConfApp = () => (
   <React.Fragment>
     <main className="L-Main">
       <div className="L-Screen">Video</div>
@@ -16,4 +16,4 @@ const RoomApp = () => (
   </React.Fragment>
 );
 
-export default RoomApp;
+export default ConfApp;
