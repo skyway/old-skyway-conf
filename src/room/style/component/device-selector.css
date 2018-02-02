@@ -1,0 +1,16 @@
+.DeviceSelector {
+  width: 80%;
+  margin: 0 auto;
+
+  &_Row {
+    display: flex;
+    align-items: center;
+    margin: 10px auto;
+  }
+
+  &_Select {
+    width: 250px;
+    height: 30px;
+    margin: 0 20px;
+  }
+}

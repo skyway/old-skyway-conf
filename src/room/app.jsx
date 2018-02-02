@@ -2,7 +2,7 @@ import React from 'react';
 
 import Setting from './container/setting';
 
-const Layout = () => (
+const RoomApp = () => (
   <React.Fragment>
     <main className="L-Main">
       <div>Video</div>
@@ -13,4 +13,4 @@ const Layout = () => (
   </React.Fragment>
 );
 
-export default Layout;
+export default RoomApp;

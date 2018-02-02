@@ -13,6 +13,7 @@ class Video extends React.Component {
     this.props.peer.stream;
     return (
       <video
+        className="Video"
         ref={ref => {
           this._ref = ref;
         }}

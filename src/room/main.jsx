@@ -4,7 +4,7 @@ import { Provider } from 'mobx-react';
 
 import RoomStore from './store';
 import RoomAction from './action';
-import Layout from './layout';
+import RoomApp from './app';
 
 import util from '../shared/util';
 
@@ -19,7 +19,7 @@ const action = new RoomAction(store);
 action.onLoad();
 ReactDOM.render(
   <Provider action={action} {...store}>
-    <Layout />
+    <RoomApp />
   </Provider>,
   document.getElementById('app-root')
 );

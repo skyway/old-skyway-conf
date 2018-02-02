@@ -1,0 +1,12 @@
+.NameEdit {
+  display: flex;
+  align-items: center;
+  width: 80%;
+  margin: 10px auto;
+
+  &_Input {
+    height: 30px;
+    width: 250px;
+    margin-left: 20px;
+  }
+}

@@ -4,14 +4,16 @@
   height: 100vh;
 }
 
-.L-Popup {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 10;
-  background-color: rgba(0, 0, 0, .5);
+.L-Setting {
+  width: 600px;
+  margin: 100px auto;
+  padding: 20px;
+  background-color: #fff;
+  color: #000;
+
+  &_Video {
+    text-align: center;
+  }
 }
 
 .L-RightSide {
