@@ -5,22 +5,17 @@ import Form from './container/form';
 import Desc from './component/desc';
 import Copyright from './component/copyright';
 
-const Layout = () => (
+const IndexApp = () => (
   <React.Fragment>
     <main className="L-Main">
       <Title />
-
-      <div className="L-Form">
-        <Form />
-      </div>
-
+      <Form />
       <Desc />
     </main>
-
     <div className="L-Copyright">
       <Copyright />
     </div>
   </React.Fragment>
 );
 
-export default Layout;
+export default IndexApp;

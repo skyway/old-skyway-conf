@@ -4,14 +4,14 @@ import { Provider } from 'mobx-react';
 
 import IndexStore from './store';
 import IndexAction from './action';
-import Layout from './layout';
+import IndexApp from './app';
 
 const store = new IndexStore();
 const action = new IndexAction(store);
 
 ReactDOM.render(
   <Provider action={action} {...store}>
-    <Layout />
+    <IndexApp />
   </Provider>,
   document.getElementById('app-root')
 );

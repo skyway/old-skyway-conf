@@ -5,10 +5,10 @@ import FormMain from '../component/form-main';
 import FormTypeSelector from '../component/form-type-selector';
 
 const Form = ({ form, ui, action }) => (
-  <React.Fragment>
+  <div className="L-Form">
     <FormMain form={form} ui={ui} action={action} />
     <FormTypeSelector form={form} action={action} />
-  </React.Fragment>
+  </div>
 );
 
 export default inject('form', 'ui', 'action')(observer(Form));
