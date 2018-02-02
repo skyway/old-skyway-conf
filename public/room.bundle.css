@@ -465,7 +465,7 @@ body {
 
 .L-Main {
   display: grid;
-  grid-template-rows: 1fr 180px;
+  grid-template-rows: 1fr 150px;
   height: 100vh;
 }
 
@@ -484,6 +484,19 @@ body {
 
 .L-Setting_Finish {
     text-align: right;
+  }
+
+.L-Screen {
+  background-color: #000;
+}
+
+.L-MemberList {
+  display: flex;
+}
+
+.L-MemberList_Video {
+    height: 150px;
+    width: calc(150px / 9 * 16);
   }
 
 .L-RightSide {
@@ -533,7 +546,16 @@ body {
 }
 
 .Video {
+  position: relative;
   width: 100%;
-  height: auto;
+  padding-bottom: calc(9 / 16 * 100%);
   background-color: #000;
 }
+
+.Video_Content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }

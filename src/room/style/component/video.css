@@ -1,5 +1,14 @@
 .Video {
+  position: relative;
   width: 100%;
-  height: auto;
+  padding-bottom: calc(9 / 16 * 100%);
   background-color: #000;
+
+  &_Content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 }

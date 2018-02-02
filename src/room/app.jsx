@@ -1,12 +1,15 @@
 import React from 'react';
 
+import MemberList from './container/member-list';
 import Setting from './container/setting';
 
 const RoomApp = () => (
   <React.Fragment>
     <main className="L-Main">
-      <div>Video</div>
-      <div>Users</div>
+      <div className="L-Screen">Video</div>
+      <div>
+        <MemberList />
+      </div>
     </main>
     <Setting />
     <div className="L-RightSide">右メニュー</div>

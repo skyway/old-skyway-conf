@@ -97,6 +97,7 @@ class RoomAction extends Action {
 
   onClickJoinRoom() {
     const { ui } = this.store;
+    ui.isSettingOpen = false;
     console.log(`join: ${ui.roomType}/${ui.roomName}`);
   }
 }

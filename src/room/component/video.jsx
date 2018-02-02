@@ -12,14 +12,16 @@ class Video extends React.Component {
     // touch it for mobx
     this.props.peer.stream;
     return (
-      <video
-        className="Video"
-        ref={ref => {
-          this._ref = ref;
-        }}
-        muted={this.props.muted}
-        autoPlay
-      />
+      <div className="Video">
+        <video
+          className="Video_Content"
+          ref={ref => {
+            this._ref = ref;
+          }}
+          muted={this.props.muted}
+          autoPlay
+        />
+      </div>
     );
   }
 

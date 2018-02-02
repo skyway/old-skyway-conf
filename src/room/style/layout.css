@@ -1,6 +1,6 @@
 .L-Main {
   display: grid;
-  grid-template-rows: 1fr 180px;
+  grid-template-rows: 1fr 150px;
   height: 100vh;
 }
 
@@ -18,6 +18,19 @@
 
   &_Finish {
     text-align: right;
+  }
+}
+
+.L-Screen {
+  background-color: #000;
+}
+
+.L-MemberList {
+  display: flex;
+
+  &_Video {
+    height: 150px;
+    width: calc(150px / 9 * 16);
   }
 }
 

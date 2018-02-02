@@ -7,7 +7,7 @@ import DeviceSelector from '../component/device-selector';
 import NameEdit from '../component/name-edit';
 
 const Setting = ({ peer, ui, action }) =>
-  ui.isSetting ? (
+  ui.isSettingOpen ? (
     <Popup>
       <div className="L-Setting">
         <div className="L-Setting_Video">
