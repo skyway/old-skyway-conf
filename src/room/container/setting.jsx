@@ -18,7 +18,7 @@ const Setting = ({ peer, ui, action }) =>
 
         <NameEdit />
 
-        <div>
+        <div className="L-Setting_Finish">
           <button onClick={() => action.onClickJoinRoom()}>設定完了</button>
         </div>
       </div>

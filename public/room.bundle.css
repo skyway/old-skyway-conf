@@ -464,4 +464,76 @@ body {
 }
 
 .L-Main {
+  display: grid;
+  grid-template-rows: 1fr 180px;
+  height: 100vh;
+}
+
+.L-Setting {
+  width: 600px;
+  margin: 100px auto;
+  padding: 20px;
+  background-color: #fff;
+  color: #000;
+  border-radius: 5px;
+}
+
+.L-Setting_Video {
+    text-align: center;
+  }
+
+.L-Setting_Finish {
+    text-align: right;
+  }
+
+.L-RightSide {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.DeviceSelector {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.DeviceSelector_Row {
+    display: flex;
+    align-items: center;
+    margin: 10px auto;
+  }
+
+.DeviceSelector_Select {
+    width: 250px;
+    height: 30px;
+    margin: 0 20px;
+  }
+
+.NameEdit {
+  display: flex;
+  align-items: center;
+  width: 80%;
+  margin: 10px auto;
+}
+
+.NameEdit_Input {
+    height: 30px;
+    width: 250px;
+    margin-left: 20px;
+  }
+
+.Popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, .5);
+}
+
+.Video {
+  width: 100%;
+  height: auto;
+  background-color: #000;
 }

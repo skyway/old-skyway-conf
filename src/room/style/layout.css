@@ -10,9 +10,14 @@
   padding: 20px;
   background-color: #fff;
   color: #000;
+  border-radius: 5px;
 
   &_Video {
     text-align: center;
+  }
+
+  &_Finish {
+    text-align: right;
   }
 }
 
