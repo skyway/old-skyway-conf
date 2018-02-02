@@ -5,49 +5,49 @@ import helper from './webrtc-helper';
 // import Peer from 'skyway-js';
 // function _initPeer() {
 //   return new Promise((resolve, reject) => {
-//     const peer = new Peer({
+//     const self = new Peer({
 //       key: '03ff6219-b58f-4310-9484-e9108e859cdd',
 //       debug: 2,
 //     });
 //
-//     peer.on('open', () => {
-//       resolve(peer);
+//     self.on('open', () => {
+//       resolve(self);
 //     });
 //     // for onOpen error
-//     peer.on('error', err => {
+//     self.on('error', err => {
 //       reject(err);
 //     });
 //
-//     window.peer = peer;
+//     window.self = self;
 //   });
 // }
 class RoomAction extends Action {
   constructor(store) {
     super(store);
 
-    const { peer } = this.store;
+    const { self } = this.store;
 
     reaction(
-      () => [peer.videoDeviceId, peer.audioDeviceId],
+      () => [self.videoDeviceId, self.audioDeviceId],
       async ([videoDeviceId, audioDeviceId]) => {
         const stream = await helper
           .getUserMedia({ videoDeviceId, audioDeviceId })
           .catch(console.error);
 
-        peer.isVideoMuted && helper.toggleMuteVideoTracks(stream, true);
-        peer.isAudioMuted && helper.toggleMuteAudioTracks(stream, true);
+        self.isVideoMuted && helper.toggleMuteVideoTracks(stream, true);
+        self.isAudioMuted && helper.toggleMuteAudioTracks(stream, true);
 
-        peer.stream = stream;
+        self.stream = stream;
       }
     );
 
     reaction(
-      () => peer.isVideoMuted,
-      isMuted => helper.toggleMuteVideoTracks(peer.stream, isMuted)
+      () => self.isVideoMuted,
+      isMuted => helper.toggleMuteVideoTracks(self.stream, isMuted)
     );
     reaction(
-      () => peer.isAudioMuted,
-      isMuted => helper.toggleMuteAudioTracks(peer.stream, isMuted)
+      () => self.isAudioMuted,
+      isMuted => helper.toggleMuteAudioTracks(self.stream, isMuted)
     );
 
     // TODO: 使ってたデバイスがなくなったら
@@ -57,42 +57,42 @@ class RoomAction extends Action {
         .catch(console.error);
 
       runInAction(() => {
-        peer.videoDevices = video;
-        peer.audioDevices = audio;
+        self.videoDevices = video;
+        self.audioDevices = audio;
       });
     });
   }
 
   async onLoad() {
-    const { peer } = this.store;
+    const { self } = this.store;
     const { video, audio } = await helper.getUserDevices().catch(console.error);
 
     runInAction(() => {
-      peer.videoDevices = video;
-      peer.audioDevices = audio;
+      self.videoDevices = video;
+      self.audioDevices = audio;
 
       // temp devices for first gUM()
-      peer.videoDeviceId = video[0].deviceId;
-      peer.audioDeviceId = audio[0].deviceId;
+      self.videoDeviceId = video[0].deviceId;
+      self.audioDeviceId = audio[0].deviceId;
     });
   }
 
   async onChangeVideoDevice(deviceId) {
-    const { peer } = this.store;
-    peer.videoDeviceId = deviceId;
+    const { self } = this.store;
+    self.videoDeviceId = deviceId;
   }
   async onChangeAudioDevice(deviceId) {
-    const { peer } = this.store;
-    peer.audioDeviceId = deviceId;
+    const { self } = this.store;
+    self.audioDeviceId = deviceId;
   }
 
   onClickVideoMute() {
-    const { peer } = this.store;
-    peer.isVideoMuted = !peer.isVideoMuted;
+    const { self } = this.store;
+    self.isVideoMuted = !self.isVideoMuted;
   }
   onClickAudioMute() {
-    const { peer } = this.store;
-    peer.isAudioMuted = !peer.isAudioMuted;
+    const { self } = this.store;
+    self.isAudioMuted = !self.isAudioMuted;
   }
 
   onClickJoinRoom() {

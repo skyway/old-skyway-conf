@@ -1,10 +1,10 @@
 import UiStore from './ui';
-import PeerStore from './peer';
+import SelfStore from './self';
 
 class RoomStore {
   constructor({ roomType, roomName }) {
     this.ui = new UiStore({ roomType, roomName });
-    this.peer = new PeerStore();
+    this.self = new SelfStore();
   }
 }
 

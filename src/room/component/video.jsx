@@ -10,7 +10,7 @@ class Video extends React.Component {
 
   render() {
     // touch it for mobx
-    this.props.peer.stream;
+    this.props.self.stream;
     return (
       <div className="Video">
         <video
@@ -26,7 +26,7 @@ class Video extends React.Component {
   }
 
   componentWillReact() {
-    this._ref.srcObject = this.props.peer.stream;
+    this._ref.srcObject = this.props.self.stream;
   }
 }
 
