@@ -4,11 +4,11 @@ import { observer, inject } from 'mobx-react';
 import Video from '../component/video';
 
 // TODO: optimize render perf
-const MemberList = ({ self, room, action }) => (
+const MemberList = ({ device, room, action }) => (
   <div className="L-MemberList">
     <div className="L-MemberList_Video">
       <div onClick={() => action.$update('ui.isSettingOpen', true)}>
-        <Video store={self} muted />
+        <Video store={device} muted />
       </div>
     </div>
     {room.streams.slice().map(stream => (
@@ -19,4 +19,4 @@ const MemberList = ({ self, room, action }) => (
   </div>
 );
 
-export default inject('self', 'room', 'action')(observer(MemberList));
+export default inject('device', 'room', 'action')(observer(MemberList));

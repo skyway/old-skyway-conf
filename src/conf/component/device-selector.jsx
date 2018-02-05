@@ -1,40 +1,40 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 
-const DeviceSelector = ({ self, action }) => (
+const DeviceSelector = ({ device, action }) => (
   <div className="DeviceSelector">
     <div className="DeviceSelector_Row">
       <div>カメラ</div>
       <select
         className="DeviceSelector_Select"
-        value={self.videoDeviceId}
+        value={device.videoDeviceId}
         onChange={ev => action.onChangeVideoDevice(ev.target.value)}
       >
-        {self.videoDevices.map((device, idx) => (
+        {device.videoDevices.map((device, idx) => (
           <option key={device.deviceId} value={device.deviceId}>
             {device.label || `Video${idx + 1}`}
           </option>
         ))}
       </select>
       <button onClick={() => action.onClickVideoMute()}>
-        ミュート{self.isVideoMuted ? '解除' : ''}
+        ミュート{device.isVideoMuted ? '解除' : ''}
       </button>
     </div>
     <div className="DeviceSelector_Row">
       <div>マイク</div>
       <select
         className="DeviceSelector_Select"
-        value={self.audioDeviceId}
+        value={device.audioDeviceId}
         onChange={ev => action.onChangeAudioDevice(ev.target.value)}
       >
-        {self.audioDevices.map((device, idx) => (
+        {device.audioDevices.map((device, idx) => (
           <option key={device.deviceId} value={device.deviceId}>
             {device.label || `Audio${idx + 1}`}
           </option>
         ))}
       </select>
       <button onClick={() => action.onClickAudioMute()}>
-        ミュート{self.isAudioMuted ? '解除' : ''}
+        ミュート{device.isAudioMuted ? '解除' : ''}
       </button>
     </div>
   </div>

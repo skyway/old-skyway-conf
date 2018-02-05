@@ -1,6 +1,6 @@
 import { extendObservable, observable } from 'mobx';
 
-class SelfStore {
+class DeviceStore {
   constructor() {
     extendObservable(this, {
       stream: observable.shallowObject({}),
@@ -14,4 +14,4 @@ class SelfStore {
   }
 }
 
-export default SelfStore;
+export default DeviceStore;

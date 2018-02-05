@@ -1,11 +1,11 @@
 import UiStore from './ui';
-import SelfStore from './self';
+import DeviceStore from './device';
 import RoomStore from './room';
 
 class ConfStore {
   constructor({ roomType, roomName }) {
     this.ui = new UiStore({ roomType, roomName });
-    this.self = new SelfStore();
+    this.device = new DeviceStore();
     this.room = new RoomStore();
   }
 }

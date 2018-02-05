@@ -8,29 +8,29 @@ class ConfAction extends Action {
   constructor(store) {
     super(store);
 
-    const { self } = this.store;
+    const { device } = this.store;
 
     reaction(
-      () => [self.videoDeviceId, self.audioDeviceId],
+      () => [device.videoDeviceId, device.audioDeviceId],
       async ([videoDeviceId, audioDeviceId]) => {
         const stream = await webrtc
           .getUserMedia({ videoDeviceId, audioDeviceId })
           .catch(console.error);
 
-        self.isVideoMuted && webrtc.toggleMuteVideoTracks(stream, true);
-        self.isAudioMuted && webrtc.toggleMuteAudioTracks(stream, true);
+        device.isVideoMuted && webrtc.toggleMuteVideoTracks(stream, true);
+        device.isAudioMuted && webrtc.toggleMuteAudioTracks(stream, true);
 
-        self.stream = stream;
+        device.stream = stream;
       }
     );
 
     reaction(
-      () => self.isVideoMuted,
-      isMuted => webrtc.toggleMuteVideoTracks(self.stream, isMuted)
+      () => device.isVideoMuted,
+      isMuted => webrtc.toggleMuteVideoTracks(device.stream, isMuted)
     );
     reaction(
-      () => self.isAudioMuted,
-      isMuted => webrtc.toggleMuteAudioTracks(self.stream, isMuted)
+      () => device.isAudioMuted,
+      isMuted => webrtc.toggleMuteAudioTracks(device.stream, isMuted)
     );
 
     // TODO: 使ってたデバイスがなくなったら
@@ -40,51 +40,51 @@ class ConfAction extends Action {
         .catch(console.error);
 
       runInAction(() => {
-        self.videoDevices = video;
-        self.audioDevices = audio;
+        device.videoDevices = video;
+        device.audioDevices = audio;
       });
     });
   }
 
   async onLoad() {
-    const { self } = this.store;
+    const { device } = this.store;
     const { video, audio } = await webrtc.getUserDevices().catch(console.error);
 
     runInAction(() => {
-      self.videoDevices = video;
-      self.audioDevices = audio;
+      device.videoDevices = video;
+      device.audioDevices = audio;
 
       // temp devices for first gUM()
-      self.videoDeviceId = video[0].deviceId;
-      self.audioDeviceId = audio[0].deviceId;
+      device.videoDeviceId = video[0].deviceId;
+      device.audioDeviceId = audio[0].deviceId;
     });
   }
 
   async onChangeVideoDevice(deviceId) {
-    const { self } = this.store;
-    self.videoDeviceId = deviceId;
+    const { device } = this.store;
+    device.videoDeviceId = deviceId;
   }
   async onChangeAudioDevice(deviceId) {
-    const { self } = this.store;
-    self.audioDeviceId = deviceId;
+    const { device } = this.store;
+    device.audioDeviceId = deviceId;
   }
 
   onClickVideoMute() {
-    const { self } = this.store;
-    self.isVideoMuted = !self.isVideoMuted;
+    const { device } = this.store;
+    device.isVideoMuted = !device.isVideoMuted;
   }
   onClickAudioMute() {
-    const { self } = this.store;
-    self.isAudioMuted = !self.isAudioMuted;
+    const { device } = this.store;
+    device.isAudioMuted = !device.isAudioMuted;
   }
 
   async onClickJoinRoom() {
-    const { ui, self } = this.store;
+    const { ui, device } = this.store;
 
     const peer = await skyway.initPeer().catch(console.error);
     const room = peer.joinRoom(`${ui.roomType}/${ui.roomName}`, {
       mode: ui.roomType,
-      stream: self.stream,
+      stream: device.stream,
     });
     this._onRoomJoin(room);
 
@@ -92,7 +92,7 @@ class ConfAction extends Action {
   }
 
   _onRoomJoin(room) {
-    const { ui, self } = this.store;
+    const { ui, device } = this.store;
     ui.isRoomJoin = true;
 
     room.on('stream', stream => this._onRoomAddStream(stream));
@@ -100,7 +100,7 @@ class ConfAction extends Action {
     room.on('peerLeave', peerId => this._onRoomPeerLeave(peerId));
     room.on('data', data => this._onRoomData(data));
 
-    reaction(() => self.stream, () => room.replaceStream(self.stream));
+    reaction(() => device.stream, () => room.replaceStream(device.stream));
   }
   _onRoomAddStream(stream) {
     const { room } = this.store;
