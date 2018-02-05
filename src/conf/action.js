@@ -102,7 +102,7 @@ class ConfAction extends Action {
 
     reaction(
       () => room.localStream,
-      () => room.replaceStream(room.localStream)
+      () => confRoom.replaceStream(room.localStream)
     );
   }
   _onRoomAddStream(stream) {
