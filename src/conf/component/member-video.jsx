@@ -18,7 +18,7 @@ const RemoteVideos = ({ room, action }) => (
       <div
         key={stream.id}
         className="MemberVideo"
-        onClick={() => action.onClickRemoteVideo(stream.id)}
+        onClick={() => action.onClickRemotePeer(stream.peerId)}
       >
         <Video stream={stream} />
       </div>

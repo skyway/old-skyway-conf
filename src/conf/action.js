@@ -20,6 +20,7 @@ class ConfAction extends Action {
         device.isVideoMuted && webrtc.toggleMuteVideoTracks(stream, true);
         device.isAudioMuted && webrtc.toggleMuteAudioTracks(stream, true);
 
+        stream.peerId = 'myPeerId';
         room.localStream = stream;
       }
     );
@@ -91,9 +92,9 @@ class ConfAction extends Action {
     ui.isSettingOpen = false;
   }
 
-  onClickRemoteVideo(streamId) {
+  onClickRemotePeer(peerId) {
     const { room } = this.store;
-    room.pinnedStreamId = streamId;
+    room.pinnedPeerId = peerId;
   }
 
   _onRoomJoin(confRoom) {

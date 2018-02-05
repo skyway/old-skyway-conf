@@ -3,13 +3,13 @@ import { extendObservable, observable } from 'mobx';
 class RoomStore {
   constructor() {
     extendObservable(this, {
-      pinnedStreamId: '',
+      pinnedPeerId: '',
       localStream: observable.shallowObject({}),
       remoteStreams: observable.shallowArray([]),
       get pinnedStream() {
-        if (this.pinnedStreamId !== '') {
+        if (this.pinnedPeerId !== '') {
           return this.remoteStreams.find(
-            stream => stream.id === this.pinnedStreamId
+            stream => stream.peerId === this.pinnedPeerId
           );
         }
 
@@ -24,8 +24,8 @@ class RoomStore {
 
   removeRemoteStream(stream) {
     this.remoteStreams.remove(stream);
-    if (this.pinnedStreamId === stream.id) {
-      this.pinnedStreamId = '';
+    if (this.pinnedPeerId === stream.peerId) {
+      this.pinnedPeerId = '';
     }
   }
 
