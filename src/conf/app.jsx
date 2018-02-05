@@ -1,12 +1,13 @@
 import React from 'react';
 
+import Screen from './container/screen';
 import MemberList from './container/member-list';
 import Setting from './container/setting';
 
 const ConfApp = () => (
   <React.Fragment>
     <main className="L-Main">
-      <div className="L-Screen">Screen</div>
+      <Screen />
       <MemberList />
     </main>
     <Setting />
