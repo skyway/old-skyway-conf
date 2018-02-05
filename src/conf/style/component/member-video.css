@@ -1,4 +1,5 @@
 .MemberVideo {
   height: 150px;
-  width: calc(150px / 9 * 16);
+  /* fix this to scroll container */
+  min-width: calc(150px / 9 * 16);
 }

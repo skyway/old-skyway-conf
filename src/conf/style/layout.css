@@ -23,6 +23,7 @@
 
 .L-MemberList {
   display: flex;
+  overflow-x: auto;
 }
 
 .L-RightSide {
