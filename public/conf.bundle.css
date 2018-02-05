@@ -465,7 +465,7 @@ body {
 
 .L-Main {
   display: grid;
-  grid-template-rows: 1fr 150px;
+  grid-template-rows: calc(100vh - 150px) 150px;
   height: 100vh;
 }
 
@@ -486,18 +486,9 @@ body {
     text-align: right;
   }
 
-.L-Screen {
-  background-color: #000;
-}
-
 .L-MemberList {
   display: flex;
 }
-
-.L-MemberList_Video {
-    height: 150px;
-    width: calc(150px / 9 * 16);
-  }
 
 .L-RightSide {
   position: absolute;
@@ -522,6 +513,11 @@ body {
     margin: 0 20px;
   }
 
+.MemberVideo {
+  height: 150px;
+  width: calc(150px / 9 * 16);
+}
+
 .NameEdit {
   display: flex;
   align-items: center;
@@ -542,8 +538,19 @@ body {
   right: 0;
   bottom: 0;
   z-index: 10;
-  background-color: rgba(0, 0, 0, .5);
+  background-color: rgba(0, 0, 0, .8);
 }
+
+.ScreenVideo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
+}
+
+.ScreenVideo_Display {
+    width: 100%; /* controlled by js */
+  }
 
 .Video {
   position: relative;

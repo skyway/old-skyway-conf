@@ -91,9 +91,9 @@ class ConfAction extends Action {
     ui.isSettingOpen = false;
   }
 
-  onClickRemoteVideo(stream) {
+  onClickRemoteVideo(streamId) {
     const { room } = this.store;
-    room.pinnedStreamId = stream.id;
+    room.pinnedStreamId = streamId;
   }
 
   _onRoomJoin(confRoom) {
