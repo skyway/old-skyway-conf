@@ -6,12 +6,12 @@ import Video from '../component/video';
 import DeviceSelector from '../component/device-selector';
 import NameEdit from '../component/name-edit';
 
-const Setting = ({ device, ui, action }) =>
+const Setting = ({ device, room, ui, action }) =>
   ui.isSettingOpen ? (
     <Popup>
       <div className="L-Setting">
         <div className="L-Setting_Video">
-          <Video store={device} muted />
+          <Video store={{ stream: room.localStream }} muted />
         </div>
 
         <DeviceSelector device={device} action={action} />
@@ -19,9 +19,13 @@ const Setting = ({ device, ui, action }) =>
         <NameEdit />
 
         <div className="L-Setting_Finish">
-          <button onClick={() => {
-            ui.isRoomJoin ? action.$update('ui.isSettingOpen', false) : action.onClickJoinRoom();
-          }}>
+          <button
+            onClick={() => {
+              ui.isRoomJoin
+                ? action.$update('ui.isSettingOpen', false)
+                : action.onClickJoinRoom();
+            }}
+          >
             設定完了
           </button>
         </div>
@@ -29,4 +33,4 @@ const Setting = ({ device, ui, action }) =>
     </Popup>
   ) : null;
 
-export default inject('device', 'ui', 'action')(observer(Setting));
+export default inject('device', 'room', 'ui', 'action')(observer(Setting));

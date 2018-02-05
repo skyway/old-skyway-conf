@@ -3,7 +3,6 @@ import { extendObservable, observable } from 'mobx';
 class DeviceStore {
   constructor() {
     extendObservable(this, {
-      stream: observable.shallowObject({}),
       isVideoMuted: false,
       isAudioMuted: false,
       videoDeviceId: '',

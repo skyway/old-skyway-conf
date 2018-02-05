@@ -8,7 +8,7 @@ class ConfAction extends Action {
   constructor(store) {
     super(store);
 
-    const { device } = this.store;
+    const { device, room } = this.store;
 
     reaction(
       () => [device.videoDeviceId, device.audioDeviceId],
@@ -20,17 +20,17 @@ class ConfAction extends Action {
         device.isVideoMuted && webrtc.toggleMuteVideoTracks(stream, true);
         device.isAudioMuted && webrtc.toggleMuteAudioTracks(stream, true);
 
-        device.stream = stream;
+        room.localStream = stream;
       }
     );
 
     reaction(
       () => device.isVideoMuted,
-      isMuted => webrtc.toggleMuteVideoTracks(device.stream, isMuted)
+      isMuted => webrtc.toggleMuteVideoTracks(room.localStream, isMuted)
     );
     reaction(
       () => device.isAudioMuted,
-      isMuted => webrtc.toggleMuteAudioTracks(device.stream, isMuted)
+      isMuted => webrtc.toggleMuteAudioTracks(room.localStream, isMuted)
     );
 
     // TODO: 使ってたデバイスがなくなったら
@@ -79,41 +79,44 @@ class ConfAction extends Action {
   }
 
   async onClickJoinRoom() {
-    const { ui, device } = this.store;
+    const { ui, room } = this.store;
 
     const peer = await skyway.initPeer().catch(console.error);
-    const room = peer.joinRoom(`${ui.roomType}/${ui.roomName}`, {
+    const confRoom = peer.joinRoom(`${ui.roomType}/${ui.roomName}`, {
       mode: ui.roomType,
-      stream: device.stream,
+      stream: room.localStream,
     });
-    this._onRoomJoin(room);
+    this._onRoomJoin(confRoom);
 
     ui.isSettingOpen = false;
   }
 
-  _onRoomJoin(room) {
-    const { ui, device } = this.store;
+  _onRoomJoin(confRoom) {
+    const { ui, room } = this.store;
     ui.isRoomJoin = true;
 
-    room.on('stream', stream => this._onRoomAddStream(stream));
-    room.on('removeStream', stream => this._onRoomRemoveStream(stream));
-    room.on('peerLeave', peerId => this._onRoomPeerLeave(peerId));
-    room.on('data', data => this._onRoomData(data));
+    confRoom.on('stream', stream => this._onRoomAddStream(stream));
+    confRoom.on('removeStream', stream => this._onRoomRemoveStream(stream));
+    confRoom.on('peerLeave', peerId => this._onRoomPeerLeave(peerId));
+    confRoom.on('data', data => this._onRoomData(data));
 
-    reaction(() => device.stream, () => room.replaceStream(device.stream));
+    reaction(
+      () => room.localStream,
+      () => room.replaceStream(room.localStream)
+    );
   }
   _onRoomAddStream(stream) {
     const { room } = this.store;
-    room.streams.push(stream);
+    room.remoteStreams.push(stream);
   }
   _onRoomRemoveStream(stream) {
     const { room } = this.store;
-    room.streams.remove(stream);
+    room.remoteStreams.remove(stream);
   }
   _onRoomPeerLeave(peerId) {
     const { room } = this.store;
-    const stream = room.streams.find(stream => stream.peerId === peerId);
-    stream && room.streams.remove(stream);
+    const stream = room.remoteStreams.find(stream => stream.peerId === peerId);
+    stream && room.remoteStreams.remove(stream);
   }
   _onRoomData(data) {
     console.log('data', data);
