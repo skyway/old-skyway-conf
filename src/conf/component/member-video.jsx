@@ -12,10 +12,14 @@ const LocalVideo = ({ room, action }) => (
   </div>
 );
 
-const RemoteVideos = ({ room }) => (
+const RemoteVideos = ({ room, action }) => (
   <React.Fragment>
     {room.remoteStreams.slice().map(stream => (
-      <div key={stream.id} className="MemberVideo">
+      <div
+        key={stream.id}
+        className="MemberVideo"
+        onClick={() => action.onClickRemoteVideo(stream)}
+      >
         <Video stream={stream} />
       </div>
     ))}

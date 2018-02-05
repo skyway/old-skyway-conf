@@ -6,7 +6,7 @@ import MemberVideo from '../component/member-video';
 const MemberList = ({ room, action }) => (
   <div className="L-MemberList">
     <MemberVideo.LocalVideo room={room} action={action} />
-    <MemberVideo.RemoteVideos room={room} />
+    <MemberVideo.RemoteVideos room={room} action={action} />
   </div>
 );
 

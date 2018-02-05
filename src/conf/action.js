@@ -91,6 +91,11 @@ class ConfAction extends Action {
     ui.isSettingOpen = false;
   }
 
+  onClickRemoteVideo(stream) {
+    const { room } = this.store;
+    room.pinnedStreamId = stream.id;
+  }
+
   _onRoomJoin(confRoom) {
     const { ui, room } = this.store;
     ui.isRoomJoin = true;
@@ -111,12 +116,11 @@ class ConfAction extends Action {
   }
   _onRoomRemoveStream(stream) {
     const { room } = this.store;
-    room.remoteStreams.remove(stream);
+    room.removeRemoteStream(stream);
   }
   _onRoomPeerLeave(peerId) {
     const { room } = this.store;
-    const stream = room.remoteStreams.find(stream => stream.peerId === peerId);
-    stream && room.remoteStreams.remove(stream);
+    room.removeRemoteStreamByPeerId(peerId);
   }
   _onRoomData(data) {
     console.log('data', data);
