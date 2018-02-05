@@ -6,10 +6,8 @@ import Setting from './container/setting';
 const ConfApp = () => (
   <React.Fragment>
     <main className="L-Main">
-      <div className="L-Screen">Video</div>
-      <div>
-        <MemberList />
-      </div>
+      <div className="L-Screen">Screen</div>
+      <MemberList />
     </main>
     <Setting />
     <div className="L-RightSide">右メニュー</div>
