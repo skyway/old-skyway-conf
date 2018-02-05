@@ -1,0 +1,10 @@
+.ScreenVideo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
+
+  &_Display {
+    width: 100%; /* controlled by js */
+  }
+}

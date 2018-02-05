@@ -1,6 +1,6 @@
 .L-Main {
   display: grid;
-  grid-template-rows: 1fr 150px;
+  grid-template-rows: calc(100vh - 150px) 150px;
   height: 100vh;
 }
 
@@ -19,10 +19,6 @@
   &_Finish {
     text-align: right;
   }
-}
-
-.L-Screen {
-  background-color: #000;
 }
 
 .L-MemberList {
