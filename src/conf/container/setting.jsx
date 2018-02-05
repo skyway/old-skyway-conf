@@ -2,7 +2,7 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 
 import Popup from '../component/popup';
-import Video from '../component/video';
+import SettingVideo from '../component/setting-video';
 import DeviceSelector from '../component/device-selector';
 import NameEdit from '../component/name-edit';
 
@@ -11,7 +11,7 @@ const Setting = ({ device, room, ui, action }) =>
     <Popup>
       <div className="L-Setting">
         <div className="L-Setting_Video">
-          <Video store={{ stream: room.localStream }} muted />
+          <SettingVideo room={room} />
         </div>
 
         <DeviceSelector device={device} action={action} />

@@ -1,5 +1,4 @@
 import React from 'react';
-import { observer } from 'mobx-react';
 
 class Video extends React.Component {
   constructor() {
@@ -8,8 +7,6 @@ class Video extends React.Component {
   }
 
   render() {
-    // touch it for mobx
-    this.props.store.stream;
     return (
       <div className="Video">
         <video
@@ -24,19 +21,19 @@ class Video extends React.Component {
     );
   }
 
+  // for adding stream(e.g. someone joins room)
   componentDidMount() {
-    // for adding stream(e.g. someone joins room)
-    if (this._ref && this.props.store.stream instanceof MediaStream) {
-      this._ref.srcObject = this.props.store.stream;
+    if (this._ref && this.props.stream instanceof MediaStream) {
+      this._ref.srcObject = this.props.stream;
     }
   }
 
-  componentWillReact() {
-    // for updating stream(e.g. device change)
-    if (this._ref && this.props.store.stream instanceof MediaStream) {
-      this._ref.srcObject = this.props.store.stream;
+  // for updating stream(e.g. gUM() 1st time, change devices)
+  componentDidUpdate() {
+    if (this._ref && this.props.stream instanceof MediaStream) {
+      this._ref.srcObject = this.props.stream;
     }
   }
 }
 
-export default observer(Video);
+export default Video;

@@ -1,22 +1,13 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 
-import Video from '../component/video';
+import MemberVideo from '../component/member-video';
 
-// TODO: optimize render perf
 const MemberList = ({ room, action }) => (
   <div className="L-MemberList">
-    <div className="L-MemberList_Video">
-      <div onClick={() => action.$update('ui.isSettingOpen', true)}>
-        <Video store={{ stream: room.localStream }} muted />
-      </div>
-    </div>
-    {room.remoteStreams.slice().map(stream => (
-      <div key={stream.id} className="L-MemberList_Video">
-        <Video store={{ stream }} />
-      </div>
-    ))}
+    <MemberVideo.LocalVideo room={room} action={action} />
+    <MemberVideo.RemoteVideos room={room} />
   </div>
 );
 
-export default inject('device', 'room', 'action')(observer(MemberList));
+export default inject('room', 'action')(observer(MemberList));

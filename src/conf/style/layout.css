@@ -27,11 +27,6 @@
 
 .L-MemberList {
   display: flex;
-
-  &_Video {
-    height: 150px;
-    width: calc(150px / 9 * 16);
-  }
 }
 
 .L-RightSide {
