@@ -1,8 +1,8 @@
 import { reaction, runInAction } from 'mobx';
 
 import Action from '../shared/action';
-import webrtc from './webrtc-helper';
-import skyway from './skyway-helper';
+import webrtc from './helper/webrtc';
+import skyway from './helper/skyway';
 
 class ConfAction extends Action {
   constructor(store) {
