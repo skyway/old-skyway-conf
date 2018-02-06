@@ -539,6 +539,14 @@ body {
       flex: 1 1 auto;
     }
 
+.MemberVideo_Invite {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
+  }
+
 .NameEdit {
   display: flex;
   align-items: center;
