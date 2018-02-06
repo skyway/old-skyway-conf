@@ -79,6 +79,7 @@ class ConfAction extends Action {
     device.isAudioMuted = !device.isAudioMuted;
   }
 
+  // TODO: prevent dup join
   async onClickJoinRoom() {
     const { ui, room } = this.store;
 
