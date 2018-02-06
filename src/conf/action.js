@@ -70,11 +70,11 @@ class ConfAction extends Action {
     device.audioDeviceId = deviceId;
   }
 
-  onClickVideoMute() {
+  onClickToggleVideoMute() {
     const { device } = this.store;
     device.isVideoMuted = !device.isVideoMuted;
   }
-  onClickAudioMute() {
+  onClickToggleAudioMute() {
     const { device } = this.store;
     device.isAudioMuted = !device.isAudioMuted;
   }

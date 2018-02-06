@@ -16,7 +16,7 @@ const DeviceSelector = ({ device, action }) => (
           </option>
         ))}
       </select>
-      <button onClick={() => action.onClickVideoMute()}>
+      <button onClick={() => action.onClickToggleVideoMute()}>
         ミュート{device.isVideoMuted ? '解除' : ''}
       </button>
     </div>
@@ -33,7 +33,7 @@ const DeviceSelector = ({ device, action }) => (
           </option>
         ))}
       </select>
-      <button onClick={() => action.onClickAudioMute()}>
+      <button onClick={() => action.onClickToggleAudioMute()}>
         ミュート{device.isAudioMuted ? '解除' : ''}
       </button>
     </div>
