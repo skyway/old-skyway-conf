@@ -3,16 +3,7 @@ import { observer } from 'mobx-react';
 
 import Video from './video';
 
-const LocalVideo = ({ room, action }) => (
-  <div
-    className="MemberVideo"
-    onClick={() => action.$update('ui.isSettingOpen', true)}
-  >
-    <Video stream={room.localStream} muted />
-  </div>
-);
-
-const RemoteVideos = ({ room, action }) => (
+const MemberVideoRemotes = ({ room, action }) => (
   <React.Fragment>
     {room.remoteStreams.slice().map(stream => (
       <div
@@ -26,7 +17,4 @@ const RemoteVideos = ({ room, action }) => (
   </React.Fragment>
 );
 
-export default {
-  LocalVideo: observer(LocalVideo),
-  RemoteVideos: observer(RemoteVideos),
-};
+export default observer(MemberVideoRemotes);

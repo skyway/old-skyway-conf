@@ -1,12 +1,13 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 
-import MemberVideo from '../component/member-video';
+import MemberVideoLocal from '../component/member-video/local';
+import MemberVideoRemotes from '../component/member-video/remotes';
 
 const MemberList = ({ room, action }) => (
   <div className="L-MemberList">
-    <MemberVideo.LocalVideo room={room} action={action} />
-    <MemberVideo.RemoteVideos room={room} action={action} />
+    <MemberVideoLocal room={room} action={action} />
+    <MemberVideoRemotes room={room} action={action} />
   </div>
 );
 
