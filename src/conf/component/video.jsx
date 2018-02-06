@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react';
 
 class Video extends React.Component {
   constructor() {
@@ -7,6 +8,9 @@ class Video extends React.Component {
   }
 
   render() {
+    console.warn('Video:render');
+    // touch it for mobx
+    this.props.stream;
     return (
       <div className="Video">
         <video
@@ -29,11 +33,11 @@ class Video extends React.Component {
   }
 
   // for updating stream(e.g. gUM() 1st time, change devices)
-  componentDidUpdate() {
+  componentWillReact() {
     if (this._ref && this.props.stream instanceof MediaStream) {
       this._ref.srcObject = this.props.stream;
     }
   }
 }
 
-export default Video;
+export default observer(Video);

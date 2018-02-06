@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 
-import Video from './video';
+import Video from '../video';
 
 const MemberVideoRemotes = ({ room, action }) => (
   <React.Fragment>
