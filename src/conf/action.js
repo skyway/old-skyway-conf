@@ -101,9 +101,7 @@ class ConfAction extends Action {
     );
     reaction(
       () => user.syncState,
-      state => {
-        confRoom.send({ type: 'sync', payload: state });
-      }
+      state => confRoom.send({ type: 'sync', payload: state })
     );
   }
   _onRoomAddStream(stream, confRoom) {
