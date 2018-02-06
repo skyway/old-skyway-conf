@@ -3,7 +3,6 @@ import { extendObservable, observable } from 'mobx';
 class RoomStore {
   constructor() {
     extendObservable(this, {
-      localName: 'hello',
       pinnedPeerId: '',
       localStream: observable.shallowObject({}),
       remoteStreams: observable.shallowArray([]),

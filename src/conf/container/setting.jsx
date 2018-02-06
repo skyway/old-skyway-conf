@@ -16,7 +16,7 @@ const Setting = ({ device, room, ui, action }) =>
 
         <DeviceSelector device={device} action={action} />
 
-        <NameEdit />
+        <NameEdit ui={ui} action={action} />
 
         <div className="L-Setting_Finish">
           <button

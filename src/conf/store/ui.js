@@ -5,6 +5,7 @@ class UiStore {
     extendObservable(this, {
       roomType,
       roomName,
+      tempDispName: 'TODO: random',
       isSettingOpen: true,
       isRoomJoin: false,
       hasError: null,
