@@ -24,6 +24,7 @@
 .L-MemberList {
   display: flex;
   overflow-x: auto;
+  background-color: #005ece;
 }
 
 .L-RightSide {
