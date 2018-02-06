@@ -486,6 +486,29 @@ body {
     text-align: right;
   }
 
+.L-Invite {
+  width: 600px;
+  margin: 100px auto;
+  padding: 20px;
+  background-color: #fff;
+  color: #000;
+  border-radius: 5px;
+}
+
+.L-Invite_Title {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+
+.L-Invite_Input {
+    width: 100%;
+    margin: 20px auto;
+  }
+
+.L-Invite_Finish {
+    text-align: right;
+  }
+
 .L-MemberList {
   display: flex;
   overflow-x: auto;

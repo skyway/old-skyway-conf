@@ -6,9 +6,13 @@ class UiStore {
       roomType,
       roomName,
       isSettingOpen: true,
-      isInviteOpen: true,
+      isInviteOpen: false,
       isRoomJoin: false,
       hasError: null,
+      get confUrl() {
+        const hash = `#!/${this.roomType}/${this.roomName}`;
+        return `${location.origin}${location.pathname}${hash}`;
+      },
     });
   }
 }

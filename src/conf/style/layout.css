@@ -21,6 +21,29 @@
   }
 }
 
+.L-Invite {
+  width: 600px;
+  margin: 100px auto;
+  padding: 20px;
+  background-color: #fff;
+  color: #000;
+  border-radius: 5px;
+
+  &_Title {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+
+  &_Input {
+    width: 100%;
+    margin: 20px auto;
+  }
+
+  &_Finish {
+    text-align: right;
+  }
+}
+
 .L-MemberList {
   display: flex;
   overflow-x: auto;
