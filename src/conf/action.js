@@ -1,4 +1,5 @@
 import { reaction, runInAction } from 'mobx';
+import Mousetrap from 'mousetrap';
 
 import Action from '../shared/action';
 import webrtc from './helper/webrtc';
@@ -44,6 +45,15 @@ class ConfAction extends Action {
         user.videoDevices = video;
         user.audioDevices = audio;
       });
+    });
+
+    Mousetrap.bind(['command+e', 'ctrl+e'], () => {
+      user.isVideoMuted = !user.isVideoMuted;
+      return false;
+    });
+    Mousetrap.bind(['command+d', 'ctrl+d'], () => {
+      user.isAudioMuted = !user.isAudioMuted;
+      return false;
     });
   }
 
