@@ -16,6 +16,10 @@ if (!util.isValidRoomName(roomName) || !util.isValidRoomType(roomType)) {
 const store = new ConfStore({ roomType, roomName });
 const action = new ConfAction(store);
 
+// TODO: for debug
+window.store = store;
+window.action = action;
+
 action.onLoad();
 ReactDOM.render(
   <Provider action={action} {...store}>
