@@ -1,8 +1,9 @@
-import { extendObservable, observable } from 'mobx';
+import { extendObservable, observable, runInAction } from 'mobx';
 
 class RoomStore {
   constructor() {
     extendObservable(this, {
+      syncState: new Map(),
       pinnedPeerId: '',
       localStream: observable.shallowObject({}),
       remoteStreams: observable.shallowArray([]),
@@ -23,15 +24,13 @@ class RoomStore {
   }
 
   removeRemoteStream(stream) {
-    this.remoteStreams.remove(stream);
-    if (this.pinnedPeerId === stream.peerId) {
-      this.pinnedPeerId = '';
-    }
-  }
-
-  removeRemoteStreamByPeerId(peerId) {
-    const stream = this.remoteStreams.find(stream => stream.peerId === peerId);
-    stream && this.removeRemoteStream(stream);
+    runInAction(() => {
+      this.remoteStreams.remove(stream);
+      this.syncState.delete(stream.peerId);
+      if (this.pinnedPeerId === stream.peerId) {
+        this.pinnedPeerId = '';
+      }
+    });
   }
 }
 

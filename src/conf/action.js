@@ -66,44 +66,57 @@ class ConfAction extends Action {
     const { ui, room, user } = this.store;
 
     const peer = await skyway.initPeer().catch(console.error);
+    user.peerId = peer.id;
+
     const confRoom = peer.joinRoom(`${ui.roomType}/${ui.roomName}`, {
       mode: ui.roomType,
       stream: room.localStream,
     });
     this._onRoomJoin(confRoom);
 
-    user.peerId = peer.id;
     ui.isSettingOpen = false;
   }
 
   _onRoomJoin(confRoom) {
-    const { ui, room } = this.store;
+    const { ui, user, room } = this.store;
     ui.isRoomJoin = true;
 
-    confRoom.on('stream', stream => this._onRoomAddStream(stream));
+    confRoom.on('stream', stream => this._onRoomAddStream(stream, confRoom));
     confRoom.on('removeStream', stream => this._onRoomRemoveStream(stream));
-    confRoom.on('peerLeave', peerId => this._onRoomPeerLeave(peerId));
     confRoom.on('data', data => this._onRoomData(data));
 
     reaction(
       () => room.localStream,
       () => confRoom.replaceStream(room.localStream)
     );
+    reaction(
+      () => user.syncState,
+      state => {
+        confRoom.send({ type: 'sync', payload: state });
+      }
+    );
   }
-  _onRoomAddStream(stream) {
-    const { room } = this.store;
+  _onRoomAddStream(stream, confRoom) {
+    const { room, user } = this.store;
     room.remoteStreams.push(stream);
+
+    // return back state as welcome message
+    confRoom.send({ type: 'sync', payload: user.syncState });
   }
   _onRoomRemoveStream(stream) {
     const { room } = this.store;
     room.removeRemoteStream(stream);
   }
-  _onRoomPeerLeave(peerId) {
+  _onRoomData({ _src, data }) {
     const { room } = this.store;
-    room.removeRemoteStreamByPeerId(peerId);
-  }
-  _onRoomData(data) {
-    console.log('data', data);
+    const { type, payload } = data;
+    switch (type) {
+      case 'sync':
+        room.syncState.set(payload.peerId, payload);
+        break;
+      default:
+        throw new Error(`${type} is not defined as message type`);
+    }
   }
 }
 
