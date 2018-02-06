@@ -9,7 +9,7 @@ const MemberVideoRemotes = ({ room, action }) => (
       <div
         key={stream.id}
         className="MemberVideo"
-        onClick={() => action.onClickRemotePeer(stream.peerId)}
+        onClick={() => action.$update('room.pinnedPeerId', stream.peerId)}
       >
         <Video stream={stream} />
       </div>

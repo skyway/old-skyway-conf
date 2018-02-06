@@ -63,7 +63,7 @@ class ConfAction extends Action {
 
   // TODO: prevent dup join
   async onClickJoinRoom() {
-    const { ui, room } = this.store;
+    const { ui, room, user } = this.store;
 
     const peer = await skyway.initPeer().catch(console.error);
     const confRoom = peer.joinRoom(`${ui.roomType}/${ui.roomName}`, {
@@ -72,12 +72,8 @@ class ConfAction extends Action {
     });
     this._onRoomJoin(confRoom);
 
+    user.peerId = peer.id;
     ui.isSettingOpen = false;
-  }
-
-  onClickRemotePeer(peerId) {
-    const { room } = this.store;
-    room.pinnedPeerId = peerId;
   }
 
   _onRoomJoin(confRoom) {
