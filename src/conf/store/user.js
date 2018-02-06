@@ -1,8 +1,10 @@
 import { extendObservable, observable } from 'mobx';
 
-class DeviceStore {
+class UserStore {
   constructor() {
     extendObservable(this, {
+      peerId: '',
+      dispName: 'YOUR NAME',
       isVideoMuted: false,
       isAudioMuted: false,
       videoDeviceId: '',
@@ -13,4 +15,4 @@ class DeviceStore {
   }
 }
 
-export default DeviceStore;
+export default UserStore;

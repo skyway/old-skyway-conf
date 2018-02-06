@@ -6,7 +6,7 @@ import SettingVideo from '../component/setting-video';
 import DeviceSelector from '../component/device-selector';
 import NameEdit from '../component/name-edit';
 
-const Setting = ({ device, room, ui, action }) =>
+const Setting = ({ room, ui, user, action }) =>
   ui.isSettingOpen ? (
     <Popup>
       <div className="L-Setting">
@@ -14,9 +14,9 @@ const Setting = ({ device, room, ui, action }) =>
           <SettingVideo room={room} />
         </div>
 
-        <DeviceSelector device={device} action={action} />
+        <DeviceSelector user={user} action={action} />
 
-        <NameEdit ui={ui} action={action} />
+        <NameEdit user={user} action={action} />
 
         <div className="L-Setting_Finish">
           <button
@@ -33,4 +33,4 @@ const Setting = ({ device, room, ui, action }) =>
     </Popup>
   ) : null;
 
-export default inject('device', 'room', 'ui', 'action')(observer(Setting));
+export default inject('room', 'ui', 'user', 'action')(observer(Setting));

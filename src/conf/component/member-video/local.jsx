@@ -3,23 +3,21 @@ import { observer } from 'mobx-react';
 
 import Video from '../video';
 
-const MemberVideoLocal = ({ room, action }) => (
+const MemberVideoLocal = ({ room, user, action }) => (
   <div className="MemberVideo">
     <div className="MemberVideo_Info">
-      <div className="MemberVideo_Info_Name">{room.localName}</div>
+      <div className="MemberVideo_Info_Name">{user.dispName}</div>
       <button
-        onClick={() => action.onClickToggleVideoMute()}
+        onClick={() => action.$update('user.isVideoMuted', !user.isVideoMuted)}
       >
         x
       </button>
       <button
-        onClick={() => action.onClickToggleAudioMute()}
+        onClick={() => action.$update('user.isAudioMuted', !user.isAudioMuted)}
       >
         x
       </button>
-      <button
-        onClick={() => action.$update('ui.isSettingOpen', true)}
-      >
+      <button onClick={() => action.$update('ui.isSettingOpen', true)}>
         設定
       </button>
     </div>

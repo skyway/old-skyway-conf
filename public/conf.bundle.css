@@ -515,10 +515,29 @@ body {
   }
 
 .MemberVideo {
+  position: relative;
   height: 150px;
   /* fix this to scroll container */
   min-width: calc(150px / 9 * 16);
 }
+
+.MemberVideo_Info {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    background-color: rgba(0, 0, 0, .5);
+    font-size: .8rem;
+    padding: 0 5px;
+  }
+
+.MemberVideo_Info_Name {
+      flex: 1 1 auto;
+    }
 
 .NameEdit {
   display: flex;

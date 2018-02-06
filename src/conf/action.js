@@ -8,17 +8,17 @@ class ConfAction extends Action {
   constructor(store) {
     super(store);
 
-    const { device, room } = this.store;
+    const { user, room } = this.store;
 
     reaction(
-      () => [device.videoDeviceId, device.audioDeviceId],
+      () => [user.videoDeviceId, user.audioDeviceId],
       async ([videoDeviceId, audioDeviceId]) => {
         const stream = await webrtc
           .getUserMedia({ videoDeviceId, audioDeviceId })
           .catch(console.error);
 
-        device.isVideoMuted && webrtc.toggleMuteVideoTracks(stream, true);
-        device.isAudioMuted && webrtc.toggleMuteAudioTracks(stream, true);
+        user.isVideoMuted && webrtc.toggleMuteVideoTracks(stream, true);
+        user.isAudioMuted && webrtc.toggleMuteAudioTracks(stream, true);
 
         stream.peerId = 'myPeerId';
         room.localStream = stream;
@@ -26,11 +26,11 @@ class ConfAction extends Action {
     );
 
     reaction(
-      () => device.isVideoMuted,
+      () => user.isVideoMuted,
       isMuted => webrtc.toggleMuteVideoTracks(room.localStream, isMuted)
     );
     reaction(
-      () => device.isAudioMuted,
+      () => user.isAudioMuted,
       isMuted => webrtc.toggleMuteAudioTracks(room.localStream, isMuted)
     );
 
@@ -41,42 +41,24 @@ class ConfAction extends Action {
         .catch(console.error);
 
       runInAction(() => {
-        device.videoDevices = video;
-        device.audioDevices = audio;
+        user.videoDevices = video;
+        user.audioDevices = audio;
       });
     });
   }
 
   async onLoad() {
-    const { device } = this.store;
+    const { user } = this.store;
     const { video, audio } = await webrtc.getUserDevices().catch(console.error);
 
     runInAction(() => {
-      device.videoDevices = video;
-      device.audioDevices = audio;
+      user.videoDevices = video;
+      user.audioDevices = audio;
 
       // temp devices for first gUM()
-      device.videoDeviceId = video[0].deviceId;
-      device.audioDeviceId = audio[0].deviceId;
+      user.videoDeviceId = video[0].deviceId;
+      user.audioDeviceId = audio[0].deviceId;
     });
-  }
-
-  async onChangeVideoDevice(deviceId) {
-    const { device } = this.store;
-    device.videoDeviceId = deviceId;
-  }
-  async onChangeAudioDevice(deviceId) {
-    const { device } = this.store;
-    device.audioDeviceId = deviceId;
-  }
-
-  onClickToggleVideoMute() {
-    const { device } = this.store;
-    device.isVideoMuted = !device.isVideoMuted;
-  }
-  onClickToggleAudioMute() {
-    const { device } = this.store;
-    device.isAudioMuted = !device.isAudioMuted;
   }
 
   // TODO: prevent dup join
