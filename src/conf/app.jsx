@@ -4,6 +4,7 @@ import Screen from './container/screen';
 import MemberList from './container/member-list';
 import Setting from './container/setting';
 import Invite from './container/invite';
+import Chat from './container/chat';
 
 const ConfApp = () => (
   <React.Fragment>
@@ -13,7 +14,9 @@ const ConfApp = () => (
     </main>
     <Setting />
     <Invite />
-    <div className="L-RightSide">右メニュー</div>
+    <div className="L-RightSide">
+      <Chat />
+    </div>
   </React.Fragment>
 );
 

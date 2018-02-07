@@ -87,6 +87,19 @@ class ConfAction extends Action {
     ui.isSettingOpen = false;
   }
 
+  onChatEnterKeyDown() {
+    const { chat } = this.store;
+    if (chat.tempMsg.length === 0) {
+      return;
+    }
+
+    chat.addMessage({
+      text: chat.tempMsg,
+      thumb: '',
+    });
+    chat.tempMsg = '';
+  }
+
   _onRoomJoin(confRoom) {
     const { ui, user, room } = this.store;
     ui.isRoomJoin = true;

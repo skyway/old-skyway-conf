@@ -1,0 +1,19 @@
+.ChatBox {
+  height: calc(90vh - 150px); /* save for member-list grid */
+  width: 300px;
+  display: grid;
+  grid-template-rows: 1fr 40px;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #000;
+
+  &_Closer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #aaa;
+    width: 10px;
+  }
+}
