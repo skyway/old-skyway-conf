@@ -5,7 +5,7 @@ class UiStore {
     extendObservable(this, {
       roomType,
       roomName,
-      isSettingOpen: false, // TODO: debug
+      isSettingOpen: true,
       isInviteOpen: false,
       isChatOpen: true,
       isRoomJoin: false,

@@ -69,6 +69,9 @@ class ConfAction extends Action {
       user.videoDeviceId = video[0].deviceId;
       user.audioDeviceId = audio[0].deviceId;
     });
+
+    // TODO: debug
+    await this.onClickJoinRoom();
   }
 
   // TODO: prevent dup join
