@@ -14,7 +14,7 @@ const ChatBox = ({ chat, action }) => (
             <div>
               <img />
               <div>
-                <p>{msg.from}</p>
+                <p>{msg.name}</p>
                 <p>{msg.text}</p>
                 <div>{msg.timestamp}</div>
               </div>

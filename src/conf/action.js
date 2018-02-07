@@ -97,7 +97,7 @@ class ConfAction extends Action {
     }
 
     chat.addMessage({
-      from: user.peerId,
+      name: user.dispName,
       text: chat.tempMsg,
       thumb: '',
     });
