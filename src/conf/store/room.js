@@ -23,6 +23,11 @@ class RoomStore {
     });
   }
 
+  removeRemoteStreamByPeerId(peerId) {
+    const stream = this.remoteStreams.find(stream => stream.peerId === peerId);
+    stream && this.removeRemoteStream(stream);
+  }
+
   removeRemoteStream(stream) {
     runInAction(() => {
       this.remoteStreams.remove(stream);

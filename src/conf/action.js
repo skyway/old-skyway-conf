@@ -106,6 +106,7 @@ class ConfAction extends Action {
 
     confRoom.on('stream', stream => this._onRoomAddStream(stream, confRoom));
     confRoom.on('removeStream', stream => this._onRoomRemoveStream(stream));
+    confRoom.on('peerLeave', peerId => this._onRoomPeerLeave(peerId));
     confRoom.on('data', data => this._onRoomData(data));
 
     reaction(
@@ -127,6 +128,10 @@ class ConfAction extends Action {
   _onRoomRemoveStream(stream) {
     const { room } = this.store;
     room.removeRemoteStream(stream);
+  }
+  _onRoomPeerLeave(peerId) {
+    const { room } = this.store;
+    room.removeRemoteStreamByPeerId(peerId);
   }
   _onRoomData({ _src, data }) {
     const { room } = this.store;
