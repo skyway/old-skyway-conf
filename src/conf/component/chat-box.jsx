@@ -1,28 +1,21 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 
+import ChatMessage from './chat-message';
+
 const ChatBox = ({ chat, action }) => (
   <div className="ChatBox">
     <div
       className="ChatBox_Closer"
       onClick={() => action.$update('ui.isChatOpen', false)}
     />
-    <div className="ChatBox_MessageList">
-      <ul>
-        {chat.messages.map(msg => (
-          <li key={msg.id}>
-            <div>
-              <img />
-              <div>
-                <p>{msg.name}</p>
-                <p>{msg.text}</p>
-                <div>{msg.timestamp}</div>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ul className="ChatBox_MessageList">
+      {chat.messages.map(msg => (
+        <li key={msg.id}>
+          <ChatMessage msg={msg} />
+        </li>
+      ))}
+    </ul>
     <div className="ChatBox_Input">
       <input
         type="text"
