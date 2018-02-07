@@ -8,7 +8,20 @@ const ChatBox = ({ chat, action }) => (
       onClick={() => action.$update('ui.isChatOpen', false)}
     />
     <div className="ChatBox_MessageList">
-      <ul>{chat.messages.map(msg => <li key={msg.id}>{msg.text}</li>)}</ul>
+      <ul>
+        {chat.messages.map(msg => (
+          <li key={msg.id}>
+            <div>
+              <img />
+              <div>
+                <p>{msg.from}</p>
+                <p>{msg.text}</p>
+                <div>{msg.timestamp}</div>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
     <div className="ChatBox_Input">
       <input

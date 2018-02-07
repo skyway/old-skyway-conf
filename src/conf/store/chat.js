@@ -10,10 +10,10 @@ class ChatStore {
     });
   }
 
-  addMessage({ text, thumb }) {
+  addMessage({ from, text, thumb }) {
     const id = util.randomId();
     const timestamp = Date.now();
-    this.messages.push({ text, thumb, timestamp, id });
+    this.messages.push({ from, text, thumb, timestamp, id });
   }
 }
 

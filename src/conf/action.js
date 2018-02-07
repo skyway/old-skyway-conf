@@ -88,12 +88,13 @@ class ConfAction extends Action {
   }
 
   onChatEnterKeyDown() {
-    const { chat } = this.store;
+    const { chat, user } = this.store;
     if (chat.tempMsg.length === 0) {
       return;
     }
 
     chat.addMessage({
+      from: user.peerId,
       text: chat.tempMsg,
       thumb: '',
     });
