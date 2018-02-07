@@ -5,7 +5,7 @@ import Video from '../video';
 
 const MemberVideoRemotes = ({ room, action }) => (
   <React.Fragment>
-    {room.remoteStreams.slice().map(stream => {
+    {room.remoteStreams.map(stream => {
       const syncState = room.syncState.get(stream.peerId);
       return (
         <div
