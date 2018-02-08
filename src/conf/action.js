@@ -1,4 +1,4 @@
-import { reaction, runInAction } from 'mobx';
+import { reaction } from 'mobx';
 import Mousetrap from 'mousetrap';
 
 import Action from '../shared/action';
@@ -21,7 +21,7 @@ class ConfAction extends Action {
         user.isVideoMuted && webrtc.toggleMuteVideoTracks(stream, true);
         user.isAudioMuted && webrtc.toggleMuteAudioTracks(stream, true);
 
-        stream.peerId = 'myPeerId';
+        stream.peerId = user.peerId;
         room.localStream = stream;
       }
     );
@@ -35,16 +35,10 @@ class ConfAction extends Action {
       isMuted => webrtc.toggleMuteAudioTracks(room.localStream, isMuted)
     );
 
-    // TODO: 使ってたデバイスがなくなったら
     navigator.mediaDevices.addEventListener('devicechange', async () => {
-      const { video, audio } = await webrtc
-        .getUserDevices()
-        .catch(console.error);
+      const devices = await webrtc.getUserDevices().catch(console.error);
 
-      runInAction(() => {
-        user.videoDevices = video;
-        user.audioDevices = audio;
-      });
+      user.updateDevices(devices);
     });
 
     Mousetrap.bind(['command+e', 'ctrl+e'], () => {
@@ -59,16 +53,9 @@ class ConfAction extends Action {
 
   async onLoad() {
     const { user } = this.store;
-    const { video, audio } = await webrtc.getUserDevices().catch(console.error);
+    const devices = await webrtc.getUserDevices().catch(console.error);
 
-    runInAction(() => {
-      user.videoDevices = video;
-      user.audioDevices = audio;
-
-      // temp devices for first gUM()
-      user.videoDeviceId = video[0].deviceId;
-      user.audioDeviceId = audio[0].deviceId;
-    });
+    user.updateDevices(devices);
   }
 
   async onClickJoinRoom() {
