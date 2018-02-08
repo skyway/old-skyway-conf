@@ -24,18 +24,21 @@ class RoomStore {
   }
 
   removeRemoteStreamByPeerId(peerId) {
-    const stream = this.remoteStreams.find(stream => stream.peerId === peerId);
-    stream && this.removeRemoteStream(stream);
-  }
-
-  removeRemoteStream(stream) {
     runInAction(() => {
-      this.remoteStreams.remove(stream);
-      this.syncState.delete(stream.peerId);
-      if (this.pinnedPeerId === stream.peerId) {
+      const stream = this.remoteStreams.find(
+        stream => stream.peerId === peerId
+      );
+      stream && this.removeRemoteStream(stream);
+
+      this.syncState.delete(peerId);
+      if (this.pinnedPeerId === peerId) {
         this.pinnedPeerId = '';
       }
     });
+  }
+
+  removeRemoteStream(stream) {
+    this.remoteStreams.remove(stream);
   }
 }
 
