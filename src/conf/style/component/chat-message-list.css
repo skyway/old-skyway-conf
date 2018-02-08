@@ -1,16 +1,41 @@
 .ChatMessageList {
   padding: 0;
+  margin: 0 0 20px;
   overflow-y: auto;
 
   &_Item {
     display: flex;
     align-items: flex-start;
+    margin-bottom: 10px;
 
     &_Thumb {
-      width: 80px;
+      min-width: 80px;
+      height: 45px;
       margin-right: 10px;
       background-color: #000;
       text-align: center;
+    }
+
+    &_Content {
+      &_Head {
+        margin-bottom: 5px;
+      }
+
+      &_HeadName {
+        margin-right: 10px;
+        color: #aaa;
+        font-size: .8rem;
+        font-weight: bold;
+      }
+      &_HeadDate {
+        color: #aaa;
+        font-size: .7rem;
+      }
+
+      &_Body {
+        font-size: .9rem;
+        word-break: break-all;
+      }
     }
   }
 }

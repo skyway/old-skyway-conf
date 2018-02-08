@@ -546,20 +546,44 @@ body {
 
 .ChatMessageList {
   padding: 0;
+  margin: 0 0 20px;
   overflow-y: auto;
 }
 
 .ChatMessageList_Item {
     display: flex;
     align-items: flex-start;
+    margin-bottom: 10px;
   }
 
 .ChatMessageList_Item_Thumb {
-      width: 80px;
+      min-width: 80px;
+      height: 45px;
       margin-right: 10px;
       background-color: #000;
       text-align: center;
     }
+
+.ChatMessageList_Item_Content_Head {
+        margin-bottom: 5px;
+      }
+
+.ChatMessageList_Item_Content_HeadName {
+        margin-right: 10px;
+        color: #aaa;
+        font-size: .8rem;
+        font-weight: bold;
+      }
+
+.ChatMessageList_Item_Content_HeadDate {
+        color: #aaa;
+        font-size: .7rem;
+      }
+
+.ChatMessageList_Item_Content_Body {
+        font-size: .9rem;
+        word-break: break-all;
+      }
 
 .DeviceSelector {
   width: 80%;

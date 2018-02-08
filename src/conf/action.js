@@ -69,9 +69,6 @@ class ConfAction extends Action {
       user.videoDeviceId = video[0].deviceId;
       user.audioDeviceId = audio[0].deviceId;
     });
-
-    // TODO: debug
-    await this.onClickJoinRoom();
   }
 
   // TODO: prevent dup join
@@ -90,6 +87,7 @@ class ConfAction extends Action {
     ui.isSettingOpen = false;
   }
 
+  // TODO: wait until done
   async onChatEnterKeyDown() {
     const { chat, user, room } = this.store;
     if (chat.bufferText.length === 0) {

@@ -7,7 +7,7 @@ class UiStore {
       roomName,
       isSettingOpen: true,
       isInviteOpen: false,
-      isChatOpen: true,
+      isChatOpen: false,
       isRoomJoin: false,
       hasError: null,
       get confUrl() {
