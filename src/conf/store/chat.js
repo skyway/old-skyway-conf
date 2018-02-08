@@ -9,15 +9,13 @@ class ChatStore {
     });
   }
 
-  addMessage(message, dispName) {
-    const date = new Date(message.timestamp);
-    const dispDate = `${date.getHours()}:${date.getMinutes()}`;
+  addMessage({ text, thumb, timestamp, peerId }, dispName) {
     this.messages.push({
-      text: message.text,
-      thumb: message.thumb,
-      id: `${message.peerId}-${message.timestamp}`,
+      id: `${peerId}-${timestamp}`,
+      text,
+      thumb,
       dispName,
-      dispDate,
+      dispDate: new Date(timestamp).toLocaleTimeString().slice(0, 5),
     });
   }
 }
