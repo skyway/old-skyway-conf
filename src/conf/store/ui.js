@@ -9,7 +9,6 @@ class UiStore {
       isInviteOpen: false,
       isChatOpen: false,
       isRoomJoin: false,
-      hasError: null,
       get confUrl() {
         const hash = `#!/${this.roomType}/${this.roomName}`;
         return `${location.origin}${location.pathname}${hash}`;
