@@ -41,11 +41,11 @@ class ScreenVideo extends React.Component {
 
   componentDidMount() {
     this._handleResize();
-    window.addEventListener('resize', this._handleResize, false);
+    window.addEventListener('resize', this._handleResize, { passive: true });
   }
 
   componentDidUnmout() {
-    window.removeEventListener('resize', this._handleResize, false);
+    window.removeEventListener('resize', this._handleResize, { passive: true });
   }
 }
 
