@@ -540,6 +540,18 @@ body {
     width: 10px;
   }
 
+.ChatBox_Input {
+    width: 100%;
+  }
+
+.ChatMessageList {
+  overflow-y: auto;
+}
+
+.ChatMessageList_Item {
+    display: flex;
+  }
+
 .DeviceSelector {
   width: 80%;
   margin: 0 auto;

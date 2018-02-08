@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 
-import ChatMessage from './chat-message';
+import ChatMessageList from './chat-message-list';
 
 const ChatBox = ({ chat, action }) => (
   <div className="ChatBox">
@@ -9,21 +9,14 @@ const ChatBox = ({ chat, action }) => (
       className="ChatBox_Closer"
       onClick={() => action.$update('ui.isChatOpen', false)}
     />
-    <ul className="ChatBox_MessageList">
-      {chat.messages.map(msg => (
-        <li key={msg.id}>
-          <ChatMessage msg={msg} />
-        </li>
-      ))}
-    </ul>
-    <div className="ChatBox_Input">
-      <input
-        type="text"
-        value={chat.bufferText}
-        onChange={ev => action.$update('chat.bufferText', ev.target.value)}
-        onKeyDown={ev => ev.keyCode === 13 && action.onChatEnterKeyDown()}
-      />
-    </div>
+    <ChatMessageList chat={chat} />
+    <input
+      className="ChatBox_Input"
+      type="text"
+      value={chat.bufferText}
+      onChange={ev => action.$update('chat.bufferText', ev.target.value)}
+      onKeyDown={ev => ev.keyCode === 13 && action.onChatEnterKeyDown()}
+    />
   </div>
 );
 

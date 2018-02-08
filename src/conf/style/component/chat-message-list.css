@@ -1,0 +1,7 @@
+.ChatMessageList {
+  overflow-y: auto;
+
+  &_Item {
+    display: flex;
+  }
+}

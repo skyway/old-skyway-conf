@@ -16,4 +16,8 @@
     background-color: #aaa;
     width: 10px;
   }
+
+  &_Input {
+    width: 100%;
+  }
 }
