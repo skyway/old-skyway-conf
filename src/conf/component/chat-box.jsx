@@ -19,8 +19,8 @@ const ChatBox = ({ chat, action }) => (
     <div className="ChatBox_Input">
       <input
         type="text"
-        value={chat.tempMsg}
-        onChange={ev => action.$update('chat.tempMsg', ev.target.value)}
+        value={chat.bufferText}
+        onChange={ev => action.$update('chat.bufferText', ev.target.value)}
         onKeyDown={ev => ev.keyCode === 13 && action.onChatEnterKeyDown()}
       />
     </div>

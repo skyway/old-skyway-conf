@@ -5,9 +5,9 @@ const ChatMessage = ({ msg }) => (
   <div className="ChatMessage">
     <img src={msg.thumb} />
     <div>
-      <p>{msg.name}</p>
+      <p>{msg.dispName}</p>
       <p>{msg.text}</p>
-      <div>{msg.timestamp}</div>
+      <div>{msg.dispDate}</div>
     </div>
   </div>
 );

@@ -1,19 +1,24 @@
 import { extendObservable, observable } from 'mobx';
 
-import util from '../../shared/util';
-
 class ChatStore {
   constructor() {
     extendObservable(this, {
+      bufferText: '',
+      lastMessage: observable.shallowObject({}),
       messages: observable.shallowArray([]),
-      tempMsg: '',
     });
   }
 
-  addMessage(message) {
-    const id = util.randomId();
-    const timestamp = Date.now();
-    this.messages.push(Object.assign({ id, timestamp }, message));
+  addMessage(message, dispName) {
+    const date = new Date(message.timestamp);
+    const dispDate = `${date.getHours()}:${date.getMinutes()}`;
+    this.messages.push({
+      text: message.text,
+      thumb: message.thumb,
+      id: `${message.peerId}-${message.timestamp}`,
+      dispName,
+      dispDate,
+    });
   }
 }
 

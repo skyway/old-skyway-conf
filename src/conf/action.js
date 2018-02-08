@@ -92,20 +92,25 @@ class ConfAction extends Action {
 
   onChatEnterKeyDown() {
     const { chat, user } = this.store;
-    if (chat.tempMsg.length === 0) {
+    if (chat.bufferText.length === 0) {
       return;
     }
 
-    chat.addMessage({
-      name: user.dispName,
-      text: chat.tempMsg,
-      thumb: '',
-    });
-    chat.tempMsg = '';
+    const payload = {
+      peerId: user.peerId,
+      text: chat.bufferText,
+      thumb: '', // TODO: capture from stream
+      timestamp: Date.now(),
+    };
+    // sync local
+    chat.addMessage(payload, user.dispName);
+    // this triggers sync remotes
+    chat.lastMessage = payload;
+    chat.bufferText = '';
   }
 
   _onRoomJoin(confRoom) {
-    const { ui, user, room } = this.store;
+    const { ui, user, room, chat } = this.store;
     ui.isRoomJoin = true;
 
     confRoom.on('stream', stream => this._onRoomAddStream(stream, confRoom));
@@ -120,6 +125,10 @@ class ConfAction extends Action {
     reaction(
       () => user.syncState,
       state => confRoom.send({ type: 'sync', payload: state })
+    );
+    reaction(
+      () => chat.lastMessage,
+      msg => confRoom.send({ type: 'chat', payload: msg })
     );
   }
   _onRoomAddStream(stream, confRoom) {
@@ -138,12 +147,19 @@ class ConfAction extends Action {
     room.removeRemoteStreamByPeerId(peerId);
   }
   _onRoomData({ _src, data }) {
-    const { room } = this.store;
+    const { room, chat } = this.store;
     const { type, payload } = data;
     switch (type) {
-      case 'sync':
+      case 'sync': {
         room.syncState.set(payload.peerId, payload);
         break;
+      }
+      case 'chat': {
+        const syncState = room.syncState.get(payload.peerId);
+        const dispName = syncState.dispName;
+        chat.addMessage(payload, dispName);
+        break;
+      }
       default:
         throw new Error(`${type} is not defined as message type`);
     }
