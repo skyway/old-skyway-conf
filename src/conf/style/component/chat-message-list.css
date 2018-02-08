@@ -1,7 +1,16 @@
 .ChatMessageList {
+  padding: 0;
   overflow-y: auto;
 
   &_Item {
     display: flex;
+    align-items: flex-start;
+
+    &_Thumb {
+      width: 80px;
+      margin-right: 10px;
+      background-color: #000;
+      text-align: center;
+    }
   }
 }

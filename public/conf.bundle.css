@@ -545,12 +545,21 @@ body {
   }
 
 .ChatMessageList {
+  padding: 0;
   overflow-y: auto;
 }
 
 .ChatMessageList_Item {
     display: flex;
+    align-items: flex-start;
   }
+
+.ChatMessageList_Item_Thumb {
+      width: 80px;
+      margin-right: 10px;
+      background-color: #000;
+      text-align: center;
+    }
 
 .DeviceSelector {
   width: 80%;

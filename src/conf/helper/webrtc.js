@@ -31,9 +31,44 @@ function getUserMedia({ videoDeviceId, audioDeviceId }) {
   });
 }
 
+function snapVideoStream(stream, mimeType = 'image/webp', qualityArgument = 1) {
+  let $video = document.createElement('video');
+  $video.srcObject = stream;
+
+  return new Promise(resolve => {
+    // need to wait this to get first frame image
+    $video.addEventListener(
+      'loadeddata',
+      () => {
+        let $canvas = document.createElement('canvas');
+        $canvas.width = $video.videoWidth;
+        $canvas.height = $video.videoHeight;
+
+        // copy same size
+        const ctx = $canvas.getContext('2d');
+        ctx.drawImage($video, 0, 0);
+
+        // then compress
+        $canvas.toBlob(
+          blob => {
+            $video.srcObject = null;
+            $video = $canvas = null;
+
+            resolve(blob);
+          },
+          mimeType,
+          qualityArgument
+        );
+      },
+      { once: true }
+    );
+  });
+}
+
 export default {
   toggleMuteVideoTracks,
   toggleMuteAudioTracks,
   getUserDevices,
   getUserMedia,
+  snapVideoStream,
 };

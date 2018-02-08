@@ -9,13 +9,18 @@ class ChatStore {
     });
   }
 
-  addMessage({ text, thumb, timestamp, peerId }, dispName) {
+  addMessage({ text, blob, timestamp, peerId }, dispName) {
+    // from remotes
+    if (blob instanceof ArrayBuffer) {
+      blob = new Blob([new Uint8Array(blob)]);
+    }
+
     this.messages.push({
       id: `${peerId}-${timestamp}`,
       text,
-      thumb,
-      dispName,
+      thumb: URL.createObjectURL(blob),
       dispDate: new Date(timestamp).toLocaleTimeString().slice(0, 5),
+      dispName,
     });
   }
 }

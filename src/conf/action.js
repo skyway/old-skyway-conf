@@ -90,16 +90,22 @@ class ConfAction extends Action {
     ui.isSettingOpen = false;
   }
 
-  onChatEnterKeyDown() {
-    const { chat, user } = this.store;
+  async onChatEnterKeyDown() {
+    const { chat, user, room } = this.store;
     if (chat.bufferText.length === 0) {
       return;
     }
 
+    const blob = await webrtc.snapVideoStream(
+      room.localStream,
+      'image/webp',
+      0.5
+    );
+
     const payload = {
       peerId: user.peerId,
       text: chat.bufferText,
-      thumb: '', // TODO: capture from stream
+      blob,
       timestamp: Date.now(),
     };
     // sync local
@@ -156,8 +162,7 @@ class ConfAction extends Action {
       }
       case 'chat': {
         const syncState = room.syncState.get(payload.peerId);
-        const dispName = syncState.dispName;
-        chat.addMessage(payload, dispName);
+        chat.addMessage(payload, syncState.dispName);
         break;
       }
       default:
