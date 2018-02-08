@@ -19,10 +19,10 @@ const Setting = ({ room, ui, user, action }) => (
 
       <div className="L-Setting_Finish">
         <button
-          onClick={() => {
+          onClick={ev => {
             ui.isRoomJoin
               ? action.$update('ui.isSettingOpen', false)
-              : action.onClickJoinRoom();
+              : (ev.target.disabled = true) && action.onClickJoinRoom();
           }}
         >
           設定完了

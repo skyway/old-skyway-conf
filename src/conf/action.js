@@ -71,7 +71,6 @@ class ConfAction extends Action {
     });
   }
 
-  // TODO: prevent dup join
   async onClickJoinRoom() {
     const { ui, room, user } = this.store;
 
@@ -87,7 +86,6 @@ class ConfAction extends Action {
     ui.isSettingOpen = false;
   }
 
-  // TODO: wait until done
   async onChatEnterKeyDown() {
     const { chat, user, room } = this.store;
     if (chat.bufferText.length === 0) {
