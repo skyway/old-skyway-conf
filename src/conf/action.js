@@ -14,14 +14,19 @@ class ConfAction extends Action {
     reaction(
       () => [user.videoDeviceId, user.audioDeviceId],
       async ([videoDeviceId, audioDeviceId]) => {
+        // stop previous stream if exist
+        if (room.localStream instanceof MediaStream) {
+          webrtc.stopStream(room.localStream);
+        }
+
         const stream = await webrtc
           .getUserMedia({ videoDeviceId, audioDeviceId })
           .catch(console.error);
 
+        stream.peerId = user.peerId;
         user.isVideoMuted && webrtc.toggleMuteVideoTracks(stream, true);
         user.isAudioMuted && webrtc.toggleMuteAudioTracks(stream, true);
 
-        stream.peerId = user.peerId;
         room.localStream = stream;
       }
     );
@@ -37,7 +42,6 @@ class ConfAction extends Action {
 
     navigator.mediaDevices.addEventListener('devicechange', async () => {
       const devices = await webrtc.getUserDevices().catch(console.error);
-
       user.updateDevices(devices);
     });
 

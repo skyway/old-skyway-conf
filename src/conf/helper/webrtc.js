@@ -5,6 +5,10 @@ function toggleMuteAudioTracks(stream, isMuted) {
   stream.getAudioTracks().forEach(track => (track.enabled = !isMuted));
 }
 
+function stopStream(stream) {
+  stream.getTracks().forEach(track => track.stop());
+}
+
 async function getUserDevices() {
   const userDevices = {
     video: [],
@@ -68,6 +72,7 @@ function snapVideoStream(stream, mimeType = 'image/webp', qualityArgument = 1) {
 export default {
   toggleMuteVideoTracks,
   toggleMuteAudioTracks,
+  stopStream,
   getUserDevices,
   getUserMedia,
   snapVideoStream,
