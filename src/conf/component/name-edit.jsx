@@ -7,6 +7,7 @@ const NameEdit = ({ user, action }) => (
     <input
       className="NameEdit_Input"
       type="text"
+      maxLength={10}
       value={user.dispName}
       onChange={ev => action.$update('user.dispName', ev.target.value)}
     />
