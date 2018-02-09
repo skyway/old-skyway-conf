@@ -35,11 +35,10 @@ function getUserMedia({ videoDeviceId, audioDeviceId }) {
   });
 }
 
-function snapVideoStream(stream, mimeType = 'image/webp', qualityArgument = 1) {
-  let $video = document.createElement('video');
-  $video.srcObject = stream;
-
+function snapVideoStream(stream, mimeType = 'image/jpeg', qualityArgument = 1) {
   return new Promise(resolve => {
+    let $video = document.createElement('video');
+
     // need to wait this to get first frame image
     $video.addEventListener(
       'loadeddata',
@@ -55,6 +54,7 @@ function snapVideoStream(stream, mimeType = 'image/webp', qualityArgument = 1) {
         // then compress
         $canvas.toBlob(
           blob => {
+            $video.pause();
             $video.srcObject = null;
             $video = $canvas = null;
 
@@ -66,6 +66,10 @@ function snapVideoStream(stream, mimeType = 'image/webp', qualityArgument = 1) {
       },
       { once: true }
     );
+
+    // Firefox can't load media without this
+    $video.autoplay = true;
+    $video.srcObject = stream;
   });
 }
 
