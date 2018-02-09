@@ -1,4 +1,4 @@
 @import "normalize.css";
-@import "./style/global";
+@import "../shared/style/global";
 @import "./style/layout";
 @import "./style/component/*";

@@ -454,14 +454,16 @@ html {
   background-color: #005ece;
   color: #039be5;
   font-size: 18px;
+  font-family: sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
 body {
   height: 100vh;
   overflow: hidden;
-  margin: 0;
 }
+
+/* we are using material-icons */
 
 .material-icons.-x2 { font-size: 48px; }
 
