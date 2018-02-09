@@ -13,6 +13,7 @@ const ChatBox = ({ chat, action }) => (
     <input
       className="ChatBox_Input"
       type="text"
+      placeholder="Type messages here..."
       value={chat.bufferText}
       onChange={ev => action.$update('chat.bufferText', ev.target.value)}
       onKeyDown={ev => ev.keyCode === 13 && action.onChatEnterKeyDown()}

@@ -7,7 +7,9 @@ const Chat = ({ ui, chat, action }) =>
   ui.isChatOpen ? (
     <ChatBox chat={chat} action={action} />
   ) : (
-    <button onClick={() => action.$update('ui.isChatOpen', true)}>Chat</button>
+    <button onClick={() => action.$update('ui.isChatOpen', true)}>
+      <i className="material-icons">chat</i>
+    </button>
   );
 
 export default inject('ui', 'chat', 'action')(observer(Chat));
