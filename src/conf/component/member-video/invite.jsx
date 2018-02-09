@@ -3,11 +3,12 @@ import { observer } from 'mobx-react';
 
 const MemberVideoInvite = ({ action }) => (
   <div className="MemberVideo">
-    <div className="MemberVideo_Invite">
-      <button onClick={() => action.$update('ui.isInviteOpen', true)}>
-        Invite people!
-      </button>
-    </div>
+    <a
+      className="MemberVideo_Invite"
+      onClick={() => action.$update('ui.isInviteOpen', true)}
+    >
+      <i className="material-icons -x2">person_add</i>
+    </a>
   </div>
 );
 

@@ -463,6 +463,8 @@ body {
   margin: 0;
 }
 
+.material-icons.-x2 { font-size: 48px; }
+
 .L-Main {
   display: grid;
   grid-template-rows: calc(100vh - 150px) 150px;
@@ -640,6 +642,7 @@ body {
     align-items: center;
     justify-content: center;
     background-color: #000;
+    color: #fff;
   }
 
 /* sizes should be synced with device-selector.css */
