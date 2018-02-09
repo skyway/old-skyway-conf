@@ -487,11 +487,8 @@ body {
   align-items: flex-end;
 }
 
-.Copyright_Text {
-    color: #fff;
-    font-size: .6rem;
-    margin-left: 5px;
-    margin-bottom: 2px;
+.Copyright_Image {
+    height: 40px;
   }
 
 .Desc {
@@ -534,7 +531,7 @@ body {
 
 .FormMain_NameInput_Tip {
       position: absolute;
-      top: -50px;
+      top: -70px;
       left: 100px;
       background-color: #fff;
       color: #000;

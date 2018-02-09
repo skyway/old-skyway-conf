@@ -13,11 +13,18 @@ const MemberVideoRemotes = ({ room, action }) => (
           className="MemberVideo"
           onClick={() => action.$update('room.pinnedPeerId', stream.peerId)}
         >
+          {room.pinnedPeerId === stream.peerId && (
+            <div className="MemberVideo_Pinned" />
+          )}
           {syncState ? (
             <div className="MemberVideo_Info">
               <div className="MemberVideo_Info_Name">{syncState.dispName}</div>
-              <div>{syncState.isVideoMuted ? 'カメラミュート' : ''}</div>
-              <div>{syncState.isAudioMuted ? 'マイクミュート' : ''}</div>
+              {syncState.isVideoMuted && (
+                <i className="material-icons">videocam_off</i>
+              )}
+              {syncState.isAudioMuted && (
+                <i className="material-icons">mic_off</i>
+              )}
             </div>
           ) : null}
           <Video stream={stream} />

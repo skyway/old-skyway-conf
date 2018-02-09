@@ -1,3 +1,4 @@
+/* sizes should be synced with name-edit.css */
 .DeviceSelector {
   width: 80%;
   margin: 0 auto;
@@ -8,9 +9,14 @@
     margin: 10px auto;
   }
 
+  &_Label {
+    width: 60px;
+    text-align: right;
+  }
+
   &_Select {
-    width: 250px;
     height: 30px;
+    width: 300px;
     margin: 0 20px;
   }
 }

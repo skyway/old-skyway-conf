@@ -60,6 +60,8 @@ class ConfAction extends Action {
     const devices = await webrtc.getUserDevices().catch(console.error);
 
     user.updateDevices(devices);
+
+    this.onClickJoinRoom();
   }
 
   async onClickJoinRoom() {

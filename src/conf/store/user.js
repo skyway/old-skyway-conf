@@ -4,7 +4,7 @@ class UserStore {
   constructor() {
     extendObservable(this, {
       peerId: 'MY_PEER_ID',
-      dispName: 'YOUR NAME',
+      dispName: 'YOUR_NAME',
       isVideoMuted: false,
       isAudioMuted: false,
 
@@ -35,8 +35,8 @@ class UserStore {
 
   /**
    * Set default device ids if
+   * - getting devices for the 1st time
    * - using device was ejected
-   * - for the 1st time to get devices
    *
    */
   _setDefaultDeviceIfNeeded() {

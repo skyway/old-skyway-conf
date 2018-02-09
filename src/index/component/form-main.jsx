@@ -15,7 +15,7 @@ const FormMain = ({ form, ui, action }) => (
         className="FormMain_NameInput_Tip"
         data-visible={ui.isFocusInput && form.isNameValid === false}
       >
-        半角英数字4-32文字のルーム名を入力してください。
+        Please type using half-width characters, more than 4 but less than 32.
       </div>
       <div className="FormMain_NameInput_Placeholder">
         <span>conf.webrtc.ecl.ntt.com/#!/</span>
@@ -37,7 +37,7 @@ const FormMain = ({ form, ui, action }) => (
       className="FormMain_Button"
       disabled={form.isNameValid === false}
     >
-      ルーム作成
+      Create room
     </button>
   </form>
 );
