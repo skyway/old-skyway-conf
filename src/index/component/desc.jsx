@@ -2,9 +2,8 @@ import React from 'react';
 
 const Desc = () => (
   <div className="Desc">
-    <p className="Desc_Text">インストールも登録も不要</p>
-    <p className="Desc_Text">ルームを作成してリンクを共有するだけ</p>
-    <img src="/images/index/icon-plane.png" />
+    <p className="Desc_Text">No registration or installs</p>
+    <p className="Desc_Text">Create a room and share the link</p>
   </div>
 );
 

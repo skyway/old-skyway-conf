@@ -2,8 +2,13 @@ import React from 'react';
 
 const Copyright = () => (
   <footer className="Copyright">
-    <img src="/images/index/icon-skyway.png" alt="SkyWay" />
-    <p className="Copyright_Text">A Simple and Flexible WebRTC Platform</p>
+    <a href="https://webrtc.ecl.ntt.com/">
+      <img
+        className="Copyright_Image"
+        src="/images/index/icon-skyway.svg"
+        alt="SkyWay"
+      />
+    </a>
   </footer>
 );
 
