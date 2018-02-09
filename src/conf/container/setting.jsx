@@ -25,7 +25,7 @@ const Setting = ({ room, ui, user, action }) => (
               : (ev.target.disabled = true) && action.onClickJoinRoom();
           }}
         >
-          設定完了
+          OK
         </button>
       </div>
     </div>

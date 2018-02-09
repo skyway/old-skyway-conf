@@ -10,15 +10,15 @@ const MemberVideoLocal = ({ room, user, action }) => (
       <button
         onClick={() => action.$update('user.isVideoMuted', !user.isVideoMuted)}
       >
-        カメラミュート{user.isVideoMuted ? '解除' : ''}
+        Cam {user.isVideoMuted ? 'unmute' : 'mute'}
       </button>
       <button
         onClick={() => action.$update('user.isAudioMuted', !user.isAudioMuted)}
       >
-        マイクミュート{user.isAudioMuted ? '解除' : ''}
+        Mic {user.isAudioMuted ? 'unmute' : 'mute'}
       </button>
       <button onClick={() => action.$update('ui.isSettingOpen', true)}>
-        設定
+        Settings
       </button>
     </div>
     <Video stream={room.localStream} muted />
