@@ -10,15 +10,23 @@ const MemberVideoLocal = ({ room, user, action }) => (
       <button
         onClick={() => action.$update('user.isVideoMuted', !user.isVideoMuted)}
       >
-        Cam {user.isVideoMuted ? 'unmute' : 'mute'}
+        {user.isVideoMuted ? (
+          <i className="material-icons">videocam</i>
+        ) : (
+          <i className="material-icons">videocam_off</i>
+        )}
       </button>
       <button
         onClick={() => action.$update('user.isAudioMuted', !user.isAudioMuted)}
       >
-        Mic {user.isAudioMuted ? 'unmute' : 'mute'}
+        {user.isAudioMuted ? (
+          <i className="material-icons">mic</i>
+        ) : (
+          <i className="material-icons">mic_off</i>
+        )}
       </button>
       <button onClick={() => action.$update('ui.isSettingOpen', true)}>
-        Settings
+        <i className="material-icons">settings</i>
       </button>
     </div>
     <Video stream={room.localStream} muted />

@@ -12,10 +12,11 @@
     z-index: 1;
     display: flex;
     align-items: center;
+    padding: 0 5px;
+    min-height: 30px;
     color: #fff;
     background-color: rgba(0, 0, 0, .5);
     font-size: .8rem;
-    padding: 0 5px;
 
     &_Name {
       flex: 1 1 auto;

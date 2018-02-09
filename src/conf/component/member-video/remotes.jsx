@@ -16,8 +16,12 @@ const MemberVideoRemotes = ({ room, action }) => (
           {syncState ? (
             <div className="MemberVideo_Info">
               <div className="MemberVideo_Info_Name">{syncState.dispName}</div>
-              <div>{syncState.isVideoMuted ? 'Cam mute' : ''}</div>
-              <div>{syncState.isAudioMuted ? 'Mic mute' : ''}</div>
+              {syncState.isVideoMuted && (
+                <i className="material-icons">videocam_off</i>
+              )}
+              {syncState.isAudioMuted && (
+                <i className="material-icons">mic_off</i>
+              )}
             </div>
           ) : null}
           <Video stream={stream} />
