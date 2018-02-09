@@ -585,6 +585,8 @@ body {
         word-break: break-all;
       }
 
+/* sizes should be synced with name-edit.css */
+
 .DeviceSelector {
   width: 80%;
   margin: 0 auto;
@@ -596,9 +598,14 @@ body {
     margin: 10px auto;
   }
 
+.DeviceSelector_Label {
+    width: 60px;
+    text-align: right;
+  }
+
 .DeviceSelector_Select {
-    width: 250px;
     height: 30px;
+    width: 300px;
     margin: 0 20px;
   }
 
@@ -635,6 +642,8 @@ body {
     background-color: #000;
   }
 
+/* sizes should be synced with device-selector.css */
+
 .NameEdit {
   display: flex;
   align-items: center;
@@ -642,10 +651,17 @@ body {
   margin: 10px auto;
 }
 
+.NameEdit_Label {
+    width: 60px;
+    text-align: right;
+  }
+
 .NameEdit_Input {
     height: 30px;
-    width: 250px;
-    margin-left: 20px;
+    width: 300px;
+    margin: 0 20px;
+    box-sizing: border-box;
+    text-indent: 5px;
   }
 
 .Popup {

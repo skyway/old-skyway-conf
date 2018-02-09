@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 const DeviceSelector = ({ user, action }) => (
   <div className="DeviceSelector">
     <div className="DeviceSelector_Row">
-      <div>Cam</div>
+      <div className="DeviceSelector_Label">Cam</div>
       <select
         className="DeviceSelector_Select"
         value={user.videoDeviceId}
@@ -19,11 +19,15 @@ const DeviceSelector = ({ user, action }) => (
       <button
         onClick={() => action.$update('user.isVideoMuted', !user.isVideoMuted)}
       >
-        {user.isVideoMuted ? 'Unmute' : 'Mute'}
+        {user.isVideoMuted ? (
+          <i className="material-icons">videocam</i>
+        ) : (
+          <i className="material-icons">videocam_off</i>
+        )}
       </button>
     </div>
     <div className="DeviceSelector_Row">
-      <div>Mic</div>
+      <div className="DeviceSelector_Label">Mic</div>
       <select
         className="DeviceSelector_Select"
         value={user.audioDeviceId}
@@ -38,7 +42,11 @@ const DeviceSelector = ({ user, action }) => (
       <button
         onClick={() => action.$update('user.isAudioMuted', !user.isAudioMuted)}
       >
-        {user.isAudioMuted ? 'Unmute' : 'Mute'}
+        {user.isAudioMuted ? (
+          <i className="material-icons">mic</i>
+        ) : (
+          <i className="material-icons">mic_off</i>
+        )}
       </button>
     </div>
   </div>

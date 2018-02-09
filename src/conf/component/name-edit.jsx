@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 
 const NameEdit = ({ user, action }) => (
   <div className="NameEdit">
-    <div>Name</div>
+    <div className="NameEdit_Label">Name</div>
     <input
       className="NameEdit_Input"
       type="text"
