@@ -60,8 +60,6 @@ class ConfAction extends Action {
     const devices = await webrtc.getUserDevices().catch(console.error);
 
     user.updateDevices(devices);
-
-    this.onClickJoinRoom();
   }
 
   async onClickJoinRoom() {
@@ -87,7 +85,7 @@ class ConfAction extends Action {
 
     const blob = await webrtc.snapVideoStream(
       room.localStream,
-      'image/webp',
+      'image/jpeg',
       0.5
     );
 
