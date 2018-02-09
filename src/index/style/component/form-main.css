@@ -7,7 +7,6 @@
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
-  box-shadow: 1px 1px 1px 1px #ccc;
 
   &_NameInput {
     position: relative;
@@ -27,23 +26,21 @@
 
     &_Tip {
       position: absolute;
-      top: -70px;
+      top: -55px;
       left: 100px;
-      background-color: #fff;
+      background-color: #eee;
       color: #000;
-      width: 250px;
+      width: 290px;
       padding: 10px;
       border-radius: 5px;
-      border: 1px solid #ccc;
       font-size: .8rem;
-      box-shadow: 0 5px 10px #ccc;
 
       &::before {
         content: '';
         position: absolute;
         left: 50%;
         bottom: -10px;
-        border-top: 15px solid #fff;
+        border-top: 15px solid #eee;
         border-right: 15px solid transparent;
         border-left: 15px solid transparent;
       }
@@ -55,9 +52,8 @@
   }
 
   &_Button {
-    height: 100%;
     padding: 10px;
-    border-color: #ff6572;
+    border: none;
     background-color: #ff6673;
     color: #fff;
     border-radius: 5px;
