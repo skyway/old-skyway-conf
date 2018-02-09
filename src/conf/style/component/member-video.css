@@ -4,6 +4,16 @@
   /* fix this to scroll container */
   min-width: calc(150px / 9 * 16);
 
+  &_Pinned {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    border: 3px double #fff;
+  }
+
   &_Info {
     position: absolute;
     left: 0;
