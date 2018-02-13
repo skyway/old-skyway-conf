@@ -63,9 +63,17 @@ class ConfAction extends Action {
     // this triggers reaction and get user media
     user.updateDevices(devices);
 
-    navigator.mediaDevices.addEventListener('devicechange', () =>
-      this.onLoad()
-    );
+    navigator.mediaDevices.addEventListener('devicechange', async () => {
+      const devices = await webrtc
+        .getUserDevices()
+        .catch(err => ui.handleUserError(err));
+
+      if (ui.isError) {
+        return;
+      }
+
+      user.updateDevices(devices);
+    });
     Mousetrap.bind(['command+e', 'ctrl+e'], () => {
       user.isVideoMuted = !user.isVideoMuted;
       return false;
