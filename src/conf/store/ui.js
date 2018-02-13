@@ -6,6 +6,8 @@ class UiStore {
       roomType,
       roomName,
 
+      isAppReady: false,
+
       isSettingOpen: true,
       isInviteOpen: false,
       isChatOpen: false,

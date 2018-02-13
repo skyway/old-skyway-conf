@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Root from './container/root';
 import Screen from './container/screen';
 import MemberList from './container/member-list';
 import Setting from './container/setting';
@@ -7,7 +8,7 @@ import Invite from './container/invite';
 import Chat from './container/chat';
 
 const ConfApp = () => (
-  <React.Fragment>
+  <Root>
     <main className="L-Main">
       <Screen />
       <MemberList />
@@ -17,7 +18,7 @@ const ConfApp = () => (
     <div className="L-RightSide">
       <Chat />
     </div>
-  </React.Fragment>
+  </Root>
 );
 
 export default ConfApp;

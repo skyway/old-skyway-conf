@@ -27,6 +27,8 @@ class ConfAction extends Action {
           return;
         }
 
+        // once got media, it's ready
+        ui.isAppReady = true;
         stream.peerId = user.peerId;
         user.isVideoMuted && webrtc.toggleMuteVideoTracks(stream, true);
         user.isAudioMuted && webrtc.toggleMuteAudioTracks(stream, true);
@@ -55,6 +57,7 @@ class ConfAction extends Action {
       return;
     }
 
+    // this triggers reaction and get user media
     user.updateDevices(devices);
 
     navigator.mediaDevices.addEventListener('devicechange', () =>
