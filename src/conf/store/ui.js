@@ -25,13 +25,13 @@ class UiStore {
   }
 
   handleGetUserMediaError(err) {
-    if (
-      window.OverconstrainedError &&
-      err instanceof window.OverconstrainedError
-    ) {
-      this.isAppError = true;
-    } else {
-      this.isUserError = true;
+    switch (err.name) {
+      case 'OverconstrainedError':
+      case 'NotFoundError':
+        this.isAppError = true;
+        break;
+      default:
+        this.isUserError = true;
     }
     console.error(err);
   }
