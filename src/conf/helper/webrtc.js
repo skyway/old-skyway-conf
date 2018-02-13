@@ -68,7 +68,7 @@ function snapVideoStream(stream, mimeType = 'image/jpeg', qualityArgument = 1) {
     );
 
     // Firefox can't load media without this
-    $video.autoplay = true;
+    $video.autoplay = $video.muted = true;
     $video.srcObject = stream;
   });
 }
