@@ -6,21 +6,15 @@ import ConfStore from './store';
 import ConfAction from './action';
 import ConfApp from './app';
 
-import util from '../shared/util';
-
-const [, roomType, roomName] = location.hash.split('/');
-if (!util.isValidRoomName(roomName) || !util.isValidRoomType(roomType)) {
-  throw new Error(`Invalid roomName or roomType: ${location.hash}`);
-}
-
-const store = new ConfStore({ roomType, roomName });
+const store = new ConfStore();
 const action = new ConfAction(store);
 
 // TODO: for debug
 window.store = store;
 window.action = action;
 
-action.onLoad();
+const [, roomType, roomName] = location.hash.split('/');
+action.onLoad({ roomType, roomName });
 ReactDOM.render(
   <Provider action={action} {...store}>
     <ConfApp />

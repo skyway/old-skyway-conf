@@ -9,7 +9,7 @@ class ConfAction extends Action {
   constructor(store) {
     super(store);
 
-    const { user, room } = this.store;
+    const { user, room, ui } = this.store;
 
     reaction(
       () => [user.videoDeviceId, user.audioDeviceId],
@@ -21,8 +21,14 @@ class ConfAction extends Action {
 
         const stream = await webrtc
           .getUserMedia({ videoDeviceId, audioDeviceId })
-          .catch(console.error);
+          .catch(err => ui.handleGetUserMediaError(err));
 
+        if (ui.isError) {
+          return;
+        }
+
+        // once got media, it's ready
+        ui.isAppReady = true;
         stream.peerId = user.peerId;
         user.isVideoMuted && webrtc.toggleMuteVideoTracks(stream, true);
         user.isAudioMuted && webrtc.toggleMuteAudioTracks(stream, true);
@@ -39,12 +45,27 @@ class ConfAction extends Action {
       () => user.isAudioMuted,
       isMuted => webrtc.toggleMuteAudioTracks(room.localStream, isMuted)
     );
+  }
 
-    navigator.mediaDevices.addEventListener('devicechange', async () => {
-      const devices = await webrtc.getUserDevices().catch(console.error);
-      user.updateDevices(devices);
-    });
+  async onLoad({ roomType, roomName }) {
+    const { user, ui } = this.store;
 
+    ui.setRoom({ roomType, roomName });
+
+    const devices = await webrtc
+      .getUserDevices()
+      .catch(err => ui.handleUserError(err));
+
+    if (ui.isError) {
+      return;
+    }
+
+    // this triggers reaction and get user media
+    user.updateDevices(devices);
+
+    navigator.mediaDevices.addEventListener('devicechange', () =>
+      this.onLoad()
+    );
     Mousetrap.bind(['command+e', 'ctrl+e'], () => {
       user.isVideoMuted = !user.isVideoMuted;
       return false;
@@ -55,17 +76,16 @@ class ConfAction extends Action {
     });
   }
 
-  async onLoad() {
-    const { user } = this.store;
-    const devices = await webrtc.getUserDevices().catch(console.error);
-
-    user.updateDevices(devices);
-  }
-
   async onClickJoinRoom() {
     const { ui, room, user } = this.store;
 
-    const peer = await skyway.initPeer().catch(console.error);
+    const peer = await skyway.initPeer().catch(err => ui.handleAppError(err));
+
+    if (ui.isError) {
+      return;
+    }
+
+    peer.on('error', err => ui.handleSkyWayPeerError(err));
     user.peerId = peer.id;
 
     const confRoom = peer.joinRoom(`${ui.roomType}/${ui.roomName}`, {
@@ -78,16 +98,18 @@ class ConfAction extends Action {
   }
 
   async onChatEnterKeyDown() {
-    const { chat, user, room } = this.store;
+    const { chat, user, room, ui } = this.store;
     if (chat.bufferText.length === 0) {
       return;
     }
 
-    const blob = await webrtc.snapVideoStream(
-      room.localStream,
-      'image/jpeg',
-      0.5
-    );
+    const blob = await webrtc
+      .snapVideoStream(room.localStream, 'image/jpeg', 0.5)
+      .catch(err => ui.handleAppError(err));
+
+    if (ui.isError) {
+      return;
+    }
 
     const payload = {
       peerId: user.peerId,

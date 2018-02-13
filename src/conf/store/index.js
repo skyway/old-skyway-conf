@@ -4,8 +4,8 @@ import RoomStore from './room';
 import ChatStore from './chat';
 
 class ConfStore {
-  constructor({ roomType, roomName }) {
-    this.ui = new UiStore({ roomType, roomName });
+  constructor() {
+    this.ui = new UiStore();
     this.user = new UserStore();
     this.room = new RoomStore();
     this.chat = new ChatStore();

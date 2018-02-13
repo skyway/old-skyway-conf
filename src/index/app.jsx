@@ -1,12 +1,13 @@
 import React from 'react';
 
-import Title from './component/title';
+import Root from './container/root';
 import Form from './container/form';
+import Title from './component/title';
 import Desc from './component/desc';
 import Copyright from './component/copyright';
 
 const IndexApp = () => (
-  <React.Fragment>
+  <Root>
     <main className="L-Main">
       <Title />
       <Form />
@@ -15,7 +16,7 @@ const IndexApp = () => (
     <div className="L-Copyright">
       <Copyright />
     </div>
-  </React.Fragment>
+  </Root>
 );
 
 export default IndexApp;

@@ -4,6 +4,10 @@ class UiStore {
   constructor() {
     extendObservable(this, {
       isFocusInput: false,
+      isAppError: false,
+      get isError() {
+        return this.isAppError;
+      },
     });
   }
 }
