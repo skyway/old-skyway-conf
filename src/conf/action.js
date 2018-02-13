@@ -43,19 +43,6 @@ class ConfAction extends Action {
       () => user.isAudioMuted,
       isMuted => webrtc.toggleMuteAudioTracks(room.localStream, isMuted)
     );
-
-    navigator.mediaDevices.addEventListener('devicechange', () =>
-      this.onLoad()
-    );
-
-    Mousetrap.bind(['command+e', 'ctrl+e'], () => {
-      user.isVideoMuted = !user.isVideoMuted;
-      return false;
-    });
-    Mousetrap.bind(['command+d', 'ctrl+d'], () => {
-      user.isAudioMuted = !user.isAudioMuted;
-      return false;
-    });
   }
 
   async onLoad() {
@@ -69,6 +56,18 @@ class ConfAction extends Action {
     }
 
     user.updateDevices(devices);
+
+    navigator.mediaDevices.addEventListener('devicechange', () =>
+      this.onLoad()
+    );
+    Mousetrap.bind(['command+e', 'ctrl+e'], () => {
+      user.isVideoMuted = !user.isVideoMuted;
+      return false;
+    });
+    Mousetrap.bind(['command+d', 'ctrl+d'], () => {
+      user.isAudioMuted = !user.isAudioMuted;
+      return false;
+    });
   }
 
   async onClickJoinRoom() {
