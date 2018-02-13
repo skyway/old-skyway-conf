@@ -1,10 +1,11 @@
 import { extendObservable } from 'mobx';
+import util from '../../shared/util';
 
 class UiStore {
-  constructor({ roomType, roomName }) {
+  constructor() {
     extendObservable(this, {
-      roomType,
-      roomName,
+      roomType: '',
+      roomName: '',
 
       isAppReady: false,
 
@@ -24,6 +25,16 @@ class UiStore {
         return this.isUserError || this.isAppError;
       },
     });
+  }
+
+  setRoom({ roomType, roomName }) {
+    if (!util.isValidRoomName(roomName) || !util.isValidRoomType(roomType)) {
+      this.isUserError = true;
+      return;
+    }
+
+    this.roomType = roomType;
+    this.roomName = roomName;
   }
 
   handleGetUserMediaError(err) {

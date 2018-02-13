@@ -47,8 +47,11 @@ class ConfAction extends Action {
     );
   }
 
-  async onLoad() {
+  async onLoad({ roomType, roomName }) {
     const { user, ui } = this.store;
+
+    ui.setRoom({ roomType, roomName });
+
     const devices = await webrtc
       .getUserDevices()
       .catch(err => ui.handleUserError(err));
