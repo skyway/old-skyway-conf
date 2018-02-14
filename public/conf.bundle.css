@@ -467,6 +467,8 @@ body {
 
 .material-icons.-x2 { font-size: 48px; }
 
+.material-icons.-muted { color: #ff6673; }
+
 .L-Main {
   display: grid;
   grid-template-rows: calc(100vh - 150px) 150px;

@@ -2,6 +2,8 @@ import React from 'react';
 import { observer } from 'mobx-react';
 
 import Video from '../video';
+import CamIcon from '../icon/cam';
+import MicIcon from '../icon/mic';
 
 const MemberVideoRemotes = ({ room, action }) => (
   <React.Fragment>
@@ -19,12 +21,8 @@ const MemberVideoRemotes = ({ room, action }) => (
           {syncState ? (
             <div className="MemberVideo_Info">
               <div className="MemberVideo_Info_Name">{syncState.dispName}</div>
-              {syncState.isVideoMuted && (
-                <i className="material-icons">videocam_off</i>
-              )}
-              {syncState.isAudioMuted && (
-                <i className="material-icons">mic_off</i>
-              )}
+              {syncState.isVideoMuted && <CamIcon isMuted={true} />}
+              {syncState.isAudioMuted && <MicIcon isMuted={true} />}
             </div>
           ) : null}
           <Video stream={stream} />
