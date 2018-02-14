@@ -1,8 +1,9 @@
 const path = require('path');
 
 const rootPath = path.resolve('');
+const nodeEnv = process.env.NODE_ENV;
 
-module.exports = {
+const config = {
   context: rootPath,
   entry: {
     index: './src/index/main.css',
@@ -15,6 +16,11 @@ module.exports = {
   plugins: {
     'postcss-easy-import': {},
     'postcss-nested': {},
-    'cssnano': {},
   },
 };
+
+if (nodeEnv === 'production') {
+  config.plugins['cssnano'] = {};
+}
+
+module.exports = config;
