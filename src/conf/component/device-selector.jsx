@@ -1,6 +1,9 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 
+import CamIcon from './icon/cam';
+import MicIcon from './icon/mic';
+
 const DeviceSelector = ({ user, action }) => (
   <div className="DeviceSelector">
     <div className="DeviceSelector_Row">
@@ -19,11 +22,7 @@ const DeviceSelector = ({ user, action }) => (
       <button
         onClick={() => action.$update('user.isVideoMuted', !user.isVideoMuted)}
       >
-        {user.isVideoMuted ? (
-          <i className="material-icons">videocam</i>
-        ) : (
-          <i className="material-icons">videocam_off</i>
-        )}
+        <CamIcon isMuted={user.isVideoMuted} />
       </button>
     </div>
     <div className="DeviceSelector_Row">
@@ -42,11 +41,7 @@ const DeviceSelector = ({ user, action }) => (
       <button
         onClick={() => action.$update('user.isAudioMuted', !user.isAudioMuted)}
       >
-        {user.isAudioMuted ? (
-          <i className="material-icons">mic</i>
-        ) : (
-          <i className="material-icons">mic_off</i>
-        )}
+        <MicIcon isMuted={user.isAudioMuted} />
       </button>
     </div>
   </div>

@@ -17,3 +17,4 @@ body {
 
 /* we are using material-icons */
 .material-icons.-x2 { font-size: 48px; }
+.material-icons.-muted { color: #ff6673; }

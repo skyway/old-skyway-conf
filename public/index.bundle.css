@@ -467,6 +467,8 @@ body {
 
 .material-icons.-x2 { font-size: 48px; }
 
+.material-icons.-muted { color: #ff6673; }
+
 body {
   background-image: url(/images/index/bg.jpg);
   background-size: cover;
