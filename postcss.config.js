@@ -15,5 +15,6 @@ module.exports = {
   plugins: {
     'postcss-easy-import': {},
     'postcss-nested': {},
+    'cssnano': {},
   },
 };
