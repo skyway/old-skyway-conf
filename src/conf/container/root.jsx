@@ -1,6 +1,8 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 
+import Loader from '../component/loader';
+
 class Root extends React.Component {
   render() {
     const { ui, children } = this.props;
@@ -17,11 +19,7 @@ class Root extends React.Component {
       return children;
     }
 
-    return (
-      <div>
-        <i className="material-icons">adjust</i>
-      </div>
-    );
+    return <Loader />;
   }
 
   componentDidCatch(err) {

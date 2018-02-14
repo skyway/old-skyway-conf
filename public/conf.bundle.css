@@ -613,6 +613,17 @@ body {
     margin: 0 20px;
   }
 
+.Loader {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Loader_Image {
+    width: 100px;
+  }
+
 .MemberVideo {
   position: relative;
   height: 150px;
