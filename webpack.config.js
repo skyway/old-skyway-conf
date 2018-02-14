@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const rootPath = path.resolve('');
 const nodeEnv = process.env.NODE_ENV;
@@ -9,6 +10,7 @@ const config = {
   entry: {
     index: './src/index/main.jsx',
     conf: './src/conf/main.jsx',
+    vendor: ['react', 'react-dom', 'mobx', 'mobx-react'],
   },
   output: {
     path: `${rootPath}/public`,
@@ -27,8 +29,9 @@ const config = {
     extensions: ['.js', '.jsx'],
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env': { NODE_ENV: JSON.stringify(nodeEnv) },
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: Infinity,
     }),
   ],
   devServer: {
@@ -40,7 +43,7 @@ const config = {
 };
 
 if (nodeEnv === 'production') {
-  config.plugins.push(new webpack.optimize.ModuleConcatenationPlugin());
+  config.plugins.push(new UglifyJsPlugin());
 }
 
 module.exports = config;

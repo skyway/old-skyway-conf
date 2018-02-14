@@ -6,6 +6,9 @@
     "dev": "npm run dev:js & npm run dev:css & wait",
     "dev:js": "webpack-dev-server",
     "dev:css": "node ./postcss-multi.js -w",
+    "build": "npm run build:js && npm run build:css",
+    "build:js": "NODE_ENV=production webpack",
+    "build:css": "NODE_ENV=production node ./postcss-multi.js",
     "lint": "eslint . --fix --ext .js --ext .jsx"
   },
   "author": "",
@@ -22,6 +25,7 @@
     "postcss-easy-import": "^3.0.0",
     "postcss-nested": "^3.0.0",
     "prettier": "^1.10.2",
+    "uglifyjs-webpack-plugin": "^1.1.8",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.11.1"
   },
