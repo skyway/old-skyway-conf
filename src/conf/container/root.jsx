@@ -2,17 +2,14 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 
 import Loader from '../component/loader';
+import Error from '../component/error';
 
 class Root extends React.Component {
   render() {
     const { ui, children } = this.props;
 
     if (ui.isError) {
-      return (
-        <div>
-          <i className="material-icons">error</i>
-        </div>
-      );
+      return <Error ui={ui} />;
     }
 
     if (ui.isAppReady) {

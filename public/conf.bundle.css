@@ -613,6 +613,24 @@ body {
     margin: 0 20px;
   }
 
+.Error {
+  width: 600px;
+  margin: 100px auto;
+  color: #fff;
+}
+
+.Error_Title {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    text-indent: 5px;
+    font-size: 1.2rem;
+  }
+
+.Error_Desc {
+    padding: 10px;
+  }
+
 .Loader {
   height: 100vh;
   display: flex;
