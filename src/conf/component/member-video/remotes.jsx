@@ -19,11 +19,13 @@ const MemberVideoRemotes = ({ room, action }) => (
             <div className="MemberVideo_Pinned" />
           )}
           {syncState ? (
-            <div className="MemberVideo_Info">
-              <div className="MemberVideo_Info_Name">{syncState.dispName}</div>
-              {syncState.isVideoMuted && <CamIcon isMuted={true} />}
-              {syncState.isAudioMuted && <MicIcon isMuted={true} />}
-            </div>
+            <React.Fragment>
+              <div className="MemberVideo_Name">{syncState.dispName}</div>
+              <div className="MemberVideo_Media">
+                {syncState.isVideoMuted && <CamIcon isMuted={true} />}
+                {syncState.isAudioMuted && <MicIcon isMuted={true} />}
+              </div>
+            </React.Fragment>
           ) : null}
           <Video stream={stream} />
         </div>

@@ -7,8 +7,8 @@ import MicIcon from '../icon/mic';
 
 const MemberVideoLocal = ({ room, user, action }) => (
   <div className="MemberVideo">
-    <div className="MemberVideo_Info">
-      <div className="MemberVideo_Info_Name">{user.dispName}</div>
+    <div className="MemberVideo_Name">{user.dispName}</div>
+    <div className="MemberVideo_Media">
       <button
         onClick={() => action.$update('user.isVideoMuted', !user.isVideoMuted)}
       >
@@ -19,6 +19,8 @@ const MemberVideoLocal = ({ room, user, action }) => (
       >
         <MicIcon isMuted={user.isAudioMuted} />
       </button>
+    </div>
+    <div className="MemberVideo_Settings">
       <button onClick={() => action.$update('ui.isSettingOpen', true)}>
         <i className="material-icons">settings</i>
       </button>

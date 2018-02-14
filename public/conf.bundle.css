@@ -657,28 +657,35 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 1;
+    z-index: 2;
     border: 3px double #fff;
   }
 
-.MemberVideo_Info {
+.MemberVideo_Name {
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: 1;
-    display: flex;
-    align-items: center;
-    padding: 0 5px;
-    min-height: 30px;
-    color: #fff;
     background-color: rgba(0, 0, 0, .5);
+    color: #fff;
     font-size: .8rem;
+    line-height: 30px;
   }
 
-.MemberVideo_Info_Name {
-      flex: 1 1 auto;
-    }
+.MemberVideo_Media {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+  }
+
+.MemberVideo_Settings {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+  }
 
 .MemberVideo_Invite {
     height: 100%;
