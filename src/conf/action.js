@@ -63,8 +63,6 @@ class ConfAction extends Action {
     // this triggers reaction and get user media
     user.updateDevices(devices);
 
-    this.onClickJoinRoom();
-
     navigator.mediaDevices.addEventListener('devicechange', async () => {
       const devices = await webrtc
         .getUserDevices()
