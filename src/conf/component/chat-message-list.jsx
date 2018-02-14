@@ -14,7 +14,12 @@ class ChatMessageList extends React.Component {
         {chat.messages.map(msg => (
           <li key={msg.id}>
             <div className="ChatMessageList_Item">
-              <img className="ChatMessageList_Item_Thumb" src={msg.thumb} />
+              <div className="ChatMessageList_Item_Thumb">
+                <img
+                  className="ChatMessageList_Item_Thumb_Image"
+                  src={msg.thumb}
+                />
+              </div>
               <div className="ChatMessageList_Item_Content">
                 <div className="ChatMessageList_Item_Content_Head">
                   <span className="ChatMessageList_Item_Content_HeadName">

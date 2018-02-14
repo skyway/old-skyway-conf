@@ -563,12 +563,16 @@ body {
   }
 
 .ChatMessageList_Item_Thumb {
-      min-width: 80px;
-      height: 45px;
+      min-width: 60px;
       margin-right: 10px;
       background-color: #000;
       text-align: center;
+      overflow: hidden;
     }
+
+.ChatMessageList_Item_Thumb_Image {
+        height: 45px;
+      }
 
 .ChatMessageList_Item_Content_Head {
         margin-bottom: 5px;

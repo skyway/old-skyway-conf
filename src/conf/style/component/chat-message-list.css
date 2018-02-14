@@ -9,11 +9,15 @@
     margin-bottom: 10px;
 
     &_Thumb {
-      min-width: 80px;
-      height: 45px;
+      min-width: 60px;
       margin-right: 10px;
       background-color: #000;
       text-align: center;
+      overflow: hidden;
+
+      &_Image {
+        height: 45px;
+      }
     }
 
     &_Content {
