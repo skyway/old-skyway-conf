@@ -11,7 +11,7 @@ const config = {
     not_supported: './src/not_supported/main.css',
   },
   output: {
-    path: `${rootPath}/public`,
+    path: `${rootPath}/docs`,
     filename: '[name].bundle.css',
   },
   plugins: {

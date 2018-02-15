@@ -13,7 +13,7 @@ const config = {
     vendor: ['react', 'react-dom', 'mobx', 'mobx-react'],
   },
   output: {
-    path: `${rootPath}/public`,
+    path: `${rootPath}/docs`,
     filename: '[name].bundle.js',
   },
   module: {
@@ -35,7 +35,7 @@ const config = {
     }),
   ],
   devServer: {
-    contentBase: `${rootPath}/public`,
+    contentBase: `${rootPath}/docs`,
     watchContentBase: true,
     host: '0.0.0.0',
     port: 9000,
