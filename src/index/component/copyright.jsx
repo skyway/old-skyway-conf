@@ -5,7 +5,7 @@ const Copyright = () => (
     <a href="https://webrtc.ecl.ntt.com/">
       <img
         className="Copyright_Image"
-        src="/images/index/icon-skyway.svg"
+        src="./images/index/icon-skyway.svg"
         alt="SkyWay"
       />
     </a>
