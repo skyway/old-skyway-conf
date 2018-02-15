@@ -21,5 +21,5 @@ if (util.supportOs(ua) && util.supportBrowser(ua)) {
     document.getElementById('app-root')
   );
 } else {
-  location.href = '/not_supported.html';
+  location.href = './not_supported.html';
 }
