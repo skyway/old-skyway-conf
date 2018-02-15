@@ -1,5 +1,6 @@
 .FormMain {
-  display: flex;
+  display: grid;
+  grid-template-columns: 460px 140px;
   width: 600px;
   height: 50px;
   margin: 0 auto 20px;
@@ -10,7 +11,6 @@
 
   &_NameInput {
     position: relative;
-    flex: 1 1 auto;
     display: flex;
     align-items: center;
     cursor: text;
@@ -21,6 +21,7 @@
     }
     &_Input {
       flex: 1 1 auto;
+      width: 100%;
       border: none;
     }
 
