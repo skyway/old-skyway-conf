@@ -8,7 +8,6 @@ class Video extends React.Component {
   }
 
   render() {
-    console.warn('Video:render');
     // touch it for mobx
     this.props.stream;
     return (
