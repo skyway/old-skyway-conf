@@ -135,10 +135,20 @@ class ConfAction extends Action {
   startScreenShare() {
     const { ui } = this.store;
     ui.isScreenSharing = true;
+
+    // TODO:
+    // get screenId
+    // add to devices
+    // set it as videoDeviceId
+    // listen ended event and call stopScreenShare
   }
   stopScreenShare() {
     const { ui } = this.store;
     ui.isScreenSharing = false;
+
+    // TODO:
+    // remove from devices
+    // reset videoDeviceId
   }
 
   _onRoomJoin(confRoom) {
