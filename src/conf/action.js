@@ -135,21 +135,41 @@ class ConfAction extends Action {
   }
 
   async startScreenShare() {
-    const { ui } = this.store;
-    ui.isScreenSharing = true;
+    const { ui, room } = this.store;
 
-    // TODO:
-    // get screen stream
-    // extract video track
-    // listen ended event and call stopScreenShare
-    // add to store
+    const ss = window.ScreenShare.create();
+    let isCancelled = false;
+    const stream = await ss.start().catch(err => {
+      isCancelled = true;
+      console.error(err);
+    });
+
+    if (isCancelled) {
+      return;
+    }
+
+    const [vTrack] = stream.getTracks();
+    room.localScreenStreamTrack = vTrack;
+
+    vTrack.addEventListener(
+      'ended',
+      () => {
+        room.localScreenStreamTrack = null;
+      },
+      { once: true }
+    );
+
+    ui.isScreenSharing = true;
   }
   stopScreenShare() {
     const { ui } = this.store;
-    ui.isScreenSharing = false;
 
     // TODO:
     // remove track from store
+    // prevent change video during screensharing
+    //   but why?
+
+    ui.isScreenSharing = false;
   }
 
   _onRoomJoin(confRoom) {

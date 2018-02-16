@@ -6,20 +6,28 @@ class RoomStore {
       syncState: new Map(),
       pinnedPeerId: '',
       localVideoStreamTrack: observable.shallowObject({}),
+      localScreenStreamTrack: observable.shallowObject({}),
       localAudioStreamTrack: observable.shallowObject({}),
       remoteStreams: observable.shallowArray([]),
 
       get localStream() {
-        if (
-          (this.localVideoStreamTrack instanceof MediaStreamTrack &&
-            this.localAudioStreamTrack instanceof MediaStreamTrack) === false
-        ) {
-          return new MediaStream();
+        const ms = new MediaStream();
+
+        if (this.localAudioStreamTrack instanceof MediaStreamTrack) {
+          ms.addTrack(this.localAudioStreamTrack);
         }
-        return new MediaStream([
-          this.localVideoStreamTrack,
-          this.localAudioStreamTrack,
-        ]);
+
+        // return either video
+        if (this.localScreenStreamTrack instanceof MediaStreamTrack) {
+          ms.addTrack(this.localScreenStreamTrack);
+          return ms;
+        }
+        if (this.localVideoStreamTrack instanceof MediaStreamTrack) {
+          ms.addTrack(this.localVideoStreamTrack);
+          return ms;
+        }
+
+        return ms;
       },
       get pinnedStream() {
         return (
