@@ -49,6 +49,17 @@ class RoomStore {
     });
   }
 
+  setScreenStreamTrack(track) {
+    if (track instanceof MediaStreamTrack) {
+      // start
+      this.localScreenStreamTrack = track;
+    } else {
+      // stop
+      this.localScreenStreamTrack.stop();
+      this.localScreenStreamTrack = {};
+    }
+  }
+
   removeRemoteStreamByPeerId(peerId) {
     runInAction(() => {
       const stream = this.remoteStreams.find(

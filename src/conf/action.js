@@ -139,36 +139,30 @@ class ConfAction extends Action {
 
     const ss = window.ScreenShare.create();
     let isCancelled = false;
-    const stream = await ss.start().catch(err => {
-      isCancelled = true;
-      console.error(err);
-    });
+    const vTrack = await ss
+      .start()
+      .then(stream => stream.getTracks()[0])
+      .catch(err => {
+        isCancelled = true;
+        console.error(err);
+      });
 
     if (isCancelled) {
       return;
     }
 
-    const [vTrack] = stream.getTracks();
-    room.localScreenStreamTrack = vTrack;
+    vTrack.addEventListener('ended', () => this.stopScreenShare(), {
+      once: true,
+    });
 
-    vTrack.addEventListener(
-      'ended',
-      () => {
-        room.localScreenStreamTrack = null;
-      },
-      { once: true }
-    );
-
+    // this triggers stream replacement
+    room.setScreenStreamTrack(vTrack);
     ui.isScreenSharing = true;
   }
   stopScreenShare() {
-    const { ui } = this.store;
+    const { ui, room } = this.store;
 
-    // TODO:
-    // remove track from store
-    // prevent change video during screensharing
-    //   but why?
-
+    room.setScreenStreamTrack(null);
     ui.isScreenSharing = false;
   }
 
