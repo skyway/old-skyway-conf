@@ -8,12 +8,16 @@ import ConfAction from './action';
 import ConfApp from './app';
 
 const ua = navigator.userAgent;
-if (util.supportOs(ua) && util.supportBrowser(ua)) {
+if (util.isSupportedEnv(ua)) {
   const store = new ConfStore();
   const action = new ConfAction(store);
 
   const [, roomType, roomName] = location.hash.split('/');
-  action.onLoad({ roomType, roomName });
+  const env = {
+    os: util.getOsName(ua),
+    browser: util.getBrowserName(ua),
+  };
+  action.onLoad({ roomType, roomName, env });
   ReactDOM.render(
     <Provider action={action} {...store}>
       <ConfApp />

@@ -3,7 +3,9 @@ import { extendObservable, observable, runInAction } from 'mobx';
 class UserStore {
   constructor() {
     extendObservable(this, {
+      env: observable.shallowObject({}),
       peerId: 'MY_PEER_ID',
+
       dispName: 'YOUR_NAME',
       isVideoMuted: false,
       isAudioMuted: false,

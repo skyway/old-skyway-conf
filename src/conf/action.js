@@ -1,6 +1,7 @@
 import { reaction } from 'mobx';
 import Mousetrap from 'mousetrap';
 
+import util from '../shared/util';
 import Action from '../shared/action';
 import webrtc from './helper/webrtc';
 import skyway from './helper/skyway';
@@ -47,10 +48,11 @@ class ConfAction extends Action {
     );
   }
 
-  async onLoad({ roomType, roomName }) {
+  async onLoad({ roomType, roomName, env }) {
     const { user, ui } = this.store;
 
     ui.setRoom({ roomType, roomName });
+    user.env = env;
 
     const devices = await webrtc
       .getUserDevices()
@@ -133,9 +135,10 @@ class ConfAction extends Action {
   }
 
   startScreenShare() {
-    const { ui } = this.store;
+    const { ui, user } = this.store;
     ui.isScreenSharing = true;
 
+    console.log(user.env);
     // TODO:
     // get screenId
     // add to devices
