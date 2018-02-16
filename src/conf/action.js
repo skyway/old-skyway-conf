@@ -14,11 +14,6 @@ class ConfAction extends Action {
     reaction(
       () => [user.videoDeviceId, user.audioDeviceId],
       async ([videoDeviceId, audioDeviceId]) => {
-        // stop previous stream if exist
-        if (room.localStream instanceof MediaStream) {
-          webrtc.stopStream(room.localStream);
-        }
-
         const stream = await webrtc
           .getUserMedia({ videoDeviceId, audioDeviceId })
           .catch(err => ui.handleGetUserMediaError(err));
@@ -27,13 +22,20 @@ class ConfAction extends Action {
           return;
         }
 
+        // stop previous stream if exist
+        if (room.localStream instanceof MediaStream) {
+          webrtc.stopStream(room.localStream);
+        }
+
         // once got media, it's ready
         ui.isAppReady = true;
         stream.peerId = user.peerId;
+
+        // apply current status before set
         user.isVideoMuted && webrtc.toggleMuteVideoTracks(stream, true);
         user.isAudioMuted && webrtc.toggleMuteAudioTracks(stream, true);
 
-        room.localStream = stream;
+        room.setLocalStream(stream);
       }
     );
 

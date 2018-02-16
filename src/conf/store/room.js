@@ -5,8 +5,22 @@ class RoomStore {
     extendObservable(this, {
       syncState: new Map(),
       pinnedPeerId: '',
-      localStream: observable.shallowObject({}),
+      localVideoStreamTrack: observable.shallowObject({}),
+      localAudioStreamTrack: observable.shallowObject({}),
       remoteStreams: observable.shallowArray([]),
+
+      get localStream() {
+        if (
+          (this.localVideoStreamTrack instanceof MediaStreamTrack &&
+            this.localAudioStreamTrack instanceof MediaStreamTrack) === false
+        ) {
+          return new MediaStream();
+        }
+        return new MediaStream([
+          this.localVideoStreamTrack,
+          this.localAudioStreamTrack,
+        ]);
+      },
       get pinnedStream() {
         return (
           this.remoteStreams.find(
@@ -14,6 +28,16 @@ class RoomStore {
           ) || this.localStream
         );
       },
+    });
+  }
+
+  setLocalStream(stream) {
+    const [vTrack] = stream.getVideoTracks();
+    const [aTrack] = stream.getAudioTracks();
+
+    runInAction(() => {
+      this.localVideoStreamTrack = vTrack;
+      this.localAudioStreamTrack = aTrack;
     });
   }
 
