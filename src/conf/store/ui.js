@@ -13,6 +13,7 @@ class UiStore {
       isInviteOpen: false,
       isChatOpen: false,
       isRoomJoin: false,
+      isScreenSharing: false,
 
       isUserError: false,
       isAppError: false,

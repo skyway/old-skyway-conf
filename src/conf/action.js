@@ -132,6 +132,15 @@ class ConfAction extends Action {
     chat.bufferText = '';
   }
 
+  startScreenShare() {
+    const { ui } = this.store;
+    ui.isScreenSharing = true;
+  }
+  stopScreenShare() {
+    const { ui } = this.store;
+    ui.isScreenSharing = false;
+  }
+
   _onRoomJoin(confRoom) {
     const { ui, user, room, chat } = this.store;
     ui.isRoomJoin = true;
