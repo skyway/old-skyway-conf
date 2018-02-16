@@ -1,7 +1,6 @@
 import { reaction } from 'mobx';
 import Mousetrap from 'mousetrap';
 
-import util from '../shared/util';
 import Action from '../shared/action';
 import webrtc from './helper/webrtc';
 import skyway from './helper/skyway';
@@ -48,11 +47,10 @@ class ConfAction extends Action {
     );
   }
 
-  async onLoad({ roomType, roomName, env }) {
+  async onLoad({ roomType, roomName }) {
     const { user, ui } = this.store;
 
     ui.setRoom({ roomType, roomName });
-    user.env = env;
 
     const devices = await webrtc
       .getUserDevices()
@@ -134,24 +132,22 @@ class ConfAction extends Action {
     chat.bufferText = '';
   }
 
-  startScreenShare() {
-    const { ui, user } = this.store;
+  async startScreenShare() {
+    const { ui } = this.store;
     ui.isScreenSharing = true;
 
-    console.log(user.env);
     // TODO:
-    // get screenId
-    // add to devices
-    // set it as videoDeviceId
+    // get screen stream
+    // extract video track
     // listen ended event and call stopScreenShare
+    // add to store
   }
   stopScreenShare() {
     const { ui } = this.store;
     ui.isScreenSharing = false;
 
     // TODO:
-    // remove from devices
-    // reset videoDeviceId
+    // remove track from store
   }
 
   _onRoomJoin(confRoom) {

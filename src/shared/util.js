@@ -9,49 +9,57 @@ function isValidRoomName(name) {
   return /^[0-9a-z_-]{4,32}$/.test(name);
 }
 
-function supportOs(ua) {
+function getOsName(ua) {
   switch (true) {
     case /Android/.test(ua):
-      return false;
+      return 'Android';
     case /iPhone|iPad|iPod/.test(ua):
-      return false;
+      return 'iOS';
     case /Windows/.test(ua):
-      return true;
+      return 'Windows';
     case /Mac OS X/.test(ua):
-      return true;
+      return 'Mac';
     case /CrOS/.test(ua):
-      return false;
+      return 'CromeOS';
     case /Firefox/.test(ua):
-      return false;
+      return 'FirefoxOS';
     default:
-      return false;
+      return '';
   }
 }
 
-function supportBrowser(ua) {
+function getBrowserName(ua) {
   switch (true) {
     case /CriOS/.test(ua):
-      return false;
+      return 'iOSChrome';
     case /Edge/.test(ua):
-      return false;
+      return 'Edge';
     case /Chrome/.test(ua):
-      return true;
+      return 'Chrome';
     case /Firefox/.test(ua):
-      return true;
+      return 'Firefox';
     case /MSIE|Trident/.test(ua):
-      return false;
+      return 'IE';
     case /Safari\//.test(ua):
-      return false;
+      return 'Safari';
     case /AppleWebKit/.test(ua):
-      return false;
+      return 'Webkit';
     default:
-      return false;
+      return '';
   }
+}
+
+function isSupportedEnv(ua) {
+  const isSupportedOs = ['Windows', 'Mac'].includes(getOsName(ua));
+  const isSupportedBrowser = ['Chrome', 'Firefox'].includes(getBrowserName(ua));
+
+  return isSupportedOs && isSupportedBrowser;
 }
 
 export default {
   isValidRoomType,
   isValidRoomName,
-  supportOs,
-  supportBrowser,
+  getOsName,
+  getBrowserName,
+  isSupportedEnv,
 };

@@ -13,11 +13,7 @@ if (util.isSupportedEnv(ua)) {
   const action = new ConfAction(store);
 
   const [, roomType, roomName] = location.hash.split('/');
-  const env = {
-    os: util.getOsName(ua),
-    browser: util.getBrowserName(ua),
-  };
-  action.onLoad({ roomType, roomName, env });
+  action.onLoad({ roomType, roomName });
   ReactDOM.render(
     <Provider action={action} {...store}>
       <ConfApp />
