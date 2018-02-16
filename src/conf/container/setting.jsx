@@ -13,7 +13,7 @@ const Setting = ({ room, ui, user, action }) => (
         <SettingVideo room={room} />
       </div>
 
-      <DeviceSelector user={user} action={action} />
+      <DeviceSelector ui={ui} user={user} action={action} />
 
       <NameEdit user={user} action={action} />
 

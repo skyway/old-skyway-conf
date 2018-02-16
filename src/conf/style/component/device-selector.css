@@ -19,4 +19,8 @@
     width: 300px;
     margin: 0 20px;
   }
+
+  &_Notice {
+    color: #ff6673;
+  }
 }
