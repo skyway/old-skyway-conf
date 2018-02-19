@@ -32,10 +32,19 @@ async function getUserDevices() {
 }
 
 function getUserMedia({ videoDeviceId, audioDeviceId }) {
-  return navigator.mediaDevices.getUserMedia({
+  const constraints = {
     video: { deviceId: videoDeviceId },
     audio: { deviceId: audioDeviceId },
-  });
+  };
+
+  if (videoDeviceId === '') {
+    constraints.video = false;
+  }
+  if (audioDeviceId === '') {
+    constraints.audio = false;
+  }
+
+  return navigator.mediaDevices.getUserMedia(constraints);
 }
 
 function snapVideoStream(stream, mimeType = 'image/jpeg', qualityArgument = 1) {
