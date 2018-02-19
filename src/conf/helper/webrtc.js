@@ -85,6 +85,11 @@ function snapVideoStream(stream, mimeType = 'image/jpeg', qualityArgument = 1) {
   });
 }
 
+function getFakeStream() {
+  const { stream } = new AudioContext().createMediaStreamDestination();
+  return stream;
+}
+
 export default {
   setMuteVideoTracks,
   setMuteAudioTracks,
@@ -93,4 +98,5 @@ export default {
   getUserDevices,
   getUserMedia,
   snapVideoStream,
+  getFakeStream,
 };

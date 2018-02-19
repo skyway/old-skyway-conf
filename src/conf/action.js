@@ -54,7 +54,7 @@ class ConfAction extends Action {
   }
 
   async onLoad({ roomType, roomName }) {
-    const { user, ui } = this.store;
+    const { user, ui, room } = this.store;
 
     ui.setRoom({ roomType, roomName });
     const prevName = localStorage.getItem('SkyWayConf.dispName');
@@ -70,6 +70,11 @@ class ConfAction extends Action {
 
     // this triggers reaction and get user media
     user.updateDevices(devices);
+    if (user.isNoVideoDevices && user.isNoAudioDevices) {
+      ui.isAppReady = true;
+      const fakeStream = webrtc.getFakeStream();
+      room.setLocalStream(fakeStream);
+    }
 
     navigator.mediaDevices.addEventListener('devicechange', async () => {
       const devices = await webrtc
