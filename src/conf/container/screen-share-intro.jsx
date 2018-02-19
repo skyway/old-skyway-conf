@@ -8,8 +8,11 @@ const ScreenShareIntro = ({ ui, action }) => (
     <div className="L-ScreenShareIntro">
       <h3 className="L-ScreenShareIntro_Title">ScreenShare is not available</h3>
       <p className="L-ScreenShareIntro_Desc">
-        Screen share is not supported on your browser.
-        If you are using Chrome, please install <a href="https://chrome.google.com/webstore/detail/skyway-screenshare-sample/gjkihkcdicimhkhmnopjgpohogiggbao">Chrome extension</a>.
+        Screen share is not supported on your browser. If you are using Chrome,
+        please install{' '}
+        <a href="https://chrome.google.com/webstore/detail/skyway-screenshare-sample/gjkihkcdicimhkhmnopjgpohogiggbao">
+          Chrome extension
+        </a>.
       </p>
       <div className="L-ScreenShareIntro_Finish">
         <button
