@@ -1,4 +1,6 @@
 import Peer from 'skyway-js';
+// can not import via npm...
+const ScreenShare = window.ScreenShare;
 
 function initPeer() {
   return new Promise((resolve, reject) => {
@@ -16,6 +18,21 @@ function initPeer() {
   });
 }
 
+function isScreenShareAvailable() {
+  return ScreenShare.create().isScreenShareAvailable();
+}
+
+function getScreenStreamTrack() {
+  return new Promise((resolve, reject) => {
+    ScreenShare.create()
+      .start()
+      .then(stream => resolve(stream.getTracks()[0]))
+      .catch(reject);
+  });
+}
+
 export default {
   initPeer,
+  isScreenShareAvailable,
+  getScreenStreamTrack,
 };

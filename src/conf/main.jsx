@@ -8,7 +8,7 @@ import ConfAction from './action';
 import ConfApp from './app';
 
 const ua = navigator.userAgent;
-if (util.supportOs(ua) && util.supportBrowser(ua)) {
+if (util.isSupportedEnv(ua)) {
   const store = new ConfStore();
   const action = new ConfAction(store);
 

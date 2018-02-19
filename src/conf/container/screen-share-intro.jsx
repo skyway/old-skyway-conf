@@ -1,0 +1,28 @@
+import React from 'react';
+import { observer, inject } from 'mobx-react';
+
+import Popup from '../component/popup';
+
+const ScreenShareIntro = ({ ui, action }) => (
+  <Popup isVisible={ui.isScreenShareIntroOpen}>
+    <div className="L-ScreenShareIntro">
+      <h3 className="L-ScreenShareIntro_Title">ScreenShare is not available</h3>
+      <p className="L-ScreenShareIntro_Desc">
+        Screen share is not supported on your browser. If you are using Chrome,
+        please install{' '}
+        <a href="https://chrome.google.com/webstore/detail/skyway-screenshare-sample/gjkihkcdicimhkhmnopjgpohogiggbao">
+          Chrome extension
+        </a>.
+      </p>
+      <div className="L-ScreenShareIntro_Finish">
+        <button
+          onClick={() => action.$update('ui.isScreenShareIntroOpen', false)}
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </Popup>
+);
+
+export default inject('ui', 'action')(observer(ScreenShareIntro));

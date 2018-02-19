@@ -6,6 +6,9 @@ import MemberList from './container/member-list';
 import Setting from './container/setting';
 import Invite from './container/invite';
 import Chat from './container/chat';
+import ChatBox from './container/chat-box';
+import ScreenShare from './container/screen-share';
+import ScreenShareIntro from './container/screen-share-intro';
 
 const ConfApp = () => (
   <Root>
@@ -16,8 +19,11 @@ const ConfApp = () => (
     <Setting />
     <Invite />
     <div className="L-RightSide">
+      <ScreenShare />
       <Chat />
     </div>
+    <ChatBox />
+    <ScreenShareIntro />
   </Root>
 );
 
