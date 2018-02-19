@@ -14,6 +14,7 @@ const DeviceSelector = ({ ui, user, action }) => (
         onChange={ev => action.$update('user.videoDeviceId', ev.target.value)}
         disabled={ui.isScreenSharing || user.isNoVideoDevices}
       >
+        {user.isNoVideoDevices && <option value="">Cam not found</option>}
         {user.videoDevices.map((device, idx) => (
           <option key={device.deviceId} value={device.deviceId}>
             {device.label || `Cam ${idx + 1}`}
@@ -34,6 +35,7 @@ const DeviceSelector = ({ ui, user, action }) => (
         onChange={ev => action.$update('user.audioDeviceId', ev.target.value)}
         disabled={ui.isScreenSharing || user.isNoAudioDevices}
       >
+        {user.isNoAudioDevices && <option value="">Mic not found</option>}
         {user.audioDevices.map((device, idx) => (
           <option key={device.deviceId} value={device.deviceId}>
             {device.label || `Mic ${idx + 1}`}
