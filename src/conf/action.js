@@ -142,13 +142,15 @@ class ConfAction extends Action {
       return;
     }
 
-    let isCancelled = false;
-    const vTrack = await skyway.getScreenStreamTrack().catch(err => {
-      isCancelled = true;
-      console.error(err);
-    });
+    let vTrack;
+    try {
+      vTrack = await skyway.getScreenStreamTrack();
+    } catch (err) {
+      if (err instanceof DOMException === false) {
+        ui.isScreenShareIntroOpen = true;
+      }
 
-    if (isCancelled) {
+      console.error(err);
       return;
     }
 
