@@ -1,8 +1,11 @@
-function toggleMuteVideoTracks(stream, isMuted) {
+function setMuteVideoTracks(stream, isMuted) {
   stream.getVideoTracks().forEach(track => (track.enabled = !isMuted));
 }
-function toggleMuteAudioTracks(stream, isMuted) {
+function setMuteAudioTracks(stream, isMuted) {
   stream.getAudioTracks().forEach(track => (track.enabled = !isMuted));
+}
+function setMuteTrack(track, isMuted) {
+  track.enabled = !isMuted;
 }
 
 function stopStream(stream) {
@@ -74,8 +77,9 @@ function snapVideoStream(stream, mimeType = 'image/jpeg', qualityArgument = 1) {
 }
 
 export default {
-  toggleMuteVideoTracks,
-  toggleMuteAudioTracks,
+  setMuteVideoTracks,
+  setMuteAudioTracks,
+  setMuteTrack,
   stopStream,
   getUserDevices,
   getUserMedia,

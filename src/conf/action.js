@@ -29,11 +29,10 @@ class ConfAction extends Action {
 
         // once got media, it's ready
         ui.isAppReady = true;
-        stream.peerId = user.peerId;
 
         // apply current status before set
-        user.isVideoMuted && webrtc.toggleMuteVideoTracks(stream, true);
-        user.isAudioMuted && webrtc.toggleMuteAudioTracks(stream, true);
+        user.isVideoMuted && webrtc.setMuteVideoTracks(stream, true);
+        user.isAudioMuted && webrtc.setMuteAudioTracks(stream, true);
 
         room.setLocalStream(stream);
       }
@@ -41,11 +40,11 @@ class ConfAction extends Action {
 
     reaction(
       () => user.isVideoMuted,
-      isMuted => webrtc.toggleMuteVideoTracks(room.localStream, isMuted)
+      isMuted => webrtc.setMuteVideoTracks(room.localStream, isMuted)
     );
     reaction(
       () => user.isAudioMuted,
-      isMuted => webrtc.toggleMuteAudioTracks(room.localStream, isMuted)
+      isMuted => webrtc.setMuteAudioTracks(room.localStream, isMuted)
     );
 
     reaction(
@@ -142,7 +141,7 @@ class ConfAction extends Action {
   }
 
   async startScreenShare() {
-    const { ui, room } = this.store;
+    const { ui, room, user } = this.store;
 
     if (skyway.isScreenShareAvailable() === false) {
       ui.isScreenShareIntroOpen = true;
@@ -165,8 +164,11 @@ class ConfAction extends Action {
       once: true,
     });
 
+    // apply current status before set
+    user.isVideoMuted && webrtc.setMuteTrack(vTrack, true);
     // this triggers stream replacement
     room.setScreenStreamTrack(vTrack);
+
     ui.isScreenSharing = true;
   }
   stopScreenShare() {
