@@ -14,6 +14,7 @@ class UiStore {
       isChatOpen: false,
       isRoomJoin: false,
       isScreenSharing: false,
+      isScreenShareIntroOpen: false,
 
       isUserError: false,
       isAppError: false,

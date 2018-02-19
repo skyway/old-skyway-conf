@@ -6,7 +6,7 @@ import Popup from '../component/popup';
 const Invite = ({ ui, action }) => (
   <Popup isVisible={ui.isInviteOpen}>
     <div className="L-Invite">
-      <p className="L-Invite_Title">Share the link</p>
+      <h3 className="L-Invite_Title">Share the link</h3>
       <input
         type="text"
         className="L-Invite_Input"

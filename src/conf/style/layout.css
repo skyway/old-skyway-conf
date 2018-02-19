@@ -54,3 +54,25 @@
   right: 20px;
   top: 20px;
 }
+
+.L-ScreenShareIntro {
+  width: 600px;
+  margin: 100px auto;
+  padding: 20px;
+  background-color: #fff;
+  color: #000;
+  border-radius: 5px;
+
+  &_Title {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+
+  &_Desc {
+    margin: 20px auto;
+  }
+
+  &_Finish {
+    text-align: right;
+  }
+}

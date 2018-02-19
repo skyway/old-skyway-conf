@@ -18,6 +18,10 @@ function initPeer() {
   });
 }
 
+function isScreenShareAvailable() {
+  return ScreenShare.create().isScreenShareAvailable();
+}
+
 function getScreenStreamTrack() {
   return new Promise((resolve, reject) => {
     ScreenShare.create()
@@ -29,5 +33,6 @@ function getScreenStreamTrack() {
 
 export default {
   initPeer,
+  isScreenShareAvailable,
   getScreenStreamTrack,
 };
