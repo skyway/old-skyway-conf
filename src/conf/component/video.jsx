@@ -8,6 +8,9 @@ class Video extends React.Component {
   }
 
   render() {
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn('[component] Video.render');
+    }
     // touch it for mobx
     this.props.stream;
     return (

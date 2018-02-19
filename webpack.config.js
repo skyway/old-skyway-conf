@@ -3,7 +3,7 @@ const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const rootPath = path.resolve('');
-const nodeEnv = process.env.NODE_ENV;
+const nodeEnv = process.env.NODE_ENV || 'development';
 
 const config = {
   context: rootPath,
@@ -32,6 +32,9 @@ const config = {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: Infinity,
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(nodeEnv),
     }),
   ],
   devServer: {
