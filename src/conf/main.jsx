@@ -24,7 +24,7 @@ if (util.isSupportedEnv(ua)) {
       .forEach(key => {
         const origMethod = action[key];
         action[key] = (...args) => {
-          console.warn(`[action] ${key}`);
+          console.warn(`[action] ${key}`, ...args);
           origMethod.call(action, ...args);
         };
       });
