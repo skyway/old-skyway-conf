@@ -47,12 +47,19 @@ class ConfAction extends Action {
       () => user.isAudioMuted,
       isMuted => webrtc.toggleMuteAudioTracks(room.localStream, isMuted)
     );
+
+    reaction(
+      () => user.dispName,
+      name => localStorage.setItem('SkyWayConf.dispName', name)
+    );
   }
 
   async onLoad({ roomType, roomName }) {
     const { user, ui } = this.store;
 
     ui.setRoom({ roomType, roomName });
+    const prevName = localStorage.getItem('SkyWayConf.dispName');
+    prevName && (user.dispName = prevName);
 
     const devices = await webrtc
       .getUserDevices()
