@@ -193,7 +193,7 @@ class ConfAction extends Action {
   }
   _onRoomAddStream(stream, confRoom) {
     const { room, user } = this.store;
-    room.remoteStreams.push(stream);
+    room.addRemoteStream(stream);
 
     // return back state as welcome message
     confRoom.send({ type: 'sync', payload: user.syncState });

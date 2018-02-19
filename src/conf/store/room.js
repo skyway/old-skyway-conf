@@ -60,6 +60,19 @@ class RoomStore {
     }
   }
 
+  addRemoteStream(stream) {
+    runInAction(() => {
+      // XXX: need to restrict 1stream/1peer
+      // room#removeStream does not fire on Chrome when Firefox replaces stream w/ screen share
+      const oldStream = this.remoteStreams.find(
+        oStream => oStream.peerId === stream.peerId
+      );
+      oldStream && this.removeRemoteStream(oldStream);
+
+      this.remoteStreams.push(stream);
+    });
+  }
+
   removeRemoteStreamByPeerId(peerId) {
     runInAction(() => {
       const stream = this.remoteStreams.find(
