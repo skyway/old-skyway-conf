@@ -5,7 +5,7 @@ import ChatMessageList from './chat-message-list';
 
 const ChatBox = ({ chat, action }) => (
   <div className="ChatBox">
-    <div
+    <a
       className="ChatBox_Closer"
       onClick={() => action.$update('ui.isChatOpen', false)}
     />
