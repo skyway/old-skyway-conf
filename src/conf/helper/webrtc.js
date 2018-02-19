@@ -32,10 +32,19 @@ async function getUserDevices() {
 }
 
 function getUserMedia({ videoDeviceId, audioDeviceId }) {
-  return navigator.mediaDevices.getUserMedia({
+  const constraints = {
     video: { deviceId: videoDeviceId },
     audio: { deviceId: audioDeviceId },
-  });
+  };
+
+  if (videoDeviceId === '') {
+    constraints.video = false;
+  }
+  if (audioDeviceId === '') {
+    constraints.audio = false;
+  }
+
+  return navigator.mediaDevices.getUserMedia(constraints);
 }
 
 function snapVideoStream(stream, mimeType = 'image/jpeg', qualityArgument = 1) {
@@ -76,6 +85,11 @@ function snapVideoStream(stream, mimeType = 'image/jpeg', qualityArgument = 1) {
   });
 }
 
+function getFakeStream() {
+  const { stream } = new AudioContext().createMediaStreamDestination();
+  return stream;
+}
+
 export default {
   setMuteVideoTracks,
   setMuteAudioTracks,
@@ -84,4 +98,5 @@ export default {
   getUserDevices,
   getUserMedia,
   snapVideoStream,
+  getFakeStream,
 };

@@ -21,6 +21,12 @@ class UserStore {
           isAudioMuted: this.isAudioMuted,
         };
       },
+      get isNoVideoDevices() {
+        return this.videoDevices.length === 0;
+      },
+      get isNoAudioDevices() {
+        return this.audioDevices.length === 0;
+      },
     });
   }
 
@@ -46,8 +52,15 @@ class UserStore {
     const audioDevice = this.audioDevices.find(
       device => device.deviceId === this.audioDeviceId
     );
-    videoDevice || (this.videoDeviceId = this.videoDevices[0].deviceId);
-    audioDevice || (this.audioDeviceId = this.audioDevices[0].deviceId);
+
+    runInAction(() => {
+      if (this.isNoVideoDevices === false) {
+        videoDevice || (this.videoDeviceId = this.videoDevices[0].deviceId);
+      }
+      if (this.isNoAudioDevices === false) {
+        audioDevice || (this.audioDeviceId = this.audioDevices[0].deviceId);
+      }
+    });
   }
 }
 
