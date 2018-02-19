@@ -137,15 +137,11 @@ class ConfAction extends Action {
   async startScreenShare() {
     const { ui, room } = this.store;
 
-    const ss = window.ScreenShare.create();
     let isCancelled = false;
-    const vTrack = await ss
-      .start()
-      .then(stream => stream.getTracks()[0])
-      .catch(err => {
-        isCancelled = true;
-        console.error(err);
-      });
+    const vTrack = await skyway.getScreenStreamTrack().catch(err => {
+      isCancelled = true;
+      console.error(err);
+    });
 
     if (isCancelled) {
       return;
