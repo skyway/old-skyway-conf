@@ -37,6 +37,7 @@
     "normalize.css": "^7.0.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "skyway-js": "^1.1.5"
+    "skyway-js": "^1.1.5",
+    "voice-activity-detection": "0.0.5"
   }
 }

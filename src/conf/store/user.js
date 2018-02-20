@@ -7,6 +7,7 @@ class UserStore {
       dispName: 'YOUR_NAME',
       isVideoMuted: false,
       isAudioMuted: false,
+      isSpeaking: false,
 
       videoDeviceId: '',
       audioDeviceId: '',
@@ -19,6 +20,7 @@ class UserStore {
           dispName: this.dispName,
           isVideoMuted: this.isVideoMuted,
           isAudioMuted: this.isAudioMuted,
+          isSpeaking: this.isSpeaking,
         };
       },
       get isNoVideoDevices() {

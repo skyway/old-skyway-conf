@@ -1,5 +1,6 @@
 import { reaction } from 'mobx';
 import Mousetrap from 'mousetrap';
+import vad from 'voice-activity-detection';
 
 import Action from '../shared/action';
 import webrtc from './helper/webrtc';
@@ -8,6 +9,8 @@ import skyway from './helper/skyway';
 class ConfAction extends Action {
   constructor(store) {
     super(store);
+
+    this._destroyVad = null;
 
     const { user, room, ui } = this.store;
 
@@ -50,6 +53,22 @@ class ConfAction extends Action {
     reaction(
       () => user.dispName,
       name => localStorage.setItem('SkyWayConf.dispName', name)
+    );
+    reaction(
+      () => room.localStream,
+      stream => {
+        this._destroyVad && this._destroyVad();
+
+        const { destroy } = vad(new AudioContext(), stream, {
+          onVoiceStart() {
+            user.isSpeaking = true;
+          },
+          onVoiceStop() {
+            user.isSpeaking = false;
+          },
+        });
+        this._destroyVad = destroy;
+      }
     );
   }
 
