@@ -20,6 +20,7 @@ class UserStore {
           dispName: this.dispName,
           isVideoMuted: this.isVideoMuted,
           isAudioMuted: this.isAudioMuted,
+          isSpeaking: this.isSpeaking,
         };
       },
       get isNoVideoDevices() {
