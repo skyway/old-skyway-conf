@@ -1,11 +1,11 @@
 .L-Main {
   display: grid;
-  grid-template-rows: calc(100vh - 150px) 150px;
+  grid-template-rows: calc(100vh - var(--bottomLayoutHeight)) var(--bottomLayoutHeight);
   height: 100vh;
 }
 
 .L-Setting {
-  width: 600px;
+  width: var(--popupWidth);
   margin: 100px auto;
   padding: 20px;
   background-color: #fff;
@@ -22,7 +22,7 @@
 }
 
 .L-Invite {
-  width: 600px;
+  width: var(--popupWidth);
   margin: 100px auto;
   padding: 20px;
   background-color: #fff;
@@ -62,7 +62,7 @@
 }
 
 .L-ScreenShareIntro {
-  width: 600px;
+  width: var(--popupWidth);
   margin: 100px auto;
   padding: 20px;
   background-color: #fff;

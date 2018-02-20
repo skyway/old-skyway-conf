@@ -1,7 +1,7 @@
 .Video {
   position: relative;
   width: 100%;
-  padding-bottom: calc(9 / 16 * 100%);
+  padding-bottom: calc(var(--videoAspectRatioLength) / var(--videoAspectRatioBreadth) * 100%);
   background-color: #000;
 
   &_Content {

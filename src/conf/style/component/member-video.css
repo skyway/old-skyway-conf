@@ -1,8 +1,8 @@
 .MemberVideo {
   position: relative;
-  height: 150px;
+  height: var(--bottomLayoutHeight);
   /* fix this to scroll container */
-  min-width: calc(150px / 9 * 16);
+  min-width: calc(var(--bottomLayoutHeight) / var(--videoAspectRatioLength) * var(--videoAspectRatioBreadth));
 
   &_Pinned {
     position: absolute;

@@ -1,0 +1,10 @@
+:root {
+  --color1: #005ece; /* deep blue */
+  --color2: #039be5; /* light blue */
+  --color3: #ff6673; /* light red */
+
+  --popupWidth: 600px;
+  --bottomLayoutHeight: 150px;
+  --videoAspectRatioW: 16;
+  --videoAspectRatioH: 9;
+}

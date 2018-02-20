@@ -21,6 +21,6 @@
   }
 
   &_Notice {
-    color: #ff6673;
+    color: var(--color3);
   }
 }

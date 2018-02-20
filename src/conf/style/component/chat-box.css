@@ -1,5 +1,5 @@
 .ChatBox {
-  height: calc(90vh - 150px); /* save for member-list grid */
+  height: calc(90vh - var(--bottomLayoutHeight)); /* save for member-list grid */
   width: 300px;
   display: grid;
   grid-template-rows: 1fr 40px;

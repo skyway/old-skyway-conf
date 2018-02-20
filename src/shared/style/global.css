@@ -1,10 +1,16 @@
+:root {
+  --color1: #005ece; /* deep blue */
+  --color2: #039be5; /* light blue */
+  --color3: #ff6673; /* light red */
+}
+
 h1, h2, h3, p {
   margin: 0;
 }
 
 html {
-  background-color: #005ece;
-  color: #039be5;
+  background-color: var(--color1);
+  color: var(--color2);
   font-size: 18px;
   font-family: sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -21,4 +27,4 @@ select, button, a {
 
 /* we are using material-icons */
 .material-icons.-x2 { font-size: 48px; }
-.material-icons.-muted { color: #ff6673; }
+.material-icons.-muted { color: var(--color3); }

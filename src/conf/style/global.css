@@ -1,0 +1,6 @@
+:root {
+  --popupWidth: 600px;
+  --bottomLayoutHeight: 150px;
+  --videoAspectRatioBreadth: 16;
+  --videoAspectRatioLength: 9;
+}

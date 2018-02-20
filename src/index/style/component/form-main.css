@@ -55,7 +55,7 @@
   &_Button {
     padding: 10px;
     border: none;
-    background-color: #ff6673;
+    background-color: var(--color3);
     color: #fff;
     border-radius: 5px;
     cursor: pointer;
