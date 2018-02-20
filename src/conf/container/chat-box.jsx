@@ -5,7 +5,7 @@ import ChatBox from '../component/chat-box';
 
 const ChatBoxWrapper = ({ ui, chat, action }) => (
   <div className="L-ChatBox">
-    {ui.isChatOpen && <ChatBox chat={chat} action={action} />}
+    {ui.isChatOpen && <ChatBox ui={ui} chat={chat} action={action} />}
   </div>
 );
 

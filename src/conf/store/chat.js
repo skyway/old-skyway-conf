@@ -1,4 +1,4 @@
-import { extendObservable, observable } from 'mobx';
+import { extendObservable, observable, runInAction } from 'mobx';
 
 class ChatStore {
   constructor() {
@@ -21,6 +21,14 @@ class ChatStore {
       thumb: URL.createObjectURL(blob),
       dispDate: new Date(timestamp).toLocaleTimeString().slice(0, 5),
       dispName,
+    });
+  }
+
+  updateBuffer(payload) {
+    runInAction(() => {
+      // this triggers sync remotes
+      this.lastMessage = payload;
+      this.bufferText = '';
     });
   }
 }

@@ -120,10 +120,16 @@ class ConfAction extends Action {
 
   async onChatEnterKeyDown() {
     const { chat, user, room, ui } = this.store;
+
+    // avoid sending duplicate texts
+    if (ui.isChatSending) {
+      return;
+    }
     if (chat.bufferText.length === 0) {
       return;
     }
 
+    ui.isChatSending = true;
     const blob = await webrtc
       .snapVideoStream(room.localStream, 'image/jpeg', 0.5)
       .catch(err => ui.handleAppError(err));
@@ -141,8 +147,9 @@ class ConfAction extends Action {
     // sync local
     chat.addMessage(payload, user.dispName);
     // this triggers sync remotes
-    chat.lastMessage = payload;
-    chat.bufferText = '';
+    chat.updateBuffer(payload);
+
+    ui.isChatSending = false;
   }
 
   async startScreenShare() {
