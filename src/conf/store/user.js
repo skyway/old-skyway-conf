@@ -7,6 +7,7 @@ class UserStore {
       dispName: 'YOUR_NAME',
       isVideoMuted: false,
       isAudioMuted: false,
+      isSpeaking: false,
 
       videoDeviceId: '',
       audioDeviceId: '',
