@@ -1,6 +1,6 @@
 /* sizes should be synced with name-edit.css */
 .DeviceSelector {
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
 
   &_Row {
@@ -18,6 +18,10 @@
     height: 30px;
     width: 300px;
     margin: 0 20px;
+  }
+
+  &_Va {
+    padding: 0 10px;
   }
 
   &_Notice {

@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 
 import CamIcon from './icon/cam';
 import MicIcon from './icon/mic';
+import VaIcon from './icon/va';
 
 const DeviceSelector = ({ ui, user, action }) => (
   <div className="DeviceSelector">
@@ -47,6 +48,9 @@ const DeviceSelector = ({ ui, user, action }) => (
       >
         <MicIcon isMuted={user.isAudioMuted} />
       </button>
+      <div className="DeviceSelector_Va">
+        <VaIcon isSpeaking={user.isSpeaking} />
+      </div>
     </div>
     {ui.isScreenSharing && (
       <p className="DeviceSelector_Notice">

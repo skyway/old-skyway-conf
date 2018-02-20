@@ -2,7 +2,7 @@
 .NameEdit {
   display: flex;
   align-items: center;
-  width: 80%;
+  width: 90%;
   margin: 10px auto;
 
   &_Label {
