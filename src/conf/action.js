@@ -60,11 +60,8 @@ class ConfAction extends Action {
         this._destroyVad && this._destroyVad();
 
         const { destroy } = vad(new AudioContext(), stream, {
-          onVoiceStart() {
-            user.isSpeaking = true;
-          },
-          onVoiceStop() {
-            user.isSpeaking = false;
+          onUpdate(lv) {
+            user.isSpeaking = lv !== 0;
           },
         });
         this._destroyVad = destroy;
@@ -89,6 +86,7 @@ class ConfAction extends Action {
 
     // this triggers reaction and get user media
     user.updateDevices(devices);
+    // or enable to force enter without devices
     if (user.isNoVideoDevices && user.isNoAudioDevices) {
       ui.isAppReady = true;
       const fakeStream = webrtc.getFakeStream();
@@ -186,7 +184,6 @@ class ConfAction extends Action {
       if (err instanceof DOMException === false) {
         ui.isScreenShareIntroOpen = true;
       }
-
       console.error(err);
       return;
     }
@@ -194,12 +191,11 @@ class ConfAction extends Action {
     vTrack.addEventListener('ended', () => this.stopScreenShare(), {
       once: true,
     });
-
     // apply current status before set
     user.isVideoMuted && webrtc.setMuteTrack(vTrack, true);
+
     // this triggers stream replacement
     room.setScreenStreamTrack(vTrack);
-
     ui.isScreenSharing = true;
   }
   stopScreenShare() {

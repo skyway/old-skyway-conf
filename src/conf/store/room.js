@@ -17,14 +17,11 @@ class RoomStore {
           ms.addTrack(this.localAudioStreamTrack);
         }
 
-        // return either video
+        // return with either video
         if (this.localScreenStreamTrack instanceof MediaStreamTrack) {
           ms.addTrack(this.localScreenStreamTrack);
-          return ms;
-        }
-        if (this.localVideoStreamTrack instanceof MediaStreamTrack) {
+        } else if (this.localVideoStreamTrack instanceof MediaStreamTrack) {
           ms.addTrack(this.localVideoStreamTrack);
-          return ms;
         }
 
         return ms;
