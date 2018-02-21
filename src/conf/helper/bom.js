@@ -38,7 +38,12 @@ function getBrowserName(ua) {
   }
 }
 
+function getAudioCtx() {
+  return new (window.webkitAudioContext || AudioContext)();
+}
+
 export default {
   getOsName,
   getBrowserName,
+  getAudioCtx,
 };

@@ -5,6 +5,7 @@ import vad from 'voice-activity-detection';
 import Action from '../shared/action';
 import webrtc from './helper/webrtc';
 import skyway from './helper/skyway';
+import bom from './helper/bom';
 
 class ConfAction extends Action {
   constructor(store) {
@@ -59,7 +60,7 @@ class ConfAction extends Action {
       stream => {
         this._destroyVad && this._destroyVad();
 
-        const { destroy } = vad(new AudioContext(), stream, {
+        const { destroy } = vad(bom.getAudioCtx(), stream, {
           onUpdate(lv) {
             user.isSpeaking = lv !== 0;
           },
@@ -89,7 +90,7 @@ class ConfAction extends Action {
     // or enable to force enter without devices
     if (user.isNoVideoDevices && user.isNoAudioDevices) {
       ui.isAppReady = true;
-      const fakeStream = webrtc.getFakeStream();
+      const fakeStream = webrtc.getFakeStream(bom.getAudioCtx());
       room.setLocalStream(fakeStream);
     }
 

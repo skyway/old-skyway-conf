@@ -2,17 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'mobx-react';
 
-import ua from './helper/ua';
+import bom from './helper/bom';
 import ConfStore from './store';
 import ConfAction from './action';
 import ConfApp from './app';
 
 const [, roomType, roomName] = location.hash.split('/');
 
-const uaString = navigator.userAgent;
-const browser = ua.getBrowserName(uaString);
+const ua = navigator.userAgent;
+const browser = bom.getBrowserName(ua);
 const isSupported =
-  ['Windows', 'Mac'].includes(ua.getOsName(uaString)) &&
+  ['Windows', 'Mac'].includes(bom.getOsName(ua)) &&
   ['Chrome', 'Firefox', 'Safari'].includes(browser);
 if (isSupported === false) {
   location.href = './not_supported.html';
