@@ -11,11 +11,13 @@ const MemberVideoLocal = ({ room, user, action }) => (
     <div className="MemberVideo_Media">
       <button
         onClick={() => action.$update('user.isVideoMuted', !user.isVideoMuted)}
+        title={user.isVideoMuted ? 'Unmute' : 'Mute'}
       >
         <CamIcon isMuted={user.isVideoMuted} />
       </button>
       <button
         onClick={() => action.$update('user.isAudioMuted', !user.isAudioMuted)}
+        title={user.isAudioMuted ? 'Unmute' : 'Mute'}
       >
         <MicIcon isMuted={user.isAudioMuted} />
       </button>
