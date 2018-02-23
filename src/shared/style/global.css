@@ -27,6 +27,5 @@ select, button, a {
 
 /* we are using material-icons */
 .material-icons.-x2 { font-size: 48px; }
-.material-icons.-muted { color: var(--color3); }
 .material-icons.-not_speaking { color: #eee; }
 .material-icons.-speaking { color: var(--color2); }
