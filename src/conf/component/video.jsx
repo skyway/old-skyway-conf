@@ -11,16 +11,17 @@ class Video extends React.Component {
     if (process.env.NODE_ENV !== 'production') {
       console.warn('[component] Video.render');
     }
+    const { muted, isMirror, stream } = this.props;
     // touch it for mobx
-    this.props.stream;
+    stream;
     return (
       <div className="Video">
         <video
-          className="Video_Content"
+          className={`Video_Content ${isMirror ? '-reverse' : ''}`}
           ref={ref => {
             this._ref = ref;
           }}
-          muted={this.props.muted}
+          muted={muted}
           autoPlay
         />
       </div>
