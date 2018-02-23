@@ -23,7 +23,10 @@ const MemberVideoLocal = ({ room, user, action }) => (
       </button>
     </div>
     <div className="MemberVideo_Settings">
-      <button onClick={() => action.$update('ui.isSettingOpen', true)}>
+      <button
+        onClick={() => action.$update('ui.isSettingOpen', true)}
+        title="Open settings"
+      >
         <i className="material-icons">settings</i>
       </button>
     </div>
