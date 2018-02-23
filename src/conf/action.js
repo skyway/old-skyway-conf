@@ -1,4 +1,4 @@
-import { reaction } from 'mobx';
+import { reaction, when } from 'mobx';
 import Mousetrap from 'mousetrap';
 import vad from 'voice-activity-detection';
 
@@ -54,6 +54,7 @@ class ConfAction extends Action {
       () => user.dispName,
       name => localStorage.setItem('SkyWayConf.dispName', name)
     );
+
     reaction(
       () => room.localStream,
       stream => {
@@ -65,6 +66,22 @@ class ConfAction extends Action {
           },
         });
         this._destroyVad = destroy;
+      }
+    );
+
+    // reload device labels after 1st time getUserMedia()
+    when(
+      () => ui.isAppReady,
+      async () => {
+        const devices = await webrtc
+          .getUserDevices()
+          .catch(err => ui.handleUserError(err));
+
+        if (ui.isError) {
+          return;
+        }
+
+        user.updateDevices(devices);
       }
     );
   }
