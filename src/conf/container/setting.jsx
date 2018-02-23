@@ -10,7 +10,7 @@ const Setting = ({ room, ui, user, action }) => (
   <Popup isVisible={ui.isSettingOpen}>
     <div className="L-Setting">
       <div className="L-Setting_Video">
-        <SettingVideo room={room} />
+        <SettingVideo ui={ui} room={room} />
       </div>
 
       <DeviceSelector ui={ui} user={user} action={action} />

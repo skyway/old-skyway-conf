@@ -5,7 +5,7 @@ import Video from '../video';
 import CamIcon from '../icon/cam';
 import MicIcon from '../icon/mic';
 
-const MemberVideoLocal = ({ room, user, action }) => (
+const MemberVideoLocal = ({ ui, room, user, action }) => (
   <div className="MemberVideo">
     <div className="MemberVideo_Name">{user.dispName}</div>
     <div className="MemberVideo_Media">
@@ -30,7 +30,11 @@ const MemberVideoLocal = ({ room, user, action }) => (
         <i className="material-icons">settings</i>
       </button>
     </div>
-    <Video stream={room.localStream} muted />
+    <Video
+      stream={room.localStream}
+      muted
+      isMirror={ui.isScreenSharing === false}
+    />
   </div>
 );
 
