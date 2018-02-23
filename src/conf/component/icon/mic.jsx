@@ -1,7 +1,10 @@
 import React from 'react';
 
-const MicIcon = ({ isMuted = false }) => (
-  <i className={`material-icons ${isMuted && '-muted'}`}>mic_off</i>
-);
+const MicIcon = ({ isMuted = false }) =>
+  isMuted ? (
+    <i className="material-icons">mic_off</i>
+  ) : (
+    <i className="material-icons">mic</i>
+  );
 
 export default MicIcon;
