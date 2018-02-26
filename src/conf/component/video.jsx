@@ -15,16 +15,14 @@ class Video extends React.Component {
     // touch it for mobx
     stream;
     return (
-      <div className="Video">
-        <video
-          className={`Video_Content ${isMirror ? '-reverse' : ''}`}
-          ref={ref => {
-            this._ref = ref;
-          }}
-          muted={muted}
-          autoPlay
-        />
-      </div>
+      <video
+        className={`Video ${isMirror ? '-reverse' : ''}`}
+        ref={ref => {
+          this._ref = ref;
+        }}
+        muted={muted}
+        autoPlay
+      />
     );
   }
 
