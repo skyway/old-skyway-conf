@@ -10,7 +10,11 @@ const ScreenShareIntro = ({ ui, action }) => (
       <p className="L-ScreenShareIntro_Desc">
         Screen share is not supported on your browser. If you are using Chrome,
         please install{' '}
-        <a href="https://chrome.google.com/webstore/detail/conf3-screenshare/ooeacgahemnciocfilnkchjjiakipakp">
+        <a
+          href="https://chrome.google.com/webstore/detail/conf3-screenshare/ooeacgahemnciocfilnkchjjiakipakp"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Chrome extension
         </a>.
       </p>
