@@ -8,7 +8,9 @@ const ChatBox = ({ chat, action }) => (
     <a
       className="ChatBox_Closer"
       onClick={() => action.$update('ui.isChatOpen', false)}
-    />
+    >
+      <i className="material-icons -x05">keyboard_arrow_right</i>
+    </a>
     <ChatMessageList chat={chat} />
     <input
       className="ChatBox_Input"

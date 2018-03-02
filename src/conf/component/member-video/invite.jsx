@@ -7,7 +7,7 @@ const MemberVideoInvite = ({ action }) => (
       className="MemberVideo_Invite"
       onClick={() => action.$update('ui.isInviteOpen', true)}
     >
-      <i className="material-icons -x2">person_add</i>
+      <i className="material-icons -x15">person_add</i>
     </a>
   </div>
 );
