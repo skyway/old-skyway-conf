@@ -42,6 +42,8 @@ if (isSupportedOs && isSupportedBrowser) {
     </Provider>,
     document.getElementById('app-root')
   );
+
+  window.addEventListener('hashchange', () => location.reload(true));
 } else {
   location.href = './not_supported.html';
 }
