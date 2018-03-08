@@ -4,7 +4,6 @@ class NotificationStore {
   constructor() {
     extendObservable(this, {
       items: observable.shallowArray([]),
-      _reserve: new Set(),
     });
   }
 
@@ -12,15 +11,8 @@ class NotificationStore {
     this._show(`${syncState.dispName} sent a chat`);
   }
 
-  reserveJoin(peerId) {
-    this._reserve.add(peerId);
-  }
-
-  showJoinIfReserved(peerId, syncState) {
-    if (this._reserve.has(peerId)) {
-      this._show(`${syncState.dispName} joined`);
-      this._reserve.delete(peerId);
-    }
+  showJoin(syncState) {
+    this._show(`${syncState.dispName} joined`);
   }
 
   showLeave(syncState) {

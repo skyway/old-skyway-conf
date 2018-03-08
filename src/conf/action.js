@@ -251,7 +251,12 @@ class ConfAction extends Action {
 
     // return back state as welcome message
     confRoom.send({ type: 'sync', payload: user.syncState });
-    notification.reserveJoin(stream.peerId);
+
+    // XXX: need to wait until syncState is sent back from remotes
+    setTimeout(() => {
+      const syncState = room.syncState.get(stream.peerId);
+      notification.showJoin(syncState);
+    }, 500);
   }
   _onRoomRemoveStream(stream) {
     const { room } = this.store;
@@ -271,7 +276,6 @@ class ConfAction extends Action {
     switch (type) {
       case 'sync': {
         room.syncState.set(payload.peerId, payload);
-        notification.showJoinIfReserved(payload.peerId, payload);
         break;
       }
       case 'chat': {
