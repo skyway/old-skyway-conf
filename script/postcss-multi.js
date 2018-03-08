@@ -2,7 +2,7 @@ const path = require('path');
 const { spawn } = require('child_process');
 
 const flags = process.argv.slice(2);
-const config = require('./postcss.config.js');
+const config = require('../postcss.config.js');
 
 // Parse postcss.config.js's extra fileds like webpack.config.js
 const entries = [];

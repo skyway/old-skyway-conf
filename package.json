@@ -5,10 +5,10 @@
   "scripts": {
     "dev": "npm run dev:js & npm run dev:css & wait",
     "dev:js": "webpack-dev-server",
-    "dev:css": "node ./postcss-multi.js -w",
+    "dev:css": "node ./script/postcss-multi.js -w",
     "build": "npm run build:js && npm run build:css",
     "build:js": "NODE_ENV=production webpack",
-    "build:css": "NODE_ENV=production node ./postcss-multi.js",
+    "build:css": "NODE_ENV=production node ./script/postcss-multi.js",
     "lint": "eslint . --fix --ext .js --ext .jsx"
   },
   "author": "",
