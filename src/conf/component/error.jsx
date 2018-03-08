@@ -12,6 +12,7 @@ const Error = ({ ui }) => (
       <div className="Error_Desc">
         <p>Please check your..</p>
         <ul>
+          <li>current url(and hash)</li>
           <li>camera or microphone settings</li>
           <li>network conditions</li>
           <li>browser updates</li>
