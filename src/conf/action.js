@@ -130,8 +130,6 @@ class ConfAction extends Action {
       user.isAudioMuted = !user.isAudioMuted;
       return false;
     });
-
-    this.onClickJoinRoom(); // debug
   }
 
   async onClickJoinRoom() {
