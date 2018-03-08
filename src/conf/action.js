@@ -130,6 +130,8 @@ class ConfAction extends Action {
       user.isAudioMuted = !user.isAudioMuted;
       return false;
     });
+
+    this.onClickJoinRoom(); // debug
   }
 
   async onClickJoinRoom() {
@@ -246,31 +248,38 @@ class ConfAction extends Action {
     );
   }
   _onRoomAddStream(stream, confRoom) {
-    const { room, user } = this.store;
+    const { room, user, notification } = this.store;
     room.addRemoteStream(stream);
 
     // return back state as welcome message
     confRoom.send({ type: 'sync', payload: user.syncState });
+    notification.reserveJoin(stream.peerId);
   }
   _onRoomRemoveStream(stream) {
     const { room } = this.store;
     room.removeRemoteStream(stream);
   }
   _onRoomPeerLeave(peerId) {
-    const { room } = this.store;
+    const { room, notification } = this.store;
+
+    const syncState = room.syncState.get(peerId);
+    notification.showLeave(syncState);
+
     room.removeRemoteStreamByPeerId(peerId);
   }
   _onRoomData({ _src, data }) {
-    const { room, chat } = this.store;
+    const { room, chat, ui, notification } = this.store;
     const { type, payload } = data;
     switch (type) {
       case 'sync': {
         room.syncState.set(payload.peerId, payload);
+        notification.showJoinIfReserved(payload.peerId, payload);
         break;
       }
       case 'chat': {
         const syncState = room.syncState.get(payload.peerId);
         chat.addMessage(payload, syncState.dispName);
+        ui.isChatOpen || notification.showChat(syncState);
         break;
       }
       default:

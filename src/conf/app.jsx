@@ -9,6 +9,7 @@ import Chat from './container/chat';
 import ChatBox from './container/chat-box';
 import ScreenShare from './container/screen-share';
 import ScreenShareIntro from './container/screen-share-intro';
+import Notification from './container/notification';
 
 const ConfApp = () => (
   <Root>
@@ -24,6 +25,7 @@ const ConfApp = () => (
     </div>
     <ChatBox />
     <ScreenShareIntro />
+    <Notification />
   </Root>
 );
 
