@@ -2,13 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'mobx-react';
 
-import util from '../shared/util';
 import ConfStore from './store';
 import ConfAction from './action';
 import ConfApp from './app';
+import bom from './helper/bom';
 
 const ua = navigator.userAgent;
-if (util.isSupportedEnv(ua)) {
+const isSupportedOs = ['Windows', 'Mac'].includes(bom.getOsName(ua));
+const isSupportedBrowser = ['Chrome', 'Firefox'].includes(
+  bom.getBrowserName(ua)
+);
+if (isSupportedOs && isSupportedBrowser) {
   const store = new ConfStore();
   const action = new ConfAction(store);
 

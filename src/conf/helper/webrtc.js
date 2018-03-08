@@ -85,8 +85,8 @@ function snapVideoStream(stream, mimeType = 'image/jpeg', qualityArgument = 1) {
   });
 }
 
-function getFakeStream() {
-  const { stream } = new AudioContext().createMediaStreamDestination();
+function getFakeStream(ctx) {
+  const { stream } = ctx.createMediaStreamDestination();
   return stream;
 }
 
