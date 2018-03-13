@@ -91,9 +91,9 @@ class RoomStore {
 decorate(RoomStore, {
   syncState: observable,
   pinnedPeerId: observable,
-  localVideoStreamTrack: observable, // XXX: wanna make it shallow but..
-  localScreenStreamTrack: observable, // XXX: wanna make it shallow but..
-  localAudioStreamTrack: observable, // XXX: wanna make it shallow but..
+  localVideoStreamTrack: observable.ref,
+  localScreenStreamTrack: observable.ref,
+  localAudioStreamTrack: observable.ref,
   remoteStreams: observable.shallow,
   localStream: computed,
   pinnedStream: computed,
