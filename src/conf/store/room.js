@@ -1,39 +1,44 @@
-import { extendObservable, observable, runInAction } from 'mobx';
+import { extendObservable, runInAction } from 'mobx';
 
 class RoomStore {
   constructor() {
-    extendObservable(this, {
-      syncState: new Map(),
-      pinnedPeerId: '',
-      localVideoStreamTrack: observable.shallowObject({}),
-      localScreenStreamTrack: observable.shallowObject({}),
-      localAudioStreamTrack: observable.shallowObject({}),
-      remoteStreams: observable.shallowArray([]),
+    extendObservable(
+      this,
+      {
+        syncState: new Map(),
+        pinnedPeerId: '',
+        localVideoStreamTrack: {},
+        localScreenStreamTrack: {},
+        localAudioStreamTrack: {},
+        remoteStreams: [],
 
-      get localStream() {
-        const ms = new MediaStream();
+        get localStream() {
+          const ms = new MediaStream();
 
-        if (this.localAudioStreamTrack instanceof MediaStreamTrack) {
-          ms.addTrack(this.localAudioStreamTrack);
-        }
+          if (this.localAudioStreamTrack instanceof MediaStreamTrack) {
+            ms.addTrack(this.localAudioStreamTrack);
+          }
 
-        // return with either video
-        if (this.localScreenStreamTrack instanceof MediaStreamTrack) {
-          ms.addTrack(this.localScreenStreamTrack);
-        } else if (this.localVideoStreamTrack instanceof MediaStreamTrack) {
-          ms.addTrack(this.localVideoStreamTrack);
-        }
+          // return with either video
+          if (this.localScreenStreamTrack instanceof MediaStreamTrack) {
+            ms.addTrack(this.localScreenStreamTrack);
+          } else if (this.localVideoStreamTrack instanceof MediaStreamTrack) {
+            ms.addTrack(this.localVideoStreamTrack);
+          }
 
-        return ms;
+          return ms;
+        },
+        get pinnedStream() {
+          return (
+            this.remoteStreams.find(
+              stream => stream.peerId === this.pinnedPeerId
+            ) || this.localStream
+          );
+        },
       },
-      get pinnedStream() {
-        return (
-          this.remoteStreams.find(
-            stream => stream.peerId === this.pinnedPeerId
-          ) || this.localStream
-        );
-      },
-    });
+      {},
+      { deep: false }
+    );
   }
 
   setLocalStream(stream) {
