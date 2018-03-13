@@ -1,10 +1,8 @@
-import { extendObservable, observable } from 'mobx';
+import { decorate, observable } from 'mobx';
 
 class NotificationStore {
   constructor() {
-    extendObservable(this, {
-      items: observable.shallowArray([]),
-    });
+    this.items = [];
   }
 
   showChat(syncState) {
@@ -29,4 +27,7 @@ class NotificationStore {
   }
 }
 
+decorate(NotificationStore, {
+  items: observable.shallow,
+});
 export default NotificationStore;

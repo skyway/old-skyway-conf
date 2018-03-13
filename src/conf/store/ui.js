@@ -1,33 +1,32 @@
-import { extendObservable } from 'mobx';
+import { decorate, observable, computed } from 'mobx';
 import util from '../../shared/util';
 
 class UiStore {
   constructor() {
-    extendObservable(this, {
-      roomType: '',
-      roomName: '',
+    this.roomType = '';
+    this.roomName = '';
 
-      isAppReady: false,
+    this.isAppReady = false;
 
-      isSettingOpen: true,
-      isInviteOpen: false,
-      isChatOpen: false,
-      isChatSending: false,
-      isRoomJoin: false,
-      isScreenSharing: false,
-      isScreenShareIntroOpen: false,
+    this.isSettingOpen = true;
+    this.isInviteOpen = false;
+    this.isChatOpen = false;
+    this.isChatSending = false;
+    this.isRoomJoin = false;
+    this.isScreenSharing = false;
+    this.isScreenShareIntroOpen = false;
 
-      isUserError: false,
-      isAppError: false,
+    this.isUserError = false;
+    this.isAppError = false;
+  }
 
-      get confUrl() {
-        const hash = `#!/${this.roomType}/${this.roomName}`;
-        return `${location.origin}${location.pathname}${hash}`;
-      },
-      get isError() {
-        return this.isUserError || this.isAppError;
-      },
-    });
+  get confUrl() {
+    const hash = `#!/${this.roomType}/${this.roomName}`;
+    return `${location.origin}${location.pathname}${hash}`;
+  }
+
+  get isError() {
+    return this.isUserError || this.isAppError;
   }
 
   setRoom({ roomType, roomName }) {
@@ -63,4 +62,20 @@ class UiStore {
   }
 }
 
+decorate(UiStore, {
+  roomType: observable,
+  roomName: observable,
+  isAppReady: observable,
+  isSettingOpen: observable,
+  isInviteOpen: observable,
+  isChatOpen: observable,
+  isChatSending: observable,
+  isRoomJoin: observable,
+  isScreenSharing: observable,
+  isScreenShareIntroOpen: observable,
+  isUserError: observable,
+  isAppError: observable,
+  confUrl: computed,
+  isError: computed,
+});
 export default UiStore;

@@ -1,35 +1,33 @@
-import { extendObservable, observable, runInAction } from 'mobx';
+import { decorate, observable, computed, runInAction } from 'mobx';
 
 class UserStore {
   constructor() {
-    extendObservable(this, {
-      peerId: 'YOUR_PEER_ID',
-      dispName: 'YOUR_NAME',
-      isVideoMuted: false,
-      isAudioMuted: false,
-      isSpeaking: false,
+    this.peerId = 'YOUR_PEER_ID';
+    this.dispName = 'YOUR_NAME';
+    this.isVideoMuted = false;
+    this.isAudioMuted = false;
+    this.isSpeaking = false;
+    this.videoDeviceId = '';
+    this.audioDeviceId = '';
+    this.videoDevices = [];
+    this.audioDevices = [];
+  }
 
-      videoDeviceId: '',
-      audioDeviceId: '',
-      videoDevices: observable.shallowArray([]),
-      audioDevices: observable.shallowArray([]),
+  get syncState() {
+    return {
+      peerId: this.peerId,
+      dispName: this.dispName,
+      isVideoMuted: this.isVideoMuted,
+      isAudioMuted: this.isAudioMuted,
+      isSpeaking: this.isSpeaking,
+    };
+  }
 
-      get syncState() {
-        return {
-          peerId: this.peerId,
-          dispName: this.dispName,
-          isVideoMuted: this.isVideoMuted,
-          isAudioMuted: this.isAudioMuted,
-          isSpeaking: this.isSpeaking,
-        };
-      },
-      get isNoVideoDevices() {
-        return this.videoDevices.length === 0;
-      },
-      get isNoAudioDevices() {
-        return this.audioDevices.length === 0;
-      },
-    });
+  get isNoVideoDevices() {
+    return this.videoDevices.length === 0;
+  }
+  get isNoAudioDevices() {
+    return this.audioDevices.length === 0;
   }
 
   updateDevices({ video, audio }) {
@@ -66,4 +64,20 @@ class UserStore {
   }
 }
 
+decorate(UserStore, {
+  peerId: observable,
+  dispName: observable,
+  isVideoMuted: observable,
+  isAudioMuted: observable,
+  isSpeaking: observable,
+
+  videoDeviceId: observable,
+  audioDeviceId: observable,
+  videoDevices: observable.shallow,
+  audioDevices: observable.shallow,
+
+  syncState: computed,
+  isNoVideoDevices: computed,
+  isNoAudioDevices: computed,
+});
 export default UserStore;

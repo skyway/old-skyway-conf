@@ -1,16 +1,13 @@
 const webpack = require('webpack');
 const path = require('path');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const rootPath = path.resolve('');
-const nodeEnv = process.env.NODE_ENV || 'development';
 
 const config = {
   context: rootPath,
   entry: {
     index: './src/index/main.jsx',
     conf: './src/conf/main.jsx',
-    vendor: ['react', 'react-dom', 'mobx', 'mobx-react'],
   },
   output: {
     path: `${rootPath}/docs`,
@@ -25,18 +22,21 @@ const config = {
       },
     ],
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /react|react-dom|mobx|mobx-react/,
+          name: 'vendor',
+          chunks: 'all',
+        },
+      },
+    },
+  },
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-  plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks: Infinity,
-    }),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(nodeEnv),
-    }),
-  ],
+  plugins: [new webpack.DefinePlugin({})],
   devServer: {
     contentBase: `${rootPath}/docs`,
     watchContentBase: true,
@@ -44,9 +44,5 @@ const config = {
     port: 9000,
   },
 };
-
-if (nodeEnv === 'production') {
-  config.plugins.push(new UglifyJsPlugin());
-}
 
 module.exports = config;
