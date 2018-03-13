@@ -1,17 +1,10 @@
-import { extendObservable, runInAction } from 'mobx';
+import { decorate, observable, runInAction } from 'mobx';
 
 class ChatStore {
   constructor() {
-    extendObservable(
-      this,
-      {
-        bufferText: '',
-        lastMessage: {},
-        messages: [],
-      },
-      {},
-      { deep: false }
-    );
+    this.bufferText = '';
+    this.lastMessage = {};
+    this.messages = [];
   }
 
   addMessage({ text, blob, timestamp, peerId }, dispName) {
@@ -38,4 +31,9 @@ class ChatStore {
   }
 }
 
+decorate(ChatStore, {
+  bufferText: observable,
+  lastMessage: observable.shallow,
+  messages: observable.shallow,
+});
 export default ChatStore;

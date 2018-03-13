@@ -1,43 +1,36 @@
-import { extendObservable, runInAction } from 'mobx';
+import { decorate, observable, computed, runInAction } from 'mobx';
 
 class RoomStore {
   constructor() {
-    extendObservable(
-      this,
-      {
-        syncState: new Map(),
-        pinnedPeerId: '',
-        localVideoStreamTrack: {},
-        localScreenStreamTrack: {},
-        localAudioStreamTrack: {},
-        remoteStreams: [],
+    this.syncState = new Map();
+    this.pinnedPeerId = '';
+    this.localVideoStreamTrack = {};
+    this.localScreenStreamTrack = {};
+    this.localAudioStreamTrack = {};
+    this.remoteStreams = [];
+  }
 
-        get localStream() {
-          const ms = new MediaStream();
+  get localStream() {
+    const ms = new MediaStream();
 
-          if (this.localAudioStreamTrack instanceof MediaStreamTrack) {
-            ms.addTrack(this.localAudioStreamTrack);
-          }
+    if (this.localAudioStreamTrack instanceof MediaStreamTrack) {
+      ms.addTrack(this.localAudioStreamTrack);
+    }
 
-          // return with either video
-          if (this.localScreenStreamTrack instanceof MediaStreamTrack) {
-            ms.addTrack(this.localScreenStreamTrack);
-          } else if (this.localVideoStreamTrack instanceof MediaStreamTrack) {
-            ms.addTrack(this.localVideoStreamTrack);
-          }
+    // return with either video
+    if (this.localScreenStreamTrack instanceof MediaStreamTrack) {
+      ms.addTrack(this.localScreenStreamTrack);
+    } else if (this.localVideoStreamTrack instanceof MediaStreamTrack) {
+      ms.addTrack(this.localVideoStreamTrack);
+    }
 
-          return ms;
-        },
-        get pinnedStream() {
-          return (
-            this.remoteStreams.find(
-              stream => stream.peerId === this.pinnedPeerId
-            ) || this.localStream
-          );
-        },
-      },
-      {},
-      { deep: false }
+    return ms;
+  }
+
+  get pinnedStream() {
+    return (
+      this.remoteStreams.find(stream => stream.peerId === this.pinnedPeerId) ||
+      this.localStream
     );
   }
 
@@ -90,8 +83,19 @@ class RoomStore {
   }
 
   removeRemoteStream(stream) {
-    this.remoteStreams.remove(stream);
+    const idx = this.remoteStreams.indexOf(stream);
+    this.remoteStreams.splice(idx, 1);
   }
 }
 
+decorate(RoomStore, {
+  syncState: observable,
+  pinnedPeerId: observable,
+  localVideoStreamTrack: observable, // XXX: wanna make it shallow but..
+  localScreenStreamTrack: observable, // XXX: wanna make it shallow but..
+  localAudioStreamTrack: observable, // XXX: wanna make it shallow but..
+  remoteStreams: observable.shallow,
+  localStream: computed,
+  pinnedStream: computed,
+});
 export default RoomStore;
