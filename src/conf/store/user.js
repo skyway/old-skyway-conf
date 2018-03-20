@@ -73,8 +73,8 @@ decorate(UserStore, {
 
   videoDeviceId: observable,
   audioDeviceId: observable,
-  videoDevices: observable.shallow,
-  audioDevices: observable.shallow,
+  videoDevices: observable.ref,
+  audioDevices: observable.ref,
 
   syncState: computed,
   isNoVideoDevices: computed,
