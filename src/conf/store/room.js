@@ -62,7 +62,7 @@ class RoomStore {
       const oldStream = this.remoteStreams.find(
         oStream => oStream.peerId === stream.peerId
       );
-      oldStream && this.removeRemoteStream(oldStream);
+      this.removeRemoteStream(oldStream);
 
       this.remoteStreams.push(stream);
     });
@@ -73,7 +73,7 @@ class RoomStore {
       const stream = this.remoteStreams.find(
         stream => stream.peerId === peerId
       );
-      stream && this.removeRemoteStream(stream);
+      this.removeRemoteStream(stream);
 
       this.syncState.delete(peerId);
       if (this.pinnedPeerId === peerId) {
@@ -83,8 +83,7 @@ class RoomStore {
   }
 
   removeRemoteStream(stream) {
-    const idx = this.remoteStreams.indexOf(stream);
-    this.remoteStreams.splice(idx, 1);
+    stream && this.remoteStreams.remove(stream);
   }
 }
 
