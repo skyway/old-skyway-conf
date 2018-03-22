@@ -7,12 +7,18 @@ import ConfAction from './action';
 import ConfApp from './app';
 import bom from './helper/bom';
 
+const [, roomType, roomName] = location.hash.split('/');
 const ua = navigator.userAgent;
+const browser = bom.getBrowserName(ua);
 const isSupportedOs = ['Windows', 'Mac'].includes(bom.getOsName(ua));
-const isSupportedBrowser = ['Chrome', 'Firefox'].includes(
-  bom.getBrowserName(ua)
-);
-if (isSupportedOs && isSupportedBrowser) {
+const isSupportedBrowser = ['Chrome', 'Firefox', 'Safari'].includes(browser);
+if (
+  (isSupportedOs && isSupportedBrowser) === false ||
+  // allow Safari to enter mesh room only
+  (browser === 'Safari' && roomType !== 'mesh')
+) {
+  location.href = './not_supported.html';
+} else {
   const store = new ConfStore();
   const action = new ConfAction(store);
 
@@ -34,7 +40,6 @@ if (isSupportedOs && isSupportedBrowser) {
       });
   }
 
-  const [, roomType, roomName] = location.hash.split('/');
   action.onLoad({ roomType, roomName });
   ReactDOM.render(
     <Provider action={action} {...store}>
@@ -44,6 +49,4 @@ if (isSupportedOs && isSupportedBrowser) {
   );
 
   window.addEventListener('hashchange', () => location.reload(true));
-} else {
-  location.href = './not_supported.html';
 }
