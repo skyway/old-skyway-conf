@@ -111,7 +111,9 @@ class ConfAction extends Action {
       room.setLocalStream(fakeStream);
     }
 
-    navigator.mediaDevices.addEventListener('devicechange', async () => {
+    // XXX: Safari's mediaDevices does not inherit EventTarget..
+    // navigator.mediaDevices.addEventListener('devicechange', async () => {
+    navigator.mediaDevices.ondevicechange = async function() {
       const devices = await webrtc
         .getUserDevices()
         .catch(err => ui.handleUserError(err));
@@ -121,7 +123,7 @@ class ConfAction extends Action {
       }
 
       user.updateDevices(devices);
-    });
+    };
     Mousetrap.bind(['command+e', 'ctrl+e'], () => {
       user.isVideoMuted = !user.isVideoMuted;
       return false;
