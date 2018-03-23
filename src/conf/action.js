@@ -252,11 +252,11 @@ class ConfAction extends Action {
     // return back state as welcome message
     confRoom.send({ type: 'sync', payload: user.syncState });
 
-    // XXX: need to wait until syncState is sent back from remotes
-    setTimeout(() => {
-      const syncState = room.syncState.get(stream.peerId);
-      notification.showJoin(syncState);
-    }, 500);
+    // need to wait until syncState is sent back from remotes
+    when(
+      () => room.syncState.get(stream.peerId) !== undefined,
+      () => notification.showJoin(room.syncState.get(stream.peerId))
+    );
   }
   _onRoomRemoveStream(stream) {
     const { room } = this.store;
