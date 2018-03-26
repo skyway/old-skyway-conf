@@ -10,7 +10,9 @@ import bom from './helper/bom';
 const [, roomType, roomName] = location.hash.split('/');
 const ua = navigator.userAgent;
 const browser = bom.getBrowserName(ua);
-const isSupportedOs = ['Windows', 'Mac'].includes(bom.getOsName(ua));
+const isSupportedOs = ['Windows', 'Mac', 'iOS', 'Android'].includes(
+  bom.getOsName(ua)
+);
 const isSupportedBrowser = ['Chrome', 'Firefox', 'Safari'].includes(browser);
 if (
   (isSupportedOs && isSupportedBrowser) === false ||
