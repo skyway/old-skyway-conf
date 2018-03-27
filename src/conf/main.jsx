@@ -5,7 +5,7 @@ import { Provider } from 'mobx-react';
 import ConfStore from './store';
 import ConfAction from './action';
 import ConfApp from './app';
-import bom from './helper/bom';
+import bom from '../shared/bom';
 
 const [, roomType, roomName] = location.hash.split('/');
 const os = bom.getOsName(navigator.userAgent);

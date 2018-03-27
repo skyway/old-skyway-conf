@@ -1,5 +1,4 @@
 import { reaction, when } from 'mobx';
-import Mousetrap from 'mousetrap';
 import vad from 'voice-activity-detection';
 
 import Action from '../shared/action';
@@ -124,14 +123,6 @@ class ConfAction extends Action {
 
       user.updateDevices(devices);
     };
-    Mousetrap.bind(['command+e', 'ctrl+e'], () => {
-      user.isVideoMuted = !user.isVideoMuted;
-      return false;
-    });
-    Mousetrap.bind(['command+d', 'ctrl+d'], () => {
-      user.isAudioMuted = !user.isAudioMuted;
-      return false;
-    });
   }
 
   async onClickJoinRoom() {
@@ -155,6 +146,7 @@ class ConfAction extends Action {
     ui.isSettingOpen = false;
   }
 
+  // TODO: key?
   async onChatEnterKeyDown() {
     const { chat, user, room, ui } = this.store;
 
@@ -187,42 +179,6 @@ class ConfAction extends Action {
     chat.updateBuffer(payload);
 
     ui.isChatSending = false;
-  }
-
-  async startScreenShare() {
-    const { ui, room, user } = this.store;
-
-    if (skyway.isScreenShareAvailable() === false) {
-      ui.isScreenShareIntroOpen = true;
-      return;
-    }
-
-    let vTrack;
-    try {
-      vTrack = await skyway.getScreenStreamTrack();
-    } catch (err) {
-      if (err instanceof DOMException === false) {
-        ui.isScreenShareIntroOpen = true;
-      }
-      console.error(err);
-      return;
-    }
-
-    vTrack.addEventListener('ended', () => this.stopScreenShare(), {
-      once: true,
-    });
-    // apply current status before set
-    user.isVideoMuted && webrtc.setMuteTrack(vTrack, true);
-
-    // this triggers stream replacement
-    room.setScreenStreamTrack(vTrack);
-    ui.isScreenSharing = true;
-  }
-  stopScreenShare() {
-    const { ui, room } = this.store;
-
-    room.setScreenStreamTrack(null);
-    ui.isScreenSharing = false;
   }
 
   _onRoomJoin(confRoom) {

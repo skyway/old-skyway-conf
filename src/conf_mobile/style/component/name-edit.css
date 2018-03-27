@@ -1,0 +1,20 @@
+/* sizes should be synced with device-selector.css */
+.NameEdit {
+  display: flex;
+  align-items: center;
+  width: 90%;
+  margin: 10px auto;
+
+  &_Label {
+    width: 60px;
+    text-align: right;
+  }
+
+  &_Input {
+    height: 30px;
+    width: 300px;
+    margin: 0 20px;
+    box-sizing: border-box;
+    text-indent: 5px;
+  }
+}

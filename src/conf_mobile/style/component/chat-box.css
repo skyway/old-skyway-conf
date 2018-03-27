@@ -1,0 +1,25 @@
+.ChatBox {
+  height: calc(90vh - var(--bottomLayoutHeight)); /* save for member-list grid */
+  width: 300px;
+  display: grid;
+  grid-template-rows: 1fr 40px;
+  padding: 20px;
+  border-radius: 0 5px 5px 0;
+  background-color: #fff;
+  color: #000;
+
+  &_Closer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -10px;
+    width: 10px;
+    background-color: #aaa;
+    border-radius: 5px 0 0 5px;
+    padding-top: 100%;
+  }
+
+  &_Input {
+    width: 100%;
+  }
+}

@@ -1,0 +1,65 @@
+.L-Main {
+  display: grid;
+  grid-template-rows: calc(100vh - var(--bottomLayoutHeight)) var(--bottomLayoutHeight);
+  height: 100vh;
+}
+
+.L-Setting {
+  width: var(--popupWidth);
+  margin: 100px auto;
+  padding: 20px;
+  background-color: #fff;
+  color: #000;
+  border-radius: 5px;
+
+  &_Video {
+    text-align: center;
+    background-color: #000;
+    height: 300px;
+  }
+
+  &_Finish {
+    text-align: right;
+  }
+}
+
+.L-Invite {
+  width: var(--popupWidth);
+  margin: 100px auto;
+  padding: 20px;
+  background-color: #fff;
+  color: #000;
+  border-radius: 5px;
+
+  &_Title {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+
+  &_Input {
+    width: 100%;
+    margin: 20px auto;
+  }
+
+  &_Finish {
+    text-align: right;
+  }
+}
+
+.L-RightSide {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.L-ChatBox {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.L-Notification {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
