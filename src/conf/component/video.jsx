@@ -22,7 +22,6 @@ class Video extends React.Component {
         }}
         muted={muted}
         autoPlay
-        playsInline
       />
     );
   }
