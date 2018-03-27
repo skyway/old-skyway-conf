@@ -8,6 +8,7 @@ const config = {
   entry: {
     index: './src/index/main.jsx',
     conf: './src/conf/main.jsx',
+    conf_mobile: './src/conf/main.mobile.jsx',
   },
   output: {
     path: `${rootPath}/docs`,

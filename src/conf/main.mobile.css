@@ -1,0 +1,5 @@
+@import "normalize.css";
+@import "../shared/style/global";
+@import "./style/global";
+@import "./style/layout";
+@import "./style/component/*";

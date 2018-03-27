@@ -8,6 +8,7 @@ const config = {
   entry: {
     index: './src/index/main.css',
     conf: './src/conf/main.css',
+    conf_mobile: './src/conf/main.mobile.css',
     not_supported: './src/not_supported/main.css',
   },
   output: {
