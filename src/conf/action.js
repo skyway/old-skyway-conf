@@ -61,7 +61,7 @@ class ConfAction extends Action {
       stream => {
         this._destroyVad && this._destroyVad();
 
-        const { destroy } = vad(bom.getAudioCtx(), stream, {
+        const { destroy } = vad(bom.getAudioCtx(window), stream, {
           onUpdate(lv) {
             user.isSpeaking = lv !== 0;
           },
@@ -107,7 +107,7 @@ class ConfAction extends Action {
     // or enable to force enter without devices
     if (user.isNoVideoDevices && user.isNoAudioDevices) {
       ui.isAppReady = true;
-      const fakeStream = webrtc.getFakeStream(bom.getAudioCtx());
+      const fakeStream = webrtc.getFakeStream(bom.getAudioCtx(window));
       room.setLocalStream(fakeStream);
     }
 
