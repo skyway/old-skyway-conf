@@ -8,20 +8,35 @@ import ConfApp from './app';
 import bom from './helper/bom';
 
 const [, roomType, roomName] = location.hash.split('/');
-const ua = navigator.userAgent;
-const browser = bom.getBrowserName(ua);
-const isSupportedOs = ['Windows', 'Mac'].includes(bom.getOsName(ua));
-const isSupportedBrowser = ['Chrome', 'Firefox', 'Safari'].includes(browser);
+const os = bom.getOsName(navigator.userAgent);
+const browser = bom.getBrowserName(navigator.userAgent);
 if (
-  (isSupportedOs && isSupportedBrowser) === false ||
+  (['Windows', 'Mac', 'iOS', 'Android'].includes(os) &&
+    ['Chrome', 'Firefox', 'Safari'].includes(browser)) === false ||
   // allow Safari to enter mesh room only
   (browser === 'Safari' && roomType !== 'mesh')
 ) {
   location.href = './not_supported.html';
 } else {
+  // if supported, but mobile, redirect
+  if (['iOS', 'Android'].includes(os)) {
+    location.href = `./conf_mobile.html${location.hash}`;
+  }
+
   const store = new ConfStore();
   const action = new ConfAction(store);
 
+  action.onLoad({ roomType, roomName });
+  ReactDOM.render(
+    <Provider action={action} {...store}>
+      <ConfApp />
+    </Provider>,
+    document.getElementById('app-root')
+  );
+
+  window.addEventListener('hashchange', () => location.reload(true));
+
+  // for debug
   if (process.env.NODE_ENV !== 'production') {
     window.store = store;
     window.action = action;
@@ -39,14 +54,4 @@ if (
         };
       });
   }
-
-  action.onLoad({ roomType, roomName });
-  ReactDOM.render(
-    <Provider action={action} {...store}>
-      <ConfApp />
-    </Provider>,
-    document.getElementById('app-root')
-  );
-
-  window.addEventListener('hashchange', () => location.reload(true));
 }
