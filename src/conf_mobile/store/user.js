@@ -13,6 +13,18 @@ class UserStore {
     this.audioDevices = [];
   }
 
+  // XXX: assume there are at least 2 cameras on mobile device
+  get facingMode() {
+    if (this.videoDevices.length !== 2) {
+      return 'environment';
+    }
+
+    // XXX: and assume videoDevices is [env, user] sorted
+    return this.videoDeviceId === this.videoDevices[1].deviceId
+      ? 'user'
+      : 'environment';
+  }
+
   get syncState() {
     return {
       peerId: this.peerId,
@@ -77,6 +89,7 @@ decorate(UserStore, {
   audioDevices: observable.ref,
 
   syncState: computed,
+  facingMode: computed,
   isNoVideoDevices: computed,
   isNoAudioDevices: computed,
 });

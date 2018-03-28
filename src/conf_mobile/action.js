@@ -18,7 +18,7 @@ class ConfAction extends Action {
       () => [user.videoDeviceId, user.audioDeviceId],
       async ([videoDeviceId, audioDeviceId]) => {
         const stream = await webrtc
-          .getUserMedia({ videoDeviceId, audioDeviceId })
+          .getUserMedia({ videoDeviceId, audioDeviceId }, user.facingMode)
           .catch(err => ui.handleGetUserMediaError(err));
 
         if (ui.isError) {
