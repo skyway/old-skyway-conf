@@ -4,27 +4,8 @@ class RoomStore {
   constructor() {
     this.syncState = new Map();
     this.pinnedPeerId = '';
-    this.localVideoStreamTrack = {};
-    this.localScreenStreamTrack = {};
-    this.localAudioStreamTrack = {};
+    this.localStream = {};
     this.remoteStreams = [];
-  }
-
-  get localStream() {
-    const ms = new MediaStream();
-
-    if (this.localAudioStreamTrack instanceof MediaStreamTrack) {
-      ms.addTrack(this.localAudioStreamTrack);
-    }
-
-    // return with either video
-    if (this.localScreenStreamTrack instanceof MediaStreamTrack) {
-      ms.addTrack(this.localScreenStreamTrack);
-    } else if (this.localVideoStreamTrack instanceof MediaStreamTrack) {
-      ms.addTrack(this.localVideoStreamTrack);
-    }
-
-    return ms;
   }
 
   get pinnedStream() {
@@ -35,24 +16,7 @@ class RoomStore {
   }
 
   setLocalStream(stream) {
-    const [vTrack] = stream.getVideoTracks();
-    const [aTrack] = stream.getAudioTracks();
-
-    runInAction(() => {
-      this.localVideoStreamTrack = vTrack;
-      this.localAudioStreamTrack = aTrack;
-    });
-  }
-
-  setScreenStreamTrack(track) {
-    if (track instanceof MediaStreamTrack) {
-      // start
-      this.localScreenStreamTrack = track;
-    } else {
-      // stop
-      this.localScreenStreamTrack.stop();
-      this.localScreenStreamTrack = {};
-    }
+    this.localStream = stream;
   }
 
   addRemoteStream(stream) {
@@ -90,11 +54,8 @@ class RoomStore {
 decorate(RoomStore, {
   syncState: observable,
   pinnedPeerId: observable,
-  localVideoStreamTrack: observable.ref,
-  localScreenStreamTrack: observable.ref,
-  localAudioStreamTrack: observable.ref,
+  localStream: observable.ref,
   remoteStreams: observable.shallow,
-  localStream: computed,
   pinnedStream: computed,
 });
 export default RoomStore;
