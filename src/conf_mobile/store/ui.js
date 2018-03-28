@@ -10,7 +10,6 @@ class UiStore {
 
     this.isSettingOpen = true;
     this.isChatOpen = false;
-    this.isChatSending = false;
     this.isRoomJoin = false;
 
     this.isUserError = false;
@@ -65,7 +64,6 @@ decorate(UiStore, {
   isAppReady: observable,
   isSettingOpen: observable,
   isChatOpen: observable,
-  isChatSending: observable,
   isRoomJoin: observable,
   isUserError: observable,
   isAppError: observable,

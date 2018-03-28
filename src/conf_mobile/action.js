@@ -123,6 +123,8 @@ class ConfAction extends Action {
 
       user.updateDevices(devices);
     };
+
+    await this.onClickJoinRoom();
   }
 
   async onClickJoinRoom() {
@@ -146,19 +148,9 @@ class ConfAction extends Action {
     ui.isSettingOpen = false;
   }
 
-  // TODO: key?
-  async onChatEnterKeyDown() {
+  async onClickSendChat() {
     const { chat, user, room, ui } = this.store;
 
-    // avoid sending duplicate texts
-    if (ui.isChatSending) {
-      return;
-    }
-    if (chat.bufferText.length === 0) {
-      return;
-    }
-
-    ui.isChatSending = true;
     const blob = await webrtc
       .snapVideoStream(room.localStream, 'image/jpeg', 0.5)
       .catch(err => ui.handleAppError(err));
@@ -177,8 +169,6 @@ class ConfAction extends Action {
     chat.addMessage(payload, user.dispName);
     // this triggers sync remotes
     chat.updateBuffer(payload);
-
-    ui.isChatSending = false;
   }
 
   _onRoomJoin(confRoom) {

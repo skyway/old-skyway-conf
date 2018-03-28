@@ -1,7 +1,9 @@
 .ChatMessageList {
   padding: 0;
-  margin: 0 0 20px;
+  margin: 0;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
 
   &_Item {
     display: flex;
