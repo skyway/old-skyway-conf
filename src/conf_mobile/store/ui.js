@@ -9,7 +9,6 @@ class UiStore {
     this.isAppReady = false;
 
     this.isSettingOpen = true;
-    this.isInviteOpen = false;
     this.isChatOpen = false;
     this.isChatSending = false;
     this.isRoomJoin = false;
@@ -65,7 +64,6 @@ decorate(UiStore, {
   roomName: observable,
   isAppReady: observable,
   isSettingOpen: observable,
-  isInviteOpen: observable,
   isChatOpen: observable,
   isChatSending: observable,
   isRoomJoin: observable,

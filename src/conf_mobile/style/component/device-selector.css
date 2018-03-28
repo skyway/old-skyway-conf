@@ -4,27 +4,18 @@
   margin: 0 auto;
 
   &_Row {
-    display: flex;
-    align-items: center;
     margin: 10px auto;
   }
 
   &_Label {
-    width: 60px;
-    text-align: right;
   }
 
   &_Select {
     height: 30px;
-    width: 300px;
-    margin: 0 20px;
+    width: 100%;
   }
 
   &_Va {
     padding: 0 10px;
-  }
-
-  &_Notice {
-    color: var(--color3);
   }
 }
