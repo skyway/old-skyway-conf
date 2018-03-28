@@ -42,4 +42,13 @@
     right: 0;
     z-index: 1;
   }
+
+  &_Local {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: calc(var(--bottomLayoutHeight) / 2);
+    > button {
+      height: 100%;
+    }
+  }
 }

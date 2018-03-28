@@ -1,14 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 
-import Video from '../video';
 import CamIcon from '../icon/cam';
 import MicIcon from '../icon/mic';
 
-const MemberVideoLocal = ({ ui, room, user, action }) => (
+const MemberVideoLocal = ({ user, action }) => (
   <div className="MemberVideo">
-    <div className="MemberVideo_Name">{user.dispName}</div>
-    <div className="MemberVideo_Media">
+    <div className="MemberVideo_Local">
       <button
         onClick={() => action.$update('user.isVideoMuted', !user.isVideoMuted)}
         title={user.isVideoMuted ? 'Unmute' : 'Mute'}
@@ -21,20 +19,19 @@ const MemberVideoLocal = ({ ui, room, user, action }) => (
       >
         <MicIcon isMuted={user.isAudioMuted} />
       </button>
-    </div>
-    <div className="MemberVideo_Settings">
       <button
         onClick={() => action.$update('ui.isSettingOpen', true)}
         title="Open settings"
       >
         <i className="material-icons">settings</i>
       </button>
+      <button
+        onClick={() => action.$update('ui.isChatOpen', true)}
+        title="Open chat"
+      >
+        <i className="material-icons">chat</i>
+      </button>
     </div>
-    <Video
-      stream={room.localStream}
-      muted
-      isMirror={ui.isScreenSharing === false}
-    />
   </div>
 );
 

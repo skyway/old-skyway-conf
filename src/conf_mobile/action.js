@@ -123,8 +123,6 @@ class ConfAction extends Action {
 
       user.updateDevices(devices);
     };
-
-    await this.onClickJoinRoom();
   }
 
   async onClickJoinRoom() {

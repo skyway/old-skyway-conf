@@ -7,3 +7,10 @@ body,
 #app-root {
   height: 100%;
 }
+
+button {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: #f5f5f5;
+  border: 1px solid #afafaf;
+}
