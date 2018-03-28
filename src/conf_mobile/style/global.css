@@ -1,2 +1,9 @@
 :root {
+  --bottomLayoutHeight: 100px;
+}
+
+html,
+body,
+#app-root {
+  height: 100%;
 }

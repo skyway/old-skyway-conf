@@ -5,6 +5,8 @@
   &_Scroller {
     display: flex;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
   }
 
   &_Arrow {

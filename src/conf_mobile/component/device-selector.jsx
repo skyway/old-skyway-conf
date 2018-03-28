@@ -7,7 +7,7 @@ import VaIcon from './icon/va';
 
 const DeviceSelector = ({ user, action }) => (
   <div className="DeviceSelector">
-    <div className="DeviceSelector_Label">Cam</div>
+    <div className="DeviceSelector_Label">Device</div>
     <div className="DeviceSelector_Row">
       <select
         className="DeviceSelector_Select"
@@ -29,7 +29,6 @@ const DeviceSelector = ({ user, action }) => (
         <CamIcon isMuted={user.isVideoMuted} />
       </button>
     </div>
-    <div className="DeviceSelector_Label">Mic</div>
     <div className="DeviceSelector_Row">
       <select
         className="DeviceSelector_Select"

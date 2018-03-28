@@ -4,7 +4,6 @@
   margin: 0 auto;
 
   &_Row {
-    margin: 10px auto;
   }
 
   &_Label {
@@ -12,7 +11,7 @@
 
   &_Select {
     height: 30px;
-    width: 100%;
+    width: 50%;
   }
 
   &_Va {

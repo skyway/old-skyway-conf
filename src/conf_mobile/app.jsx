@@ -9,19 +9,11 @@ import ChatBox from './container/chat-box';
 const ConfApp = () => (
   <Root>
     <main className="L-Main">
-      <div className="">
-        <Screen />
-        <MemberList />
-      </div>
-      <div className="">
-        <ChatBox />
-      </div>
-      <div className="L-Tab">
-        <div>Room</div>
-        <div>Chat</div>
-      </div>
+      <Screen />
+      <MemberList />
     </main>
     <Setting />
+    <ChatBox />
   </Root>
 );
 

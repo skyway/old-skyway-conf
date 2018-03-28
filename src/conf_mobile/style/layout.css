@@ -1,5 +1,7 @@
 .L-Main {
   display: grid;
+  grid-template-rows: calc(100% - var(--bottomLayoutHeight)) var(--bottomLayoutHeight);
+  height: 100%;
 }
 
 .L-Setting {
@@ -10,6 +12,7 @@
 }
 .L-Setting_Video {
   padding: 10px;
+  height: 50%;
 }
 .L-Setting_Finish {
   text-align: center;
