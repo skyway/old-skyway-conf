@@ -3,9 +3,9 @@ import Mousetrap from 'mousetrap';
 import vad from 'voice-activity-detection';
 
 import Action from '../shared/action';
-import webrtc from '../shared/webrtc';
-import skyway from '../shared/skyway';
-import bom from '../shared/bom';
+import webrtc from '../shared/util/webrtc';
+import skyway from '../shared/util/skyway';
+import bom from '../shared/util/bom';
 
 class ConfAction extends Action {
   constructor(store) {

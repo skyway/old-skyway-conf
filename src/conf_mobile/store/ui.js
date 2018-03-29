@@ -1,5 +1,5 @@
 import { decorate, observable, computed } from 'mobx';
-import util from '../../shared/util';
+import { isValidRoomName, isValidRoomType } from '../../shared/util/validate';
 
 class UiStore {
   constructor() {
@@ -27,7 +27,7 @@ class UiStore {
   }
 
   setRoom({ roomType, roomName }) {
-    if (!util.isValidRoomName(roomName) || !util.isValidRoomType(roomType)) {
+    if (!isValidRoomName(roomName) || !isValidRoomType(roomType)) {
       this.isUserError = true;
       return;
     }

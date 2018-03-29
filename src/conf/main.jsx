@@ -5,7 +5,7 @@ import { Provider } from 'mobx-react';
 import ConfStore from './store';
 import ConfAction from './action';
 import ConfApp from './app';
-import bom from '../shared/bom';
+import bom from '../shared/util/bom';
 
 (function() {
   const [, roomType, roomName] = location.hash.split('/');
