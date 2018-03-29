@@ -2,6 +2,7 @@
   --bottomLayoutHeight: 80px;
 }
 
+/* XXX: do not use vh for iOS Safari  */
 html,
 body,
 #app-root {
