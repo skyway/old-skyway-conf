@@ -1,0 +1,6 @@
+.Toast {
+  padding: 5px 10px;
+  background-color: rgba(0, 0, 0, .5);
+  color: #fff;
+  font-size: .6rem;
+}

@@ -5,15 +5,15 @@ import CamIcon from '../../shared/component/icon/cam';
 import MicIcon from '../../shared/component/icon/mic';
 import VaIcon from '../../shared/component/icon/va';
 
-const DeviceSelector = ({ ui, user, action }) => (
+const DeviceSelector = ({ user, action }) => (
   <div className="DeviceSelector">
+    <div className="DeviceSelector_Label">Cam / Mic</div>
     <div className="DeviceSelector_Row">
-      <div className="DeviceSelector_Label">Cam</div>
       <select
         className="DeviceSelector_Select"
         value={user.videoDeviceId}
         onChange={ev => action.$update('user.videoDeviceId', ev.target.value)}
-        disabled={ui.isScreenSharing || user.isNoVideoDevices}
+        disabled={user.isNoVideoDevices}
       >
         {user.isNoVideoDevices && <option value="">Cam not found</option>}
         {user.videoDevices.map((device, idx) => (
@@ -30,12 +30,11 @@ const DeviceSelector = ({ ui, user, action }) => (
       </button>
     </div>
     <div className="DeviceSelector_Row">
-      <div className="DeviceSelector_Label">Mic</div>
       <select
         className="DeviceSelector_Select"
         value={user.audioDeviceId}
         onChange={ev => action.$update('user.audioDeviceId', ev.target.value)}
-        disabled={ui.isScreenSharing || user.isNoAudioDevices}
+        disabled={user.isNoAudioDevices}
       >
         {user.isNoAudioDevices && <option value="">Mic not found</option>}
         {user.audioDevices.map((device, idx) => (
@@ -50,15 +49,10 @@ const DeviceSelector = ({ ui, user, action }) => (
       >
         <MicIcon isMuted={user.isAudioMuted} />
       </button>
-      <div className="DeviceSelector_Va">
+      <span className="DeviceSelector_Va">
         <VaIcon isSpeaking={user.isSpeaking} />
-      </div>
+      </span>
     </div>
-    {ui.isScreenSharing && (
-      <p className="DeviceSelector_Notice">
-        You can not change devices during screen sharing.
-      </p>
-    )}
   </div>
 );
 

@@ -1,5 +1,4 @@
 import { reaction, when } from 'mobx';
-import Mousetrap from 'mousetrap';
 import vad from 'voice-activity-detection';
 
 import Action from '../shared/action';
@@ -19,7 +18,7 @@ class ConfAction extends Action {
       () => [user.videoDeviceId, user.audioDeviceId],
       async ([videoDeviceId, audioDeviceId]) => {
         const stream = await webrtc
-          .getUserMedia({ videoDeviceId, audioDeviceId })
+          .getUserMedia({ videoDeviceId, audioDeviceId }, user.facingMode)
           .catch(err => ui.handleGetUserMediaError(err));
 
         if (ui.isError) {
@@ -56,20 +55,6 @@ class ConfAction extends Action {
       name => localStorage.setItem('SkyWayConf.dispName', name)
     );
 
-    reaction(
-      () => room.localStream,
-      stream => {
-        this._destroyVad && this._destroyVad();
-
-        const { destroy } = vad(bom.getAudioCtx(window), stream, {
-          onUpdate(lv) {
-            user.isSpeaking = lv !== 0;
-          },
-        });
-        this._destroyVad = destroy;
-      }
-    );
-
     // reload device labels after 1st time getUserMedia()
     when(
       () => ui.isAppReady,
@@ -84,6 +69,27 @@ class ConfAction extends Action {
 
         user.updateDevices(devices);
       }
+    );
+  }
+
+  // from this handler, we are allowed to use AudioContext
+  onClickWelcomeClose() {
+    const { ui, user, room } = this.store;
+
+    ui.isWelcomeOpen = false;
+    reaction(
+      () => room.localStream,
+      stream => {
+        this._destroyVad && this._destroyVad();
+
+        const { destroy } = vad(bom.getAudioCtx(window), stream, {
+          onUpdate(lv) {
+            user.isSpeaking = lv !== 0;
+          },
+        });
+        this._destroyVad = destroy;
+      },
+      { fireImmediately: true }
     );
   }
 
@@ -124,14 +130,6 @@ class ConfAction extends Action {
 
       user.updateDevices(devices);
     };
-    Mousetrap.bind(['command+e', 'ctrl+e'], () => {
-      user.isVideoMuted = !user.isVideoMuted;
-      return false;
-    });
-    Mousetrap.bind(['command+d', 'ctrl+d'], () => {
-      user.isAudioMuted = !user.isAudioMuted;
-      return false;
-    });
   }
 
   async onClickJoinRoom() {
@@ -155,18 +153,9 @@ class ConfAction extends Action {
     ui.isSettingOpen = false;
   }
 
-  async onChatEnterKeyDown() {
+  async onClickSendChat() {
     const { chat, user, room, ui } = this.store;
 
-    // avoid sending duplicate texts
-    if (ui.isChatSending) {
-      return;
-    }
-    if (chat.bufferText.length === 0) {
-      return;
-    }
-
-    ui.isChatSending = true;
     const blob = await webrtc
       .snapVideoStream(room.localStream, 'image/jpeg', 0.5)
       .catch(err => ui.handleAppError(err));
@@ -185,44 +174,6 @@ class ConfAction extends Action {
     chat.addMessage(payload, user.dispName);
     // this triggers sync remotes
     chat.updateBuffer(payload);
-
-    ui.isChatSending = false;
-  }
-
-  async startScreenShare() {
-    const { ui, room, user } = this.store;
-
-    if (skyway.isScreenShareAvailable() === false) {
-      ui.isScreenShareIntroOpen = true;
-      return;
-    }
-
-    let vTrack;
-    try {
-      vTrack = await skyway.getScreenStreamTrack();
-    } catch (err) {
-      if (err instanceof DOMException === false) {
-        ui.isScreenShareIntroOpen = true;
-      }
-      console.error(err);
-      return;
-    }
-
-    vTrack.addEventListener('ended', () => this.stopScreenShare(), {
-      once: true,
-    });
-    // apply current status before set
-    user.isVideoMuted && webrtc.setMuteTrack(vTrack, true);
-
-    // this triggers stream replacement
-    room.setScreenStreamTrack(vTrack);
-    ui.isScreenSharing = true;
-  }
-  stopScreenShare() {
-    const { ui, room } = this.store;
-
-    room.setScreenStreamTrack(null);
-    ui.isScreenSharing = false;
   }
 
   _onRoomJoin(confRoom) {

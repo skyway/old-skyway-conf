@@ -38,8 +38,8 @@ function getBrowserName(ua) {
   }
 }
 
-function getAudioCtx() {
-  return new (window.webkitAudioContext || AudioContext)();
+function getAudioCtx(global) {
+  return new (global.webkitAudioContext || global.AudioContext)();
 }
 
 export default {

@@ -1,0 +1,54 @@
+.L-Main {
+  display: grid;
+  grid-template-rows: calc(100% - var(--bottomLayoutHeight)) var(--bottomLayoutHeight);
+  height: 100%;
+}
+
+.L-Setting {
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
+  color: #000;
+}
+.L-Setting_Video {
+  height: 50%;
+  background-color: #000;
+}
+.L-Setting_Finish {
+  text-align: center;
+
+  > button {
+    width: 200px;
+    height: 40px;
+  }
+}
+
+.L-Notification {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+}
+
+.L-Welcome {
+  width: 280px;
+  padding: 10px;
+  background-color: #fff;
+  color: #000;
+  margin: 100px auto;
+}
+.L-Welcome_Header {
+  text-align: center;
+}
+.L-Welcome_Messages {
+  margin: 10px 0 20px;
+  font-size: .9rem;
+}
+.L-Welcome_Finish {
+  text-align: center;
+
+  > button {
+    width: 200px;
+    height: 40px;
+  }
+}

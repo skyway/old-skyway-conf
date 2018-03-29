@@ -31,7 +31,7 @@ async function getUserDevices() {
   return userDevices;
 }
 
-function getUserMedia({ videoDeviceId, audioDeviceId }) {
+function getUserMedia({ videoDeviceId, audioDeviceId }, facingMode) {
   const constraints = {
     video: { deviceId: videoDeviceId },
     audio: { deviceId: audioDeviceId },
@@ -42,6 +42,10 @@ function getUserMedia({ videoDeviceId, audioDeviceId }) {
   }
   if (audioDeviceId === '') {
     constraints.audio = false;
+  }
+
+  if (['user', 'environment'].includes(facingMode)) {
+    constraints.video.facingMode = facingMode;
   }
 
   return navigator.mediaDevices.getUserMedia(constraints);
@@ -80,7 +84,7 @@ function snapVideoStream(stream, mimeType = 'image/jpeg', qualityArgument = 1) {
     );
 
     // Firefox can't load media without this
-    $video.autoplay = $video.muted = true;
+    $video.autoplay = $video.muted = $video.playsInline = true;
     $video.srcObject = stream;
   });
 }

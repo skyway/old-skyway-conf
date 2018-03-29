@@ -8,13 +8,10 @@ class UiStore {
 
     this.isAppReady = false;
 
+    this.isWelcomeOpen = true;
     this.isSettingOpen = true;
-    this.isInviteOpen = false;
     this.isChatOpen = false;
-    this.isChatSending = false;
     this.isRoomJoin = false;
-    this.isScreenSharing = false;
-    this.isScreenShareIntroOpen = false;
 
     this.isUserError = false;
     this.isAppError = false;
@@ -69,13 +66,10 @@ decorate(UiStore, {
   roomType: observable,
   roomName: observable,
   isAppReady: observable,
+  isWelcomeOpen: observable,
   isSettingOpen: observable,
-  isInviteOpen: observable,
   isChatOpen: observable,
-  isChatSending: observable,
   isRoomJoin: observable,
-  isScreenSharing: observable,
-  isScreenShareIntroOpen: observable,
   isUserError: observable,
   isAppError: observable,
   confUrl: computed,

@@ -22,9 +22,9 @@ import bom from '../shared/util/bom';
     return;
   }
 
-  // if supported, but mobile, redirect
-  if (['iOS', 'Android'].includes(os)) {
-    location.href = `./conf_mobile.html${location.hash}`;
+  // if not mobile, redirect
+  if (['iOS', 'Android'].includes(os) === false) {
+    location.href = `./conf.html${location.hash}`;
     return;
   }
 
