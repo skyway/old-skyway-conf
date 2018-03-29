@@ -17,3 +17,10 @@
 .L-Setting_Finish {
   text-align: center;
 }
+
+.L-Notification {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+}

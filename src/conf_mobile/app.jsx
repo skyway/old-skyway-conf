@@ -5,6 +5,7 @@ import Screen from './container/screen';
 import MemberList from './container/member-list';
 import Setting from './container/setting';
 import ChatBox from './container/chat-box';
+import Notification from './container/notification';
 
 const ConfApp = () => (
   <Root>
@@ -14,6 +15,7 @@ const ConfApp = () => (
     </main>
     <Setting />
     <ChatBox />
+    <Notification />
   </Root>
 );
 
