@@ -1,9 +1,11 @@
 import Action from '../shared/action';
+import bom from '../shared/util/bom';
 
 class IndexAction extends Action {
   onSubmitForm() {
     const { name, type } = this.store.form;
-    location.href = `./conf.html#!/${type}/${name}`;
+    const url = `./conf.html#!/${type}/${name}`;
+    bom.setLocationHref(url);
   }
 }
 
