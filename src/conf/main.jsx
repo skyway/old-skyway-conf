@@ -7,20 +7,25 @@ import ConfAction from './action';
 import ConfApp from './app';
 import bom from '../shared/bom';
 
-const [, roomType, roomName] = location.hash.split('/');
-const os = bom.getOsName(navigator.userAgent);
-const browser = bom.getBrowserName(navigator.userAgent);
-if (
-  (['Windows', 'Mac', 'iOS', 'Android'].includes(os) &&
-    ['Chrome', 'Firefox', 'Safari'].includes(browser)) === false ||
-  // allow Safari to enter mesh room only
-  (browser === 'Safari' && roomType !== 'mesh')
-) {
-  location.href = './not_supported.html';
-} else {
+(function() {
+  const [, roomType, roomName] = location.hash.split('/');
+  const os = bom.getOsName(navigator.userAgent);
+  const browser = bom.getBrowserName(navigator.userAgent);
+
+  if (
+    (['Windows', 'Mac', 'iOS', 'Android'].includes(os) &&
+      ['Chrome', 'Firefox', 'Safari'].includes(browser)) === false ||
+    // allow Safari to enter mesh room only
+    (browser === 'Safari' && roomType !== 'mesh')
+  ) {
+    location.href = './not_supported.html';
+    return;
+  }
+
   // if supported, but mobile, redirect
   if (['iOS', 'Android'].includes(os)) {
     location.href = `./conf_mobile.html${location.hash}`;
+    return;
   }
 
   const store = new ConfStore();
@@ -54,4 +59,4 @@ if (
         };
       });
   }
-}
+})();
