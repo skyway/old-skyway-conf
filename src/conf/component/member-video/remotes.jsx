@@ -2,9 +2,9 @@ import React from 'react';
 import { observer } from 'mobx-react';
 
 import Video from '../video';
-import CamIcon from '../icon/cam';
-import MicIcon from '../icon/mic';
-import VaIcon from '../icon/va';
+import CamIcon from '../../../shared/component/icon/cam';
+import MicIcon from '../../../shared/component/icon/mic';
+import VaIcon from '../../../shared/component/icon/va';
 
 const MemberVideoRemotes = ({ room, action }) => (
   <React.Fragment>

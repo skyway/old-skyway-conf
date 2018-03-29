@@ -1,8 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 
-import CamIcon from '../icon/cam';
-import MicIcon from '../icon/mic';
+import CamIcon from '../../../shared/component/icon/cam';
+import MicIcon from '../../../shared/component/icon/mic';
 
 const MemberVideoLocal = ({ user, action }) => (
   <div className="MemberVideo">
