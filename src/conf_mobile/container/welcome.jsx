@@ -12,7 +12,9 @@ const Welcome = ({ ui, action }) => (
         <br />
         And this site uses your camera and microphone until closing tab.
       </p>
-      <button onClick={() => action.onClickWelcomeClose()}>OK</button>
+      <div className="L-Welcome_Finish">
+        <button onClick={() => action.onClickWelcomeClose()}>OK</button>
+      </div>
     </div>
   </Popup>
 );

@@ -16,6 +16,11 @@
 }
 .L-Setting_Finish {
   text-align: center;
+
+  > button {
+    width: 200px;
+    height: 40px;
+  }
 }
 
 .L-Notification {
@@ -38,4 +43,12 @@
 .L-Welcome_Messages {
   margin: 10px 0 20px;
   font-size: .9rem;
+}
+.L-Welcome_Finish {
+  text-align: center;
+
+  > button {
+    width: 200px;
+    height: 40px;
+  }
 }
