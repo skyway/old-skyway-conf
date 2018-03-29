@@ -11,8 +11,8 @@
   color: #000;
 }
 .L-Setting_Video {
-  padding: 10px;
   height: 50%;
+  background-color: #000;
 }
 .L-Setting_Finish {
   text-align: center;
@@ -37,4 +37,5 @@
 }
 .L-Welcome_Messages {
   margin: 10px 0 20px;
+  font-size: .9rem;
 }

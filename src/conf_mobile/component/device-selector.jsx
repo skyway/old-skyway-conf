@@ -7,7 +7,7 @@ import VaIcon from './icon/va';
 
 const DeviceSelector = ({ user, action }) => (
   <div className="DeviceSelector">
-    <div className="DeviceSelector_Label">Device</div>
+    <div className="DeviceSelector_Label">Cam / Mic</div>
     <div className="DeviceSelector_Row">
       <select
         className="DeviceSelector_Select"
