@@ -55,20 +55,6 @@ class ConfAction extends Action {
       name => localStorage.setItem('SkyWayConf.dispName', name)
     );
 
-    reaction(
-      () => room.localStream,
-      stream => {
-        this._destroyVad && this._destroyVad();
-
-        const { destroy } = vad(bom.getAudioCtx(window), stream, {
-          onUpdate(lv) {
-            user.isSpeaking = lv !== 0;
-          },
-        });
-        this._destroyVad = destroy;
-      }
-    );
-
     // reload device labels after 1st time getUserMedia()
     when(
       () => ui.isAppReady,
@@ -83,6 +69,27 @@ class ConfAction extends Action {
 
         user.updateDevices(devices);
       }
+    );
+  }
+
+  // from this handler, we are allowed to use AudioContext
+  onClickWelcomeClose() {
+    const { ui, user, room } = this.store;
+
+    ui.isWelcomeOpen = false;
+    reaction(
+      () => room.localStream,
+      stream => {
+        this._destroyVad && this._destroyVad();
+
+        const { destroy } = vad(bom.getAudioCtx(window), stream, {
+          onUpdate(lv) {
+            user.isSpeaking = lv !== 0;
+          },
+        });
+        this._destroyVad = destroy;
+      },
+      { fireImmediately: true }
     );
   }
 

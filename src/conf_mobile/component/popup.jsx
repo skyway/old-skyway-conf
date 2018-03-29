@@ -1,7 +1,14 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 
-const Popup = ({ isVisible, children }) => (
+const Popup = ({ isVisible, noAnim = false, children }) =>
+  noAnim ? (
+    <NoAnimPopup isVisible={isVisible}>{children}</NoAnimPopup>
+  ) : (
+    <AnimPopup isVisible={isVisible}>{children}</AnimPopup>
+  );
+
+const AnimPopup = ({ isVisible, children }) => (
   <div
     className="Popup"
     style={{
@@ -14,5 +21,8 @@ const Popup = ({ isVisible, children }) => (
     {children}
   </div>
 );
+
+const NoAnimPopup = ({ isVisible, children }) =>
+  isVisible ? <div className="Popup">{children}</div> : null;
 
 export default observer(Popup);

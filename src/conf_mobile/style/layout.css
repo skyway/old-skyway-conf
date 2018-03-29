@@ -24,3 +24,17 @@
   left: 10px;
   z-index: 1;
 }
+
+.L-Welcome {
+  width: 280px;
+  padding: 10px;
+  background-color: #fff;
+  color: #000;
+  margin: 100px auto;
+}
+.L-Welcome_Header {
+  text-align: center;
+}
+.L-Welcome_Messages {
+  margin: 10px 0 20px;
+}

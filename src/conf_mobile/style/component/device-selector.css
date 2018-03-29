@@ -1,9 +1,10 @@
 /* sizes should be synced with name-edit.css */
 .DeviceSelector {
-  width: 90%;
-  margin: 0 auto;
+  margin: 0 10px;
 
   &_Row {
+    display: flex;
+    align-items: center;
   }
 
   &_Label {
@@ -11,7 +12,6 @@
 
   &_Select {
     height: 30px;
-    width: 50%;
   }
 
   &_Va {

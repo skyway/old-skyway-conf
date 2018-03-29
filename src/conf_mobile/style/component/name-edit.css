@@ -1,14 +1,12 @@
 /* sizes should be synced with device-selector.css */
 .NameEdit {
-  width: 90%;
-  margin: 10px auto;
+  margin: 10px;
 
   &_Label {
   }
 
   &_Input {
     height: 30px;
-    width: 50%;
     box-sizing: border-box;
   }
 }
