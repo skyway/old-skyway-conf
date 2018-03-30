@@ -9,10 +9,18 @@ class RoomStore {
   }
 
   get pinnedStream() {
-    return (
-      this.remoteStreams.find(stream => stream.peerId === this.pinnedPeerId) ||
-      this.localStream
+    const pinned = this.remoteStreams.find(
+      stream => stream.peerId === this.pinnedPeerId
     );
+    if (pinned) {
+      return pinned;
+    }
+
+    if (this.remoteStreams.length !== 0) {
+      return this.remoteStreams[0];
+    }
+
+    return null;
   }
 
   setLocalStream(stream) {

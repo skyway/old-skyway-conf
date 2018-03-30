@@ -5,7 +5,7 @@ import Video from './video';
 
 const ScreenVideo = ({ room }) => (
   <div className="ScreenVideo">
-    <Video stream={room.pinnedStream} muted />
+    {room.pinnedStream ? <Video stream={room.pinnedStream} muted /> : null}
   </div>
 );
 
