@@ -2,9 +2,6 @@
   "private": true,
   "name": "skyway-conference-dev",
   "version": "0.0.0",
-  "jest": {
-    "testEnvironment": "./custom-jsdom.js"
-  },
   "scripts": {
     "dev": "npm run dev:js & npm run dev:css & wait",
     "dev:js": "webpack-dev-server --mode development",
