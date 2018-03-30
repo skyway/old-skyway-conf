@@ -4,7 +4,7 @@ import validate from '../../shared/util/validate';
 class FormStore {
   constructor() {
     this.name = '';
-    this.type = 'sfu';
+    this.type = 'mesh';
   }
 
   get isNameValid() {
