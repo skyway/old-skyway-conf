@@ -27,11 +27,31 @@ class RoomStore {
     return ms;
   }
 
+  get pinnedPeerIdDisp() {
+    if (this.pinnedPeerId.length !== 0) {
+      return this.pinnedPeerId;
+    }
+
+    if (this.remoteStreams.length !== 0) {
+      return this.remoteStreams[0].peerId;
+    }
+
+    return '';
+  }
+
   get pinnedStream() {
-    return (
-      this.remoteStreams.find(stream => stream.peerId === this.pinnedPeerId) ||
-      this.localStream
+    const pinned = this.remoteStreams.find(
+      stream => stream.peerId === this.pinnedPeerIdDisp
     );
+    if (pinned) {
+      return pinned;
+    }
+
+    if (this.remoteStreams.length !== 0) {
+      return this.remoteStreams[0];
+    }
+
+    return null;
   }
 
   setLocalStream(stream) {
@@ -95,6 +115,7 @@ decorate(RoomStore, {
   localAudioStreamTrack: observable.ref,
   remoteStreams: observable.shallow,
   localStream: computed,
+  pinnedPeerIdDisp: computed,
   pinnedStream: computed,
 });
 export default RoomStore;

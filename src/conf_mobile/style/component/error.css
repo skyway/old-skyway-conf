@@ -1,5 +1,6 @@
 .Error {
-  width: 600px;
+  width: 90%;
+  max-width: 600px;
   margin: 100px auto;
   color: #fff;
 
