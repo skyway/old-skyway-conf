@@ -11,7 +11,7 @@ const FormTypeSelector = ({ form, action }) => (
         onChange={() => action.$update('form.type', 'mesh')}
         checked={form.type === 'mesh'}
       />
-      <span className="FormTypeSelector_Item_Text">FullMesh</span>
+      <span className="FormTypeSelector_Item_Text">Mesh</span>
     </label>
     <label className="FormTypeSelector_Item">
       <input

@@ -37,7 +37,7 @@ const FormMain = ({ form, ui, action }) => (
       className="FormMain_Button"
       disabled={form.isNameValid === false}
     >
-      Create room
+      Create
     </button>
   </form>
 );
