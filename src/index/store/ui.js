@@ -1,16 +1,19 @@
-import { extendObservable } from 'mobx';
+import { decorate, observable, computed } from 'mobx';
 
 class UiStore {
   constructor() {
-    extendObservable(this, {
-      isFocusInput: false,
-      isAppError: false,
+    this.isFocusInput = false;
+    this.isAppError = false;
+  }
 
-      get isError() {
-        return this.isAppError;
-      },
-    });
+  get isError() {
+    return this.isAppError;
   }
 }
 
+decorate(UiStore, {
+  isFocusInput: observable,
+  isAppError: observable,
+  isError: computed,
+});
 export default UiStore;
