@@ -8,18 +8,16 @@ beforeEach(() => {
 });
 
 describe('_show', () => {
-  test('should add and delete items', () => {
-    jest.useFakeTimers();
-
+  test('should add and delete items', done => {
     expect(notification.items).toHaveLength(0);
 
     notification._show('foo');
     expect(notification.items).toHaveLength(1);
 
-    // removed after 1sec
-    jest.advanceTimersByTime(1000);
-
-    expect(notification.items).toHaveLength(0);
-    jest.useRealTimers();
+    // XXX: jest.useFakeTimers() does not work via esm...
+    setTimeout(() => {
+      expect(notification.items).toHaveLength(0);
+      done();
+    }, 1000); // removed after 1000ms
   });
 });
