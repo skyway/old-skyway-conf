@@ -182,7 +182,8 @@ class ConfAction extends Action {
       timestamp: Date.now(),
     };
     // sync local
-    chat.addMessage(payload, user.dispName);
+    const thumb = URL.createObjectURL(blob);
+    chat.addMessage(payload, thumb, user.dispName);
     // this triggers sync remotes
     chat.updateBuffer(payload);
 
@@ -282,7 +283,9 @@ class ConfAction extends Action {
       }
       case 'chat': {
         const syncState = room.syncState.get(payload.peerId);
-        chat.addMessage(payload, syncState.dispName);
+        const blob = new Blob([new Uint8Array(payload.blob)]);
+        const thumb = URL.createObjectURL(blob);
+        chat.addMessage(payload, thumb, syncState.dispName);
         ui.isChatOpen || notification.showChat(syncState);
         break;
       }

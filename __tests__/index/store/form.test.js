@@ -2,7 +2,7 @@ const requireEsm = require('esm')(module);
 const FormStore = requireEsm('../../../src/index/store/form').default;
 
 let form;
-beforeAll(() => {
+beforeEach(() => {
   form = new FormStore();
 });
 
