@@ -1,5 +1,6 @@
 .L-Main {
-  width: 600px;
+  width: 90%;
+  max-width: 600px;
   margin: 100px auto;
   padding: 20px;
   color: #fff;
