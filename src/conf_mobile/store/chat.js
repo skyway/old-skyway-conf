@@ -33,7 +33,7 @@ class ChatStore {
 
 decorate(ChatStore, {
   bufferText: observable,
-  lastMessage: observable.shallow,
+  lastMessage: observable.ref,
   messages: observable.shallow,
 });
 export default ChatStore;
