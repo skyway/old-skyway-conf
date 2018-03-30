@@ -16,7 +16,7 @@ const MemberVideoRemotes = ({ room, action }) => (
           className="MemberVideo"
           onClick={() => action.$update('room.pinnedPeerId', stream.peerId)}
         >
-          {room.pinnedPeerId === stream.peerId && (
+          {room.pinnedPeerIdDisp === stream.peerId && (
             <div className="MemberVideo_Pinned" />
           )}
           {syncState ? (
