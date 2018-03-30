@@ -1,17 +1,20 @@
-import { extendObservable } from 'mobx';
+import { decorate, observable, computed } from 'mobx';
 import validate from '../../shared/util/validate';
 
 class FormStore {
   constructor() {
-    extendObservable(this, {
-      name: '',
-      type: 'sfu',
+    this.name = '';
+    this.type = 'sfu';
+  }
 
-      get isNameValid() {
-        return validate.isValidRoomName(this.name);
-      },
-    });
+  get isNameValid() {
+    return validate.isValidRoomName(this.name);
   }
 }
 
+decorate(FormStore, {
+  name: observable,
+  type: observable,
+  isNameValid: computed,
+});
 export default FormStore;
