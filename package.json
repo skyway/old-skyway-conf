@@ -2,6 +2,9 @@
   "private": true,
   "name": "skyway-conference-dev",
   "version": "0.0.0",
+  "jest": {
+    "testEnvironment": "./custom-jsdom.js"
+  },
   "scripts": {
     "dev": "npm run dev:js & npm run dev:css & wait",
     "dev:js": "webpack-dev-server --mode development",
@@ -10,7 +13,7 @@
     "build:js": "NODE_ENV=production webpack --mode production",
     "build:css": "NODE_ENV=production node ./script/postcss-multi.js",
     "lint": "eslint . --fix --ext .js --ext .jsx",
-    "test": "jest --bail"
+    "test": "karma start"
   },
   "author": "",
   "devDependencies": {
@@ -23,12 +26,18 @@
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.7.0",
-    "esm": "^3.0.13",
-    "jest": "^22.4.3",
+    "jasmine": "^3.1.0",
+    "karma": "^2.0.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.1",
+    "karma-mocha-reporter": "^2.2.5",
+    "karma-rollup-preprocessor": "^5.1.1",
     "postcss-cli": "^5.0.0",
     "postcss-easy-import": "^3.0.0",
     "postcss-nested": "^3.0.0",
     "prettier": "^1.11.1",
+    "rollup": "^0.57.1",
+    "rollup-plugin-node-resolve": "^3.3.0",
     "webpack": "^4.4.1",
     "webpack-cli": "^2.0.13",
     "webpack-dev-server": "^3.1.1"

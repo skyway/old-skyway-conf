@@ -1,5 +1,4 @@
-const requireEsm = require('esm')(module);
-const FormStore = requireEsm('../../../src/index/store/form').default;
+import FormStore from '../../../src/index/store/form';
 
 let form;
 beforeEach(() => {
@@ -7,7 +6,7 @@ beforeEach(() => {
 });
 
 describe('@computed isNameValid', () => {
-  test('should follow this.name', () => {
+  it('should follow this.name', () => {
     // form.name = '';
     expect(form.isNameValid).toBeFalsy();
 

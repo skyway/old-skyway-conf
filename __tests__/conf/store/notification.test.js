@@ -1,6 +1,4 @@
-const requireEsm = require('esm')(module);
-const NotificationStore = requireEsm('../../../src/conf/store/notification')
-  .default;
+import NotificationStore from '../../../src/conf/store/notification';
 
 let notification;
 beforeEach(() => {
@@ -8,16 +6,17 @@ beforeEach(() => {
 });
 
 describe('_show', () => {
-  test('should add and delete items', done => {
-    expect(notification.items).toHaveLength(0);
+  it('should add and delete items', () => {
+    jasmine.clock().install();
 
+    expect(notification.items.length).toBe(0);
     notification._show('foo');
-    expect(notification.items).toHaveLength(1);
+    expect(notification.items.length).toBe(1);
 
-    // XXX: jest.useFakeTimers() does not work via esm...
-    setTimeout(() => {
-      expect(notification.items).toHaveLength(0);
-      done();
-    }, 1000); // removed after 1000ms
+    // will remove after 1000ms
+    jasmine.clock().tick(1001);
+    expect(notification.items.length).toBe(0);
+
+    jasmine.clock().uninstall();
   });
 });

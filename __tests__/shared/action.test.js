@@ -1,15 +1,14 @@
-const requireEsm = require('esm')(module);
-const Action = requireEsm('../../src/shared/action').default;
+import Action from '../../src/shared/action';
 
 describe('constructor', () => {
-  test('should assign store', () => {
+  it('should assign store', () => {
     const store = {};
     const a = new Action(store);
 
     expect(a.store).toBe(store);
   });
 
-  test('should inherit', () => {
+  it('should inherit', () => {
     const store = {};
     class A extends Action {}
     const a = new A(store);
@@ -28,7 +27,7 @@ describe('$update', () => {
     a = new Action({ x: xStore });
   });
 
-  test('should update if store exists', () => {
+  it('should update if store exists', () => {
     a.$update('x.p', 2);
     expect(a.store.x.p).toBe(2);
 
@@ -37,18 +36,17 @@ describe('$update', () => {
     expect(a.store.x.q).toBe(d);
   });
 
-  test('should throw if store exists but props not exists', () => {
+  it('should throw if store exists but props not exists', () => {
     expect(() => {
       a.$update('x.r', 3);
     }).toThrow();
-    expect(a.store).not.toHaveProperty('x.r');
+    expect('r' in a.store.x).toBeFalsy();
   });
 
-  test('should throw if store not exists', () => {
+  it('should throw if store not exists', () => {
     expect(() => {
       a.$update('y.p', 2);
     }).toThrow();
-    expect(a.store).not.toHaveProperty('y');
-    expect(a.store).not.toHaveProperty('y.p');
+    expect('y' in a.store).toBeFalsy();
   });
 });

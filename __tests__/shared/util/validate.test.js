@@ -1,15 +1,14 @@
-const requireEsm = require('esm')(module);
-const validate = requireEsm('../../../src/shared/util/validate').default;
+import validate from '../../../src/shared/util/validate';
 
 describe('isValidRoomType', () => {
-  test('should return true for sfu and mesh', () => {
+  it('should return true for sfu and mesh', () => {
     ['sfu', 'mesh'].forEach(name => {
       const res = validate.isValidRoomType(name);
       expect(res).toBeTruthy();
     });
   });
 
-  test('should return false for others', () => {
+  it('should return false for others', () => {
     [
       'meshh',
       ' mesh',
@@ -30,7 +29,7 @@ describe('isValidRoomType', () => {
 });
 
 describe('isValidRoomName', () => {
-  test('should return true for valid strings', () => {
+  it('should return true for valid strings', () => {
     [
       'valid',
       'myroom-1',
@@ -43,7 +42,7 @@ describe('isValidRoomName', () => {
     });
   });
 
-  test('should return false for others', () => {
+  it('should return false for others', () => {
     [
       'aaa',
       '12345678901234567890123456789012-',
