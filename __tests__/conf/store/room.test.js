@@ -88,8 +88,24 @@ describe('removeRemoteStreamByPeerId()', () => {
     expect(room.remoteStreams.length).toBe(0);
   });
 
-  it('should remove pinnedPeerId');
-  it('should delete syncState');
+  it('should remove pinnedPeerId', () => {
+    const stream = getFakeMedia({ video: true, audio: true });
+    room.addRemoteStream(stream);
+    room.pinnedPeerId = stream.peerId;
+
+    room.removeRemoteStreamByPeerId(stream.peerId);
+    expect(room.pinnedPeerId).toBe('');
+  });
+
+  it('should delete syncState', () => {
+    const stream = getFakeMedia({ video: true, audio: true });
+    room.addRemoteStream(stream);
+    room.syncState.set(stream.peerId, {});
+    expect(room.syncState.get(stream.peerId)).not.toBeUndefined();
+
+    room.removeRemoteStreamByPeerId(stream.peerId);
+    expect(room.syncState.get(stream.peerId)).toBeUndefined();
+  });
 });
 
 describe('removeRemoteStream()', () => {
