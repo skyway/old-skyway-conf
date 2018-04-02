@@ -10,7 +10,10 @@ module.exports = function(config) {
       './__tests__/**/*.test.js': ['rollup'],
     },
     rollupPreprocessor: {
-      plugins: [require('rollup-plugin-node-resolve')()],
+      plugins: [
+        require('rollup-plugin-node-resolve')(),
+        require('rollup-plugin-commonjs')(),
+      ],
       output: {
         format: 'iife',
         globals: {

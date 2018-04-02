@@ -1,5 +1,5 @@
-import Peer from 'skyway-js';
-// can not import via npm...
+// do not import via npm for auto-update
+const Peer = window.Peer;
 const ScreenShare = window.ScreenShare;
 
 function initPeer() {
