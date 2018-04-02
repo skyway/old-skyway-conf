@@ -19,7 +19,7 @@ describe('constructor()', () => {
 
 describe('$update()', () => {
   let a;
-  beforeAll(() => {
+  beforeEach(() => {
     const xStore = {
       p: 1,
       q: 2,

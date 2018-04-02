@@ -2,10 +2,11 @@ import IndexStore from '../../src/index/store';
 import IndexAction from '../../src/index/action';
 import bom from '../../src/shared/util/bom';
 
+let store;
 let action;
 let setLocationHrefSpy;
-beforeAll(() => {
-  const store = new IndexStore();
+beforeEach(() => {
+  store = new IndexStore();
   action = new IndexAction(store);
 
   setLocationHrefSpy = spyOn(bom, 'setLocationHref');
