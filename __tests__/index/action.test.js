@@ -11,7 +11,7 @@ beforeAll(() => {
   setLocationHrefSpy = spyOn(bom, 'setLocationHref');
 });
 
-describe('onSubmitForm', () => {
+describe('onSubmitForm()', () => {
   it('should set location.href', () => {
     action.$update('form.name', 'my-room');
     action.$update('form.type', 'mesh');

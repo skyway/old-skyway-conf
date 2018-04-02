@@ -1,6 +1,6 @@
 import Action from '../../src/shared/action';
 
-describe('constructor', () => {
+describe('constructor()', () => {
   it('should assign store', () => {
     const store = {};
     const a = new Action(store);
@@ -17,7 +17,7 @@ describe('constructor', () => {
   });
 });
 
-describe('$update', () => {
+describe('$update()', () => {
   let a;
   beforeAll(() => {
     const xStore = {

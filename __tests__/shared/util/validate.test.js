@@ -1,6 +1,6 @@
 import validate from '../../../src/shared/util/validate';
 
-describe('isValidRoomType', () => {
+describe('isValidRoomType()', () => {
   it('should return true for sfu and mesh', () => {
     ['sfu', 'mesh'].forEach(name => {
       const res = validate.isValidRoomType(name);
@@ -28,7 +28,7 @@ describe('isValidRoomType', () => {
   });
 });
 
-describe('isValidRoomName', () => {
+describe('isValidRoomName()', () => {
   it('should return true for valid strings', () => {
     [
       'valid',
