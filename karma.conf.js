@@ -4,10 +4,10 @@ module.exports = function(config) {
     files: [
       // XXX: need to load as external to avoid multiple instance issue
       './node_modules/mobx/lib/mobx.umd.js',
-      '__tests__/**/*.test.js',
+      './__tests__/**/*.test.js',
     ],
     preprocessors: {
-      '__tests__/**/*.test.js': ['rollup'],
+      './__tests__/**/*.test.js': ['rollup'],
     },
     rollupPreprocessor: {
       plugins: [require('rollup-plugin-node-resolve')()],
