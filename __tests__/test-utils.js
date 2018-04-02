@@ -17,3 +17,10 @@ export function getFakeMedia(constraints = { audio: true, video: true }) {
 
   return ms;
 }
+
+export function getFakeDevices() {
+  const video = [{ deviceId: 'v1' }, { deviceId: 'v2' }];
+  const audio = [{ deviceId: 'a1' }];
+
+  return { video, audio };
+}
