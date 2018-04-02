@@ -5,7 +5,7 @@ beforeEach(() => {
   chat = new ChatStore();
 });
 
-describe('addMessage', () => {
+describe('addMessage()', () => {
   it('should add messages', () => {
     expect(chat.messages.length).toBe(0);
     chat.addMessage({});
@@ -26,7 +26,7 @@ describe('addMessage', () => {
   });
 });
 
-describe('updateBuffer', () => {
+describe('updateBuffer()', () => {
   it('should update lastMessage', () => {
     const buffer1 = { id: 1 };
     const buffer2 = { id: 2 };

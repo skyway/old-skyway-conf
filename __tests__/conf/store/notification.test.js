@@ -5,7 +5,7 @@ beforeEach(() => {
   notification = new NotificationStore();
 });
 
-describe('_show', () => {
+describe('_show()', () => {
   it('should add and delete items', () => {
     jasmine.clock().install();
 

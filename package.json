@@ -10,7 +10,8 @@
     "build:js": "NODE_ENV=production webpack --mode production",
     "build:css": "NODE_ENV=production node ./script/postcss-multi.js",
     "lint": "eslint . --fix --ext .js --ext .jsx",
-    "test": "karma start"
+    "test": "karma start",
+    "test:watch": "karma start --no-single-run --auto-watch"
   },
   "author": "",
   "devDependencies": {
