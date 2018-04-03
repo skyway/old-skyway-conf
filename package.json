@@ -9,7 +9,9 @@
     "build": "npm run build:js && npm run build:css",
     "build:js": "NODE_ENV=production webpack --mode production",
     "build:css": "NODE_ENV=production node ./script/postcss-multi.js",
-    "lint": "eslint . --fix --ext .js --ext .jsx"
+    "lint": "eslint . --fix --ext .js --ext .jsx",
+    "test": "karma start",
+    "test:watch": "karma start --no-single-run --auto-watch"
   },
   "author": "",
   "devDependencies": {
@@ -22,10 +24,19 @@
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.7.0",
+    "jasmine": "^3.1.0",
+    "karma": "^2.0.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.1",
+    "karma-mocha-reporter": "^2.2.5",
+    "karma-rollup-preprocessor": "^5.1.1",
     "postcss-cli": "^5.0.0",
     "postcss-easy-import": "^3.0.0",
     "postcss-nested": "^3.0.0",
     "prettier": "^1.11.1",
+    "rollup": "^0.57.1",
+    "rollup-plugin-commonjs": "^9.1.0",
+    "rollup-plugin-node-resolve": "^3.3.0",
     "webpack": "^4.4.1",
     "webpack-cli": "^2.0.13",
     "webpack-dev-server": "^3.1.1"
@@ -37,7 +48,6 @@
     "normalize.css": "^8.0.0",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
-    "skyway-js": "^1.1.7",
     "voice-activity-detection": "0.0.5"
   }
 }

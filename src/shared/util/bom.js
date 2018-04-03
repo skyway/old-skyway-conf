@@ -44,8 +44,13 @@ function getAudioCtx(global) {
   return new (global.webkitAudioContext || global.AudioContext)();
 }
 
+function setLocationHref(url) {
+  location.href = url;
+}
+
 export default {
   getOsName,
   getBrowserName,
   getAudioCtx,
+  setLocationHref,
 };
