@@ -28,6 +28,12 @@ import bom from '../shared/util/bom';
     return;
   }
 
+  // if mobile but iPod, refirect
+  if (/iPod/.test(navigator.userAgent)) {
+    location.href = './not_supported.html';
+    return;
+  }
+
   const store = new ConfStore();
   const action = new ConfAction(store);
 

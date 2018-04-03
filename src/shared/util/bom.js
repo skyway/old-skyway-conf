@@ -2,9 +2,7 @@ function getOsName(ua) {
   switch (true) {
     case /Android/.test(ua):
       return 'Android';
-    // ignore iPod
-    // case /iPhone|iPad|iPod/.test(ua):
-    case /iPhone|iPad/.test(ua):
+    case /iPhone|iPad|iPod/.test(ua):
       return 'iOS';
     case /Windows/.test(ua):
       return 'Windows';
