@@ -78,7 +78,8 @@ class RoomStore {
   addRemoteStream(stream) {
     runInAction(() => {
       // XXX: need to restrict 1stream/1peer
-      // room#removeStream does not fire on Chrome when Firefox replaces stream w/ screen share
+      // room#removeStream does not fire on Chrome when Firefox replaces stream w/ screen share in SFU
+      // but now, Chrome 66 and Firefox 59, they do not fire remove -> add events on replacing stream
       const oldStream = this.remoteStreams.find(
         oStream => oStream.peerId === stream.peerId
       );
