@@ -38,8 +38,15 @@ function getBrowserName(ua) {
   }
 }
 
+let ctx = null;
 function getAudioCtx(global) {
-  return new (global.webkitAudioContext || global.AudioContext)();
+  if (ctx !== null) {
+    return ctx;
+  }
+
+  const audioCtx = new (global.webkitAudioContext || global.AudioContext)();
+  ctx = audioCtx;
+  return ctx;
 }
 
 function setLocationHref(url) {
