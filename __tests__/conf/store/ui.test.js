@@ -10,20 +10,24 @@ describe('setRoom()', () => {
     ui.setRoom({
       roomType: 'mesh',
       roomName: 'valid-room',
+      browser: 'Chrome',
     });
 
     expect(ui.roomType).toBe('mesh');
     expect(ui.roomName).toBe('valid-room');
+    expect(ui.browser).toBe('Chrome');
   });
 
   it('should not set invalid room', () => {
     ui.setRoom({
       roomType: 'foo',
       roomName: 'invalid-room',
+      browser: 'Chrome',
     });
 
     expect(ui.roomType).toBe('');
     expect(ui.roomName).toBe('');
+    expect(ui.browser).toBe('');
     expect(ui.isUserError).toBeTruthy();
   });
 });
