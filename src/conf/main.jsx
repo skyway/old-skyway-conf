@@ -31,7 +31,7 @@ import bom from '../shared/util/bom';
   const store = new ConfStore();
   const action = new ConfAction(store);
 
-  action.onLoad({ roomType, roomName });
+  action.onLoad({ roomType, roomName, browser });
   ReactDOM.render(
     <Provider action={action} {...store}>
       <ConfApp />

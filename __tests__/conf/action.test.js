@@ -28,7 +28,11 @@ describe('onLoad()', () => {
   it('should call user.updateDevices()', async () => {
     const spy = spyOn(store.user, 'updateDevices');
 
-    await action.onLoad({ roomType: 'mesh', roomName: 'valid-room' });
+    await action.onLoad({
+      roomType: 'mesh',
+      roomName: 'valid-room',
+      browser: 'Chrome',
+    });
     expect(spy).toHaveBeenCalled();
   });
 });

@@ -22,10 +22,10 @@ function isScreenShareAvailable() {
   return ScreenShare.create().isScreenShareAvailable();
 }
 
-function getScreenStreamTrack() {
+function getScreenStreamTrack(params) {
   return new Promise((resolve, reject) => {
     ScreenShare.create()
-      .start()
+      .start(params)
       .then(stream => resolve(stream.getTracks()[0]))
       .catch(reject);
   });
