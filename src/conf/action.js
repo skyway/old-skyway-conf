@@ -87,10 +87,10 @@ class ConfAction extends Action {
     );
   }
 
-  async onLoad({ roomType, roomName }) {
+  async onLoad({ roomType, roomName, browser }) {
     const { user, ui, room } = this.store;
 
-    ui.setRoom({ roomType, roomName });
+    ui.setRoom({ roomType, roomName, browser });
     const prevName = localStorage.getItem('SkyWayConf.dispName');
     prevName && (user.dispName = prevName);
 
@@ -190,7 +190,7 @@ class ConfAction extends Action {
     ui.isChatSending = false;
   }
 
-  async startScreenShare() {
+  async startScreenShare(mediaSource) {
     const { ui, room, user } = this.store;
 
     if (skyway.isScreenShareAvailable() === false) {
@@ -200,7 +200,7 @@ class ConfAction extends Action {
 
     let vTrack;
     try {
-      vTrack = await skyway.getScreenStreamTrack();
+      vTrack = await skyway.getScreenStreamTrack({ mediaSource });
     } catch (err) {
       if (err instanceof DOMException === false) {
         ui.isScreenShareIntroOpen = true;
@@ -218,6 +218,7 @@ class ConfAction extends Action {
     // this triggers stream replacement
     room.setScreenStreamTrack(vTrack);
     ui.isScreenSharing = true;
+    ui.isScreenShareTriggerOpen = false;
   }
   stopScreenShare() {
     const { ui, room } = this.store;
