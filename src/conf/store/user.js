@@ -5,7 +5,7 @@ class UserStore {
     this.peerId = 'YOUR_PEER_ID';
     this.dispName = 'YOUR_NAME';
     this.isVideoMuted = false;
-    this.isAudioMuted = false;
+    this.isAudioMuted = true;
     this.isSpeaking = false;
     this.videoDeviceId = '';
     this.audioDeviceId = '';

@@ -48,7 +48,13 @@ class ConfAction extends Action {
     );
     reaction(
       () => user.isAudioMuted,
-      isMuted => webrtc.setMuteAudioTracks(room.localStream, isMuted)
+      isMuted => {
+        webrtc.setMuteAudioTracks(room.localStream, isMuted);
+
+        // need to resume audio context by user gesture
+        const ctx = bom.getAudioCtx(window);
+        ctx.state === 'suspended' && ctx.resume();
+      }
     );
 
     reaction(
