@@ -1,4 +1,4 @@
-import { decorate, observable, runInAction } from 'mobx';
+import { decorate, observable, action } from 'mobx';
 
 class ChatStore {
   constructor() {
@@ -18,11 +18,9 @@ class ChatStore {
   }
 
   updateBuffer(payload) {
-    runInAction(() => {
-      // this triggers sync remotes
-      this.lastMessage = payload;
-      this.bufferText = '';
-    });
+    // this triggers sync remotes
+    this.lastMessage = payload;
+    this.bufferText = '';
   }
 }
 
@@ -30,5 +28,6 @@ decorate(ChatStore, {
   bufferText: observable,
   lastMessage: observable.ref,
   messages: observable.shallow,
+  updateBuffer: action,
 });
 export default ChatStore;

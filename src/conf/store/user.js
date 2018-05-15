@@ -1,4 +1,4 @@
-import { decorate, observable, computed, runInAction } from 'mobx';
+import { decorate, observable, computed, action } from 'mobx';
 
 class UserStore {
   constructor() {
@@ -31,12 +31,10 @@ class UserStore {
   }
 
   updateDevices({ video, audio }) {
-    runInAction(() => {
-      this.videoDevices = video;
-      this.audioDevices = audio;
+    this.videoDevices = video;
+    this.audioDevices = audio;
 
-      this._setDefaultDeviceIfNeeded();
-    });
+    this._setDefaultDeviceIfNeeded();
   }
 
   /**
@@ -53,14 +51,12 @@ class UserStore {
       device => device.deviceId === this.audioDeviceId
     );
 
-    runInAction(() => {
-      if (this.isNoVideoDevices === false) {
-        videoDevice || (this.videoDeviceId = this.videoDevices[0].deviceId);
-      }
-      if (this.isNoAudioDevices === false) {
-        audioDevice || (this.audioDeviceId = this.audioDevices[0].deviceId);
-      }
-    });
+    if (this.isNoVideoDevices === false) {
+      videoDevice || (this.videoDeviceId = this.videoDevices[0].deviceId);
+    }
+    if (this.isNoAudioDevices === false) {
+      audioDevice || (this.audioDeviceId = this.audioDevices[0].deviceId);
+    }
   }
 }
 
@@ -79,5 +75,8 @@ decorate(UserStore, {
   syncState: computed,
   isNoVideoDevices: computed,
   isNoAudioDevices: computed,
+
+  updateDevices: action,
+  _setDefaultDeviceIfNeeded: action,
 });
 export default UserStore;

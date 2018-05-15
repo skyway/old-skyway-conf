@@ -1,4 +1,4 @@
-import { decorate, observable, computed, runInAction } from 'mobx';
+import { decorate, observable, computed, action } from 'mobx';
 
 class RoomStore {
   constructor() {
@@ -58,10 +58,8 @@ class RoomStore {
     const [vTrack] = stream.getVideoTracks();
     const [aTrack] = stream.getAudioTracks();
 
-    runInAction(() => {
-      this.localVideoStreamTrack = vTrack;
-      this.localAudioStreamTrack = aTrack;
-    });
+    this.localVideoStreamTrack = vTrack;
+    this.localAudioStreamTrack = aTrack;
   }
 
   setScreenStreamTrack(track) {
@@ -76,31 +74,25 @@ class RoomStore {
   }
 
   addRemoteStream(stream) {
-    runInAction(() => {
-      // XXX: need to restrict 1stream/1peer
-      // room#removeStream does not fire on Chrome when Firefox replaces stream w/ screen share in SFU
-      // but now, Chrome 66 and Firefox 59, they do not fire remove -> add events on replacing stream
-      const oldStream = this.remoteStreams.find(
-        oStream => oStream.peerId === stream.peerId
-      );
-      this.removeRemoteStream(oldStream);
+    // XXX: need to restrict 1stream/1peer
+    // room#removeStream does not fire on Chrome when Firefox replaces stream w/ screen share in SFU
+    // but now, Chrome 66 and Firefox 59, they do not fire remove -> add events on replacing stream
+    const oldStream = this.remoteStreams.find(
+      oStream => oStream.peerId === stream.peerId
+    );
+    this.removeRemoteStream(oldStream);
 
-      this.remoteStreams.push(stream);
-    });
+    this.remoteStreams.push(stream);
   }
 
   removeRemoteStreamByPeerId(peerId) {
-    runInAction(() => {
-      const stream = this.remoteStreams.find(
-        stream => stream.peerId === peerId
-      );
-      this.removeRemoteStream(stream);
+    const stream = this.remoteStreams.find(stream => stream.peerId === peerId);
+    this.removeRemoteStream(stream);
 
-      this.syncState.delete(peerId);
-      if (this.pinnedPeerId === peerId) {
-        this.pinnedPeerId = '';
-      }
-    });
+    this.syncState.delete(peerId);
+    if (this.pinnedPeerId === peerId) {
+      this.pinnedPeerId = '';
+    }
   }
 
   removeRemoteStream(stream) {
@@ -118,5 +110,9 @@ decorate(RoomStore, {
   localStream: computed,
   pinnedPeerIdDisp: computed,
   pinnedStream: computed,
+  setLocalStream: action,
+  addRemoteStream: action,
+  removeRemoteStreamByPeerId: action,
+  removeRemoteStream: action,
 });
 export default RoomStore;
