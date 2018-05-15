@@ -11,13 +11,13 @@ const MemberVideoLocal = ({ user, action }) => (
         onClick={() => action.$update('user.isVideoMuted', !user.isVideoMuted)}
         title={user.isVideoMuted ? 'Unmute' : 'Mute'}
       >
-        <CamIcon isMuted={user.isVideoMuted} />
+        <CamIcon isMuted={user.isVideoMuted} isSelf />
       </button>
       <button
         onClick={() => action.$update('user.isAudioMuted', !user.isAudioMuted)}
         title={user.isAudioMuted ? 'Unmute' : 'Mute'}
       >
-        <MicIcon isMuted={user.isAudioMuted} />
+        <MicIcon isMuted={user.isAudioMuted} isSelf />
       </button>
       <button
         onClick={() => action.$update('ui.isSettingOpen', true)}
