@@ -1,10 +1,9 @@
 import React from 'react';
 
-const CamIcon = ({ isMuted = false }) =>
-  isMuted ? (
-    <i className="material-icons">videocam_off</i>
-  ) : (
-    <i className="material-icons">videocam</i>
-  );
+const CamIcon = ({ isMuted = false, isSelf = false }) => (
+  <i className={`material-icons ${isSelf && isMuted ? '-muted' : ''}`}>
+    {isMuted ? 'videocam_off' : 'videocam'}
+  </i>
+);
 
 export default CamIcon;
