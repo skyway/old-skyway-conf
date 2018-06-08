@@ -52,46 +52,48 @@ function getUserMedia({ videoDeviceId, audioDeviceId }, facingMode) {
 }
 
 function snapVideoStream(stream, mimeType = 'image/jpeg', qualityArgument = 1) {
-  return new Promise(resolve => {
+  return new Promise(async (resolve, reject) => {
     let $video = document.createElement('video');
 
-    // need to wait this to get first frame image
-    $video.addEventListener(
-      'loadeddata',
-      () => {
-        let $canvas = document.createElement('canvas');
-        $canvas.width = $video.videoWidth;
-        $canvas.height = $video.videoHeight;
-
-        // copy same size
-        const ctx = $canvas.getContext('2d');
-        ctx.drawImage($video, 0, 0);
-
-        // then compress
-        $canvas.toBlob(
-          blob => {
-            $video.pause();
-            $video.srcObject = null;
-            $video = $canvas = null;
-
-            resolve(blob);
-          },
-          mimeType,
-          qualityArgument
-        );
-      },
-      { once: true }
-    );
-
     // Firefox can't load media without this
-    $video.autoplay = $video.muted = $video.playsInline = true;
+    $video.muted = $video.playsInline = true;
     $video.srcObject = stream;
+    await $video.play().catch(reject);
+
+    let $canvas = document.createElement('canvas');
+    $canvas.width = $video.videoWidth;
+    $canvas.height = $video.videoHeight;
+
+    // copy same size
+    const ctx = $canvas.getContext('2d');
+    ctx.drawImage($video, 0, 0);
+
+    // then compress
+    $canvas.toBlob(
+      blob => {
+        $video.pause();
+        $video.srcObject = null;
+        $video = $canvas = null;
+
+        resolve(blob);
+      },
+      mimeType,
+      qualityArgument
+    );
   });
 }
 
 function getFakeStream(ctx) {
-  const { stream } = ctx.createMediaStreamDestination();
-  return stream;
+  const $canvas = document.createElement('canvas');
+  $canvas.width = $canvas.height = 1;
+  $canvas.getContext('2d');
+  const vStream = $canvas.captureStream();
+  const aStream = ctx.createMediaStreamDestination().stream;
+
+  const [vTrack] = vStream.getVideoTracks();
+  const [aTrack] = aStream.getAudioTracks();
+
+  return new MediaStream([vTrack, aTrack]);
 }
 
 export default {
