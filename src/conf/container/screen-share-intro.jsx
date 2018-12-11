@@ -16,7 +16,8 @@ const ScreenShareIntro = ({ ui, action }) => (
           rel="noopener noreferrer"
         >
           Chrome extension
-        </a>.
+        </a>
+        .
       </p>
       <div className="L-ScreenShareIntro_Finish">
         <button
