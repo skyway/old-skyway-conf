@@ -9,11 +9,12 @@ import bom from '../shared/util/bom';
 
 (function() {
   const [, roomType, roomName] = location.hash.split('/');
-  const os = bom.getOsName(navigator.userAgent);
-  const browser = bom.getBrowserName(navigator.userAgent);
+  const { userAgent } = navigator;
+  const os = bom.getOsName(userAgent);
+  const browser = bom.getBrowserName(userAgent);
 
   if (
-    (['Windows', 'Mac', 'iOS', 'Android'].includes(os) &&
+    (['Windows', 'Mac', 'Linux', 'iOS', 'Android'].includes(os) &&
       ['Chrome', 'Firefox', 'Safari'].includes(browser)) === false ||
     // allow Safari to enter mesh room only
     (browser === 'Safari' && roomType !== 'mesh')

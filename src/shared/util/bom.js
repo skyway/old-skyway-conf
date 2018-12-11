@@ -8,6 +8,8 @@ function getOsName(ua) {
       return 'Windows';
     case /Mac OS X/.test(ua):
       return 'Mac';
+    case /Linux/.test(ua):
+      return 'Linux';
     case /CrOS/.test(ua):
       return 'CromeOS';
     case /Firefox/.test(ua):
