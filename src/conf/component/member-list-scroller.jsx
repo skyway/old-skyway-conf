@@ -1,7 +1,7 @@
 import React from 'react';
 import { reaction } from 'mobx';
 
-class MemberList extends React.Component {
+class MemberListScroller extends React.Component {
   constructor() {
     super();
     this._ref = null;
@@ -12,14 +12,17 @@ class MemberList extends React.Component {
 
   render() {
     return (
-      <div className="MemberList">
-        <div className="MemberList_Arrow -left">
+      <div className="MemberListScroller">
+        <div className="MemberListScroller_Arrow -left">
           <i className="material-icons">chevron_left</i>
         </div>
-        <div ref={ref => (this._ref = ref)} className="MemberList_Scroller">
+        <div
+          ref={ref => (this._ref = ref)}
+          className="MemberListScroller_Content"
+        >
           {this.props.children}
         </div>
-        <div className="MemberList_Arrow -right">
+        <div className="MemberListScroller_Arrow -right">
           <i className="material-icons">chevron_right</i>
         </div>
       </div>
@@ -59,4 +62,4 @@ class MemberList extends React.Component {
   }
 }
 
-export default MemberList;
+export default MemberListScroller;

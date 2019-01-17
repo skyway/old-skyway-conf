@@ -23,6 +23,11 @@
   }
 }
 
+.L-MemberList {
+  display: grid;
+  grid-template-columns: var(--memberVideoWidth) auto;
+}
+
 .L-Invite {
   width: var(--popupWidth);
   margin: 100px auto;

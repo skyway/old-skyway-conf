@@ -1,17 +1,19 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 
-import MemberList from '../component/member-list';
+import MemberListScroller from '../component/member-list-scroller';
 import MemberVideoLocal from '../component/member-video/local';
 import MemberVideoRemotes from '../component/member-video/remotes';
 import MemberVideoInvite from '../component/member-video/invite';
 
-const MemberListC = ({ ui, room, user, action }) => (
-  <MemberList room={room}>
+const MemberList = ({ ui, room, user, action }) => (
+  <div className="L-MemberList">
     <MemberVideoLocal ui={ui} room={room} user={user} action={action} />
-    <MemberVideoRemotes room={room} action={action} />
-    <MemberVideoInvite action={action} />
-  </MemberList>
+    <MemberListScroller room={room}>
+      <MemberVideoRemotes room={room} action={action} />
+      <MemberVideoInvite action={action} />
+    </MemberListScroller>
+  </div>
 );
 
-export default inject('ui', 'room', 'user', 'action')(observer(MemberListC));
+export default inject('ui', 'room', 'user', 'action')(observer(MemberList));
