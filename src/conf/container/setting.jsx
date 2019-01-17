@@ -25,7 +25,7 @@ const Setting = ({ room, ui, user, action }) => (
               : (ev.target.disabled = true) && action.onClickJoinRoom();
           }}
         >
-          OK
+          {ui.isRoomJoin ? 'Close' : 'OK'}
         </button>
       </div>
     </div>

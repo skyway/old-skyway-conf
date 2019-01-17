@@ -25,7 +25,7 @@ const Setting = ({ room, ui, user, action }) => (
               : action.onClickJoinRoom();
           }}
         >
-          OK
+          {ui.isRoomJoin ? 'Close' : 'OK'}
         </button>
       </div>
     </div>
