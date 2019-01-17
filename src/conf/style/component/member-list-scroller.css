@@ -1,8 +1,8 @@
-.MemberList {
+.MemberListScroller {
   position: relative;
   overflow: hidden;
 
-  &_Scroller {
+  &_Content {
     display: flex;
     overflow-x: auto;
   }
