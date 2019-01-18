@@ -98,6 +98,13 @@ class RoomStore {
   removeRemoteStream(stream) {
     stream && this.remoteStreams.remove(stream);
   }
+
+  removeAllRemoteStreams() {
+    this.remoteStreams.forEach(stream => {
+      stream.getTracks().forEach(track => track.stop());
+    });
+    this.remoteStreams.clear();
+  }
 }
 
 decorate(RoomStore, {

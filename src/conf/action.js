@@ -11,6 +11,7 @@ class ConfAction extends Action {
   constructor(store) {
     super(store);
 
+    this._peer = null;
     this._destroyVad = null;
 
     const { user, room, ui } = this.store;
@@ -143,16 +144,17 @@ class ConfAction extends Action {
   async onClickJoinRoom() {
     const { ui, room, user } = this.store;
 
-    const peer = await skyway.initPeer().catch(err => ui.handleAppError(err));
+    this._peer = await skyway.initPeer().catch(err => ui.handleAppError(err));
 
     if (ui.isError) {
       return;
     }
 
-    peer.on('error', err => ui.handleSkyWayPeerError(err));
-    user.peerId = peer.id;
+    // TODO: そんなメソッドない
+    this._peer.on('error', err => ui.handleSkyWayPeerError(err));
+    user.peerId = this._peer.id;
 
-    const confRoom = peer.joinRoom(`${ui.roomType}/${ui.roomName}`, {
+    const confRoom = this._peer.joinRoom(`${ui.roomType}/${ui.roomName}`, {
       mode: ui.roomType,
       stream: room.localStream,
     });
@@ -237,22 +239,28 @@ class ConfAction extends Action {
     const { ui, user, room, chat } = this.store;
     ui.isRoomJoin = true;
 
+    const roomDisposers = [];
     confRoom.on('stream', stream => this._onRoomAddStream(stream, confRoom));
     confRoom.on('removeStream', stream => this._onRoomRemoveStream(stream));
     confRoom.on('peerLeave', peerId => this._onRoomPeerLeave(peerId));
     confRoom.on('data', data => this._onRoomData(data));
+    confRoom.on('close', () => this._onRoomClose(confRoom, roomDisposers));
 
-    reaction(
-      () => room.localStream,
-      () => confRoom.replaceStream(room.localStream)
-    );
-    reaction(
-      () => user.syncState,
-      state => confRoom.send({ type: 'sync', payload: state })
-    );
-    reaction(
-      () => chat.lastMessage,
-      msg => confRoom.send({ type: 'chat', payload: msg })
+    window.confRoom = confRoom;
+
+    roomDisposers.push(
+      reaction(
+        () => room.localStream,
+        () => confRoom.replaceStream(room.localStream)
+      ),
+      reaction(
+        () => user.syncState,
+        state => confRoom.send({ type: 'sync', payload: state })
+      ),
+      reaction(
+        () => chat.lastMessage,
+        msg => confRoom.send({ type: 'chat', payload: msg })
+      )
     );
   }
   _onRoomAddStream(stream, confRoom) {
@@ -299,6 +307,22 @@ class ConfAction extends Action {
       default:
         throw new Error(`${type} is not defined as message type`);
     }
+  }
+  _onRoomClose(confRoom, roomDisposers) {
+    const { room, ui } = this.store;
+
+    // room will close when iceConnectionState === failed
+    // try to reconnect, clean up related stuff
+    confRoom.removeAllListeners();
+    roomDisposers.forEach(dispose => dispose());
+    room.removeAllRemoteStreams();
+
+    // then join new room
+    const newConfRoom = this._peer.joinRoom(`${ui.roomType}/${ui.roomName}`, {
+      mode: ui.roomType,
+      stream: room.localStream,
+    });
+    this._onRoomJoin(newConfRoom);
   }
 }
 
