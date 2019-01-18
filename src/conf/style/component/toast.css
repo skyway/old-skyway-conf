@@ -1,5 +1,14 @@
 .Toast {
   padding: 5px 10px;
-  background-color: rgba(0, 0, 0, .5);
   color: #fff;
+
+  &.-stat {
+    background-color: rgba(255, 102, 115, .6);
+  }
+  &.-chat {
+    background-color: rgba(3, 155, 229, .6);
+  }
+  &.-user {
+    background-color: rgba(0, 0, 0, .6);
+  }
 }

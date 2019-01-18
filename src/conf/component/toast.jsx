@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 const Toast = ({ notification }) => (
   <React.Fragment>
     {notification.items.map(item => (
-      <div className="Toast" key={item.id}>
+      <div className={`Toast -${item.type}`} key={item.id}>
         {item.text}
       </div>
     ))}
