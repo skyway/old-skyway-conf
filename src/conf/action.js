@@ -150,8 +150,7 @@ class ConfAction extends Action {
       return;
     }
 
-    // TODO: そんなメソッドない
-    this._peer.on('error', err => ui.handleSkyWayPeerError(err));
+    this._peer.on('error', err => ui.handleUserError(err));
     user.peerId = this._peer.id;
 
     const confRoom = this._peer.joinRoom(`${ui.roomType}/${ui.roomName}`, {
