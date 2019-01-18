@@ -240,18 +240,10 @@ class ConfAction extends Action {
     ui.isRoomJoin = true;
 
     const roomDisposers = [];
-    confRoom.on('stream', stream => this._onRoomAddStream(stream, confRoom));
-    confRoom.on('removeStream', stream => this._onRoomRemoveStream(stream));
-    confRoom.on('peerLeave', peerId => this._onRoomPeerLeave(peerId));
-    confRoom.on('data', data => this._onRoomData(data));
-    confRoom.on('close', () => this._onRoomClose(confRoom, roomDisposers));
-
-    window.confRoom = confRoom;
-
     roomDisposers.push(
       reaction(
         () => room.localStream,
-        () => confRoom.replaceStream(room.localStream)
+        localStream => confRoom.replaceStream(localStream)
       ),
       reaction(
         () => user.syncState,
@@ -262,6 +254,12 @@ class ConfAction extends Action {
         msg => confRoom.send({ type: 'chat', payload: msg })
       )
     );
+
+    confRoom.on('stream', stream => this._onRoomAddStream(stream, confRoom));
+    confRoom.on('removeStream', stream => this._onRoomRemoveStream(stream));
+    confRoom.on('peerLeave', peerId => this._onRoomPeerLeave(peerId));
+    confRoom.on('data', data => this._onRoomData(data));
+    confRoom.on('close', () => this._onRoomClose(confRoom, roomDisposers));
   }
   _onRoomAddStream(stream, confRoom) {
     const { room, user, notification } = this.store;
@@ -310,7 +308,6 @@ class ConfAction extends Action {
   }
   _onRoomClose(confRoom, roomDisposers) {
     const { room, ui } = this.store;
-
     // room will close when iceConnectionState === failed
     // try to reconnect, clean up related stuff
     confRoom.removeAllListeners();
