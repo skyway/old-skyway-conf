@@ -5,7 +5,7 @@ const Toast = ({ notification }) => (
   <React.Fragment>
     {notification.items.map(item => (
       <div className={`Toast -${item.type}`} key={item.id}>
-        {item.text}
+        <span className="Toast_Text">{item.text}</span>
       </div>
     ))}
   </React.Fragment>

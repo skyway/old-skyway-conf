@@ -5,6 +5,10 @@ class NotificationStore {
     this.items = [];
   }
 
+  showStat(text) {
+    this._show({ type: 'stat', text }, 2000);
+  }
+
   showChat(syncState) {
     this._show(
       { type: 'chat', text: `${syncState.dispName} sent a chat` },

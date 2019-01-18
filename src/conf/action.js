@@ -306,8 +306,12 @@ class ConfAction extends Action {
     }
   }
   _onRoomClose(confRoom, roomDisposers) {
-    const { room, ui } = this.store;
+    const { room, ui, notification } = this.store;
+
     // room will close when iceConnectionState === failed
+    // at first, need to notify it locally
+    notification.showStat('Your connection closed, trying to reconnect...');
+
     // try to reconnect, clean up related stuff
     confRoom.removeAllListeners();
     roomDisposers.forEach(dispose => dispose());
