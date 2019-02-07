@@ -7,8 +7,8 @@ class UserStore {
     this.isVideoMuted = false;
     this.isAudioMuted = true;
     this.isSpeaking = false;
-    this.videoDeviceId = '';
-    this.audioDeviceId = '';
+    this.videoDeviceId = 'default';
+    this.audioDeviceId = 'default';
     this.videoDevices = [];
     this.audioDevices = [];
   }
