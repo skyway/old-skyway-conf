@@ -8,7 +8,7 @@ import MicIcon from '../../../shared/component/icon/mic';
 const MemberVideoLocal = ({ ui, room, user, action }) => (
   <div className="MemberVideo">
     <div className="MemberVideo_Name">{user.dispName}</div>
-    <div className="MemberVideo_Media">
+    <div className="MemberVideo_Control">
       <button
         onClick={() => action.$update('user.isAudioMuted', !user.isAudioMuted)}
         title={user.isAudioMuted ? 'Unmute' : 'Mute'}

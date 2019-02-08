@@ -29,10 +29,18 @@
     text-indent: 10px;
   }
 
-  &_Media {
+  /* local */
+  &_Control {
     position: absolute;
     bottom: 0;
     right: 0;
+    z-index: 1;
+  }
+  /* remote */
+  &_Media {
+    position: absolute;
+    bottom: 0;
+    right: 10px;
     z-index: 1;
   }
 
