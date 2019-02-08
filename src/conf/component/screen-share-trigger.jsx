@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 
 const ScreenShareTrigger = ({ ui, action }) =>
-  ui.browser !== 'Firefox' ? (
+  !ui.isFirefoxAndScreenShareTriggerNeeded ? (
     <button
       onClick={() => action.startScreenShare()}
       title="Start screen share"

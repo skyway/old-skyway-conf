@@ -6,6 +6,7 @@ import ConfStore from './store';
 import ConfAction from './action';
 import ConfApp from './app';
 import bom from '../shared/util/bom';
+import webrtc from '../shared/util/webrtc';
 
 (function() {
   const [, roomType, roomName] = location.hash.split('/');
@@ -32,7 +33,10 @@ import bom from '../shared/util/bom';
   const store = new ConfStore();
   const action = new ConfAction(store);
 
-  action.onLoad({ roomType, roomName, browser });
+  // need to select window or screen or ... w/o getDisplayMedia()
+  const isFirefoxAndScreenShareTriggerNeeded =
+    browser === 'Firefox' && webrtc.isGetDisplayMediaAvailable() === false;
+  action.onLoad({ roomType, roomName, isFirefoxAndScreenShareTriggerNeeded });
   ReactDOM.render(
     <Provider action={action} {...store}>
       <ConfApp />

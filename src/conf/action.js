@@ -74,10 +74,10 @@ class ConfAction extends Action {
     );
   }
 
-  async onLoad({ roomType, roomName, browser }) {
+  async onLoad({ roomType, roomName, isFirefoxAndScreenShareTriggerNeeded }) {
     const { user, ui, room } = this.store;
 
-    ui.setRoom({ roomType, roomName, browser });
+    ui.setRoom({ roomType, roomName, isFirefoxAndScreenShareTriggerNeeded });
     const prevName = localStorage.getItem('SkyWayConf.dispName');
     prevName && (user.dispName = prevName);
 

@@ -5,7 +5,6 @@ class UiStore {
   constructor() {
     this.roomType = '';
     this.roomName = '';
-    this.browser = '';
 
     this.isAppReady = false;
 
@@ -16,7 +15,9 @@ class UiStore {
     this.isRoomJoin = false;
     this.isScreenSharing = false;
     this.isScreenShareIntroOpen = false;
+
     // only for Firefox
+    this.isFirefoxAndScreenShareTriggerNeeded = false;
     this.isScreenShareTriggerOpen = false;
 
     this.isUserError = false;
@@ -32,7 +33,7 @@ class UiStore {
     return this.isUserError || this.isAppError;
   }
 
-  setRoom({ roomType, roomName, browser }) {
+  setRoom({ roomType, roomName, isFirefoxAndScreenShareTriggerNeeded }) {
     if (
       !validate.isValidRoomName(roomName) ||
       !validate.isValidRoomType(roomType)
@@ -43,7 +44,7 @@ class UiStore {
 
     this.roomType = roomType;
     this.roomName = roomName;
-    this.browser = browser;
+    this.isFirefoxAndScreenShareTriggerNeeded = isFirefoxAndScreenShareTriggerNeeded;
   }
 
   handleGetUserMediaError(err) {
@@ -72,7 +73,6 @@ class UiStore {
 decorate(UiStore, {
   roomType: observable,
   roomName: observable,
-  browser: observable,
   isAppReady: observable,
   isSettingOpen: observable,
   isInviteOpen: observable,
@@ -81,6 +81,7 @@ decorate(UiStore, {
   isRoomJoin: observable,
   isScreenSharing: observable,
   isScreenShareIntroOpen: observable,
+  isFirefoxAndScreenShareTriggerNeeded: observable,
   isScreenShareTriggerOpen: observable,
   isUserError: observable,
   isAppError: observable,
