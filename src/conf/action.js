@@ -22,7 +22,6 @@ class ConfAction extends Action {
         const stream = await webrtc
           .getUserMedia({ videoDeviceId, audioDeviceId })
           .catch(err => ui.handleGetUserMediaError(err));
-
         if (ui.isError) {
           return;
         }
@@ -31,9 +30,6 @@ class ConfAction extends Action {
         if (room.localStream instanceof MediaStream) {
           webrtc.stopStream(room.localStream);
         }
-
-        // once got media, it's ready
-        ui.isAppReady = true;
 
         // apply current status before set
         user.isVideoMuted && webrtc.setMuteVideoTracks(stream, true);
@@ -76,22 +72,6 @@ class ConfAction extends Action {
         this._destroyVad = destroy;
       }
     );
-
-    // reload device labels after 1st time getUserMedia()
-    when(
-      () => ui.isAppReady,
-      async () => {
-        const devices = await webrtc
-          .getUserDevices()
-          .catch(err => ui.handleUserError(err));
-
-        if (ui.isError) {
-          return;
-        }
-
-        user.updateDevices(devices);
-      }
-    );
   }
 
   async onLoad({ roomType, roomName, browser }) {
@@ -101,22 +81,32 @@ class ConfAction extends Action {
     const prevName = localStorage.getItem('SkyWayConf.dispName');
     prevName && (user.dispName = prevName);
 
+    // only for user permission to enumerateDevices() properly
+    const tempStream = await navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: true,
+    });
+
     const devices = await webrtc
       .getUserDevices()
       .catch(err => ui.handleUserError(err));
-
     if (ui.isError) {
       return;
     }
 
-    // this triggers reaction and get user media
+    // need to keep reference until enumerateDevices() finished
+    webrtc.stopStream(tempStream);
+
+    // this triggers reaction and get real user media
     user.updateDevices(devices);
     // or enable to force enter without devices
     if (user.isNoVideoDevices && user.isNoAudioDevices) {
-      ui.isAppReady = true;
       const fakeStream = webrtc.getFakeStream(bom.getAudioCtx(window));
       room.setLocalStream(fakeStream);
     }
+
+    // once got media, now it's ready
+    ui.isAppReady = true;
 
     // XXX: Safari's mediaDevices does not inherit EventTarget..
     // navigator.mediaDevices.addEventListener('devicechange', async () => {
@@ -124,7 +114,6 @@ class ConfAction extends Action {
       const devices = await webrtc
         .getUserDevices()
         .catch(err => ui.handleUserError(err));
-
       if (ui.isError) {
         return;
       }
