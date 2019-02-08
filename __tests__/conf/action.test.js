@@ -120,7 +120,7 @@ describe('_onRoomJoin()', () => {
     const confRoom = jasmine.createSpyObj(['on']);
     action._onRoomJoin(confRoom);
 
-    expect(confRoom.on).toHaveBeenCalledTimes(4);
+    expect(confRoom.on).toHaveBeenCalledTimes(5);
     expect(store.ui.isRoomJoin).toBeTruthy();
   });
 });
