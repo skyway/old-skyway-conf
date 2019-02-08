@@ -27,8 +27,8 @@ describe('updateDevices()', () => {
 
 describe('_setDefaultDeviceIfNeeded()', () => {
   it('should set deviceId', () => {
-    expect(user.videoDeviceId).toBe('');
-    expect(user.audioDeviceId).toBe('');
+    expect(user.videoDeviceId).toBe('default');
+    expect(user.audioDeviceId).toBe('default');
 
     const devices = getFakeDevices();
     user.updateDevices(devices);

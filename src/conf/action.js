@@ -74,18 +74,15 @@ class ConfAction extends Action {
     );
   }
 
-  async onLoad({ roomType, roomName, browser }) {
+  async onLoad({ roomType, roomName, isFirefoxAndScreenShareTriggerNeeded }) {
     const { user, ui, room } = this.store;
 
-    ui.setRoom({ roomType, roomName, browser });
+    ui.setRoom({ roomType, roomName, isFirefoxAndScreenShareTriggerNeeded });
     const prevName = localStorage.getItem('SkyWayConf.dispName');
     prevName && (user.dispName = prevName);
 
     // only for user permission to enumerateDevices() properly
-    const tempStream = await navigator.mediaDevices.getUserMedia({
-      video: true,
-      audio: true,
-    });
+    const tempStream = await webrtc.getUserPermission();
 
     const devices = await webrtc
       .getUserDevices()
@@ -188,16 +185,23 @@ class ConfAction extends Action {
 
   async startScreenShare(mediaSource) {
     const { ui, room, user } = this.store;
+    const isGDMAvailable = webrtc.isGetDisplayMediaAvailable();
 
-    if (skyway.isScreenShareAvailable() === false) {
+    if (skyway.isScreenShareAvailable() === false && isGDMAvailable === false) {
       ui.isScreenShareIntroOpen = true;
       return;
     }
 
     let vTrack;
     try {
-      vTrack = await skyway.getScreenStreamTrack({ mediaSource });
+      // prefer to use getDisplayMedia()
+      if (isGDMAvailable) {
+        vTrack = await webrtc.getDisplayStreamTrack();
+      } else {
+        vTrack = await skyway.getScreenStreamTrack({ mediaSource });
+      }
     } catch (err) {
+      // DOMException means user cancelled screen selection
       if (err instanceof DOMException === false) {
         ui.isScreenShareIntroOpen = true;
       }
@@ -205,10 +209,11 @@ class ConfAction extends Action {
       return;
     }
 
+    // for user stopped sharing from browser's UI
     vTrack.addEventListener('ended', () => this.stopScreenShare(), {
       once: true,
     });
-    // apply current status before set
+    // apply current mute status before set
     user.isVideoMuted && webrtc.setMuteTrack(vTrack, true);
 
     // this triggers stream replacement

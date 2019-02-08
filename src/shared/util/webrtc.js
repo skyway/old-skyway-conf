@@ -31,6 +31,10 @@ async function getUserDevices() {
   return userDevices;
 }
 
+function getUserPermission() {
+  return navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+}
+
 function getUserMedia({ videoDeviceId, audioDeviceId }, facingMode) {
   const constraints = {
     video: { deviceId: videoDeviceId },
@@ -49,6 +53,16 @@ function getUserMedia({ videoDeviceId, audioDeviceId }, facingMode) {
   }
 
   return navigator.mediaDevices.getUserMedia(constraints);
+}
+
+function isGetDisplayMediaAvailable() {
+  return typeof navigator.mediaDevices.getDisplayMedia === 'function';
+}
+
+function getDisplayStreamTrack() {
+  return navigator.mediaDevices
+    .getDisplayMedia({ video: true })
+    .then(stream => stream.getTracks()[0]);
 }
 
 function snapVideoStream(stream, mimeType = 'image/jpeg', qualityArgument = 1) {
@@ -101,8 +115,11 @@ export default {
   setMuteAudioTracks,
   setMuteTrack,
   stopStream,
+  getUserPermission,
   getUserDevices,
   getUserMedia,
+  isGetDisplayMediaAvailable,
+  getDisplayStreamTrack,
   snapVideoStream,
   getFakeStream,
 };

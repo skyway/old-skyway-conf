@@ -2,7 +2,7 @@ import ConfStore from '../../src/conf/store';
 import ConfAction from '../../src/conf/action';
 import skyway from '../../src/shared/util/skyway';
 import webrtc from '../../src/shared/util/webrtc';
-import { getFakeDevices } from '../test-utils';
+import { getFakeDevices, getFakeMedia } from '../test-utils';
 
 let store;
 let action;
@@ -19,6 +19,12 @@ beforeEach(() => {
   spyOn(webrtc, 'snapVideoStream').and.callFake(() =>
     Promise.resolve(new Blob())
   );
+  spyOn(webrtc, 'getUserPermission').and.callFake(() =>
+    Promise.resolve(getFakeMedia())
+  );
+  spyOn(webrtc, 'getDisplayStreamTrack').and.callFake(() =>
+    jasmine.createSpyObj(['addEventListener'])
+  );
   spyOn(webrtc, 'getUserDevices').and.callFake(() =>
     Promise.resolve(getFakeDevices())
   );
@@ -31,7 +37,7 @@ describe('onLoad()', () => {
     await action.onLoad({
       roomType: 'mesh',
       roomName: 'valid-room',
-      browser: 'Chrome',
+      isFirefoxAndScreenShareTriggerNeeded: false,
     });
     expect(spy).toHaveBeenCalled();
   });
@@ -78,14 +84,27 @@ describe('startScreenShare()', () => {
   it('should set true to ui.isScreenShareIntroOpen w/o screen share is available', async () => {
     expect(store.ui.isScreenShareIntroOpen).toBeFalsy();
     spyOn(skyway, 'isScreenShareAvailable').and.callFake(() => false);
+    spyOn(webrtc, 'isGetDisplayMediaAvailable').and.callFake(() => false);
 
     await action.startScreenShare();
     expect(store.ui.isScreenShareIntroOpen).toBeTruthy();
   });
 
-  it('should set true to ui.isScreenSharing w/ screen share is available', async () => {
+  it('should set true to ui.isScreenSharing w/ skyway screen share is available', async () => {
     expect(store.ui.isScreenSharing).toBeFalsy();
     spyOn(skyway, 'isScreenShareAvailable').and.callFake(() => true);
+    spyOn(webrtc, 'isGetDisplayMediaAvailable').and.callFake(() => false);
+    const spy = spyOn(store.room, 'setScreenStreamTrack');
+
+    await action.startScreenShare();
+    expect(spy).toHaveBeenCalled();
+    expect(store.ui.isScreenSharing).toBeTruthy();
+  });
+
+  it('should set true to ui.isScreenSharing w/ getDisplayMedia is available', async () => {
+    expect(store.ui.isScreenSharing).toBeFalsy();
+    spyOn(skyway, 'isScreenShareAvailable').and.callFake(() => false);
+    spyOn(webrtc, 'isGetDisplayMediaAvailable').and.callFake(() => true);
     const spy = spyOn(store.room, 'setScreenStreamTrack');
 
     await action.startScreenShare();
@@ -117,7 +136,7 @@ describe('_onRoomJoin()', () => {
     const confRoom = jasmine.createSpyObj(['on']);
     action._onRoomJoin(confRoom);
 
-    expect(confRoom.on).toHaveBeenCalledTimes(4);
+    expect(confRoom.on).toHaveBeenCalledTimes(5);
     expect(store.ui.isRoomJoin).toBeTruthy();
   });
 });
@@ -164,7 +183,7 @@ describe('_onRoomData()', () => {
     expect(spy2).toHaveBeenCalled();
   });
 
-  xit('should handle data type:chat w/ isChatOpen', () => {
+  it('should handle data type:chat w/ isChatOpen', () => {
     store.ui.isChatOpen = true;
     spyOn(store.room.syncState, 'get').and.callFake(() => ({}));
     const spy = spyOn(store.notification, 'showChat');

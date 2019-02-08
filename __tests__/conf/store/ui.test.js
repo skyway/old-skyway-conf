@@ -10,24 +10,24 @@ describe('setRoom()', () => {
     ui.setRoom({
       roomType: 'mesh',
       roomName: 'valid-room',
-      browser: 'Chrome',
+      isFirefoxAndScreenShareTriggerNeeded: false,
     });
 
     expect(ui.roomType).toBe('mesh');
     expect(ui.roomName).toBe('valid-room');
-    expect(ui.browser).toBe('Chrome');
+    expect(ui.isFirefoxAndScreenShareTriggerNeeded).toBe(false);
   });
 
   it('should not set invalid room', () => {
     ui.setRoom({
       roomType: 'foo',
       roomName: 'invalid-room',
-      browser: 'Chrome',
+      isFirefoxAndScreenShareTriggerNeeded: true,
     });
 
     expect(ui.roomType).toBe('');
     expect(ui.roomName).toBe('');
-    expect(ui.browser).toBe('');
+    expect(ui.isFirefoxAndScreenShareTriggerNeeded).toBe(false);
     expect(ui.isUserError).toBeTruthy();
   });
 });
