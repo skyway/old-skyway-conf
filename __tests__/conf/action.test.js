@@ -31,7 +31,7 @@ describe('onLoad()', () => {
     await action.onLoad({
       roomType: 'mesh',
       roomName: 'valid-room',
-      browser: 'Chrome',
+      isFirefoxAndScreenShareTriggerNeeded: false,
     });
     expect(spy).toHaveBeenCalled();
   });
