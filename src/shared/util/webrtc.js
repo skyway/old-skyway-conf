@@ -51,6 +51,16 @@ function getUserMedia({ videoDeviceId, audioDeviceId }, facingMode) {
   return navigator.mediaDevices.getUserMedia(constraints);
 }
 
+function isGetDisplayMediaAvailable() {
+  return typeof navigator.mediaDevices.getDisplayMedia === 'function';
+}
+
+function getDisplayStreamTrack() {
+  return navigator.mediaDevices
+    .getDisplayMedia({ video: true })
+    .then(stream => stream.getTracks()[0]);
+}
+
 function snapVideoStream(stream, mimeType = 'image/jpeg', qualityArgument = 1) {
   return new Promise(async (resolve, reject) => {
     let $video = document.createElement('video');
@@ -103,6 +113,8 @@ export default {
   stopStream,
   getUserDevices,
   getUserMedia,
+  isGetDisplayMediaAvailable,
+  getDisplayStreamTrack,
   snapVideoStream,
   getFakeStream,
 };
