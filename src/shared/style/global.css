@@ -26,6 +26,7 @@ select, button, a {
 }
 
 /* we are using material-icons */
+.material-icons { vertical-align: middle; }
 .material-icons.-x05 { font-size: 12px; }
 .material-icons.-x15 { font-size: 36px; }
 .material-icons.-muted { color: var(--color3); }
