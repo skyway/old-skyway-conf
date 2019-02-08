@@ -19,6 +19,10 @@ const ScreenShareIntro = ({ ui, action }) => (
         </a>
         .
       </p>
+      <p className="L-ScreenShareIntro_Desc">
+        Or, try latest browser releases like Chrome Canary, Safari TP may
+        support screen share.
+      </p>
       <div className="L-ScreenShareIntro_Finish">
         <button
           onClick={() => action.$update('ui.isScreenShareIntroOpen', false)}
