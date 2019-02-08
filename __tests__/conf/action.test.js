@@ -2,7 +2,7 @@ import ConfStore from '../../src/conf/store';
 import ConfAction from '../../src/conf/action';
 import skyway from '../../src/shared/util/skyway';
 import webrtc from '../../src/shared/util/webrtc';
-import { getFakeDevices } from '../test-utils';
+import { getFakeDevices, getFakeMedia } from '../test-utils';
 
 let store;
 let action;
@@ -18,6 +18,9 @@ beforeEach(() => {
   );
   spyOn(webrtc, 'snapVideoStream').and.callFake(() =>
     Promise.resolve(new Blob())
+  );
+  spyOn(webrtc, 'getUserPermission').and.callFake(() =>
+    Promise.resolve(getFakeMedia())
   );
   spyOn(webrtc, 'getUserDevices').and.callFake(() =>
     Promise.resolve(getFakeDevices())
