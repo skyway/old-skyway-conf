@@ -105,7 +105,7 @@ describe('_onRoomData()', () => {
     expect(spy2).toHaveBeenCalled();
   });
 
-  xit('should handle data type:chat w/ isChatOpen', () => {
+  it('should handle data type:chat w/ isChatOpen', () => {
     store.ui.isChatOpen = true;
     spyOn(store.room.syncState, 'get').and.callFake(() => ({}));
     const spy = spyOn(store.notification, 'showChat');
