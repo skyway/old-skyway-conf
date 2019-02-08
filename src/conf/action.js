@@ -82,10 +82,7 @@ class ConfAction extends Action {
     prevName && (user.dispName = prevName);
 
     // only for user permission to enumerateDevices() properly
-    const tempStream = await navigator.mediaDevices.getUserMedia({
-      video: true,
-      audio: true,
-    });
+    const tempStream = await webrtc.getUserPermission();
 
     const devices = await webrtc
       .getUserDevices()

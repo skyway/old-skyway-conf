@@ -31,6 +31,10 @@ async function getUserDevices() {
   return userDevices;
 }
 
+function getUserPermission() {
+  return navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+}
+
 function getUserMedia({ videoDeviceId, audioDeviceId }, facingMode) {
   const constraints = {
     video: { deviceId: videoDeviceId },
@@ -111,6 +115,7 @@ export default {
   setMuteAudioTracks,
   setMuteTrack,
   stopStream,
+  getUserPermission,
   getUserDevices,
   getUserMedia,
   isGetDisplayMediaAvailable,
