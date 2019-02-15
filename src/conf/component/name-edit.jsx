@@ -7,9 +7,14 @@ const NameEdit = ({ user, action }) => (
     <input
       className="NameEdit_Input"
       type="text"
-      maxLength={10}
       value={user.dispName}
-      onChange={ev => action.$update('user.dispName', ev.target.value)}
+      onChange={ev => {
+        const { value } = ev.target;
+        // check manually because maxLength can't prevent event while IME compositing
+        if (value.length <= 10) {
+          action.$update('user.dispName', value);
+        }
+      }}
     />
   </div>
 );
