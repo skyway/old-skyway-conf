@@ -187,7 +187,7 @@ class ConfAction extends Action {
     const { ui, room, user } = this.store;
     const isGDMAvailable = webrtc.isGetDisplayMediaAvailable();
 
-    if (skyway.isScreenShareAvailable() === false && isGDMAvailable === false) {
+    if (isGDMAvailable === false && skyway.isScreenShareAvailable() === false) {
       ui.isScreenShareIntroOpen = true;
       return;
     }
