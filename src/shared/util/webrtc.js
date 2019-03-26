@@ -37,8 +37,8 @@ function getUserPermission() {
 
 function getUserMedia({ videoDeviceId, audioDeviceId }, facingMode) {
   const constraints = {
-    video: { deviceId: videoDeviceId },
-    audio: { deviceId: audioDeviceId },
+    video: { deviceId: { exact: videoDeviceId } },
+    audio: { deviceId: { exact: audioDeviceId } },
   };
 
   if (videoDeviceId === '') {
