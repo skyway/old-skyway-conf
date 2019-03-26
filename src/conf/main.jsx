@@ -16,7 +16,9 @@ import webrtc from '../shared/util/webrtc';
 
   if (
     (['Windows', 'Mac', 'Linux', 'iOS', 'Android'].includes(os) &&
-      ['Chrome', 'Firefox', 'Safari'].includes(browser)) === false
+      ['Chrome', 'Firefox', 'Safari'].includes(browser)) === false ||
+    // allow Safari to enter mesh room only
+    (browser === 'Safari' && roomType !== 'mesh')
   ) {
     location.href = './not_supported.html';
     return;
