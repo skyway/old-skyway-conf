@@ -105,9 +105,7 @@ class ConfAction extends Action {
     // once got media, now it's ready
     ui.isAppReady = true;
 
-    // XXX: Safari's mediaDevices does not inherit EventTarget..
-    // navigator.mediaDevices.addEventListener('devicechange', async () => {
-    navigator.mediaDevices.ondevicechange = async function() {
+    navigator.mediaDevices.addEventListener('devicechange', async () => {
       const devices = await webrtc
         .getUserDevices()
         .catch(err => ui.handleUserError(err));
@@ -116,7 +114,7 @@ class ConfAction extends Action {
       }
 
       user.updateDevices(devices);
-    };
+    });
     Mousetrap.bind(['command+e', 'ctrl+e'], () => {
       user.isVideoMuted = !user.isVideoMuted;
       return false;
