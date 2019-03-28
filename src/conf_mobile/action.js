@@ -100,6 +100,9 @@ class ConfAction extends Action {
     const prevName = localStorage.getItem('SkyWayConf.dispName');
     prevName && (user.dispName = prevName);
 
+    // only for user permission to enumerateDevices() properly
+    const tempStream = await webrtc.getUserPermission();
+
     const devices = await webrtc
       .getUserDevices()
       .catch(err => ui.handleUserError(err));
@@ -116,6 +119,9 @@ class ConfAction extends Action {
       const fakeStream = webrtc.getFakeStream(bom.getAudioCtx(window));
       room.setLocalStream(fakeStream);
     }
+
+    // need to keep reference until enumerateDevices() finished
+    webrtc.stopStream(tempStream);
 
     // XXX: Safari's mediaDevices does not inherit EventTarget..
     // navigator.mediaDevices.addEventListener('devicechange', async () => {

@@ -14,9 +14,7 @@ import bom from '../shared/util/bom';
 
   if (
     (['Windows', 'Mac', 'iOS', 'Android'].includes(os) &&
-      ['Chrome', 'Firefox', 'Safari'].includes(browser)) === false ||
-    // allow Safari to enter mesh room only
-    (browser === 'Safari' && roomType !== 'mesh')
+      ['Chrome', 'Firefox', 'Safari'].includes(browser)) === false
   ) {
     location.href = './not_supported.html';
     return;
