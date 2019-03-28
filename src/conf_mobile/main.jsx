@@ -12,7 +12,6 @@ import bom from '../shared/util/bom';
   const os = bom.getOsName(navigator.userAgent);
   const browser = bom.getBrowserName(navigator.userAgent);
 
-  debugger;
   if (
     (['Windows', 'Mac', 'iOS', 'Android'].includes(os) &&
       ['Chrome', 'Firefox', 'Safari'].includes(browser)) === false
