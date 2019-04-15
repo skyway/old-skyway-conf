@@ -61,7 +61,7 @@ describe('_onRoomJoin()', () => {
     const confRoom = jasmine.createSpyObj(['on']);
     action._onRoomJoin(confRoom);
 
-    expect(confRoom.on).toHaveBeenCalledTimes(4);
+    expect(confRoom.on).toHaveBeenCalledTimes(3);
     expect(store.ui.isRoomJoin).toBeTruthy();
   });
 });
@@ -74,15 +74,6 @@ describe('_onRoomAddStream()', () => {
     action._onRoomAddStream({}, confRoom);
     expect(spy).toHaveBeenCalled();
     expect(confRoom.send).toHaveBeenCalled();
-  });
-});
-
-describe('_onRoomRemoveStream()', () => {
-  it('should call room.removeRemoteStream()', () => {
-    const spy = spyOn(store.room, 'removeRemoteStream');
-
-    action._onRoomRemoveStream();
-    expect(spy).toHaveBeenCalled();
   });
 });
 

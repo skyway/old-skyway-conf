@@ -247,7 +247,6 @@ class ConfAction extends Action {
     );
 
     confRoom.on('stream', stream => this._onRoomAddStream(stream, confRoom));
-    confRoom.on('removeStream', stream => this._onRoomRemoveStream(stream));
     confRoom.on('peerLeave', peerId => this._onRoomPeerLeave(peerId));
     confRoom.on('data', data => this._onRoomData(data));
     confRoom.on('close', () => this._onRoomClose(confRoom, roomDisposers));
@@ -264,10 +263,6 @@ class ConfAction extends Action {
       () => room.syncState.get(stream.peerId) !== undefined,
       () => notification.showJoin(room.syncState.get(stream.peerId))
     );
-  }
-  _onRoomRemoveStream(stream) {
-    const { room } = this.store;
-    room.removeRemoteStream(stream);
   }
   _onRoomPeerLeave(peerId) {
     const { room, notification } = this.store;
