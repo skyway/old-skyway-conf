@@ -2,7 +2,7 @@ import ConfStore from '../../src/conf_mobile/store';
 import ConfAction from '../../src/conf_mobile/action';
 import skyway from '../../src/shared/util/skyway';
 import webrtc from '../../src/shared/util/webrtc';
-import { getFakeDevices } from '../test-utils';
+import { getFakeDevices, getFakeMedia } from '../test-utils';
 
 let store;
 let action;
@@ -18,6 +18,9 @@ beforeEach(() => {
   );
   spyOn(webrtc, 'getUserDevices').and.callFake(() =>
     Promise.resolve(getFakeDevices())
+  );
+  spyOn(webrtc, 'getUserPermission').and.callFake(() =>
+    Promise.resolve(getFakeMedia())
   );
 });
 
