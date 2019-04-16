@@ -62,7 +62,8 @@ export default () => {
           type="submit"
           disabled={!isValidRoomName(roomName)}
         >
-          CREATE ROOM
+          <i className="material-icons">meeting_room</i>
+          <span>CREATE ROOM</span>
         </button>
       </div>
     </form>
@@ -116,6 +117,8 @@ const buttonWrapStyle = css({
 });
 
 const createButtonStyle = css({
+  display: 'inline-flex',
+  alignItems: 'center',
   backgroundColor: globalColors.blue,
   color: globalColors.white,
   height: 40,
