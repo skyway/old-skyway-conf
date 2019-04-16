@@ -1,8 +1,0 @@
-.Copyright {
-  display: flex;
-  align-items: flex-end;
-
-  &_Image {
-    height: 40px;
-  }
-}

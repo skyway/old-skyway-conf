@@ -1,0 +1,25 @@
+{
+  "extends": ["tslint:recommended"],
+  "rules": {
+    "array-type": [true, "array"],
+    "arrow-parens": [true, "ban-single-arg-parens"],
+    "interface-name": [true, "never-prefix"],
+    "member-access": false,
+    "no-bitwise": false,
+    "no-console": false,
+    "no-debugger": false,
+    "no-unused-expression": [true, "allow-fast-null-checks"],
+    "object-literal-sort-keys": false,
+    "only-arrow-functions": false,
+    "ordered-imports": false,
+    "quotemark": [true, "single", "jsx-double"],
+    "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case", "allow-leading-underscore"],
+    "prettier": [
+      true, {
+        "singleQuote": true,
+        "trailingComma": "all"
+      }
+    ]
+  },
+  "rulesDirectory": ["tslint-plugin-prettier"]
+}
