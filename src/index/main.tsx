@@ -9,7 +9,6 @@ import App from './components/app';
 const logger = new Logger('index:main');
 
 logger.info(`${name} v${version}`);
-logger.info(navigator.userAgent);
 
 render(
   <>

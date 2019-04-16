@@ -7,6 +7,7 @@ import {
   roomNameRe,
   isValidRoomName,
 } from '../../shared/validate';
+import { enterConference } from '../effects';
 
 export default () => {
   const [roomName, setRoomName] = useState('');
@@ -18,7 +19,7 @@ export default () => {
       css={wrapperStyle}
       onSubmit={ev => {
         ev.preventDefault();
-        location.href = `conf.html/#!/${roomType}/${roomName}`;
+        enterConference(roomType, roomName);
       }}
     >
       <div css={itemStyle}>
@@ -38,6 +39,7 @@ export default () => {
       <span css={tipStyle}>
         {isRoomNameValid ? '' : 'half width, 4~16 characters are required!'}
       </span>
+
       <div css={itemStyle}>
         <div>TYPE:</div>
         {['mesh', 'sfu'].map(type => (
@@ -53,6 +55,7 @@ export default () => {
           </label>
         ))}
       </div>
+
       <div css={buttonWrapStyle}>
         <button
           css={createButtonStyle}
