@@ -10,6 +10,7 @@
     "no-debugger": false,
     "no-unused-expression": [true, "allow-fast-null-checks"],
     "object-literal-sort-keys": false,
+    "object-literal-key-quotes": [true, "as-needed"],
     "only-arrow-functions": false,
     "ordered-imports": false,
     "quotemark": [true, "single", "jsx-double"],
