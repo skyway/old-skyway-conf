@@ -25,7 +25,7 @@ export default () => (
 );
 
 const wrapperStyle = css({
-  backgroundImage: 'url(images/index/bg.jpg)',
+  backgroundImage: 'url(./images/index/bg.jpg)',
   backgroundSize: 'cover',
   height: '100vh',
   position: 'relative',
