@@ -11,6 +11,7 @@
     "@babel/core": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
+    "@emotion/babel-preset-css-prop": "^10.0.9",
     "@types/react": "^16.8.13",
     "@types/react-dom": "^16.8.4",
     "babel-loader": "^8.0.5",
@@ -23,13 +24,15 @@
     "webpack-dev-server": "^3.3.1"
   },
   "dependencies": {
+    "@emotion/core": "^10.0.10",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
   "babel": {
     "presets": [
       "@babel/preset-react",
-      "@babel/preset-typescript"
+      "@babel/preset-typescript",
+      "@emotion/babel-preset-css-prop"
     ]
   }
 }
