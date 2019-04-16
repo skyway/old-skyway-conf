@@ -1,21 +1,15 @@
 import * as React from 'react';
 import { render } from 'react-dom';
-import { version } from '../../package.json';
-import { Global, css } from '@emotion/core';
+import { Global } from '@emotion/core';
+import { name, version } from '../../package.json';
+import { globalStyle } from '../shared/global-style';
+import Logger from '../shared/logger';
+import App from './components/app';
 
-const globalStyle = css({
-  'html, body': {
-    padding: 0,
-    margin: 0,
-  },
-});
+const logger = new Logger('index:main');
 
-const style = css({
-  backgroundColor: 'orange',
-  boxSizing: 'border-box',
-});
-
-const App = () => <div css={style}>v{version}</div>;
+logger.info(`${name} v${version}`);
+logger.info(navigator.userAgent);
 
 render(
   <>
