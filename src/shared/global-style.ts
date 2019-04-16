@@ -4,6 +4,7 @@ export const globalColors = {
   blue: '#005ece',
   lightblue: '#039be5',
   red: '#ff6673',
+  gray: '#eee',
   white: '#fff',
   black: '#111',
 };
