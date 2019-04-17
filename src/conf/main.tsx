@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { Global } from '@emotion/core';
 import { name, version } from '../../package.json';
 import { globalStyle } from '../shared/global-style';
+import { isValidRoomName, isValidRoomType } from '../shared/validate';
 import Logger from '../shared/logger';
 import App from './components/app';
 
@@ -10,6 +11,11 @@ const logger = new Logger('conf:main');
 
 (async function() {
   logger.info(`${name} v${version}`);
+
+  const [, roomType, roomName] = location.hash.split('/');
+  if (!(isValidRoomType(roomType) && isValidRoomName(roomName))) {
+    logger.error('TODO: show error view');
+  }
 
   render(
     <>

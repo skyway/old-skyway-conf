@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@emotion/core": "^10.0.10",
+    "bowser": "^2.3.0",
     "debug": "^4.1.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
