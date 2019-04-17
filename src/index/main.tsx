@@ -8,12 +8,14 @@ import App from './components/app';
 
 const logger = new Logger('index:main');
 
-logger.info(`${name} v${version}`);
+(async function() {
+  logger.info(`${name} v${version}`);
 
-render(
-  <>
-    <Global styles={globalStyle} />
-    <App />
-  </>,
-  document.getElementById('app-root'),
-);
+  render(
+    <>
+      <Global styles={globalStyle} />
+      <App />
+    </>,
+    document.getElementById('app-root'),
+  );
+})().catch(err => logger.error(err));
