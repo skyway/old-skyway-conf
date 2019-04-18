@@ -1,5 +1,5 @@
-import * as debug from 'debug';
-import { Debugger } from 'debug';
+import * as debug from "debug";
+import { Debugger } from "debug";
 
 interface Logger {
   error: Debugger;
@@ -10,6 +10,6 @@ export function createLogger(name: string): Logger {
   return {
     error: debug(`${name}:error`),
     warn: debug(`${name}:warn`),
-    info: debug(`${name}:info`),
+    info: debug(`${name}:info`)
   };
 }

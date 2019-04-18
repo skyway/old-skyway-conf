@@ -1,12 +1,12 @@
-import { createContext } from 'react';
-import Action from './action';
-import User from './stores/user';
+import { createContext } from "react";
+import Action from "./action";
+import User from "./stores/user";
 
 export interface Store {
   user: User;
 }
 const store = {
-  user: new User(),
+  user: new User()
 };
 const action = new Action(store);
 

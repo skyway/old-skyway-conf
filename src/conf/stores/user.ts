@@ -1,5 +1,5 @@
-import * as bowser from 'bowser';
-import { Parser } from 'bowser';
+import * as bowser from "bowser";
+import { Parser } from "bowser";
 
 export default class User {
   ua: Parser.ParsedResult | null;

@@ -1,17 +1,17 @@
-import * as React from 'react';
-import { useState } from 'react';
-import { css } from '@emotion/core';
-import { globalColors } from '../../shared/global-style';
+import * as React from "react";
+import { useState } from "react";
+import { css } from "@emotion/core";
+import { globalColors } from "../../shared/global-style";
 import {
   maxRoomNameLength,
   roomNameRe,
-  isValidRoomName,
-} from '../../shared/validate';
-import { enterConference } from '../effects';
+  isValidRoomName
+} from "../../shared/validate";
+import { enterConference } from "../effects";
 
-export default () => {
-  const [roomName, setRoomName] = useState('');
-  const [roomType, setRoomType] = useState('sfu');
+export default function RoomCreate() {
+  const [roomName, setRoomName] = useState("");
+  const [roomType, setRoomType] = useState("sfu");
   const [isRoomNameValid, setRoomNameValid] = useState(true);
 
   return (
@@ -37,12 +37,12 @@ export default () => {
         />
       </div>
       <span css={tipStyle}>
-        {isRoomNameValid ? '' : 'half width, 4~16 characters are required!'}
+        {isRoomNameValid ? "" : "half width, 4~16 characters are required!"}
       </span>
 
       <div css={itemStyle}>
         <div>TYPE:</div>
-        {['mesh', 'sfu'].map(type => (
+        {["mesh", "sfu"].map(type => (
           <label key={type} css={roomTypeStyle}>
             <input
               type="radio"
@@ -50,7 +50,7 @@ export default () => {
               value={roomType}
               checked={roomType === type}
               name="room-type"
-            />{' '}
+            />{" "}
             {type}
           </label>
         ))}
@@ -68,70 +68,70 @@ export default () => {
       </div>
     </form>
   );
-};
+}
 
 const wrapperStyle = css({
-  margin: '24px auto 40px',
+  margin: "24px auto 40px",
   backgroundColor: globalColors.white,
   border: `1px solid ${globalColors.gray}`,
   padding: 24,
-  borderRadius: 2,
+  borderRadius: 2
 });
 
 const itemStyle = css({
-  display: 'flex',
-  alignItems: 'center',
+  display: "flex",
+  alignItems: "center",
   height: 40,
   marginBottom: 4,
-  '& > div': {
-    width: 80,
-  },
+  "& > div": {
+    width: 80
+  }
 });
 
 const roomNameStyle = css({
-  appearance: 'none',
+  appearance: "none",
   border: 0,
   borderBottom: `1px solid ${globalColors.gray}`,
   fontSize: 20,
-  padding: '4px 8px',
-  '&:focus': {
-    borderColor: globalColors.blue,
-  },
+  padding: "4px 8px",
+  "&:focus": {
+    borderColor: globalColors.blue
+  }
 });
 
 const tipStyle = css({
   color: globalColors.red,
-  fontSize: 12,
+  fontSize: 12
 });
 
 const roomTypeStyle = css({
-  margin: '0 8px',
+  margin: "0 8px",
   fontSize: 20,
-  '& > input': {
-    verticalAlign: 'middle',
-  },
+  "& > input": {
+    verticalAlign: "middle"
+  }
 });
 
 const buttonWrapStyle = css({
-  marginTop: 24,
+  marginTop: 24
 });
 
 const createButtonStyle = css({
-  display: 'inline-flex',
-  alignItems: 'center',
+  display: "inline-flex",
+  alignItems: "center",
   backgroundColor: globalColors.blue,
   color: globalColors.white,
   height: 40,
   border: 0,
-  cursor: 'pointer',
-  padding: '0 24px',
+  cursor: "pointer",
+  padding: "0 24px",
   fontSize: 16,
   borderRadius: 2,
-  '&:hover': {
-    opacity: 0.8,
+  "&:hover": {
+    opacity: 0.8
   },
-  '&:disabled': {
-    pointerEvents: 'none',
-    backgroundColor: globalColors.gray,
-  },
+  "&:disabled": {
+    pointerEvents: "none",
+    backgroundColor: globalColors.gray
+  }
 });

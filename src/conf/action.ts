@@ -1,7 +1,7 @@
-import { createLogger } from '../shared/logger';
-import { Store } from './contexts';
+import { createLogger } from "../shared/logger";
+import { Store } from "./contexts";
 
-const logger = createLogger('conf:action');
+const logger = createLogger("conf:action");
 
 export default class Action {
   private store: Store;
@@ -11,7 +11,7 @@ export default class Action {
   }
 
   async onLoad(ua: string) {
-    logger.info('onLoad()');
+    logger.info("onLoad()");
     const { user } = this.store;
 
     user.load(ua);
