@@ -18,11 +18,12 @@ module.exports = {
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier",
-    "prettier/@typescript-eslint",
+    "plugin:react/recommended",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
     "plugin:prettier/recommended",
-    "prettier/react",
-    "plugin:react/recommended"
+    "prettier/@typescript-eslint",
+    "prettier/react"
   ],
   rules: {
     "no-console": "off",
@@ -35,6 +36,7 @@ module.exports = {
     "prefer-const": "error",
 
     "import/order": "error",
+    "import/no-duplicates": "off",
 
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-member-accessibility": [
