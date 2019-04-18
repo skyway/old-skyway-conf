@@ -1,14 +1,15 @@
 import * as debug from 'debug';
 import { Debugger } from 'debug';
 
-export default class {
+interface Logger {
   error: Debugger;
   warn: Debugger;
   info: Debugger;
-
-  constructor(name: string) {
-    this.error = debug(`${name}:error`);
-    this.warn = debug(`${name}:warn`);
-    this.info = debug(`${name}:info`);
-  }
+}
+export function createLogger(name: string): Logger {
+  return {
+    error: debug(`${name}:error`),
+    warn: debug(`${name}:warn`),
+    info: debug(`${name}:info`),
+  };
 }

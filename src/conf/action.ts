@@ -1,7 +1,7 @@
-import Logger from '../shared/logger';
+import { createLogger } from '../shared/logger';
 import { Store } from './contexts';
 
-const logger = new Logger('conf:action');
+const logger = createLogger('conf:action');
 
 export default class Action {
   private store: Store;

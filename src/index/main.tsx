@@ -3,10 +3,10 @@ import { render } from 'react-dom';
 import { Global } from '@emotion/core';
 import { name, version } from '../../package.json';
 import { globalStyle } from '../shared/global-style';
-import Logger from '../shared/logger';
+import { createLogger } from '../shared/logger';
 import App from './components/app';
 
-const logger = new Logger('index:main');
+const logger = createLogger('index:main');
 
 (async function() {
   logger.info(`${name} v${version}`);

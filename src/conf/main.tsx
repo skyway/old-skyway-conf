@@ -4,10 +4,10 @@ import { Global } from '@emotion/core';
 import { name, version } from '../../package.json';
 import { globalStyle } from '../shared/global-style';
 import { isValidRoomName, isValidRoomType } from '../shared/validate';
-import Logger from '../shared/logger';
+import { createLogger } from '../shared/logger';
 import App from './components/app';
 
-const logger = new Logger('conf:main');
+const logger = createLogger('conf:main');
 
 (async function() {
   logger.info(`${name} v${version}`);
