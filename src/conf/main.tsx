@@ -14,7 +14,7 @@ const logger = createLogger("conf:main");
 
   const [, roomType, roomName] = location.hash.split("/");
   if (!(isValidRoomType(roomType) && isValidRoomName(roomName))) {
-    logger.error("TODO: show error view");
+    console.error("TODO: show error view");
   }
 
   render(
