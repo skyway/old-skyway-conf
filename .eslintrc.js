@@ -9,7 +9,7 @@ module.exports = {
     jsx: true,
     sourceType: "module"
   },
-  plugins: ["@typescript-eslint", "import", "react", "react-hooks"],
+  plugins: ["@typescript-eslint", "react", "react-hooks"],
   settings: {
     react: {
       version: "detect"
@@ -19,8 +19,6 @@ module.exports = {
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
-    "plugin:import/recommended",
-    "plugin:import/typescript",
     "plugin:prettier/recommended",
     "prettier/@typescript-eslint",
     "prettier/react"
@@ -34,9 +32,6 @@ module.exports = {
     "no-var": "error",
     "no-lonely-if": "error",
     "prefer-const": "error",
-
-    "import/order": "error",
-    "import/no-duplicates": "off",
 
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-member-accessibility": [
