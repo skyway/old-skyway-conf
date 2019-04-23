@@ -1,9 +1,9 @@
 import { toJS } from "mobx";
-import { createLogger } from "../../shared/logger";
+import debug from "debug";
 import { isValidRoomName, isValidRoomType } from "../../shared/validate";
 import RootStore from "../stores";
 
-const logger = createLogger("conf:action:onAppLoad");
+const log = debug("conf:action:onAppLoad");
 
 export const onAppLoad = async ({ ui, client }: RootStore) => {
   const [, roomType, roomName] = location.hash.split("/");
@@ -12,7 +12,7 @@ export const onAppLoad = async ({ ui, client }: RootStore) => {
     return;
   }
 
-  logger.info(`room: ${roomType}/${roomName}`);
+  log(`room: ${roomType}/${roomName}`);
 
   // get permission to enumerateDevices()
   const stream = (await navigator.mediaDevices
@@ -32,7 +32,7 @@ export const onAppLoad = async ({ ui, client }: RootStore) => {
   // release refs
   stream.getTracks().forEach(track => track.stop());
 
-  logger.info(
+  log(
     "client loaded",
     toJS(client.browser),
     client.videoInDevices,

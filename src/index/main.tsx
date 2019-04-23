@@ -1,15 +1,15 @@
 import * as React from "react";
 import { render } from "react-dom";
 import { Global } from "@emotion/core";
+import debug from "debug";
 import { name, version } from "../../package.json";
 import { globalStyle } from "../shared/global-style";
-import { createLogger } from "../shared/logger";
 import App from "./app";
 
-const logger = createLogger("index:main");
+const log = debug("index:main");
 
 (async function() {
-  logger.info(`${name} v${version}`);
+  log(`${name} v${version}`);
 
   render(
     <>
@@ -18,4 +18,4 @@ const logger = createLogger("index:main");
     </>,
     document.getElementById("app-root")
   );
-})().catch(err => logger.error(err));
+})().catch(err => console.error(err));
