@@ -4,21 +4,23 @@ import { FunctionComponent, ReactNode } from "react";
 import { Observer } from "mobx-react";
 import { css } from "@emotion/core";
 import { StoreContext } from "../contexts";
-import { onAppLoad, onDeviceChange } from "../actions";
+import { initClient, checkRoom, listenDeviceChange } from "../actions";
 import ErrorDetail from "../components/error-detail";
 
 interface Props {
   children: ReactNode;
 }
 const Bootstrap: FunctionComponent<Props> = ({ children }) => {
-  const { ui, client } = useContext(StoreContext);
+  const store = useContext(StoreContext);
 
+  useEffect(() => checkRoom(store));
   useEffect(() => {
     // do not return async
-    onAppLoad({ ui, client });
+    initClient(store);
   });
-  useEffect(() => onDeviceChange({ ui, client }));
+  useEffect(() => listenDeviceChange(store));
 
+  const { ui, client } = store;
   return (
     <div css={wrapperStyle}>
       <Observer>

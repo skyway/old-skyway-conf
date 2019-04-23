@@ -3,19 +3,23 @@ import debug from "debug";
 import { isValidRoomName, isValidRoomType } from "../../shared/validate";
 import RootStore from "../stores";
 
-export const onAppLoad = async ({ ui, client }: RootStore) => {
-  const log = debug("action:onAppLoad");
+export const checkRoom = ({ ui }: RootStore) => {
+  const log = debug("action:checkRoom");
 
   const [, roomType, roomName] = location.hash.split("/");
+
   if (!(isValidRoomType(roomType) && isValidRoomName(roomName))) {
     ui.showError(new Error("Invalid room type and/or room name."));
-    return;
   }
 
   log(`room: ${roomType}/${roomName}`);
+};
+
+export const initClient = async ({ ui, client }: RootStore) => {
+  const log = debug("action:initClient");
 
   // get permission to perform enumerateDevices() correctly
-  const stream = (await navigator.mediaDevices
+  const permissionStream = (await navigator.mediaDevices
     .getUserMedia({ audio: true, video: true })
     .catch(ui.showError)) as MediaStream;
 
@@ -23,14 +27,14 @@ export const onAppLoad = async ({ ui, client }: RootStore) => {
     .enumerateDevices()
     .catch(ui.showError);
 
+  // release refs
+  permissionStream.getTracks().forEach(track => track.stop());
+
   client.load({
     ua: navigator.userAgent,
     devices: devices || [],
     name: localStorage.getItem("SkyWayConf.dispName") || "YOUR_NAME"
   });
-
-  // release refs
-  stream.getTracks().forEach(track => track.stop());
 
   log(
     "client loaded",
@@ -40,7 +44,7 @@ export const onAppLoad = async ({ ui, client }: RootStore) => {
   );
 };
 
-export const onDeviceChange = ({ ui, client }: RootStore) => {
+export const listenDeviceChange = ({ ui, client }: RootStore) => {
   const log = debug("action:onDeviceChange");
 
   // TODO: check it

@@ -1,1 +1,2 @@
-export * from "./on-app-load";
+export * from "./bootstrap";
+export * from "./settings";

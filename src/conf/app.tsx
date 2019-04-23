@@ -1,16 +1,15 @@
 import * as React from "react";
 import { FunctionComponent } from "react";
-import { css } from "@emotion/core";
 import Bootstrap from "./containers/bootstrap";
+import Settings from "./containers/settings";
 
 const App: FunctionComponent<{}> = () => {
   return (
     <Bootstrap>
-      <div css={wrapperStyle}>APP</div>
+      <Settings />
+      <div>xxx</div>
     </Bootstrap>
   );
 };
 
 export default App;
-
-const wrapperStyle = css({});
