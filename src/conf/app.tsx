@@ -13,7 +13,4 @@ const App: FunctionComponent<{}> = () => {
 
 export default App;
 
-const wrapperStyle = css({
-  height: "100vh",
-  position: "relative"
-});
+const wrapperStyle = css({});
