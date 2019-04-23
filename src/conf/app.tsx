@@ -1,27 +1,34 @@
 import * as React from "react";
+import { useContext, useEffect } from "react";
+import { FunctionComponent } from "react";
 import { Observer } from "mobx-react";
-import { useContext, useEffect, FunctionComponent } from "react";
 import { css } from "@emotion/core";
-import { StoreContext, ActionContext } from "./contexts";
+import { StoreContext } from "./contexts";
+import { onAppLoad } from "./actions";
 
 const App: FunctionComponent<{}> = () => {
-  const store = useContext(StoreContext);
-  const action = useContext(ActionContext);
+  const { ui, client } = useContext(StoreContext);
 
-  useEffect(() => action.onLoad(), [action]);
+  useEffect(() => {
+    onAppLoad({ ui, client });
+  }, [ui, client]);
 
   return (
     <Observer>
       {() => {
-        if (store.ui.error !== null) {
-          return <p>{store.ui.error.toString()}</p>;
+        if (ui.error instanceof Error) {
+          return <p>{ui.error.toString()}</p>;
         }
 
-        return (
-          <div css={wrapperStyle}>
-            <img src="./images/conf/icon-loading.svg" />
-          </div>
-        );
+        if (!client.isReady) {
+          return (
+            <div css={wrapperStyle}>
+              <img src="./images/conf/icon-loading.svg" />
+            </div>
+          );
+        }
+
+        return <div>OK</div>;
       }}
     </Observer>
   );
