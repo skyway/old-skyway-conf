@@ -11,6 +11,9 @@ const log = debug("main");
 (async function() {
   log(`${name} v${version}`);
 
+  // TODO: debug
+  localStorage.setItem("debug", "*");
+
   render(
     <>
       <Global styles={globalStyle} />
