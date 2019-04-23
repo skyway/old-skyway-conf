@@ -15,12 +15,4 @@ decorate(UiStore, {
   error: observable
 });
 
-class RootStore {
-  ui: UiStore;
-
-  constructor() {
-    this.ui = new UiStore();
-  }
-}
-
-export default RootStore;
+export default UiStore;
