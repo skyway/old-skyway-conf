@@ -5,8 +5,8 @@ import { Observer } from "mobx-react";
 import { css } from "@emotion/core";
 import { StoreContext } from "../contexts";
 import {
-  initClient,
-  checkRoom,
+  initClientAndMedia,
+  checkRoomSetting,
   listenClientDeviceChange,
   listenGlobalDeviceChange
 } from "../actions";
@@ -18,12 +18,12 @@ interface Props {
 const Bootstrap: FunctionComponent<Props> = ({ children }) => {
   const store = useContext(StoreContext);
 
-  useEffect(() => checkRoom(store));
+  useEffect(() => checkRoomSetting(store));
   useEffect(() => listenClientDeviceChange(store));
   useEffect(() => listenGlobalDeviceChange(store));
   useEffect(() => {
     // do not return async
-    initClient(store);
+    initClientAndMedia(store);
   });
 
   const { ui, client } = store;

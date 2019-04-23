@@ -3,8 +3,8 @@ import debug from "debug";
 import { isValidRoomName, isValidRoomType } from "../../shared/validate";
 import RootStore from "../stores";
 
-export const checkRoom = ({ ui }: RootStore) => {
-  const log = debug("action:checkRoom");
+export const checkRoomSetting = ({ ui }: RootStore) => {
+  const log = debug("action:checkRoomSetting");
 
   const [, roomType, roomName] = location.hash.split("/");
 
@@ -15,8 +15,14 @@ export const checkRoom = ({ ui }: RootStore) => {
   log(`room: ${roomType}/${roomName}`);
 };
 
-export const initClient = async ({ ui, client }: RootStore) => {
-  const log = debug("action:initClient");
+export const initClientAndMedia = async ({ ui, client, media }: RootStore) => {
+  const log = debug("action:initClientAndMedia");
+
+  client.load({
+    ua: navigator.userAgent,
+    name: localStorage.getItem("SkyWayConf.dispName") || "YOUR_NAME"
+  });
+  log("client loaded", toJS(client.browser));
 
   // get permission to perform enumerateDevices() correctly
   const permissionStream = (await navigator.mediaDevices
@@ -26,29 +32,20 @@ export const initClient = async ({ ui, client }: RootStore) => {
   const devices = await navigator.mediaDevices
     .enumerateDevices()
     .catch(ui.showError);
+  media.updateDevices(devices || []);
 
   // release refs
   permissionStream.getTracks().forEach(track => track.stop());
 
-  client.load({
-    ua: navigator.userAgent,
-    devices: devices || [],
-    name: localStorage.getItem("SkyWayConf.dispName") || "YOUR_NAME"
-  });
-
-  log(
-    "client loaded",
-    toJS(client.browser),
-    client.videoInDevices,
-    client.audioInDevices
-  );
+  log("media", media.videoInDevices, media.audioInDevices);
 };
 
-export const listenClientDeviceChange = ({ client, ui }: RootStore) => {
+export const listenClientDeviceChange = ({ media, ui }: RootStore) => {
   const log = debug("action:listenClientDeviceChange");
 
+  log("reaction added");
   const disposer = reaction(
-    () => [client.videoDeviceId, client.audioDeviceId],
+    () => [media.videoDeviceId, media.audioDeviceId],
     async ([videoDeviceId, audioDeviceId]) => {
       log("update stream", { videoDeviceId, audioDeviceId });
 
@@ -58,13 +55,9 @@ export const listenClientDeviceChange = ({ client, ui }: RootStore) => {
           video: { deviceId: { exact: videoDeviceId } }
         })
         .catch(ui.showError)) as MediaStream;
-
-      // TODO: keep them as a MST
-      console.log(stream);
+      media.setTrack(stream);
     }
   );
-
-  log("reaction added");
 
   return () => {
     log("reaction removed");
@@ -72,7 +65,7 @@ export const listenClientDeviceChange = ({ client, ui }: RootStore) => {
   };
 };
 
-export const listenGlobalDeviceChange = ({ ui, client }: RootStore) => {
+export const listenGlobalDeviceChange = ({ ui, media }: RootStore) => {
   const log = debug("action:listenGlobalDeviceChange");
 
   // TODO: check it actually
@@ -81,7 +74,7 @@ export const listenGlobalDeviceChange = ({ ui, client }: RootStore) => {
     const devices = await navigator.mediaDevices
       .enumerateDevices()
       .catch(ui.showError);
-    client.updateDevices(devices || []);
+    media.updateDevices(devices || []);
   };
   navigator.mediaDevices.addEventListener(
     "devicechange",

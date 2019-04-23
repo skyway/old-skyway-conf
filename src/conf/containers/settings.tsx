@@ -5,9 +5,12 @@ import { Observer } from "mobx-react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
 import { StoreContext } from "../contexts";
+import Video from "../components/video";
 
 const Settings: FunctionComponent<{}> = () => {
-  const { ui, client } = useContext(StoreContext);
+  const { ui, media } = useContext(StoreContext);
+
+  console.count("Settings.render()");
 
   return (
     <Observer>
@@ -18,16 +21,24 @@ const Settings: FunctionComponent<{}> = () => {
 
         return (
           <div css={wrapperStyle}>
-            <video />
-            <select>
-              {client.videoInDevices.map(device => (
+            <div>
+              <Video stream={media.stream} />
+            </div>
+            <select
+              value={media.videoDeviceId}
+              onChange={ev => (media.videoDeviceId = ev.target.value)}
+            >
+              {media.videoInDevices.map(device => (
                 <option key={device.deviceId} value={device.deviceId}>
                   {device.label}
                 </option>
               ))}
             </select>
-            <select>
-              {client.audioInDevices.map(device => (
+            <select
+              value={media.audioDeviceId}
+              onChange={ev => (media.audioDeviceId = ev.target.value)}
+            >
+              {media.audioInDevices.map(device => (
                 <option key={device.deviceId} value={device.deviceId}>
                   {device.label}
                 </option>
