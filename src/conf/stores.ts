@@ -1,6 +1,19 @@
+import { decorate, observable } from "mobx";
+
 class UiStore {
-  constructor() {}
+  error: Error | null;
+
+  constructor() {
+    this.error = null;
+  }
+
+  showError(err: Error) {
+    this.error = err;
+  }
 }
+decorate(UiStore, {
+  error: observable
+});
 
 class RootStore {
   ui: UiStore;
