@@ -4,7 +4,12 @@ import { FunctionComponent, ReactNode } from "react";
 import { Observer } from "mobx-react";
 import { css } from "@emotion/core";
 import { StoreContext } from "../contexts";
-import { initClient, checkRoom, listenDeviceChange } from "../actions";
+import {
+  initClient,
+  checkRoom,
+  listenClientDeviceChange,
+  listenGlobalDeviceChange
+} from "../actions";
 import ErrorDetail from "../components/error-detail";
 
 interface Props {
@@ -14,11 +19,12 @@ const Bootstrap: FunctionComponent<Props> = ({ children }) => {
   const store = useContext(StoreContext);
 
   useEffect(() => checkRoom(store));
+  useEffect(() => listenClientDeviceChange(store));
+  useEffect(() => listenGlobalDeviceChange(store));
   useEffect(() => {
     // do not return async
     initClient(store);
   });
-  useEffect(() => listenDeviceChange(store));
 
   const { ui, client } = store;
   return (

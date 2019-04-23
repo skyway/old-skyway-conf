@@ -1,4 +1,4 @@
-import { toJS } from "mobx";
+import { reaction, toJS } from "mobx";
 import debug from "debug";
 import { isValidRoomName, isValidRoomType } from "../../shared/validate";
 import RootStore from "../stores";
@@ -44,10 +44,38 @@ export const initClient = async ({ ui, client }: RootStore) => {
   );
 };
 
-export const listenDeviceChange = ({ ui, client }: RootStore) => {
-  const log = debug("action:onDeviceChange");
+export const listenClientDeviceChange = ({ client, ui }: RootStore) => {
+  const log = debug("action:listenClientDeviceChange");
 
-  // TODO: check it
+  const disposer = reaction(
+    () => [client.videoDeviceId, client.audioDeviceId],
+    async ([videoDeviceId, audioDeviceId]) => {
+      log("update stream", { videoDeviceId, audioDeviceId });
+
+      const stream = (await navigator.mediaDevices
+        .getUserMedia({
+          audio: { deviceId: { exact: audioDeviceId } },
+          video: { deviceId: { exact: videoDeviceId } }
+        })
+        .catch(ui.showError)) as MediaStream;
+
+      // TODO: keep them as a MST
+      console.log(stream);
+    }
+  );
+
+  log("reaction added");
+
+  return () => {
+    log("reaction removed");
+    disposer();
+  };
+};
+
+export const listenGlobalDeviceChange = ({ ui, client }: RootStore) => {
+  const log = debug("action:listenGlobalDeviceChange");
+
+  // TODO: check it actually
   const handleDeviceChange = async () => {
     log("ondevicechange");
     const devices = await navigator.mediaDevices
