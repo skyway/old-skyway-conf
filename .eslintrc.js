@@ -40,6 +40,7 @@ module.exports = {
     ],
     "@typescript-eslint/no-use-before-define": "off",
 
+    "react/prop-types": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error"
   }

@@ -5,7 +5,7 @@ import { name, version } from "../../package.json";
 import { globalStyle } from "../shared/global-style";
 import { isValidRoomName, isValidRoomType } from "../shared/validate";
 import { createLogger } from "../shared/logger";
-import App from "./components/app";
+import App from "./app";
 
 const logger = createLogger("conf:main");
 
