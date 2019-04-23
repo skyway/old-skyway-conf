@@ -1,5 +1,6 @@
 import * as React from "react";
-import { useState, FunctionComponent } from "react";
+import { useState } from "react";
+import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
 import {
