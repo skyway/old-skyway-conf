@@ -4,14 +4,15 @@ import { FunctionComponent } from "react";
 import { Observer } from "mobx-react";
 import { css } from "@emotion/core";
 import { StoreContext } from "./contexts";
-import { onAppLoad } from "./actions";
+import { onAppLoad, onDeviceChange } from "./actions";
 
 const App: FunctionComponent<{}> = () => {
   const { ui, client } = useContext(StoreContext);
 
   useEffect(() => {
     onAppLoad({ ui, client });
-  }, [ui, client]);
+  });
+  useEffect(onDeviceChange({ ui, client }));
 
   return (
     <Observer>

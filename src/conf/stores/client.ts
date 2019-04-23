@@ -35,7 +35,15 @@ class ClientStore {
     this.browser = parse(ua);
     this.devices.replace(devices);
 
+    // TODO: update selected
+
     this.isReady = true;
+  }
+
+  updateDevices(devices: MediaDeviceInfo[]) {
+    this.devices.replace(devices);
+
+    // TODO: update selected
   }
 }
 decorate(ClientStore, {
@@ -46,7 +54,8 @@ decorate(ClientStore, {
   devices: observable.shallow,
   audioInDevices: computed,
   videoInDevices: computed,
-  load: action
+  load: action,
+  updateDevices: action
 });
 
 export default ClientStore;
