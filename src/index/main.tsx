@@ -4,7 +4,7 @@ import { Global } from "@emotion/core";
 import { name, version } from "../../package.json";
 import { globalStyle } from "../shared/global-style";
 import { createLogger } from "../shared/logger";
-import App from "./components/app";
+import App from "./app";
 
 const logger = createLogger("index:main");
 

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, FunctionComponent } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
 import {
@@ -7,9 +7,12 @@ import {
   roomNameRe,
   isValidRoomName
 } from "../../shared/validate";
-import { enterConference } from "../effects";
+import { RoomInit } from "../types";
 
-export default function RoomCreate() {
+interface Props {
+  onSubmit: (init: RoomInit) => void;
+}
+const RoomCreate: FunctionComponent<Props> = props => {
   const [roomName, setRoomName] = useState("");
   const [roomType, setRoomType] = useState("sfu");
   const [isRoomNameValid, setRoomNameValid] = useState(true);
@@ -19,7 +22,7 @@ export default function RoomCreate() {
       css={wrapperStyle}
       onSubmit={ev => {
         ev.preventDefault();
-        enterConference(roomType, roomName);
+        props.onSubmit({ type: roomType, name: roomName });
       }}
     >
       <div css={itemStyle}>
@@ -68,7 +71,9 @@ export default function RoomCreate() {
       </div>
     </form>
   );
-}
+};
+
+export default RoomCreate;
 
 const wrapperStyle = css({
   margin: "24px auto 40px",
