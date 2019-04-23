@@ -6,7 +6,7 @@ import { name, version } from "../../package.json";
 import { globalStyle } from "../shared/global-style";
 import App from "./app";
 
-const log = debug("conf:main");
+const log = debug("main");
 
 (async function() {
   log(`${name} v${version}`);

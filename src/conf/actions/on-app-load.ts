@@ -3,10 +3,8 @@ import debug from "debug";
 import { isValidRoomName, isValidRoomType } from "../../shared/validate";
 import RootStore from "../stores";
 
-const logger = debug("conf:action");
-
 export const onAppLoad = async ({ ui, client }: RootStore) => {
-  const log = logger.extend("onAppLoad");
+  const log = debug("action:onAppLoad");
 
   const [, roomType, roomName] = location.hash.split("/");
   if (!(isValidRoomType(roomType) && isValidRoomName(roomName))) {
@@ -43,9 +41,7 @@ export const onAppLoad = async ({ ui, client }: RootStore) => {
 };
 
 export const onDeviceChange = ({ ui, client }: RootStore) => {
-  const log = logger.extend("onDeviceChange");
-
-  log("add listener");
+  const log = debug("action:onDeviceChange");
 
   // TODO: check it
   const handleDeviceChange = async () => {
@@ -61,7 +57,10 @@ export const onDeviceChange = ({ ui, client }: RootStore) => {
     false
   );
 
+  log("listener added");
+
   return () => {
+    log("listener removed");
     navigator.mediaDevices.removeEventListener(
       "devicechange",
       handleDeviceChange
