@@ -18,13 +18,13 @@ interface Props {
 const Bootstrap: FunctionComponent<Props> = ({ children }) => {
   const store = useContext(StoreContext);
 
-  useEffect(() => checkRoomSetting(store));
-  useEffect(() => listenClientDeviceChange(store));
-  useEffect(() => listenGlobalDeviceChange(store));
+  useEffect(() => checkRoomSetting(store), [store]);
+  useEffect(() => listenClientDeviceChange(store), [store]);
+  useEffect(() => listenGlobalDeviceChange(store), [store]);
   useEffect(() => {
     // do not return async
     initClientAndMedia(store);
-  });
+  }, [store]);
 
   const { ui, client } = store;
   return (

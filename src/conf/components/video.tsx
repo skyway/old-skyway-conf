@@ -16,7 +16,7 @@ const Video: FunctionComponent<Props> = ({ stream }) => {
   useEffect(() => {
     if ($video && $video.current) {
       if (stream.getTracks().length) {
-        log("useEffect()");
+        log("useEffect(): assign and play stream", stream.id);
         $video.current.srcObject = stream;
         $video.current.paused && $video.current.play();
       }
@@ -24,7 +24,7 @@ const Video: FunctionComponent<Props> = ({ stream }) => {
   }, [$video, stream]);
 
   log("render()");
-  return <video css={videoStyle} ref={$video} />;
+  return <video css={videoStyle} ref={$video} muted />;
 };
 
 export default memo(Video);
