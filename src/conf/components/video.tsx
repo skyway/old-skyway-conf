@@ -5,7 +5,7 @@ import debug from "debug";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
 
-const log = debug("component:video");
+const _log = debug("component:video");
 
 interface Props {
   stream: MediaStream;
@@ -13,17 +13,19 @@ interface Props {
 const Video: FunctionComponent<Props> = ({ stream }) => {
   const $video = useRef<HTMLVideoElement>(null);
 
+  const log = _log.extend(stream.id);
+
   useEffect(() => {
     if ($video && $video.current) {
       if (stream.getTracks().length) {
-        log("useEffect(): assign and play stream", stream.id);
+        log("useEffect(): assign and play stream");
         $video.current.srcObject = stream;
         $video.current.paused && $video.current.play();
       }
     }
-  }, [$video, stream]);
+  }, [$video, log, stream]);
 
-  log("render()");
+  log("render()", [...stream.getTracks()]);
   return <video css={videoStyle} ref={$video} muted />;
 };
 
