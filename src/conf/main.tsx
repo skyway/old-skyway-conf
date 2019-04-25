@@ -8,7 +8,7 @@ import App from "./app";
 
 const log = debug("main");
 
-(async function() {
+(async () => {
   log(`${name} v${version}`);
 
   // TODO: debug
