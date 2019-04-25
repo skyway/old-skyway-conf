@@ -23,31 +23,37 @@ const Settings: FunctionComponent<{}> = () => {
           return <></>;
         }
 
+        console.count("Settings.Observer.render()");
+
         return (
           <div css={wrapperStyle}>
             <div>
               <Video stream={media.stream} />
             </div>
-            <select
-              value={media.videoDeviceId || ""}
-              onChange={ev => (media.videoDeviceId = ev.target.value)}
-            >
-              {media.videoInDevices.map(device => (
-                <option key={device.deviceId} value={device.deviceId}>
-                  {device.label}
-                </option>
-              ))}
-            </select>
-            <select
-              value={media.audioDeviceId || ""}
-              onChange={ev => (media.audioDeviceId = ev.target.value)}
-            >
-              {media.audioInDevices.map(device => (
-                <option key={device.deviceId} value={device.deviceId}>
-                  {device.label}
-                </option>
-              ))}
-            </select>
+            <div>
+              <select
+                value={media.videoDeviceId || ""}
+                onChange={ev => (media.videoDeviceId = ev.target.value)}
+              >
+                {media.videoInDevices.map(device => (
+                  <option key={device.deviceId} value={device.deviceId}>
+                    {device.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <select
+                value={media.audioDeviceId || ""}
+                onChange={ev => (media.audioDeviceId = ev.target.value)}
+              >
+                {media.audioInDevices.map(device => (
+                  <option key={device.deviceId} value={device.deviceId}>
+                    {device.label}
+                  </option>
+                ))}
+              </select>
+            </div>
             <button>OK</button>
           </div>
         );
