@@ -29,7 +29,7 @@ const Settings: FunctionComponent<{}> = () => {
               <Video stream={media.stream} />
             </div>
             <select
-              value={media.videoDeviceId}
+              value={media.videoDeviceId || ""}
               onChange={ev => (media.videoDeviceId = ev.target.value)}
             >
               {media.videoInDevices.map(device => (
@@ -39,7 +39,7 @@ const Settings: FunctionComponent<{}> = () => {
               ))}
             </select>
             <select
-              value={media.audioDeviceId}
+              value={media.audioDeviceId || ""}
               onChange={ev => (media.audioDeviceId = ev.target.value)}
             >
               {media.audioInDevices.map(device => (

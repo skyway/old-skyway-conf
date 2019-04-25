@@ -1,16 +1,19 @@
 import { decorate, observable, computed, action } from "mobx";
+import { IObservableArray } from "mobx";
 import { UserDevices } from "../utils/types";
 
 class MediaStore {
-  videoInDevices: UserDevices["videoInDevices"];
-  audioInDevices: UserDevices["audioInDevices"];
+  videoInDevices: IObservableArray<MediaDeviceInfo>;
+  audioInDevices: IObservableArray<MediaDeviceInfo>;
   audioDeviceId: string | null;
   videoDeviceId: string | null;
   audioTrack: MediaStreamTrack | null;
   videoTrack: MediaStreamTrack | null;
 
   constructor() {
+    // @ts-ignore: to type IObservableArray
     this.videoInDevices = [];
+    // @ts-ignore: to type IObservableArray
     this.audioInDevices = [];
     this.audioDeviceId = null;
     this.videoDeviceId = null;
@@ -19,7 +22,7 @@ class MediaStore {
   }
 
   get isReady(): boolean {
-    return this.audioDeviceId !== null;
+    return this.audioTrack !== null;
   }
 
   get stream(): MediaStream {
@@ -35,20 +38,33 @@ class MediaStore {
     return stream;
   }
 
-  updateDevices({ videoInDevices, audioInDevices }: UserDevices) {
-    this.videoInDevices = videoInDevices;
-    this.audioInDevices = audioInDevices;
+  setUserTrack(track: MediaStreamTrack) {
+    if (track.kind === "video") {
+      this.videoTrack = track;
+    }
+    if (track.kind === "audio") {
+      this.audioTrack = track;
+    }
+  }
 
-    // set default deviceId
+  setDevices({ videoInDevices, audioInDevices }: UserDevices) {
+    this.videoInDevices.replace(videoInDevices);
+    this.audioInDevices.replace(audioInDevices);
+
+    this.setDefaultDeviceId();
+  }
+
+  private setDefaultDeviceId() {
     if (this.audioDeviceId === null) {
-      const [defaultAudioDevice] = audioInDevices;
+      const [defaultAudioDevice] = this.audioInDevices;
       // may be undefined
       if (defaultAudioDevice instanceof MediaDeviceInfo) {
         this.audioDeviceId = defaultAudioDevice.deviceId;
       }
     }
+
     if (this.videoDeviceId === null) {
-      const [defaultVideoDevice] = videoInDevices;
+      const [defaultVideoDevice] = this.videoInDevices;
       // may be undefined
       if (defaultVideoDevice instanceof MediaDeviceInfo) {
         this.videoDeviceId = defaultVideoDevice.deviceId;
@@ -66,7 +82,9 @@ decorate(MediaStore, {
   videoInDevices: observable.shallow,
   isReady: computed,
   stream: computed,
-  updateDevices: action
+  setUserTrack: action,
+  setDevices: action,
+  setDefaultDeviceId: action
 });
 
 export default MediaStore;

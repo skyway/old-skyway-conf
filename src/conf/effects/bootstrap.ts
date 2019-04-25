@@ -2,7 +2,7 @@ import { EffectCallback } from "react";
 import { toJS } from "mobx";
 import debug from "debug";
 import { isValidRoomName, isValidRoomType } from "../../shared/validate";
-import { getUserDevices } from "../utils//webrtc";
+import { getUserDevices, getUserAudioTrack } from "../utils//webrtc";
 import RootStore from "../stores";
 
 const log = debug("effect:bootstrap");
@@ -25,16 +25,27 @@ export const ensureAudioDevice = ({
   log("ensureAudioDevice()");
 
   (async () => {
+    // check at least audio input exists
+    const { audioInDevices } = await getUserDevices().catch(err => {
+      throw ui.showError(err);
+    });
+
+    if (audioInDevices.length === 0) {
+      throw ui.showError(new Error("At least one audio input device needed!"));
+    }
+
+    // keep audio track
+    const [{ deviceId }] = audioInDevices;
+    const audioTrack = await getUserAudioTrack(deviceId).catch(err => {
+      throw ui.showError(err);
+    });
+    media.setUserTrack(audioTrack);
+
+    // and get valid labels...
     const devices = await getUserDevices().catch(err => {
       throw ui.showError(err);
     });
-    media.updateDevices(devices);
-
-    const hasAudioDevice = devices;
-
-    if (!hasAudioDevice) {
-      throw ui.showError(new Error("At least one audio input device needed!"));
-    }
+    media.setDevices(devices);
 
     log("devices", { ...devices });
   })();
