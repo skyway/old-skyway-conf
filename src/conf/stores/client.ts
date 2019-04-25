@@ -1,7 +1,7 @@
 import { decorate, observable, action } from "mobx";
 import { parse } from "bowser";
 import { Parser } from "bowser";
-import { ClientInit } from "../types";
+import { ClientInit } from "../utils/types";
 
 class ClientStore {
   isReady: boolean;

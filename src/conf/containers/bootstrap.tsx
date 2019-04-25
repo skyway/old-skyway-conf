@@ -5,11 +5,11 @@ import { Observer } from "mobx-react";
 import { css } from "@emotion/core";
 import { StoreContext } from "../contexts";
 import {
-  initClientAndMedia,
   checkRoomSetting,
-  listenClientDeviceChange,
-  listenGlobalDeviceChange
-} from "../actions";
+  ensureAudioDevice,
+  listenGlobalEvents,
+  initClientAndMedia
+} from "../effects/bootstrap";
 import ErrorDetail from "../components/error-detail";
 
 interface Props {
@@ -18,13 +18,10 @@ interface Props {
 const Bootstrap: FunctionComponent<Props> = ({ children }) => {
   const store = useContext(StoreContext);
 
-  useEffect(() => checkRoomSetting(store), [store]);
-  useEffect(() => listenClientDeviceChange(store), [store]);
-  useEffect(() => listenGlobalDeviceChange(store), [store]);
-  useEffect(() => {
-    // do not return async
-    initClientAndMedia(store);
-  }, [store]);
+  useEffect(checkRoomSetting(store), [store]);
+  useEffect(ensureAudioDevice(store), [store]);
+  useEffect(listenGlobalEvents(), [store]);
+  useEffect(initClientAndMedia(store), [store]);
 
   const { ui, client } = store;
   return (
