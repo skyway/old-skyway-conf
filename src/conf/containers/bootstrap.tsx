@@ -8,7 +8,7 @@ import {
   checkRoomSetting,
   ensureAudioDevice,
   listenGlobalEvents,
-  initClientAndMedia
+  loadClient
 } from "../effects/bootstrap";
 import ErrorDetail from "../components/error-detail";
 
@@ -21,7 +21,7 @@ const Bootstrap: FunctionComponent<Props> = ({ children }) => {
   useEffect(checkRoomSetting(store), [store]);
   useEffect(ensureAudioDevice(store), [store]);
   useEffect(listenGlobalEvents(), [store]);
-  useEffect(initClientAndMedia(store), [store]);
+  useEffect(loadClient(store), [store]);
 
   const { ui, client } = store;
   return (

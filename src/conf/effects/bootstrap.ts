@@ -31,35 +31,14 @@ export const ensureAudioDevice = ({ ui }: RootStore): EffectCallback => () => {
   })();
 };
 
-export const initClientAndMedia = ({
-  ui,
-  client,
-  media
-}: RootStore): EffectCallback => () => {
-  log("initClientAndMedia");
+export const loadClient = ({ client }: RootStore): EffectCallback => () => {
+  log("initClient");
 
-  (async () => {
-    client.load({
-      ua: navigator.userAgent,
-      name: localStorage.getItem("SkyWayConf.dispName") || "YOUR_NAME"
-    });
-    log("client loaded", toJS(client.browser));
-
-    // get permission to perform enumerateDevices() correctly
-    const permissionStream = (await navigator.mediaDevices
-      .getUserMedia({ audio: true, video: true })
-      .catch(ui.showError)) as MediaStream;
-
-    const devices = await navigator.mediaDevices
-      .enumerateDevices()
-      .catch(ui.showError);
-    media.updateDevices(devices || []);
-
-    // release refs
-    permissionStream.getTracks().forEach(track => track.stop());
-
-    log("media", media.videoInDevices, media.audioInDevices);
-  })();
+  client.load({
+    ua: navigator.userAgent,
+    name: localStorage.getItem("SkyWayConf.dispName") || "YOUR_NAME"
+  });
+  log("client loaded", toJS(client.browser));
 };
 
 export const listenGlobalEvents = (): EffectCallback => () => {
