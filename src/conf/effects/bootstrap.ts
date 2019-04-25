@@ -31,6 +31,8 @@ export const ensureAudioDevice = ({
     if (!hasAudioDevice) {
       throw new Error("At least one audio input device needed!");
     }
+
+    log("devices", { ...devices });
   })();
 };
 

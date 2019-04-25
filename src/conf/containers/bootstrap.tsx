@@ -32,6 +32,7 @@ const Bootstrap: FunctionComponent<Props> = ({ children }) => {
             return <ErrorDetail error={ui.error} />;
           }
 
+          // TODO: check audio device loaded
           if (!client.isReady) {
             return (
               <img css={loaderStyle} src="./images/conf/icon-loading.svg" />
