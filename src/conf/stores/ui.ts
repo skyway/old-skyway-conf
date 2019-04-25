@@ -1,7 +1,4 @@
 import { decorate, observable, action } from "mobx";
-import debug from "debug";
-
-const log = debug("store:ui");
 
 class UiStore {
   error: Error | null;
@@ -12,9 +9,9 @@ class UiStore {
     this.isSettingsOpen = true;
   }
 
-  showError(err: Error) {
-    log("error", err);
+  showError(err: Error): Error {
     this.error = err;
+    return err;
   }
 }
 decorate(UiStore, {

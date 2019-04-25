@@ -23,7 +23,7 @@ const Bootstrap: FunctionComponent<Props> = ({ children }) => {
   useEffect(listenGlobalEvents(), [store]);
   useEffect(loadClient(store), [store]);
 
-  const { ui, client } = store;
+  const { ui, client, media } = store;
   return (
     <div css={wrapperStyle}>
       <Observer>
@@ -32,8 +32,7 @@ const Bootstrap: FunctionComponent<Props> = ({ children }) => {
             return <ErrorDetail error={ui.error} />;
           }
 
-          // TODO: check audio device loaded
-          if (!client.isReady) {
+          if (!(client.isReady && media.isReady)) {
             return (
               <img css={loaderStyle} src="./images/conf/icon-loading.svg" />
             );

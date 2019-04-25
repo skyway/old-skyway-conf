@@ -18,6 +18,10 @@ class MediaStore {
     this.videoTrack = null;
   }
 
+  get isReady(): boolean {
+    return this.audioDeviceId !== null;
+  }
+
   get stream(): MediaStream {
     const stream = new MediaStream();
 
@@ -60,6 +64,7 @@ decorate(MediaStore, {
   videoTrack: observable.ref,
   audioInDevices: observable.shallow,
   videoInDevices: observable.shallow,
+  isReady: computed,
   stream: computed,
   updateDevices: action
 });
