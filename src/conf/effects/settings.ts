@@ -1,32 +1,22 @@
 import { EffectCallback } from "react";
-import { reaction } from "mobx";
+// import { reaction } from "mobx";
 import debug from "debug";
 import RootStore from "../stores";
+import { getUserAudioTrack } from "../utils/webrtc";
 const log = debug("effect:settings");
 
-export const listenClientDeviceChange = ({
-  media,
-  ui
-}: RootStore): EffectCallback => () => {
-  log("listenClientDeviceChange");
+export const getAudioDevices = ({ media }: RootStore): EffectCallback => () => {
+  log("loadAudioDevices()");
 
-  const disposer = reaction(
-    () => [media.videoDeviceId, media.audioDeviceId],
-    async ([videoDeviceId, audioDeviceId]) => {
-      log("update stream", { videoDeviceId, audioDeviceId });
-
-      const stream = (await navigator.mediaDevices
-        .getUserMedia({
-          audio: { deviceId: { exact: audioDeviceId } },
-          video: { deviceId: { exact: videoDeviceId } }
-        })
-        .catch(ui.showError)) as MediaStream;
-      media.setTrack(stream);
+  (async () => {
+    const { audioDeviceId } = media;
+    // must not be happened
+    if (audioDeviceId === null) {
+      throw new Error("No audio device!");
     }
-  );
 
-  return () => {
-    log("reaction removed");
-    disposer();
-  };
+    const audioTrack = await getUserAudioTrack(audioDeviceId);
+
+    console.log(audioTrack);
+  })();
 };

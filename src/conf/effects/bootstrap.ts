@@ -3,7 +3,9 @@ import { toJS } from "mobx";
 import debug from "debug";
 import { isValidRoomName, isValidRoomType } from "../../shared/validate";
 import { getUserDevices } from "../utils//webrtc";
+import { UserDevices } from "../utils/types";
 import RootStore from "../stores";
+
 const log = debug("effect:bootstrap");
 
 export const checkRoomSetting = ({ ui }: RootStore): EffectCallback => () => {
@@ -17,11 +19,17 @@ export const checkRoomSetting = ({ ui }: RootStore): EffectCallback => () => {
   log(`room: ${roomType}/${roomName}`);
 };
 
-export const ensureAudioDevice = ({ ui }: RootStore): EffectCallback => () => {
+export const ensureAudioDevice = ({
+  ui,
+  media
+}: RootStore): EffectCallback => () => {
   log("ensureAudioDevice()");
 
   (async () => {
-    const devices = await getUserDevices().catch(err => ui.showError(err));
+    const devices = (await getUserDevices().catch(err =>
+      ui.showError(err)
+    )) as UserDevices;
+    media.updateDevices(devices);
 
     const hasAudioDevice = devices;
 

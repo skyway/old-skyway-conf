@@ -17,3 +17,23 @@ export const getUserDevices = async (): Promise<UserDevices> => {
 
   return { videoInDevices, audioInDevices };
 };
+
+export const getUserAudioTrack = async (
+  deviceId: string
+): Promise<MediaStreamTrack> => {
+  return navigator.mediaDevices
+    .getUserMedia({
+      audio: { deviceId: { exact: deviceId } }
+    })
+    .then(stream => stream.getAudioTracks()[0]);
+};
+
+export const getUserVideoTrack = async (
+  deviceId: string
+): Promise<MediaStreamTrack> => {
+  return navigator.mediaDevices
+    .getUserMedia({
+      video: { deviceId: { exact: deviceId } }
+    })
+    .then(stream => stream.getVideoTracks()[0]);
+};

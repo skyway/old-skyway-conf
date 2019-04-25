@@ -1,17 +1,21 @@
 import * as React from "react";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { FunctionComponent } from "react";
 import { Observer } from "mobx-react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
 import { StoreContext } from "../contexts";
 import Video from "../components/video";
+import { getAudioDevices } from "../effects/settings";
 
 const Settings: FunctionComponent<{}> = () => {
-  const { ui, media } = useContext(StoreContext);
+  const store = useContext(StoreContext);
+
+  useEffect(getAudioDevices(store), [store]);
 
   console.count("Settings.render()");
 
+  const { ui, media } = store;
   return (
     <Observer>
       {() => {

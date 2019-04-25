@@ -1,76 +1,54 @@
 import { decorate, observable, computed, action } from "mobx";
-import { IObservableArray } from "mobx";
+import { UserDevices } from "../utils/types";
 
 class MediaStore {
-  audioDeviceId: string;
-  videoDeviceId: string;
+  videoInDevices: UserDevices["videoInDevices"];
+  audioInDevices: UserDevices["audioInDevices"];
+  audioDeviceId: string | null;
+  videoDeviceId: string | null;
   audioTrack: MediaStreamTrack | null;
   videoTrack: MediaStreamTrack | null;
-  private devices: IObservableArray<MediaDeviceInfo>;
 
   constructor() {
-    this.audioDeviceId = "default";
-    this.videoDeviceId = "default";
+    this.videoInDevices = [];
+    this.audioInDevices = [];
+    this.audioDeviceId = null;
+    this.videoDeviceId = null;
     this.audioTrack = null;
     this.videoTrack = null;
-    // @ts-ignore: to be detected as IObservableArray
-    this.devices = [];
-  }
-
-  get audioInDevices(): MediaDeviceInfo[] {
-    return this.devices.filter(
-      device => device.kind === "audioinput" && device.deviceId !== "default"
-    );
-  }
-
-  get videoInDevices(): MediaDeviceInfo[] {
-    return this.devices.filter(
-      device => device.kind === "videoinput" && device.deviceId !== "default"
-    );
   }
 
   get stream(): MediaStream {
     const stream = new MediaStream();
-    try {
-      if (this.audioTrack instanceof MediaStreamTrack) {
-        stream.addTrack(this.audioTrack);
-      }
-      if (this.videoTrack instanceof MediaStreamTrack) {
-        stream.addTrack(this.videoTrack);
-      }
-    } catch (err) {
-      debugger;
+
+    if (this.audioTrack instanceof MediaStreamTrack) {
+      stream.addTrack(this.audioTrack);
     }
+    if (this.videoTrack instanceof MediaStreamTrack) {
+      stream.addTrack(this.videoTrack);
+    }
+
     return stream;
   }
 
-  setTrack(stream: MediaStream) {
-    const [vTrack] = stream.getVideoTracks();
-    const [aTrack] = stream.getAudioTracks();
+  updateDevices({ videoInDevices, audioInDevices }: UserDevices) {
+    this.videoInDevices = videoInDevices;
+    this.audioInDevices = audioInDevices;
 
-    this.videoTrack = vTrack || null;
-    this.audioTrack = aTrack || null;
-  }
-
-  updateDevices(devices: MediaDeviceInfo[]) {
-    this.devices.replace(devices);
-    this.setDefaultDeviceIfNeeded();
-  }
-
-  private setDefaultDeviceIfNeeded() {
-    const curAudioDevice = this.audioInDevices.find(
-      device => device.deviceId === this.audioDeviceId
-    );
-    const curVideoDevice = this.videoInDevices.find(
-      device => device.deviceId === this.videoDeviceId
-    );
-
-    // if not found, set first device as default
-    if (!curAudioDevice) {
-      this.audioDeviceId = this.audioInDevices[0].deviceId;
+    // set default deviceId
+    if (this.audioDeviceId === null) {
+      const [defaultAudioDevice] = audioInDevices;
+      // may be undefined
+      if (defaultAudioDevice instanceof MediaDeviceInfo) {
+        this.audioDeviceId = defaultAudioDevice.deviceId;
+      }
     }
-    if (!curVideoDevice) {
-      this.videoDeviceId = this.videoInDevices[0].deviceId;
+    if (this.videoDeviceId === null) {
+      const [defaultVideoDevice] = videoInDevices;
+      // may be undefined
+      if (defaultVideoDevice instanceof MediaDeviceInfo) {
+        this.videoDeviceId = defaultVideoDevice.deviceId;
+      }
     }
   }
 }
@@ -80,13 +58,10 @@ decorate(MediaStore, {
   videoDeviceId: observable,
   audioTrack: observable.ref,
   videoTrack: observable.ref,
-  devices: observable.shallow,
+  audioInDevices: observable.shallow,
+  videoInDevices: observable.shallow,
   stream: computed,
-  audioInDevices: computed,
-  videoInDevices: computed,
-  updateDevices: action,
-  setTrack: action,
-  setDefaultDeviceIfNeeded: action
+  updateDevices: action
 });
 
 export default MediaStore;
