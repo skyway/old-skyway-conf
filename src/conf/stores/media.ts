@@ -25,6 +25,13 @@ class MediaStore {
     return this.audioTrack !== null;
   }
 
+  get isUserVideoEnabled(): boolean {
+    if (this.videoTrack !== null) {
+      return true;
+    }
+    return false;
+  }
+
   get stream(): MediaStream {
     const stream = new MediaStream();
 
@@ -81,6 +88,7 @@ decorate(MediaStore, {
   audioInDevices: observable.shallow,
   videoInDevices: observable.shallow,
   isReady: computed,
+  isUserVideoEnabled: computed,
   stream: computed,
   setUserTrack: action,
   setDevices: action,
