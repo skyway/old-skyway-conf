@@ -6,6 +6,7 @@ import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
 import { StoreContext } from "../contexts";
 import Video from "../components/video";
+import DeviceSelector from "../components/device-selector";
 import { enableVideo, changeDeviceId } from "../effects/settings";
 
 const Settings: FunctionComponent<{}> = () => {
@@ -33,32 +34,27 @@ const Settings: FunctionComponent<{}> = () => {
             </div>
             <div>
               {media.isUserVideoEnabled ? (
-                <select
-                  value={media.videoDeviceId || ""}
-                  onChange={ev => onChangeDeviceId("video", ev.target.value)}
-                >
-                  {media.videoInDevices.map(device => (
-                    <option key={device.deviceId} value={device.deviceId}>
-                      {device.label}
-                    </option>
-                  ))}
-                </select>
+                <DeviceSelector
+                  deviceId={media.videoDeviceId || ""}
+                  inDevices={media.videoInDevices}
+                  onChangeDeviceId={deviceId =>
+                    onChangeDeviceId("video", deviceId)
+                  }
+                />
               ) : (
                 <button onClick={onClickEnableVideo}>enable video</button>
               )}
             </div>
             <div>
-              <select
-                value={media.audioDeviceId || ""}
-                onChange={ev => onChangeDeviceId("audio", ev.target.value)}
-              >
-                {media.audioInDevices.map(device => (
-                  <option key={device.deviceId} value={device.deviceId}>
-                    {device.label}
-                  </option>
-                ))}
-              </select>
+              <DeviceSelector
+                deviceId={media.audioDeviceId || ""}
+                inDevices={media.audioInDevices}
+                onChangeDeviceId={deviceId =>
+                  onChangeDeviceId("audio", deviceId)
+                }
+              />
             </div>
+
             <button>OK</button>
           </div>
         );
