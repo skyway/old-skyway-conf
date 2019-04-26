@@ -6,12 +6,13 @@ import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
 import { StoreContext } from "../contexts";
 import Video from "../components/video";
-import { enableVideo } from "../effects/settings";
+import { enableVideo, changeDeviceId } from "../effects/settings";
 
 const Settings: FunctionComponent<{}> = () => {
   const store = useContext(StoreContext);
 
   const onClickEnableVideo = useCallback(enableVideo(store), [store]);
+  const onChangeDeviceId = useCallback(changeDeviceId(store), [store]);
 
   console.count("Settings.render()");
 
@@ -34,7 +35,7 @@ const Settings: FunctionComponent<{}> = () => {
               {media.isUserVideoEnabled ? (
                 <select
                   value={media.videoDeviceId || ""}
-                  onChange={ev => (media.videoDeviceId = ev.target.value)}
+                  onChange={ev => onChangeDeviceId("video", ev.target.value)}
                 >
                   {media.videoInDevices.map(device => (
                     <option key={device.deviceId} value={device.deviceId}>
@@ -49,7 +50,7 @@ const Settings: FunctionComponent<{}> = () => {
             <div>
               <select
                 value={media.audioDeviceId || ""}
-                onChange={ev => (media.audioDeviceId = ev.target.value)}
+                onChange={ev => onChangeDeviceId("audio", ev.target.value)}
               >
                 {media.audioInDevices.map(device => (
                   <option key={device.deviceId} value={device.deviceId}>

@@ -47,9 +47,15 @@ class MediaStore {
 
   setUserTrack(track: MediaStreamTrack) {
     if (track.kind === "video") {
+      if (this.videoTrack instanceof MediaStreamTrack) {
+        this.videoTrack.stop();
+      }
       this.videoTrack = track;
     }
     if (track.kind === "audio") {
+      if (this.audioTrack instanceof MediaStreamTrack) {
+        this.audioTrack.stop();
+      }
       this.audioTrack = track;
     }
   }

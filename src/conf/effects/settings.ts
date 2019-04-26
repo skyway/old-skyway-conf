@@ -1,6 +1,10 @@
 import debug from "debug";
 import RootStore from "../stores";
-import { getUserDevices, getUserVideoTrack } from "../utils//webrtc";
+import {
+  getUserDevices,
+  getUserVideoTrack,
+  getUserAudioTrack
+} from "../utils//webrtc";
 const log = debug("effect:settings");
 
 export const enableVideo = ({ media, ui }: RootStore) => async () => {
@@ -30,4 +34,27 @@ export const enableVideo = ({ media, ui }: RootStore) => async () => {
   media.setDevices(devices);
 
   log("devices updated", { ...devices });
+};
+
+export const changeDeviceId = ({ media, ui }: RootStore) => async (
+  kind: MediaStreamTrack["kind"],
+  deviceId: string
+) => {
+  log("changeDeviceId", kind, deviceId);
+
+  if (kind === "audio") {
+    media.audioDeviceId = deviceId;
+    const audioTrack = await getUserAudioTrack(deviceId).catch(err => {
+      throw ui.showError(err);
+    });
+    media.setUserTrack(audioTrack);
+  }
+
+  if (kind === "video") {
+    media.videoDeviceId = deviceId;
+    const videoTrack = await getUserVideoTrack(deviceId).catch(err => {
+      throw ui.showError(err);
+    });
+    media.setUserTrack(videoTrack);
+  }
 };
