@@ -7,7 +7,10 @@ import RootStore from "../stores";
 
 const log = debug("effect:bootstrap");
 
-export const checkRoomSetting = ({ ui }: RootStore): EffectCallback => () => {
+export const checkRoomSetting = ({
+  ui,
+  room
+}: RootStore): EffectCallback => () => {
   log("checkRoomSetting()");
   const [, roomType, roomName] = location.hash.split("/");
 
@@ -16,6 +19,7 @@ export const checkRoomSetting = ({ ui }: RootStore): EffectCallback => () => {
   }
 
   log(`room: ${roomType}/${roomName}`);
+  room.roomName = `${roomType}/${roomName}`;
 };
 
 export const ensureAudioDevice = ({
