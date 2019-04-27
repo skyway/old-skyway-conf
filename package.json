@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "webpack-dev-server",
     "build": "webpack --mode=production",
-    "lint": "eslint --ext .ts,.tsx ."
+    "lint": "eslint --ext .ts,.tsx . && tsc --project . --noEmit"
   },
   "author": "Yuji Sugiura",
   "devDependencies": {

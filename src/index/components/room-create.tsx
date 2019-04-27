@@ -8,7 +8,7 @@ import {
   roomNameRe,
   isValidRoomName
 } from "../../shared/validate";
-import { RoomInit } from "../types";
+import { RoomInit } from "../utils/types";
 
 interface Props {
   onSubmit: (init: RoomInit) => void;
@@ -23,7 +23,7 @@ const RoomCreate: FunctionComponent<Props> = props => {
       css={wrapperStyle}
       onSubmit={ev => {
         ev.preventDefault();
-        props.onSubmit({ type: roomType, name: roomName });
+        props.onSubmit({ mode: roomType as RoomInit["mode"], id: roomName });
       }}
     >
       <div css={itemStyle}>

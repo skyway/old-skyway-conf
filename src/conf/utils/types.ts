@@ -1,5 +1,10 @@
 import { EventEmitter } from "events";
 
+export interface RoomInit {
+  mode: "sfu" | "mesh";
+  id: string;
+}
+
 export interface ClientInit {
   name: string;
   ua: string;

@@ -2,13 +2,13 @@ import * as React from "react";
 import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../shared/global-style";
-import { RoomInit } from "./types";
+import { RoomInit } from "./utils/types";
 import RoomCreate from "./components/room-create";
 
 const App: FunctionComponent<{}> = () => {
   const effects = {
     enterConference(room: RoomInit) {
-      location.href = `conf.html#!/${room.type}/${room.name}`;
+      location.href = `conf.html#!/${room.mode}/${room.id}`;
     }
   };
 

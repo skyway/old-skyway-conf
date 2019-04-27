@@ -2,7 +2,8 @@ import { EffectCallback } from "react";
 import { toJS } from "mobx";
 import debug from "debug";
 import { isValidRoomName, isValidRoomType } from "../../shared/validate";
-import { getUserDevices, getUserAudioTrack } from "../utils//webrtc";
+import { getUserDevices, getUserAudioTrack } from "../utils/webrtc";
+import { RoomInit } from "../utils/types";
 import RootStore from "../stores";
 
 const log = debug("effect:bootstrap");
@@ -19,7 +20,7 @@ export const checkRoomSetting = ({
   }
 
   log(`room: ${roomType}/${roomName}`);
-  room.name = `${roomType}/${roomName}`;
+  room.load({ mode: roomType as RoomInit["mode"], id: roomName });
 };
 
 export const ensureAudioDevice = ({
