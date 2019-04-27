@@ -6,7 +6,7 @@ import { RoomInit } from "./types";
 import RoomCreate from "./components/room-create";
 
 const App: FunctionComponent<{}> = () => {
-  const action = {
+  const effects = {
     enterConference(room: RoomInit) {
       location.href = `conf.html#!/${room.type}/${room.name}`;
     }
@@ -17,7 +17,7 @@ const App: FunctionComponent<{}> = () => {
       <h1 css={headStyle}>SkyWay Conference</h1>
       <p css={pStyle}>Video conference on web browser</p>
 
-      <RoomCreate onSubmit={room => action.enterConference(room)} />
+      <RoomCreate onSubmit={room => effects.enterConference(room)} />
 
       <p css={pStyle}>
         No registration or installs! Just create a room and share the link.
