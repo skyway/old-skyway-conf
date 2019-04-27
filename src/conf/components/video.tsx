@@ -32,5 +32,10 @@ const Video: FunctionComponent<Props> = ({ stream }) => {
 export default memo(Video);
 
 const videoStyle = css({
-  backgroundColor: globalColors.black
+  backgroundColor: globalColors.black,
+  width: "100%",
+  height: "100%",
+  maxWidth: "100%",
+  maxHeight: "100%",
+  pointerEvents: "none"
 });

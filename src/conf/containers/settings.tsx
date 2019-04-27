@@ -5,6 +5,7 @@ import { Observer } from "mobx-react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
 import { StoreContext } from "../contexts";
+import Modal from "../components/modal";
 import Video from "../components/video";
 import DeviceSelector from "../components/device-selector";
 import { enableVideo, changeDeviceId } from "../effects/settings";
@@ -28,35 +29,37 @@ const Settings: FunctionComponent<{}> = () => {
         console.count("Settings.Observer.render()");
 
         return (
-          <div css={wrapperStyle}>
-            <div>
-              <Video stream={media.stream} />
-            </div>
-            <div>
-              {media.isUserVideoEnabled ? (
+          <Modal>
+            <div css={wrapperStyle}>
+              <div css={videoStyle}>
+                <Video stream={media.stream} />
+              </div>
+              <div>
+                {media.isUserVideoEnabled ? (
+                  <DeviceSelector
+                    deviceId={media.videoDeviceId || ""}
+                    inDevices={media.videoInDevices}
+                    onChangeDeviceId={deviceId =>
+                      onChangeDeviceId("video", deviceId)
+                    }
+                  />
+                ) : (
+                  <button onClick={onClickEnableVideo}>enable video</button>
+                )}
+              </div>
+              <div>
                 <DeviceSelector
-                  deviceId={media.videoDeviceId || ""}
-                  inDevices={media.videoInDevices}
+                  deviceId={media.audioDeviceId || ""}
+                  inDevices={media.audioInDevices}
                   onChangeDeviceId={deviceId =>
-                    onChangeDeviceId("video", deviceId)
+                    onChangeDeviceId("audio", deviceId)
                   }
                 />
-              ) : (
-                <button onClick={onClickEnableVideo}>enable video</button>
-              )}
-            </div>
-            <div>
-              <DeviceSelector
-                deviceId={media.audioDeviceId || ""}
-                inDevices={media.audioInDevices}
-                onChangeDeviceId={deviceId =>
-                  onChangeDeviceId("audio", deviceId)
-                }
-              />
-            </div>
+              </div>
 
-            <button>OK</button>
-          </div>
+              <button>OK</button>
+            </div>
+          </Modal>
         );
       }}
     </Observer>
@@ -66,6 +69,11 @@ const Settings: FunctionComponent<{}> = () => {
 export default Settings;
 
 const wrapperStyle = css({
-  position: "absolute",
+  width: 600,
+  margin: "100px auto 0",
   backgroundColor: globalColors.white
+});
+
+const videoStyle = css({
+  height: 300
 });
