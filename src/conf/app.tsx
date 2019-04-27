@@ -6,8 +6,8 @@ import ErrorDetail from "./components/error-detail";
 interface State {
   err: Error | null;
 }
-class App extends React.Component<never, State> {
-  constructor(props: never, state: State) {
+class App extends React.Component<{}, State> {
+  constructor(props: {}, state: State) {
     super(props, state);
     this.state = { err: null };
   }
