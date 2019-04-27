@@ -58,3 +58,18 @@ export const changeDeviceId = ({ media, ui }: RootStore) => async (
     media.setUserTrack(videoTrack);
   }
 };
+
+export const closeSettings = ({ ui }: RootStore) => async () => {
+  log("closeSettings()");
+
+  ui.isSettingsOpen = false;
+};
+
+export const joinConference = ({ ui, room }: RootStore) => async () => {
+  log("joinConference()");
+
+  // TODO: join skyway room
+
+  room.isJoined = true;
+  ui.isSettingsOpen = false;
+};

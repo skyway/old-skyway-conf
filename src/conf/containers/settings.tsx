@@ -8,17 +8,24 @@ import { StoreContext } from "../contexts";
 import Modal from "../components/modal";
 import Video from "../components/video";
 import DeviceSelector from "../components/device-selector";
-import { enableVideo, changeDeviceId } from "../effects/settings";
+import {
+  enableVideo,
+  changeDeviceId,
+  closeSettings,
+  joinConference
+} from "../effects/settings";
 
 const Settings: FunctionComponent<{}> = () => {
   const store = useContext(StoreContext);
 
   const onClickEnableVideo = useCallback(enableVideo(store), [store]);
   const onChangeDeviceId = useCallback(changeDeviceId(store), [store]);
+  const onClickJoinConference = useCallback(joinConference(store), [store]);
+  const onClickCloseSettings = useCallback(closeSettings(store), [store]);
 
   console.count("Settings.render()");
 
-  const { ui, media } = store;
+  const { ui, media, room } = store;
   return (
     <Observer>
       {() => {
@@ -57,7 +64,13 @@ const Settings: FunctionComponent<{}> = () => {
                 />
               </div>
 
-              <button>OK</button>
+              <button
+                onClick={
+                  room.isJoined ? onClickCloseSettings : onClickJoinConference
+                }
+              >
+                OK
+              </button>
             </div>
           </Modal>
         );
