@@ -2,11 +2,11 @@ import { decorate, observable } from "mobx";
 
 class RoomStore {
   isJoined: boolean;
-  roomName: string | null;
+  name: string | null;
 
   constructor() {
     this.isJoined = false;
-    this.roomName = null;
+    this.name = null;
   }
 }
 decorate(RoomStore, {

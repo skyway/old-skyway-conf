@@ -5,6 +5,7 @@ import {
   getUserVideoTrack,
   getUserAudioTrack
 } from "../utils//webrtc";
+import { initPeer } from "../utils/skyway";
 const log = debug("effect:settings");
 
 export const enableVideo = ({ media, ui }: RootStore) => async () => {
@@ -69,6 +70,17 @@ export const joinConference = ({ ui, room }: RootStore) => async () => {
   log("joinConference()");
 
   // TODO: join skyway room
+  const peer = await initPeer().catch(err => {
+    throw ui.showError(err);
+  });
+
+  // must not be happened
+  if (room.name === null) {
+    throw ui.showError(new Error("Room name is undefined!"));
+  }
+
+  const confRoom = peer.joinRoom(room.name);
+  console.warn(confRoom);
 
   room.isJoined = true;
   ui.isSettingsOpen = false;

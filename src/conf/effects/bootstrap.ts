@@ -19,7 +19,7 @@ export const checkRoomSetting = ({
   }
 
   log(`room: ${roomType}/${roomName}`);
-  room.roomName = `${roomType}/${roomName}`;
+  room.name = `${roomType}/${roomName}`;
 };
 
 export const ensureAudioDevice = ({

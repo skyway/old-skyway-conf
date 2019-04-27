@@ -9,10 +9,10 @@ import App from "./app";
 const log = debug("main");
 
 (async () => {
-  log(`${name} v${version}`);
-
   // TODO: debug
-  localStorage.setItem("debug", "*");
+  localStorage.setItem("debug", "(main|effect|component)*");
+
+  log(`${name} v${version}`);
 
   render(
     <>
