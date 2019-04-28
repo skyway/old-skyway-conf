@@ -1,4 +1,5 @@
 import debug from "debug";
+import { reaction } from "mobx";
 import RootStore from "../stores";
 import {
   getUserDevices,
@@ -87,30 +88,42 @@ export const joinConference = (store: RootStore) => async () => {
     throw ui.showError(new Error("Peer is not created!"));
   }
 
-  let confRoom;
   if (room.mode === "mesh") {
-    confRoom = room.peer.joinRoom<MeshRoom>(room.name, {
+    room.room = room.peer.joinRoom<MeshRoom>(room.name, {
       mode: "mesh",
       stream: media.stream
     });
   } else if (room.mode === "sfu") {
-    confRoom = room.peer.joinRoom<SfuRoom>(room.name, {
+    room.room = room.peer.joinRoom<SfuRoom>(room.name, {
       mode: "sfu",
       stream: media.stream
     });
-  } else {
-    throw ui.showError(new Error("Unknown room mode!"));
   }
 
-  log("joined", confRoom);
+  // must not be happened
+  if (room.room === null) {
+    throw ui.showError(new Error("Room is null!"));
+  }
 
-  confRoom.on("stream", (stream: RoomStream) => onRoomStream(store, stream));
-  confRoom.on("peerLeave", (peerId: string) => onRoomPeerLeave(store, peerId));
-  // TODO: add handlers to confRoom
-  // confRoom.on("data", (data: {}) => onRoomData(data));
-  // confRoom.on("close", () => onRoomClose());
+  log("joined", room.room);
 
-  room.room = confRoom;
+  reaction(
+    () => media.stream,
+    stream => {
+      if (room.room === null) {
+        return;
+      }
+      log("(Mesh|Sfu)Room.replaceStream()");
+      room.room.replaceStream(stream);
+    }
+  );
+
+  room.room.on("stream", (stream: RoomStream) => onRoomStream(store, stream));
+  room.room.on("peerLeave", (peerId: string) => onRoomPeerLeave(store, peerId));
+  // TODO: handlers to confRoom
+  // room.room.on("data", (data: {}) => onRoomData(data));
+  // room.room.on("close", () => onRoomClose());
+
   ui.isSettingsOpen = false;
 };
 
