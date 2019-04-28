@@ -74,17 +74,39 @@ export const loadClient = ({ client }: RootStore): EffectCallback => () => {
   log("client loaded", toJS(client.browser));
 };
 
-export const listenGlobalEvents = (): EffectCallback => () => {
+export const listenGlobalEvents = ({
+  media,
+  ui
+}: RootStore): EffectCallback => () => {
   log("listenGlobalEvents");
 
-  const reload = () => location.reload(true);
+  const reloadOnHashChange = () => location.reload(true);
+  const reloadOnDeviceAddOrRemoved = async () => {
+    const devices = await getUserDevices().catch(err => {
+      throw ui.showError(err);
+    });
 
-  window.addEventListener("hashchange", reload, false);
-  navigator.mediaDevices.addEventListener("devicechange", reload, false);
+    if (
+      devices.audioInDevices.length !== media.audioInDevices.length ||
+      devices.videoInDevices.length !== media.videoInDevices.length
+    ) {
+      location.reload(true);
+    }
+  };
+
+  window.addEventListener("hashchange", reloadOnHashChange, false);
+  navigator.mediaDevices.addEventListener(
+    "devicechange",
+    reloadOnDeviceAddOrRemoved,
+    false
+  );
 
   return () => {
     log("listener removed");
-    window.removeEventListener("hashchange", reload);
-    navigator.mediaDevices.removeEventListener("devicechange", reload);
+    window.removeEventListener("hashchange", reloadOnHashChange);
+    navigator.mediaDevices.removeEventListener(
+      "devicechange",
+      reloadOnDeviceAddOrRemoved
+    );
   };
 };

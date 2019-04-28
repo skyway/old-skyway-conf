@@ -20,7 +20,7 @@ const Bootstrap: FunctionComponent<Props> = ({ children }) => {
 
   useEffect(checkRoomSetting(store), [store]);
   useEffect(ensureAudioDevice(store), [store]);
-  useEffect(listenGlobalEvents(), [store]);
+  useEffect(listenGlobalEvents(store), [store]);
   useEffect(loadClient(store), [store]);
 
   const { ui, client, media } = store;
