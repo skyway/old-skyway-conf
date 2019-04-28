@@ -11,22 +11,20 @@ interface Props {
   stream: MediaStream;
 }
 const Video: FunctionComponent<Props> = ({ stream }) => {
-  const $video = useRef<HTMLVideoElement>(null);
-
+  const videoRef = useRef<HTMLVideoElement>(null);
   const log = _log.extend(stream.id);
 
   useEffect(() => {
-    if ($video && $video.current) {
-      if (stream.getTracks().length) {
-        log("useEffect(): assign and play stream");
-        $video.current.srcObject = stream;
-        $video.current.paused && $video.current.play();
-      }
+    if (videoRef && videoRef.current) {
+      const $video = videoRef.current;
+      log("useEffect(): assign and play stream");
+      $video.srcObject = stream;
+      $video.paused && $video.play();
     }
-  }, [$video, log, stream]);
+  }, [videoRef, log, stream]);
 
   log("render()", [...stream.getTracks()]);
-  return <video css={videoStyle} ref={$video} muted />;
+  return <video css={videoStyle} ref={videoRef} muted />;
 };
 
 export default memo(Video);
