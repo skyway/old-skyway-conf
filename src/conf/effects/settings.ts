@@ -60,9 +60,15 @@ export const changeDeviceId = ({ media, ui }: RootStore) => async (
   }
 };
 
+export const toggleMuted = ({ media }: RootStore) => async (
+  kind: MediaStreamTrack["kind"]
+) => {
+  log("toggleMuted()", kind);
+  media.toggleMuted(kind);
+};
+
 export const closeSettings = ({ ui }: RootStore) => async () => {
   log("closeSettings()");
-
   ui.isSettingsOpen = false;
 };
 

@@ -12,7 +12,8 @@ import {
   enableVideo,
   changeDeviceId,
   closeSettings,
-  joinConference
+  joinConference,
+  toggleMuted
 } from "../effects/settings";
 
 const Settings: FunctionComponent<{}> = () => {
@@ -22,6 +23,7 @@ const Settings: FunctionComponent<{}> = () => {
   const onChangeDeviceId = useCallback(changeDeviceId(store), [store]);
   const onClickJoinConference = useCallback(joinConference(store), [store]);
   const onClickCloseSettings = useCallback(closeSettings(store), [store]);
+  const onClickToggleMuted = useCallback(toggleMuted(store), [store]);
 
   const { ui, media, room } = store;
   return (
@@ -39,13 +41,18 @@ const Settings: FunctionComponent<{}> = () => {
               </div>
               <div>
                 {media.isUserVideoEnabled ? (
-                  <DeviceSelector
-                    deviceId={media.videoDeviceId || ""}
-                    inDevices={media.videoInDevices}
-                    onChangeDeviceId={deviceId =>
-                      onChangeDeviceId("video", deviceId)
-                    }
-                  />
+                  <>
+                    <DeviceSelector
+                      deviceId={media.videoDeviceId || ""}
+                      inDevices={media.videoInDevices}
+                      onChangeDeviceId={deviceId =>
+                        onChangeDeviceId("video", deviceId)
+                      }
+                    />
+                    <button onClick={() => onClickToggleMuted("video")}>
+                      {media.isVideoTrackMuted ? "unmute" : "mute"}
+                    </button>
+                  </>
                 ) : (
                   <button onClick={onClickEnableVideo}>enable video</button>
                 )}
@@ -58,6 +65,9 @@ const Settings: FunctionComponent<{}> = () => {
                     onChangeDeviceId("audio", deviceId)
                   }
                 />
+                <button onClick={() => onClickToggleMuted("audio")}>
+                  {media.isAudioTrackMuted ? "unmute" : "mute"}
+                </button>
               </div>
 
               <button

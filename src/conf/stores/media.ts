@@ -9,6 +9,8 @@ class MediaStore {
   videoDeviceId: string | null;
   audioTrack: MediaStreamTrack | null;
   videoTrack: MediaStreamTrack | null;
+  isAudioTrackMuted: boolean;
+  isVideoTrackMuted: boolean;
 
   constructor() {
     // @ts-ignore: to type IObservableArray
@@ -19,6 +21,8 @@ class MediaStore {
     this.videoDeviceId = null;
     this.audioTrack = null;
     this.videoTrack = null;
+    this.isVideoTrackMuted = false;
+    this.isAudioTrackMuted = true;
   }
 
   get isReady(): boolean {
@@ -41,6 +45,10 @@ class MediaStore {
     if (this.videoTrack instanceof MediaStreamTrack) {
       stream.addTrack(this.videoTrack);
     }
+
+    // apply muted state
+    this.videoTrack && (this.videoTrack.enabled = !this.isVideoTrackMuted);
+    this.audioTrack && (this.audioTrack.enabled = !this.isAudioTrackMuted);
 
     return stream;
   }
@@ -65,6 +73,15 @@ class MediaStore {
     this.audioInDevices.replace(audioInDevices);
 
     this.setDefaultDeviceId();
+  }
+
+  toggleMuted(kind: MediaStreamTrack["kind"]) {
+    if (kind === "video") {
+      this.isVideoTrackMuted = !this.isVideoTrackMuted;
+    }
+    if (kind === "audio") {
+      this.isAudioTrackMuted = !this.isAudioTrackMuted;
+    }
   }
 
   private setDefaultDeviceId() {
@@ -93,11 +110,14 @@ decorate(MediaStore, {
   videoTrack: observable.ref,
   audioInDevices: observable.shallow,
   videoInDevices: observable.shallow,
+  isAudioTrackMuted: observable,
+  isVideoTrackMuted: observable,
   isReady: computed,
   isUserVideoEnabled: computed,
   stream: computed,
   setUserTrack: action,
   setDevices: action,
+  toggleMuted: action,
   setDefaultDeviceId: action
 });
 
