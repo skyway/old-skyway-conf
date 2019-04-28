@@ -9,7 +9,7 @@ import {
 import { MeshRoom, SfuRoom, RoomStream } from "../utils/types";
 const log = debug("effect:settings");
 
-export const enableVideo = ({ media, ui }: RootStore) => async () => {
+export const enableVideo = ({ media, ui, room }: RootStore) => async () => {
   log("enableVideo()");
 
   const { videoInDevices } = await getUserDevices().catch(err => {
@@ -36,6 +36,11 @@ export const enableVideo = ({ media, ui }: RootStore) => async () => {
   media.setDevices(devices);
 
   log("devices updated", { ...devices });
+
+  if (room.isJoined) {
+    // TODO: need to re-enter the room
+    log("re-enter room to use audio -> audio+video");
+  }
 };
 
 export const changeDeviceId = ({ media, ui }: RootStore) => async (
