@@ -1,29 +1,47 @@
 import { decorate, observable, computed, action } from "mobx";
-import { RoomInit } from "../utils/types";
+import { RoomInit, Peer, SfuRoom, MeshRoom, RoomStream } from "../utils/types";
 
 class RoomStore {
-  isJoined: boolean;
+  peer: Peer | null;
+  room: SfuRoom | MeshRoom | null;
   id: RoomInit["id"] | null;
   mode: RoomInit["mode"] | null;
+  streams: Map<string, RoomStream>;
 
   constructor() {
-    this.isJoined = false;
+    this.peer = null;
+    this.room = null;
     this.id = null;
     this.mode = null;
+    this.streams = new Map();
   }
 
   get name(): string {
     return `${this.mode}/${this.id}`;
   }
 
-  load({ mode, id }: RoomInit) {
+  get isJoined(): boolean {
+    return this.room !== null;
+  }
+
+  load({ mode, id }: RoomInit, peer: Peer) {
     this.mode = mode;
     this.id = id;
+    this.peer = peer;
+  }
+
+  addStream(stream: RoomStream) {
+    this.streams.set(stream.peerId, stream);
+  }
+
+  removeStream(peerId: string) {
+    this.streams.delete(peerId);
   }
 }
 decorate(RoomStore, {
-  isJoined: observable,
-  name: computed,
+  room: observable.ref,
+  streams: observable.ref,
+  isJoined: computed,
   load: action
 });
 

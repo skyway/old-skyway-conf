@@ -3,6 +3,7 @@ import { toJS } from "mobx";
 import debug from "debug";
 import { isValidRoomName, isValidRoomType } from "../../shared/validate";
 import { getUserDevices, getUserAudioTrack } from "../utils/webrtc";
+import { initPeer } from "../utils/skyway";
 import { RoomInit } from "../utils/types";
 import RootStore from "../stores";
 
@@ -19,8 +20,15 @@ export const checkRoomSetting = ({
     throw ui.showError(new Error("Invalid room type and/or room name."));
   }
 
-  log(`room: ${roomType}/${roomName}`);
-  room.load({ mode: roomType as RoomInit["mode"], id: roomName });
+  (async () => {
+    const peer = await initPeer().catch(err => {
+      throw ui.showError(err);
+    });
+    room.load({ mode: roomType as RoomInit["mode"], id: roomName }, peer);
+
+    log(`room: ${roomType}/${roomName}`);
+    log("peer instance created");
+  })();
 };
 
 export const ensureAudioDevice = ({

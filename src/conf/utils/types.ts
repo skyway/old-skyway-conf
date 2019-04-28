@@ -27,6 +27,9 @@ export interface Peer extends EventEmitter {
 }
 export type SfuRoom = Room;
 export type MeshRoom = Room;
+export interface RoomStream extends MediaStream {
+  peerId: string;
+}
 
 type RoomTypes = "mesh" | "sfu";
 interface RoomOptions {
@@ -39,8 +42,8 @@ interface Room extends EventEmitter {
   send(payload: {}): void;
   replaceStream(stream: MediaStream): void;
 
-  on(ev: "stream", cb: (stream: MediaStream) => void): this;
+  on(ev: "stream", cb: (stream: RoomStream) => void): this;
   on(ev: "peerLeave", cb: (peerId: string) => void): this;
-  on(ev: "data", cb: (data: {}) => void): this;
-  on(ev: "close", cb: () => void): this;
+  // on(ev: "data", cb: (data: {}) => void): this;
+  // once(ev: "close", cb: () => void): this;
 }
