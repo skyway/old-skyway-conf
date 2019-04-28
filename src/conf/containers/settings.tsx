@@ -82,11 +82,13 @@ const Settings: FunctionComponent<{}> = () => {
 export default Settings;
 
 const wrapperStyle = css({
-  width: 600,
+  // 4:3
+  width: 480,
   margin: "100px auto 0",
   backgroundColor: globalColors.white
 });
 
 const videoStyle = css({
-  height: 300
+  // 4:3
+  height: 360
 });
