@@ -66,7 +66,7 @@ export const closeSettings = ({ ui }: RootStore) => async () => {
   ui.isSettingsOpen = false;
 };
 
-export const joinConference = ({ ui, room }: RootStore) => async () => {
+export const joinConference = ({ ui, room, media }: RootStore) => async () => {
   log("joinConference()");
 
   // TODO: join skyway room
@@ -75,11 +75,14 @@ export const joinConference = ({ ui, room }: RootStore) => async () => {
   });
 
   // must not be happened
-  if (room.name === null) {
-    throw ui.showError(new Error("Room name is undefined!"));
+  if (room.name === null || room.mode === null) {
+    throw ui.showError(new Error("Room name or mode is undefined!"));
   }
 
-  const confRoom = peer.joinRoom(room.name);
+  const confRoom = peer.joinRoom(room.name, {
+    mode: room.mode,
+    stream: media.stream
+  });
   console.warn(confRoom);
 
   room.isJoined = true;
