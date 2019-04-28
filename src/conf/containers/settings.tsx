@@ -23,8 +23,6 @@ const Settings: FunctionComponent<{}> = () => {
   const onClickJoinConference = useCallback(joinConference(store), [store]);
   const onClickCloseSettings = useCallback(closeSettings(store), [store]);
 
-  console.count("Settings.render()");
-
   const { ui, media, room } = store;
   return (
     <Observer>
@@ -32,8 +30,6 @@ const Settings: FunctionComponent<{}> = () => {
         if (!ui.isSettingsOpen) {
           return <></>;
         }
-
-        console.count("Settings.Observer.render()");
 
         return (
           <Modal>

@@ -1,6 +1,7 @@
 import * as React from "react";
 import Bootstrap from "./containers/bootstrap";
 import Settings from "./containers/settings";
+import RemoteStreams from "./containers/remote-streams";
 import ErrorDetail from "./components/error-detail";
 
 interface State {
@@ -19,8 +20,12 @@ class App extends React.Component<{}, State> {
 
     return (
       <Bootstrap>
+        {/* Base Layer */}
+        <div>
+          <RemoteStreams />
+        </div>
+        {/* Modal Layer */}
         <Settings />
-        <div>xxx</div>
       </Bootstrap>
     );
   }

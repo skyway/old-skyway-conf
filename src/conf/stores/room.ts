@@ -40,7 +40,7 @@ class RoomStore {
 }
 decorate(RoomStore, {
   room: observable.ref,
-  streams: observable.ref,
+  streams: observable.shallow,
   isJoined: computed,
   load: action
 });
