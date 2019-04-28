@@ -1,6 +1,7 @@
 import { decorate, observable, computed, action } from "mobx";
 import { IObservableArray } from "mobx";
 import { UserDevices } from "../utils/types";
+import { getFakeVideoTrack } from "../utils/webrtc";
 
 class MediaStore {
   videoInDevices: IObservableArray<MediaDeviceInfo>;
@@ -8,7 +9,8 @@ class MediaStore {
   audioDeviceId: string | null;
   videoDeviceId: string | null;
   audioTrack: MediaStreamTrack | null;
-  videoTrack: MediaStreamTrack | null;
+  videoTrack: MediaStreamTrack;
+  isUserVideoEnabled: boolean;
   isAudioTrackMuted: boolean;
   isVideoTrackMuted: boolean;
 
@@ -20,7 +22,8 @@ class MediaStore {
     this.audioDeviceId = null;
     this.videoDeviceId = null;
     this.audioTrack = null;
-    this.videoTrack = null;
+    this.videoTrack = getFakeVideoTrack();
+    this.isUserVideoEnabled = false;
     this.isVideoTrackMuted = false;
     this.isAudioTrackMuted = true;
   }
@@ -29,21 +32,11 @@ class MediaStore {
     return this.audioTrack !== null;
   }
 
-  get isUserVideoEnabled(): boolean {
-    if (this.videoTrack !== null) {
-      return true;
-    }
-    return false;
-  }
-
   get stream(): MediaStream {
-    const stream = new MediaStream();
+    const stream = new MediaStream([this.videoTrack]);
 
     if (this.audioTrack instanceof MediaStreamTrack) {
       stream.addTrack(this.audioTrack);
-    }
-    if (this.videoTrack instanceof MediaStreamTrack) {
-      stream.addTrack(this.videoTrack);
     }
 
     // apply muted state
@@ -59,6 +52,9 @@ class MediaStore {
         this.videoTrack.stop();
       }
       this.videoTrack = track;
+
+      // set video track means user enables video
+      this.isUserVideoEnabled = true;
     }
     if (track.kind === "audio") {
       if (this.audioTrack instanceof MediaStreamTrack) {
@@ -112,8 +108,8 @@ decorate(MediaStore, {
   videoInDevices: observable.shallow,
   isAudioTrackMuted: observable,
   isVideoTrackMuted: observable,
+  isUserVideoEnabled: observable,
   isReady: computed,
-  isUserVideoEnabled: computed,
   stream: computed,
   setUserTrack: action,
   setDevices: action,
