@@ -37,13 +37,3 @@ export const getUserVideoTrack = async (
     })
     .then(stream => stream.getVideoTracks()[0]);
 };
-
-export const getFakeVideoTrack = (): MediaStreamTrack => {
-  const $canvas = document.createElement("canvas");
-  $canvas.width = $canvas.height = 1;
-  $canvas.getContext("2d");
-  // @ts-ignore: captureStream() is not defined..
-  const stream = $canvas.captureStream(0);
-  const [vTrack] = stream.getVideoTracks();
-  return vTrack;
-};
