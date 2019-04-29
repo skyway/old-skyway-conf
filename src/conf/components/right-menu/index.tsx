@@ -3,7 +3,7 @@ import { useRef, useCallback } from "react";
 import { FunctionComponent, ReactNode } from "react";
 import { css } from "@emotion/core";
 import { zIndex } from "../../utils/style";
-import Icon from "../icon";
+import Toggler from "./toggler";
 
 interface Props {
   children: ReactNode;
@@ -11,21 +11,25 @@ interface Props {
 const RightMenu: FunctionComponent<Props> = ({ children }) => {
   // use ref to avoid children from re-rendering
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const onClickToggler = useCallback(() => {
-    if (wrapperRef.current === null) {
-      return;
-    }
-    wrapperRef.current.classList.toggle("-visible");
-  }, [wrapperRef]);
+  const onClickToggler = useCallback(
+    (isVisible: boolean) => {
+      if (wrapperRef.current === null) {
+        return;
+      }
+      if (isVisible) {
+        wrapperRef.current.classList.add(visibleClass);
+      } else {
+        wrapperRef.current.classList.remove(visibleClass);
+      }
+    },
+    [wrapperRef]
+  );
 
-  console.count("RightMenu.render()");
   return (
     <>
-      <div css={wrapperStyle} className="-visible" ref={wrapperRef}>
+      <div css={wrapperStyle} className={visibleClass} ref={wrapperRef}>
         {children}
-        <div css={togglerStyle} onClick={onClickToggler}>
-          <Icon name="chevron_left" />
-        </div>
+        <Toggler defaultVisibility={true} onToggle={onClickToggler} />
       </div>
     </>
   );
@@ -33,7 +37,8 @@ const RightMenu: FunctionComponent<Props> = ({ children }) => {
 
 export default RightMenu;
 
-const wrapperWidth = 300;
+const visibleClass = "-visible";
+const wrapperWidth = 200;
 const wrapperStyle = css({
   position: "absolute",
   top: 0,
@@ -45,21 +50,9 @@ const wrapperStyle = css({
   height: "100vh",
   transition: ".25s ease transform",
   transform: `translateX(${wrapperWidth}px)`,
+  willChange: "transform",
 
-  "&.-visible": {
+  [`&.${visibleClass}`]: {
     transform: "translateX(0)"
   }
-});
-
-const togglerStyle = css({
-  position: "absolute",
-  top: 0,
-  left: -40,
-  width: 40,
-  height: 40,
-  backgroundColor: "#ddd",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  cursor: "pointer"
 });
