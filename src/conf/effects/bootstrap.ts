@@ -86,6 +86,7 @@ export const listenGlobalEvents = ({
       throw ui.showError(err);
     });
 
+    // Safari fires this event on updating label(num of devices are not changed)
     if (
       devices.audioInDevices.length !== media.audioInDevices.length ||
       devices.videoInDevices.length !== media.videoInDevices.length
