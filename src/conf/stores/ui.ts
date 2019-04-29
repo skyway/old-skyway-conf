@@ -6,9 +6,7 @@ class UiStore {
 
   constructor() {
     this.error = null;
-    // TODO: debug
-    // this.isSettingsOpen = true;
-    this.isSettingsOpen = false;
+    this.isSettingsOpen = true;
   }
 
   showError(err: Error): Error {
