@@ -18,9 +18,11 @@ const RemoteStreams: FunctionComponent<{}> = () => {
       {() => {
         console.count("RemoteStreams.Observer.render()");
 
+        const streams = [...room.streams.values()];
         return (
           <div css={wrapperStyle}>
-            {[...room.streams.values()].map((stream: RoomStream) => (
+            <div>{streams.length} participants</div>
+            {streams.map((stream: RoomStream) => (
               <div css={videoStyle} key={stream.peerId}>
                 <Video stream={stream} isMine={false} />
               </div>
