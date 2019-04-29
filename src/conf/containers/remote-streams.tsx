@@ -35,9 +35,6 @@ const RemoteStreams: FunctionComponent<{}> = () => {
 export default RemoteStreams;
 
 const wrapperStyle = css({
-  backgroundColor: "#eee",
-  minHeight: 150,
-
   // 4:3
   width: 200
 });
