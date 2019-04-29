@@ -37,7 +37,7 @@ const Settings: FunctionComponent<{}> = () => {
           <Modal>
             <div css={wrapperStyle}>
               <div css={videoStyle}>
-                <Video stream={media.stream} />
+                <Video stream={media.stream} isMine={true} />
               </div>
               <div>
                 {media.isUserVideoEnabled ? (

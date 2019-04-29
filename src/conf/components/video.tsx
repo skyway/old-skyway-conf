@@ -8,9 +8,10 @@ import { globalColors } from "../../shared/global-style";
 const _log = debug("component:video");
 
 interface Props {
+  isMine: boolean;
   stream: MediaStream;
 }
-const Video: FunctionComponent<Props> = ({ stream }) => {
+const Video: FunctionComponent<Props> = ({ stream, isMine }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const log = _log.extend(stream.id);
 
@@ -25,7 +26,13 @@ const Video: FunctionComponent<Props> = ({ stream }) => {
   }, [videoRef, log, stream]);
 
   log("render()", [...stream.getTracks()]);
-  return <video css={videoStyle} ref={videoRef} muted />;
+  return (
+    <video
+      css={isMine ? mineVideoStyle : videoStyle}
+      ref={videoRef}
+      muted={isMine}
+    />
+  );
 };
 
 export default memo(Video);
@@ -37,4 +44,9 @@ const videoStyle = css({
   maxWidth: "100%",
   maxHeight: "100%",
   pointerEvents: "none"
+});
+
+const mineVideoStyle = css({
+  ...videoStyle,
+  transform: "scaleX(-1)"
 });

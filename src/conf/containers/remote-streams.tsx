@@ -22,7 +22,7 @@ const RemoteStreams: FunctionComponent<{}> = () => {
           <div css={wrapperStyle}>
             {[...room.streams.values()].map((stream: RoomStream) => (
               <div css={videoStyle} key={stream.peerId}>
-                <Video stream={stream} />
+                <Video stream={stream} isMine={false} />
               </div>
             ))}
           </div>
