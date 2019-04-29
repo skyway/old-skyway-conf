@@ -28,7 +28,7 @@ const RightMenu: FunctionComponent<Props> = ({ children }) => {
   return (
     <>
       <div css={wrapperStyle} className={visibleClass} ref={wrapperRef}>
-        {children}
+        <div css={scrollerStyle}>{children}</div>
         <Toggler defaultVisibility={true} onToggle={onClickToggler} />
       </div>
     </>
@@ -47,7 +47,7 @@ const wrapperStyle = css({
   zIndex: zIndex.base,
   width: wrapperWidth,
   backgroundColor: "#eee",
-  height: "100vh",
+  height: "100%",
   transition: ".25s ease transform",
   transform: `translateX(${wrapperWidth}px)`,
   willChange: "transform",
@@ -55,4 +55,9 @@ const wrapperStyle = css({
   [`&.${visibleClass}`]: {
     transform: "translateX(0)"
   }
+});
+
+const scrollerStyle = css({
+  height: "100%",
+  overflowY: "scroll"
 });
