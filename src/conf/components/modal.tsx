@@ -1,6 +1,7 @@
 import * as React from "react";
 import { FunctionComponent, ReactNode } from "react";
 import { css } from "@emotion/core";
+import { zIndex } from "../utils/style";
 
 interface Props {
   children: ReactNode;
@@ -15,7 +16,8 @@ const wrapperStyle = css({
   left: 0,
   right: 0,
   bottom: 0,
-  backgroundColor: "rgba(0, 0, 0, 0.8)"
+  backgroundColor: "rgba(0, 0, 0, 0.8)",
+  zIndex: zIndex.modal
 });
 
 export default Modal;

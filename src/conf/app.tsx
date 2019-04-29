@@ -1,8 +1,10 @@
 import * as React from "react";
+import { css } from "@emotion/core";
 import Bootstrap from "./containers/bootstrap";
 import Settings from "./containers/settings";
 import RemoteStreams from "./containers/remote-streams";
 import ErrorDetail from "./components/error-detail";
+import { zIndex } from "./utils/style";
 
 interface State {
   err: Error | null;
@@ -21,7 +23,7 @@ class App extends React.Component<{}, State> {
     return (
       <Bootstrap>
         {/* Base Layer */}
-        <div>
+        <div css={rightMenuStyle}>
           <RemoteStreams />
         </div>
         {/* Modal Layer */}
@@ -36,3 +38,11 @@ class App extends React.Component<{}, State> {
 }
 
 export default App;
+
+const rightMenuStyle = css({
+  position: "absolute",
+  top: 0,
+  right: 0,
+  bottom: 0,
+  zIndex: zIndex.base
+});
