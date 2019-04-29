@@ -15,12 +15,13 @@ const Video: FunctionComponent<Props> = ({ stream }) => {
   const log = _log.extend(stream.id);
 
   useEffect(() => {
-    if (videoRef && videoRef.current) {
-      const $video = videoRef.current;
-      log("useEffect(): assign and play stream");
-      $video.srcObject = stream;
-      $video.paused && $video.play();
+    if (videoRef.current === null) {
+      return;
     }
+    const $video = videoRef.current;
+    log("useEffect(): assign and play stream");
+    $video.srcObject = stream;
+    $video.paused && $video.play();
   }, [videoRef, log, stream]);
 
   log("render()", [...stream.getTracks()]);
