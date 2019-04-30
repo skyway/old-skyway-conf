@@ -13,6 +13,7 @@ const log = debug("main");
   localStorage.setItem("debug", "(main|effect|component)*");
 
   log(`${name} v${version}`);
+  document.title += ` v${version}`;
 
   render(
     <>

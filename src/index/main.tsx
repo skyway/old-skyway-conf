@@ -10,6 +10,7 @@ const log = debug("main");
 
 (async () => {
   log(`${name} v${version}`);
+  document.title += ` v${version}`;
 
   render(
     <>
