@@ -1,8 +1,10 @@
 import * as React from "react";
 import Bootstrap from "./containers/bootstrap";
 import Settings from "./containers/settings";
+import LocalStream from "./containers/local-stream";
 import RemoteStreams from "./containers/remote-streams";
 import ErrorDetail from "./components/error-detail";
+import LeftMenu from "./components/left-menu";
 import RightMenu from "./components/right-menu";
 
 interface State {
@@ -22,6 +24,9 @@ class App extends React.Component<{}, State> {
     return (
       <Bootstrap>
         {/* Base Layer */}
+        <LeftMenu>
+          <LocalStream />
+        </LeftMenu>
         <RightMenu>
           <RemoteStreams />
         </RightMenu>
