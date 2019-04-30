@@ -5,6 +5,7 @@ import { Observer } from "mobx-react";
 import { css } from "@emotion/core";
 import { StoreContext } from "../contexts";
 import { RoomStream } from "../utils/types";
+import { rightMenuWidth } from "../utils/style";
 import Video from "../components/video";
 
 const RemoteStreams: FunctionComponent<{}> = () => {
@@ -38,10 +39,10 @@ export default RemoteStreams;
 
 const wrapperStyle = css({
   // 4:3
-  width: 200
+  width: rightMenuWidth
 });
 
 const videoStyle = css({
   // 4:3
-  height: 150
+  height: (rightMenuWidth / 4) * 3
 });

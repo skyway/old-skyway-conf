@@ -31,12 +31,10 @@ const LocalStream: FunctionComponent<{}> = () => {
 
 export default LocalStream;
 
-const wrapperStyle = css({
-  // 4:3
-  width: 200
-});
+const videoWidth = 180;
+const wrapperStyle = css({});
 
 const videoStyle = css({
-  // 4:3
-  height: 150
+  width: videoWidth,
+  height: (videoWidth / 4) * 3
 });

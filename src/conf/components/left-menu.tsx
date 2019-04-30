@@ -16,6 +16,5 @@ const wrapperStyle = css({
   position: "absolute",
   left: 8,
   bottom: 8,
-  zIndex: zIndex.base,
-  width: 200
+  zIndex: zIndex.base
 });

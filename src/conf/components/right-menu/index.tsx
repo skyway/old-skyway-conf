@@ -2,7 +2,7 @@ import * as React from "react";
 import { useRef, useCallback } from "react";
 import { FunctionComponent, ReactNode } from "react";
 import { css } from "@emotion/core";
-import { zIndex } from "../../utils/style";
+import { zIndex, rightMenuWidth } from "../../utils/style";
 import Toggler from "./toggler";
 
 interface Props {
@@ -38,7 +38,7 @@ const RightMenu: FunctionComponent<Props> = ({ children }) => {
 export default RightMenu;
 
 const visibleClass = "-visible";
-const wrapperWidth = 200;
+const wrapperWidth = rightMenuWidth;
 const wrapperStyle = css({
   position: "absolute",
   top: 0,
