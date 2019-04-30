@@ -9,8 +9,9 @@ import {
 import { MeshRoom, SfuRoom, RoomStream } from "../utils/types";
 const log = debug("effect:settings");
 
-export const enableVideo = ({ media, ui, room }: RootStore) => async () => {
+export const enableVideo = (store: RootStore) => async () => {
   log("enableVideo()");
+  const { media, ui, room } = store;
 
   const { videoInDevices } = await getUserDevices().catch(err => {
     throw ui.showError(err);
@@ -38,8 +39,14 @@ export const enableVideo = ({ media, ui, room }: RootStore) => async () => {
   log("devices updated", { ...devices });
 
   if (room.isJoined) {
-    // TODO: need to re-enter the room
     log("re-enter room to use audio -> audio+video");
+
+    try {
+      room.cleanUp();
+    } catch (err) {
+      throw ui.showError(err);
+    }
+    joinRoom(store);
   }
 };
 
@@ -66,26 +73,35 @@ export const changeDeviceId = ({ media, ui }: RootStore) => async (
   }
 };
 
-export const toggleMuted = ({ media }: RootStore) => async (
+export const toggleMuted = ({ media }: RootStore) => (
   kind: MediaStreamTrack["kind"]
 ) => {
   log("toggleMuted()", kind);
   media.toggleMuted(kind);
 };
 
-export const closeSettings = ({ ui }: RootStore) => async () => {
+export const closeSettings = ({ ui }: RootStore) => () => {
   log("closeSettings()");
   ui.isSettingsOpen = false;
 };
 
-export const joinConference = (store: RootStore) => async () => {
+export const joinConference = (store: RootStore) => () => {
   log("joinConference()");
-  const { ui, room, media } = store;
+  const { ui, room } = store;
 
   // must not be happened
   if (room.isJoined) {
     throw ui.showError(new Error("Already in the room!"));
   }
+
+  joinRoom(store);
+
+  ui.isSettingsOpen = false;
+};
+
+const joinRoom = (store: RootStore) => {
+  const { room, ui, media } = store;
+
   if (room.name === null || room.mode === null) {
     throw ui.showError(new Error("Room name or mode is undefined!"));
   }
@@ -110,34 +126,39 @@ export const joinConference = (store: RootStore) => async () => {
     throw ui.showError(new Error("Room is null!"));
   }
 
-  log("joined", room.room);
+  log("joined room", room.room);
 
-  reaction(
-    () => media.stream,
-    stream => {
-      if (room.room === null) {
-        return;
+  const disposers = [
+    reaction(
+      () => media.stream,
+      stream => {
+        if (room.room === null) {
+          return;
+        }
+        log("replaceStream()");
+        room.room.replaceStream(stream);
       }
-      log("(Mesh|Sfu)Room.replaceStream()");
-      room.room.replaceStream(stream);
-    }
-  );
+    )
+  ];
 
-  room.room.on("stream", (stream: RoomStream) => onRoomStream(store, stream));
-  room.room.on("peerLeave", (peerId: string) => onRoomPeerLeave(store, peerId));
+  room.room.on("stream", (stream: RoomStream) => {
+    log("on('stream')", stream);
+    room.addStream(stream);
+  });
+  room.room.on("peerLeave", (peerId: string) => {
+    log("on('peerLeave')", peerId);
+    room.removeStream(peerId);
+  });
   // TODO: handlers to confRoom
   // room.room.on("data", (data: {}) => onRoomData(data));
-  // room.room.on("close", () => onRoomClose());
-
-  ui.isSettingsOpen = false;
-};
-
-const onRoomStream = ({ room }: RootStore, stream: RoomStream) => {
-  log("onRoomStream()", stream);
-  room.addStream(stream);
-};
-
-const onRoomPeerLeave = ({ room }: RootStore, peerId: string) => {
-  log("onRoomPeerLeave()", peerId);
-  room.removeStream(peerId);
+  room.room.once("close", () => {
+    log("on('close')");
+    disposers.forEach(d => d());
+    try {
+      room.cleanUp();
+    } catch (err) {
+      throw ui.showError(err);
+    }
+    joinRoom(store);
+  });
 };

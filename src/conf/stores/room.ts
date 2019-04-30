@@ -37,12 +37,28 @@ class RoomStore {
   removeStream(peerId: string) {
     this.streams.delete(peerId);
   }
+
+  cleanUp() {
+    if (this.room === null) {
+      throw new Error("Room is null!");
+    }
+
+    this.room.removeAllListeners();
+    this.room.close();
+    [...this.streams.values()].forEach(stream =>
+      stream.getTracks().forEach(track => track.stop())
+    );
+    this.streams.clear();
+  }
 }
 decorate(RoomStore, {
   room: observable.ref,
   streams: observable.shallow,
   isJoined: computed,
-  load: action
+  load: action,
+  addStream: action,
+  removeStream: action,
+  cleanUp: action
 });
 
 export default RoomStore;

@@ -41,6 +41,7 @@ interface Room extends EventEmitter {
   id: string;
   send(payload: {}): void;
   replaceStream(stream: MediaStream): void;
+  close(): void;
 
   on(ev: "stream", cb: (stream: RoomStream) => void): this;
   on(ev: "peerLeave", cb: (peerId: string) => void): this;
