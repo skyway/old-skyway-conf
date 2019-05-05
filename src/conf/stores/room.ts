@@ -4,16 +4,22 @@ import { RoomInit, Peer, SfuRoom, MeshRoom, RoomStream } from "../utils/types";
 class RoomStore {
   peer: Peer | null;
   room: SfuRoom | MeshRoom | null;
-  id: RoomInit["id"] | null;
   mode: RoomInit["mode"] | null;
+  id: RoomInit["id"] | null;
   streams: Map<string, RoomStream>;
+  pinnedId: string | null;
 
   constructor() {
+    // Peer instance
     this.peer = null;
+    // (Sfu|Mesh)Room instance
     this.room = null;
-    this.id = null;
+    // room name = mode + id
     this.mode = null;
+    this.id = null;
+
     this.streams = new Map();
+    this.pinnedId = null;
   }
 
   get name(): string {
@@ -22,6 +28,13 @@ class RoomStore {
 
   get isJoined(): boolean {
     return this.room !== null;
+  }
+
+  get pinnedStream(): RoomStream | null {
+    if (this.pinnedId === null) {
+      return null;
+    }
+    return this.streams.get(this.pinnedId) || null;
   }
 
   load({ mode, id }: RoomInit, peer: Peer) {
@@ -52,9 +65,9 @@ class RoomStore {
   }
 }
 decorate(RoomStore, {
-  room: observable.ref,
   streams: observable.shallow,
-  isJoined: computed,
+  pinnedId: observable,
+  pinnedStream: computed,
   load: action,
   addStream: action,
   removeStream: action,

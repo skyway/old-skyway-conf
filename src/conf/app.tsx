@@ -1,6 +1,7 @@
 import * as React from "react";
 import Bootstrap from "./containers/bootstrap";
 import Settings from "./containers/settings";
+import PinnedStream from "./containers/pinned-stream";
 import LocalStream from "./containers/local-stream";
 import RemoteStreams from "./containers/remote-streams";
 import ErrorDetail from "./components/error-detail";
@@ -24,12 +25,14 @@ class App extends React.Component<{}, State> {
     return (
       <Bootstrap>
         {/* Base Layer */}
+        <PinnedStream />
         <LeftMenu>
           <LocalStream />
         </LeftMenu>
         <RightMenu>
           <RemoteStreams />
         </RightMenu>
+
         {/* Modal Layer */}
         <Settings />
       </Bootstrap>
