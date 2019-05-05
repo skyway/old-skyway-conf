@@ -6,7 +6,7 @@ import { zIndex } from "../utils/style";
 interface Props {
   children: ReactNode;
 }
-const Modal: FunctionComponent<Props> = ({ children }) => (
+const Modal: FunctionComponent<Props> = ({ children }: Props) => (
   <div css={wrapperStyle}>{children}</div>
 );
 

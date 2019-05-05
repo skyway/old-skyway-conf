@@ -1,10 +1,12 @@
 import * as React from "react";
-import Bootstrap from "./containers/bootstrap";
-import Settings from "./containers/settings";
-import PinnedStream from "./containers/pinned-stream";
-import LocalStream from "./containers/local-stream";
-import RemoteStreams from "./containers/remote-streams";
+import Bootstrap from "./observers/bootstrap";
+import Settings from "./observers/settings";
+import PinnedStream from "./observers/pinned-stream";
+import LocalStream from "./observers/local-stream";
+import RemoteStreams from "./observers/remote-streams";
+import Layout from "./components/layout";
 import ErrorDetail from "./components/error-detail";
+import Main from "./components/main";
 import LeftMenu from "./components/left-menu";
 import RightMenu from "./components/right-menu";
 
@@ -19,23 +21,31 @@ class App extends React.Component<{}, State> {
 
   render() {
     if (this.state.err !== null) {
-      return <ErrorDetail error={this.state.err} />;
+      return (
+        <Layout>
+          <ErrorDetail error={this.state.err} />
+        </Layout>
+      );
     }
 
     return (
-      <Bootstrap>
-        {/* Base Layer */}
-        <PinnedStream />
-        <LeftMenu>
-          <LocalStream />
-        </LeftMenu>
-        <RightMenu>
-          <RemoteStreams />
-        </RightMenu>
+      <Layout>
+        <Bootstrap>
+          {/* Base Layer */}
+          <Main>
+            <PinnedStream />
+          </Main>
+          <LeftMenu>
+            <LocalStream />
+          </LeftMenu>
+          <RightMenu>
+            <RemoteStreams />
+          </RightMenu>
 
-        {/* Modal Layer */}
-        <Settings />
-      </Bootstrap>
+          {/* Modal Layer */}
+          <Settings />
+        </Bootstrap>
+      </Layout>
     );
   }
 

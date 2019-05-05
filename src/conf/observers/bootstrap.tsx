@@ -2,7 +2,6 @@ import * as React from "react";
 import { useContext, useEffect } from "react";
 import { FunctionComponent, ReactNode } from "react";
 import { Observer } from "mobx-react";
-import { css } from "@emotion/core";
 import { StoreContext } from "../contexts";
 import {
   checkRoomSetting,
@@ -11,11 +10,12 @@ import {
   loadClient
 } from "../effects/bootstrap";
 import ErrorDetail from "../components/error-detail";
+import Loader from "../components/loader";
 
 interface Props {
   children: ReactNode;
 }
-const Bootstrap: FunctionComponent<Props> = ({ children }) => {
+const Bootstrap: FunctionComponent<Props> = ({ children }: Props) => {
   const store = useContext(StoreContext);
 
   useEffect(checkRoomSetting(store), [store]);
@@ -25,38 +25,20 @@ const Bootstrap: FunctionComponent<Props> = ({ children }) => {
 
   const { ui, client, media } = store;
   return (
-    <div css={wrapperStyle}>
-      <Observer>
-        {() => {
-          if (ui.error instanceof Error) {
-            return <ErrorDetail error={ui.error} />;
-          }
+    <Observer>
+      {() => {
+        if (ui.error instanceof Error) {
+          return <ErrorDetail error={ui.error} />;
+        }
 
-          if (!(client.isReady && media.isReady)) {
-            return (
-              <img css={loaderStyle} src="./images/conf/icon-loading.svg" />
-            );
-          }
+        if (!(client.isReady && media.isReady)) {
+          return <Loader />;
+        }
 
-          return <>{children}</>;
-        }}
-      </Observer>
-    </div>
+        return <>{children}</>;
+      }}
+    </Observer>
   );
 };
 
 export default Bootstrap;
-
-const wrapperStyle = css({
-  height: "100vh",
-  position: "relative"
-});
-
-const loaderStyle = css({
-  position: "absolute",
-  margin: "auto",
-  top: 0,
-  bottom: 0,
-  left: 0,
-  right: 0
-});
