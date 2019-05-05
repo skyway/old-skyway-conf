@@ -9,6 +9,11 @@ import {
 import { MeshRoom, SfuRoom, RoomStream } from "../utils/types";
 const log = debug("effect:settings");
 
+export const changeDispName = ({ client }: RootStore) => (name: string) => {
+  log("changeDispName()", `${client.dispayName} => ${name}`);
+  client.dispayName = name;
+};
+
 export const enableVideo = (store: RootStore) => async () => {
   log("enableVideo()");
   const { media, ui, room } = store;

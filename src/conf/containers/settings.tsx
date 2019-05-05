@@ -9,6 +9,7 @@ import Modal from "../components/modal";
 import Video from "../components/video";
 import DeviceSelector from "../components/device-selector";
 import {
+  changeDispName,
   enableVideo,
   changeDeviceId,
   closeSettings,
@@ -19,13 +20,14 @@ import {
 const Settings: FunctionComponent<{}> = () => {
   const store = useContext(StoreContext);
 
+  const onChangeDispName = useCallback(changeDispName(store), [store]);
   const onClickEnableVideo = useCallback(enableVideo(store), [store]);
   const onChangeDeviceId = useCallback(changeDeviceId(store), [store]);
   const onClickJoinConference = useCallback(joinConference(store), [store]);
   const onClickCloseSettings = useCallback(closeSettings(store), [store]);
   const onClickToggleMuted = useCallback(toggleMuted(store), [store]);
 
-  const { ui, media, room } = store;
+  const { ui, media, room, client } = store;
   return (
     <Observer>
       {() => {
@@ -38,6 +40,13 @@ const Settings: FunctionComponent<{}> = () => {
             <div css={wrapperStyle}>
               <div css={videoStyle}>
                 <Video stream={media.stream} isMine={true} />
+              </div>
+              <div>
+                <input
+                  type="text"
+                  defaultValue={client.dispayName}
+                  onChange={ev => onChangeDispName(ev.target.value)}
+                />
               </div>
               <div>
                 {media.isUserVideoEnabled ? (

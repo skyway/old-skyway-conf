@@ -1,5 +1,5 @@
 import { EffectCallback } from "react";
-import { toJS } from "mobx";
+import { toJS, reaction } from "mobx";
 import debug from "debug";
 import { isValidRoomName, isValidRoomType } from "../../shared/validate";
 import { getUserDevices, getUserAudioTrack } from "../utils/webrtc";
@@ -72,6 +72,17 @@ export const loadClient = ({ client }: RootStore): EffectCallback => () => {
     name: localStorage.getItem("SkyWayConf.dispName") || "YOUR_NAME"
   });
   log("client loaded", toJS(client.browser));
+
+  const disposers = [
+    reaction(
+      () => client.dispayName,
+      name => localStorage.setItem("SkyWayConf.dispName", name)
+    )
+  ];
+
+  return () => {
+    disposers.forEach(d => d());
+  };
 };
 
 export const listenGlobalEvents = ({
