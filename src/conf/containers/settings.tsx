@@ -45,7 +45,14 @@ const Settings: FunctionComponent<{}> = () => {
                 <input
                   type="text"
                   defaultValue={client.dispayName}
-                  onChange={ev => onChangeDispName(ev.target.value)}
+                  maxLength={10}
+                  onChange={ev => {
+                    // ignore while IME compositing
+                    if (ev.target.value.length > 10) {
+                      return;
+                    }
+                    onChangeDispName(ev.target.value);
+                  }}
                 />
               </div>
               <div>
