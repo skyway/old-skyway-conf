@@ -2,8 +2,8 @@ import * as React from "react";
 import { useContext } from "react";
 import { FunctionComponent } from "react";
 import { Observer } from "mobx-react";
-import { css } from "@emotion/core";
 import { StoreContext } from "../contexts";
+import LocalStreamLayout from "../components/local-stream-layout";
 import Video from "../components/video";
 
 const LocalStream: FunctionComponent<{}> = () => {
@@ -11,30 +11,47 @@ const LocalStream: FunctionComponent<{}> = () => {
 
   console.count("LocalStream.render()");
 
-  const { media } = store;
+  const { media, client, ui } = store;
   return (
-    <Observer>
-      {() => {
-        console.count("LocalStream.Observer.render()");
+    <LocalStreamLayout
+      controller={
+        <Observer>
+          {() => {
+            console.count("LocalStream.controller.render()");
 
-        return (
-          <div css={wrapperStyle}>
-            <div css={videoStyle}>
-              <Video stream={media.stream} isMine={true} />
-            </div>
-          </div>
-        );
-      }}
-    </Observer>
+            return <button onClick={() => (ui.isSettingsOpen = true)} />;
+          }}
+        </Observer>
+      }
+      meta={
+        <Observer>
+          {() => {
+            console.count("LocalStream.meta.render()");
+
+            return (
+              <div style={{ color: "white" }}>
+                {client.displayName}
+                <div>
+                  v:{media.isVideoTrackMuted ? "x" : "o"}
+                  {" / "}
+                  a:{media.isAudioTrackMuted ? "x" : "o"}
+                </div>
+              </div>
+            );
+          }}
+        </Observer>
+      }
+      video={
+        <Observer>
+          {() => {
+            console.count("LocalStream.video.render()");
+
+            return <Video stream={media.stream} isMine={true} />;
+          }}
+        </Observer>
+      }
+    />
   );
 };
 
 export default LocalStream;
-
-const videoWidth = 180;
-const wrapperStyle = css({});
-
-const videoStyle = css({
-  width: videoWidth,
-  height: (videoWidth / 4) * 3
-});
