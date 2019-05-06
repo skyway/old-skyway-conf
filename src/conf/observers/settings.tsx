@@ -7,6 +7,7 @@ import Modal from "../components/modal";
 import Video from "../components/video";
 import SettingsLayout from "../components/settings-layout";
 import SettingsVideo from "../components/settings-video";
+import SettingsNameEdit from "../components/settings-name-edit";
 import SettingsDeviceSelector from "../components/settings-device-selector";
 import {
   changeDispName,
@@ -41,20 +42,10 @@ const Settings: FunctionComponent<{}> = () => {
               <SettingsVideo>
                 <Video stream={media.stream} isMine={true} />
               </SettingsVideo>
-              <div>
-                <input
-                  type="text"
-                  defaultValue={client.dispayName}
-                  maxLength={10}
-                  onChange={ev => {
-                    // ignore while IME compositing
-                    if (ev.target.value.length > 10) {
-                      return;
-                    }
-                    onChangeDispName(ev.target.value);
-                  }}
-                />
-              </div>
+              <SettingsNameEdit
+                defaultDispName={client.dispayName}
+                onChangeDispName={name => onChangeDispName(name)}
+              />
               <div>
                 {media.isUserVideoEnabled ? (
                   <>
