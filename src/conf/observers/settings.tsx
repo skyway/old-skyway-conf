@@ -2,12 +2,12 @@ import * as React from "react";
 import { useContext, useCallback } from "react";
 import { FunctionComponent } from "react";
 import { Observer } from "mobx-react";
-import { css } from "@emotion/core";
-import { globalColors } from "../../shared/global-style";
 import { StoreContext } from "../contexts";
 import Modal from "../components/modal";
 import Video from "../components/video";
-import DeviceSelector from "../components/device-selector";
+import SettingsLayout from "../components/settings-layout";
+import SettingsVideo from "../components/settings-video";
+import SettingsDeviceSelector from "../components/settings-device-selector";
 import {
   changeDispName,
   enableVideo,
@@ -37,10 +37,10 @@ const Settings: FunctionComponent<{}> = () => {
 
         return (
           <Modal>
-            <div css={wrapperStyle}>
-              <div css={videoStyle}>
+            <SettingsLayout>
+              <SettingsVideo>
                 <Video stream={media.stream} isMine={true} />
-              </div>
+              </SettingsVideo>
               <div>
                 <input
                   type="text"
@@ -58,7 +58,7 @@ const Settings: FunctionComponent<{}> = () => {
               <div>
                 {media.isUserVideoEnabled ? (
                   <>
-                    <DeviceSelector
+                    <SettingsDeviceSelector
                       deviceId={media.videoDeviceId || ""}
                       inDevices={media.videoInDevices}
                       onChangeDeviceId={deviceId =>
@@ -74,7 +74,7 @@ const Settings: FunctionComponent<{}> = () => {
                 )}
               </div>
               <div>
-                <DeviceSelector
+                <SettingsDeviceSelector
                   deviceId={media.audioDeviceId || ""}
                   inDevices={media.audioInDevices}
                   onChangeDeviceId={deviceId =>
@@ -93,7 +93,7 @@ const Settings: FunctionComponent<{}> = () => {
               >
                 OK
               </button>
-            </div>
+            </SettingsLayout>
           </Modal>
         );
       }}
@@ -102,15 +102,3 @@ const Settings: FunctionComponent<{}> = () => {
 };
 
 export default Settings;
-
-const wrapperStyle = css({
-  // 4:3
-  width: 480,
-  margin: "100px auto 0",
-  backgroundColor: globalColors.white
-});
-
-const videoStyle = css({
-  // 4:3
-  height: 360
-});

@@ -6,7 +6,7 @@ interface Props {
   inDevices: MediaDeviceInfo[];
   onChangeDeviceId: (deviceId: string) => void;
 }
-const DeviceSelector: FunctionComponent<Props> = ({
+const SettingsDeviceSelector: FunctionComponent<Props> = ({
   deviceId,
   inDevices,
   onChangeDeviceId
@@ -23,4 +23,4 @@ const DeviceSelector: FunctionComponent<Props> = ({
   </select>
 );
 
-export default DeviceSelector;
+export default SettingsDeviceSelector;
