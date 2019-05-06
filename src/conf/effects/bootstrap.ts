@@ -75,7 +75,7 @@ export const loadClient = ({ client }: RootStore): EffectCallback => () => {
 
   const disposers = [
     reaction(
-      () => client.dispayName,
+      () => client.displayName,
       name => localStorage.setItem("SkyWayConf.dispName", name)
     )
   ];

@@ -43,7 +43,7 @@ const Settings: FunctionComponent<{}> = () => {
                 <Video stream={media.stream} isMine={true} />
               </SettingsVideo>
               <SettingsNameEdit
-                defaultDispName={client.dispayName}
+                defaultDispName={client.displayName}
                 onChangeDispName={name => onChangeDispName(name)}
               />
               <div>

@@ -5,17 +5,17 @@ import { ClientInit } from "../utils/types";
 
 class ClientStore {
   isReady: boolean;
-  dispayName: string;
+  displayName: string;
   browser: Parser.ParsedResult | null;
 
   constructor() {
     this.isReady = false;
-    this.dispayName = "";
+    this.displayName = "";
     this.browser = null;
   }
 
   load({ name, ua }: ClientInit) {
-    this.dispayName = name;
+    this.displayName = name;
     this.browser = parse(ua);
 
     this.isReady = true;
@@ -24,7 +24,7 @@ class ClientStore {
 decorate(ClientStore, {
   // @ts-ignore: to use private accessor
   isReady: observable,
-  dispayName: observable,
+  displayName: observable,
   browser: observable.ref,
   load: action
 });
