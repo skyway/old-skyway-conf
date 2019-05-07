@@ -14,16 +14,8 @@ class ClientStore {
     this.browser = null;
   }
 
-  get browserName(): string {
-    if (this.browser === null) {
-      return "N/A";
-    }
-
-    return `${this.browser.browser.name} v${this.browser.browser.version}`;
-  }
-
   get stat() {
-    return { displayName: this.displayName, browser: this.browser };
+    return { displayName: this.displayName };
   }
 
   load({ name, ua }: ClientInit) {
@@ -38,7 +30,6 @@ decorate(ClientStore, {
   isReady: observable,
   displayName: observable,
   browser: observable.ref,
-  browserName: computed,
   stat: computed,
   load: action
 });
