@@ -4,36 +4,34 @@ import { FunctionComponent } from "react";
 import { Observer } from "mobx-react";
 import { StoreContext } from "../contexts";
 import LocalStreamLayout from "../components/local-stream-layout";
+import LocalStreamController from "../components/local-stream-controller";
 import { Video } from "../components/video";
-import { openSettings } from "../effects/local-stream";
+import { openSettings, toggleMuted } from "../effects/local-stream";
 
 const LocalStream: FunctionComponent<{}> = () => {
   const store = useContext(StoreContext);
 
   const onClickOpenSettings = useCallback(openSettings(store), [store]);
+  const onClickToggleMuted = useCallback(toggleMuted(store), [store]);
 
   console.count("LocalStream.render()");
 
   const { media, client } = store;
   return (
     <LocalStreamLayout
-      onClickOpenSettings={onClickOpenSettings}
-      meta={
+      controller={
         <Observer>
-          {() => {
-            console.count("LocalStream.meta.render()");
-
-            return (
-              <div style={{ color: "white" }}>
-                {client.displayName}
-                <div>
-                  v:{media.isVideoTrackMuted ? "x" : "o"}
-                  {" / "}
-                  a:{media.isAudioTrackMuted ? "x" : "o"}
-                </div>
-              </div>
-            );
-          }}
+          {() => (
+            <LocalStreamController
+              dispName={client.displayName}
+              browser={client.browserName}
+              isVideoDisabled={!media.isUserVideoEnabled}
+              isVideoMuted={media.isVideoTrackMuted}
+              isAudioMuted={media.isAudioTrackMuted}
+              onClickToggleMuted={onClickToggleMuted}
+              onClickOpenSettings={onClickOpenSettings}
+            />
+          )}
         </Observer>
       }
       video={

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { FunctionComponent, ReactNode } from "react";
 import { css } from "@emotion/core";
 import { zIndex, rightMenuWidth } from "../utils/style";
-import Icon from "./icon";
+import { Icon } from "./icon";
 
 interface Props {
   children: ReactNode;

@@ -1,5 +1,7 @@
 import { css } from "@emotion/core";
 
+export const fontSize = 16;
+
 export const globalColors = {
   blue: "#005ece",
   lightblue: "#039be5",
@@ -15,7 +17,7 @@ export const globalStyle = css({
   },
   body: {
     margin: 0,
-    fontSize: 16,
+    fontSize,
     fontFamily: '"Open Sans", sans-serif',
     fontWeight: "lighter",
     lineHeight: 1.5,
