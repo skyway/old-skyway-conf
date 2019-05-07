@@ -8,11 +8,17 @@ import { globalColors } from "../../shared/global-style";
 const _log = debug("component:video");
 
 interface Props {
-  isMine: boolean;
   stream: MediaStream;
+  isMine?: boolean;
+  isVideoOnly?: boolean;
 }
-const _Video: FunctionComponent<Props> = ({ stream, isMine }) => {
+const Video: FunctionComponent<Props> = ({
+  stream,
+  isMine = false,
+  isVideoOnly = false
+}) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
   const log = _log.extend(stream.id);
 
   useEffect(() => {
@@ -24,19 +30,35 @@ const _Video: FunctionComponent<Props> = ({ stream, isMine }) => {
     $video.srcObject = stream;
     $video.paused && $video.play();
   }, [videoRef, log, stream]);
+  useEffect(() => {
+    if (isVideoOnly || audioRef.current === null) {
+      return;
+    }
+    const $audio = audioRef.current;
+    $audio.srcObject = stream;
+    $audio.paused && $audio.play();
+  }, [isVideoOnly, audioRef, stream]);
 
   log("render()", [...stream.getTracks()]);
   return (
-    <video
-      css={isMine ? [videoStyle, mineVideoStyle] : videoStyle}
-      ref={videoRef}
-      muted={isMine}
-    />
+    <>
+      <video
+        css={isMine ? [videoStyle, mineVideoStyle] : videoStyle}
+        ref={videoRef}
+        muted={true}
+      />
+      {isVideoOnly ? null : (
+        <audio css={audioStyle} ref={audioRef} muted={isMine} />
+      )}
+    </>
   );
 };
 
-export const Video = memo(_Video);
-export const BlankVideo: FunctionComponent<{}> = () => <div css={videoStyle} />;
+export default memo(Video);
+
+const audioStyle = css({
+  display: "none"
+});
 
 const videoStyle = css({
   backgroundColor: globalColors.black,

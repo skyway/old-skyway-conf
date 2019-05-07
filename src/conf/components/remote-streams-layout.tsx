@@ -4,7 +4,7 @@ import { css } from "@emotion/core";
 import { rightMenuWidth } from "../utils/style";
 import { RoomStream } from "../utils/types";
 import { globalColors } from "../../shared/global-style";
-import { Video } from "../components/video";
+import Video from "../components/video";
 
 interface Props {
   streams: RoomStream[];
@@ -29,7 +29,7 @@ const RemoteStreamsLayout: FunctionComponent<Props> = ({
           key={stream.peerId}
           onClick={() => onClickSetPinned(stream.peerId)}
         >
-          <Video stream={stream} isMine={false} />
+          <Video stream={stream} />
         </div>
       ))}
     </div>

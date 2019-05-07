@@ -5,7 +5,7 @@ import { Observer } from "mobx-react";
 import { StoreContext } from "../contexts";
 import LocalStreamLayout from "../components/local-stream-layout";
 import LocalStreamController from "../components/local-stream-controller";
-import { Video } from "../components/video";
+import Video from "../components/video";
 import { openSettings, toggleMuted } from "../effects/local-stream";
 
 const LocalStream: FunctionComponent<{}> = () => {

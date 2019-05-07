@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { FunctionComponent } from "react";
 import { Observer } from "mobx-react";
 import { StoreContext } from "../contexts";
-import { BlankVideo, Video } from "../components/video";
+import Video from "../components/video";
 
 const PinnedStream: FunctionComponent<{}> = () => {
   const store = useContext(StoreContext);
@@ -13,10 +13,12 @@ const PinnedStream: FunctionComponent<{}> = () => {
     <Observer>
       {() => {
         if (room.pinnedStream === null) {
-          return <BlankVideo />;
+          return <></>;
         }
 
-        return <Video stream={room.pinnedStream} isMine={false} />;
+        return (
+          <Video stream={room.pinnedStream} isVideoOnly={true} />
+        );
       }}
     </Observer>
   );
