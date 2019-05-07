@@ -1,37 +1,27 @@
 import * as React from "react";
-import { useRef, useCallback } from "react";
+import { useState } from "react";
 import { FunctionComponent, ReactNode } from "react";
 import { css } from "@emotion/core";
-import { zIndex, rightMenuWidth } from "../../utils/style";
-import Toggler from "./toggler";
+import { zIndex, rightMenuWidth } from "../utils/style";
+import Icon from "./icon";
 
 interface Props {
   children: ReactNode;
 }
 const RightMenu: FunctionComponent<Props> = ({ children }) => {
-  // use ref to avoid children from re-rendering
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const onClickToggler = useCallback(
-    (isVisible: boolean) => {
-      if (wrapperRef.current === null) {
-        return;
-      }
-      if (isVisible) {
-        wrapperRef.current.classList.add(visibleClass);
-      } else {
-        wrapperRef.current.classList.remove(visibleClass);
-      }
-    },
-    [wrapperRef]
-  );
+  const [isVisible, setVisible] = useState(true);
 
   return (
-    <>
-      <div css={wrapperStyle} className={visibleClass} ref={wrapperRef}>
-        <div css={scrollerStyle}>{children}</div>
-        <Toggler defaultVisibility={true} onToggle={onClickToggler} />
+    <div css={wrapperStyle} className={isVisible ? visibleClass : ""}>
+      <div css={scrollerStyle}>{children}</div>
+      <div css={togglerStyle} onClick={() => setVisible(!isVisible)}>
+        {isVisible ? (
+          <Icon name="chevron_right" />
+        ) : (
+          <Icon name="chevron_left" />
+        )}
       </div>
-    </>
+    </div>
   );
 };
 
@@ -60,4 +50,18 @@ const wrapperStyle = css({
 const scrollerStyle = css({
   height: "100%",
   overflowY: "scroll"
+});
+
+const togglerSize = 32;
+const togglerStyle = css({
+  position: "absolute",
+  top: 0,
+  left: -togglerSize,
+  width: togglerSize,
+  height: togglerSize,
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  backgroundColor: "inherit",
+  cursor: "pointer"
 });
