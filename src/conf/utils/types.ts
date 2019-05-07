@@ -29,6 +29,9 @@ interface RoomDataChat {
 
 export interface RoomStat {
   displayName: string;
+  isVideoDisabled: boolean;
+  isVideoMuted: boolean;
+  isAudioMuted: boolean;
 }
 
 /* Types for skyway-js */

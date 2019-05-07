@@ -2,23 +2,19 @@ import * as React from "react";
 import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
-import { IconButton } from "./icon";
+import { Icon, IconButton } from "./icon";
 
 interface Props {
   displayName: string;
   isVideoDisabled: boolean;
   isVideoMuted: boolean;
   isAudioMuted: boolean;
-  onClickToggleMuted: (kind: MediaStreamTrack["kind"]) => void;
-  onClickOpenSettings: () => void;
 }
-const LocalStreamController: FunctionComponent<Props> = ({
+const RemoteStreamController: FunctionComponent<Props> = ({
   displayName,
   isVideoDisabled,
   isVideoMuted,
-  isAudioMuted,
-  onClickToggleMuted,
-  onClickOpenSettings
+  isAudioMuted
 }: Props) => {
   const videoIcon = isVideoDisabled
     ? "videocam_off"
@@ -31,26 +27,15 @@ const LocalStreamController: FunctionComponent<Props> = ({
     <div css={wrapperStyle}>
       <div>{displayName}</div>
       <div css={buttonStyle}>
-        {isVideoDisabled ? null : (
-          <IconButton
-            name={videoIcon}
-            title={isVideoMuted ? "Unmute" : "Mute"}
-            onClick={() => onClickToggleMuted("video")}
-          />
-        )}
-        <IconButton
-          name={audioIcon}
-          title={isAudioMuted ? "Unmute" : "Mute"}
-          onClick={() => onClickToggleMuted("audio")}
-        />
-        <IconButton name="settings" onClick={() => onClickOpenSettings()} />
+        {isVideoDisabled ? null : <Icon name={videoIcon} />}
+        <Icon name={audioIcon} />
         <IconButton name="info" onClick={() => alert("TODO")} />
       </div>
     </div>
   );
 };
 
-export default LocalStreamController;
+export default RemoteStreamController;
 
 const wrapperStyle = css({
   display: "grid",

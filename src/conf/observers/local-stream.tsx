@@ -23,8 +23,7 @@ const LocalStream: FunctionComponent<{}> = () => {
         <Observer>
           {() => (
             <LocalStreamController
-              dispName={client.displayName}
-              browser={client.browserName}
+              displayName={client.displayName}
               isVideoDisabled={!media.isUserVideoEnabled}
               isVideoMuted={media.isVideoTrackMuted}
               isAudioMuted={media.isAudioTrackMuted}
