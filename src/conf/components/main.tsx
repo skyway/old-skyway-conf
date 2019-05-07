@@ -12,6 +12,10 @@ const Main: FunctionComponent<Props> = ({ children }) => (
 export default Main;
 
 const wrapperStyle = css({
+  position: "relative",
   width: "100%",
-  height: "100%"
+  height: "100%",
+  backgroundImage: "url(./images/logo.svg)",
+  backgroundRepeat: "no-repeat",
+  backgroundPosition: "center center"
 });

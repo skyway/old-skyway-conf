@@ -16,9 +16,7 @@ const PinnedStream: FunctionComponent<{}> = () => {
           return <></>;
         }
 
-        return (
-          <Video stream={room.pinnedStream} isVideoOnly={true} />
-        );
+        return <Video stream={room.pinnedStream} isVideoOnly={true} />;
       }}
     </Observer>
   );

@@ -22,7 +22,7 @@ const Layout: FunctionComponent<Props> = ({ children }: Props) => (
       target="_blank"
       rel="noopener noreferrer"
     >
-      <img src="./images/index/icon-skyway.svg" alt="SkyWay" />
+      <img src="./images/logo.svg" alt="SkyWay" />
     </a>
   </div>
 );
