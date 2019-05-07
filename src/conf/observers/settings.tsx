@@ -6,7 +6,6 @@ import { StoreContext } from "../contexts";
 import Modal from "../components/modal";
 import { Video } from "../components/video";
 import SettingsLayout from "../components/settings-layout";
-import SettingsVideo from "../components/settings-video";
 import SettingsNameEdit from "../components/settings-name-edit";
 import SettingsDeviceSelector from "../components/settings-device-selector";
 import {
@@ -38,10 +37,9 @@ const Settings: FunctionComponent<{}> = () => {
 
         return (
           <Modal>
-            <SettingsLayout>
-              <SettingsVideo>
-                <Video stream={media.stream} isMine={true} />
-              </SettingsVideo>
+            <SettingsLayout
+              video={<Video stream={media.stream} isMine={true} />}
+            >
               <SettingsNameEdit
                 defaultDispName={client.displayName}
                 onChangeDispName={name => onChangeDispName(name)}
