@@ -2,7 +2,8 @@ import * as React from "react";
 import { useState } from "react";
 import { FunctionComponent, ReactNode } from "react";
 import { css } from "@emotion/core";
-import { zIndex, rightMenuWidth } from "../utils/style";
+import { globalColors } from "../../shared/global-style";
+import { zIndex, rightMenuWidth, rightMenuTogglerHeight } from "../utils/style";
 import { Icon } from "./icon";
 
 interface Props {
@@ -36,7 +37,7 @@ const wrapperStyle = css({
   bottom: 0,
   zIndex: zIndex.base,
   width: wrapperWidth,
-  backgroundColor: "#eee",
+  backgroundColor: globalColors.gray,
   height: "100%",
   transition: ".25s ease transform",
   transform: `translateX(${wrapperWidth}px)`,
@@ -52,13 +53,12 @@ const scrollerStyle = css({
   overflowY: "scroll"
 });
 
-const togglerSize = 32;
 const togglerStyle = css({
   position: "absolute",
   top: 0,
-  left: -togglerSize,
-  width: togglerSize,
-  height: togglerSize,
+  left: -rightMenuTogglerHeight,
+  width: rightMenuTogglerHeight,
+  height: rightMenuTogglerHeight,
   display: "flex",
   justifyContent: "center",
   alignItems: "center",

@@ -4,3 +4,4 @@ export const zIndex = {
 };
 
 export const rightMenuWidth = 200;
+export const rightMenuTogglerHeight = 32;
