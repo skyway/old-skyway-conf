@@ -4,7 +4,7 @@ import { FunctionComponent } from "react";
 import { Observer } from "mobx-react";
 import { StoreContext } from "../contexts";
 import LocalStreamLayout from "../components/local-stream-layout";
-import Video from "../components/video";
+import { Video } from "../components/video";
 
 const LocalStream: FunctionComponent<{}> = () => {
   const store = useContext(StoreContext);

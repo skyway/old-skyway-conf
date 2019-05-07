@@ -6,7 +6,7 @@ import { css } from "@emotion/core";
 import { StoreContext } from "../contexts";
 import { RoomStream } from "../utils/types";
 import { rightMenuWidth } from "../utils/style";
-import Video from "../components/video";
+import { Video } from "../components/video";
 
 const RemoteStreams: FunctionComponent<{}> = () => {
   const store = useContext(StoreContext);

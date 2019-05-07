@@ -3,8 +3,7 @@ import { useContext } from "react";
 import { FunctionComponent } from "react";
 import { Observer } from "mobx-react";
 import { StoreContext } from "../contexts";
-import Video from "../components/video";
-import BlankVideo from "../components/blank-video";
+import { BlankVideo, Video } from "../components/video";
 
 const PinnedStream: FunctionComponent<{}> = () => {
   const store = useContext(StoreContext);

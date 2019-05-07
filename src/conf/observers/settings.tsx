@@ -4,7 +4,7 @@ import { FunctionComponent } from "react";
 import { Observer } from "mobx-react";
 import { StoreContext } from "../contexts";
 import Modal from "../components/modal";
-import Video from "../components/video";
+import { Video } from "../components/video";
 import SettingsLayout from "../components/settings-layout";
 import SettingsVideo from "../components/settings-video";
 import SettingsNameEdit from "../components/settings-name-edit";

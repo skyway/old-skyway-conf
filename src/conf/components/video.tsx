@@ -11,7 +11,7 @@ interface Props {
   isMine: boolean;
   stream: MediaStream;
 }
-const Video: FunctionComponent<Props> = ({ stream, isMine }) => {
+const _Video: FunctionComponent<Props> = ({ stream, isMine }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const log = _log.extend(stream.id);
 
@@ -35,7 +35,8 @@ const Video: FunctionComponent<Props> = ({ stream, isMine }) => {
   );
 };
 
-export default memo(Video);
+export const Video = memo(_Video);
+export const BlankVideo: FunctionComponent<{}> = () => <div css={videoStyle} />;
 
 const videoStyle = css({
   backgroundColor: globalColors.black,
