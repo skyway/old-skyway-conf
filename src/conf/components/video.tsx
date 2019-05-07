@@ -28,7 +28,7 @@ const _Video: FunctionComponent<Props> = ({ stream, isMine }) => {
   log("render()", [...stream.getTracks()]);
   return (
     <video
-      css={isMine ? mineVideoStyle : videoStyle}
+      css={isMine ? [videoStyle, mineVideoStyle] : videoStyle}
       ref={videoRef}
       muted={isMine}
     />
@@ -48,6 +48,5 @@ const videoStyle = css({
 });
 
 const mineVideoStyle = css({
-  ...videoStyle,
   transform: "scaleX(-1)"
 });
