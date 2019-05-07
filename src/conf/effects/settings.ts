@@ -6,7 +6,13 @@ import {
   getUserVideoTrack,
   getUserAudioTrack
 } from "../utils/webrtc";
-import { MeshRoom, SfuRoom, RoomStream } from "../utils/types";
+import {
+  MeshRoom,
+  SfuRoom,
+  RoomStream,
+  RoomData,
+  RoomStat
+} from "../utils/types";
 const log = debug("effect:settings");
 
 export const changeDispName = ({ client }: RootStore) => (name: string) => {
@@ -46,12 +52,11 @@ export const enableVideo = (store: RootStore) => async () => {
   if (room.isJoined) {
     log("re-enter room to use audio -> audio+video");
 
-    try {
-      room.cleanUp();
-    } catch (err) {
-      throw ui.showError(err);
+    if (room.room === null) {
+      throw ui.showError(new Error("Room is null!"));
     }
-    joinRoom(store);
+    // force close the room, triggers re-entering
+    room.room.close();
   }
 };
 
@@ -105,7 +110,7 @@ export const joinConference = (store: RootStore) => () => {
 };
 
 const joinRoom = (store: RootStore) => {
-  const { room, ui, media } = store;
+  const { room, ui, media, client } = store;
 
   if (room.name === null || room.mode === null) {
     throw ui.showError(new Error("Room name or mode is undefined!"));
@@ -126,44 +131,66 @@ const joinRoom = (store: RootStore) => {
     });
   }
 
+  const confRoom = room.room;
   // must not be happened
-  if (room.room === null) {
+  if (confRoom === null) {
     throw ui.showError(new Error("Room is null!"));
   }
 
-  log("joined room", room.room);
+  log("joined room", confRoom);
 
   const disposers = [
     reaction(
       () => media.stream,
       stream => {
-        if (room.room === null) {
-          return;
-        }
-        log("replaceStream()");
-        room.room.replaceStream(stream);
+        log("reaction:replaceStream()");
+        confRoom.replaceStream(stream);
+      }
+    ),
+    reaction(
+      () => ({ ...media.stat, ...client.stat }),
+      stat => {
+        log("reaction:send(stat)");
+        confRoom.send({ type: "stat", payload: stat });
       }
     )
   ];
 
-  room.room.on("stream", (stream: RoomStream) => {
+  confRoom.on("stream", (stream: RoomStream) => {
     log("on('stream')", stream);
     room.addStream(stream);
+
+    // send back stat as welcome message
+    confRoom.send({
+      type: "stat",
+      payload: { ...client.stat, ...media.stat }
+    });
   });
-  room.room.on("peerLeave", (peerId: string) => {
+  confRoom.on("peerLeave", (peerId: string) => {
     log("on('peerLeave')", peerId);
     room.removeStream(peerId);
   });
-  // TODO: handlers to confRoom
-  // room.room.on("data", (data: {}) => onRoomData(data));
-  room.room.once("close", () => {
+  confRoom.on("data", ({ src, data }) => {
+    const { type, payload }: RoomData = data;
+    log(`on('data/${type}')`, payload);
+
+    if (type === "stat") {
+      room.addStat(src, payload as RoomStat);
+    }
+  });
+  confRoom.once("close", () => {
     log("on('close')");
+
     disposers.forEach(d => d());
+
     try {
+      confRoom.removeAllListeners();
       room.cleanUp();
     } catch (err) {
       throw ui.showError(err);
     }
+
+    // re-enter the same room automatically
     joinRoom(store);
   });
 };

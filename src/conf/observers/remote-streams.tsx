@@ -16,7 +16,8 @@ const RemoteStreams: FunctionComponent<{}> = () => {
     <Observer>
       {() => (
         <RemoteStreamsLayout
-          streams={[...room.streams.values()]}
+          streams={[...room.streams.entries()]}
+          stats={[...room.stats.entries()]}
           pinnedId={room.pinnedId || ""}
           onClickSetPinned={onClickSetPinned}
         />

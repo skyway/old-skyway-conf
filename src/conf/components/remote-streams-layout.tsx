@@ -2,39 +2,42 @@ import * as React from "react";
 import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
-import { RoomStream } from "../utils/types";
+import { RoomStream, RoomStat } from "../utils/types";
 import { rightMenuWidth, rightMenuTogglerHeight } from "../utils/style";
 import Video from "../components/video";
 
 interface Props {
-  streams: RoomStream[];
+  streams: [string, RoomStream][];
+  stats: [string, RoomStat][];
   pinnedId: string;
   onClickSetPinned: (id: string) => void;
 }
 const RemoteStreamsLayout: FunctionComponent<Props> = ({
   streams,
+  stats,
   pinnedId,
   onClickSetPinned
-}: Props) => {
-  return (
-    <div css={wrapperStyle}>
-      <div css={headStyle}>{streams.length} participants</div>
-      {streams.map((stream: RoomStream) => (
+}: Props) => (
+  <div css={wrapperStyle}>
+    <div css={headStyle}>{streams.length} participants</div>
+    {streams.map(([peerId, stream]) => {
+      const entry = stats.find(([id]) => id === peerId);
+      const stat = entry ? entry[1] : null;
+      return (
         <div
           css={
-            pinnedId === stream.peerId
-              ? [videoStyle, pinnedVideoStyle]
-              : videoStyle
+            pinnedId === peerId ? [videoStyle, pinnedVideoStyle] : videoStyle
           }
-          key={stream.peerId}
-          onClick={() => onClickSetPinned(stream.peerId)}
+          key={peerId}
+          onClick={() => onClickSetPinned(peerId)}
         >
+          <div>{(stat && JSON.stringify(stat)) || "-"}</div>
           <Video stream={stream} />
         </div>
-      ))}
-    </div>
-  );
-};
+      );
+    })}
+  </div>
+);
 
 export default RemoteStreamsLayout;
 

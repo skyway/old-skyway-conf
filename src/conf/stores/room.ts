@@ -1,5 +1,12 @@
 import { decorate, observable, computed, action } from "mobx";
-import { RoomInit, Peer, SfuRoom, MeshRoom, RoomStream } from "../utils/types";
+import {
+  RoomInit,
+  Peer,
+  SfuRoom,
+  MeshRoom,
+  RoomStream,
+  RoomStat
+} from "../utils/types";
 
 class RoomStore {
   peer: Peer | null;
@@ -7,6 +14,7 @@ class RoomStore {
   mode: RoomInit["mode"] | null;
   id: RoomInit["id"] | null;
   streams: Map<string, RoomStream>;
+  stats: Map<string, RoomStat>;
   pinnedId: string | null;
 
   constructor() {
@@ -19,6 +27,7 @@ class RoomStore {
     this.id = null;
 
     this.streams = new Map();
+    this.stats = new Map();
     this.pinnedId = null;
   }
 
@@ -49,6 +58,11 @@ class RoomStore {
 
   removeStream(peerId: string) {
     this.streams.delete(peerId);
+    this.stats.delete(peerId);
+  }
+
+  addStat(peerId: string, stat: RoomStat) {
+    this.stats.set(peerId, stat);
   }
 
   cleanUp() {
@@ -56,16 +70,17 @@ class RoomStore {
       throw new Error("Room is null!");
     }
 
-    this.room.removeAllListeners();
-    this.room.close();
     [...this.streams.values()].forEach(stream =>
       stream.getTracks().forEach(track => track.stop())
     );
     this.streams.clear();
+    this.stats.clear();
+    this.room = null;
   }
 }
 decorate(RoomStore, {
   streams: observable.shallow,
+  stats: observable.shallow,
   pinnedId: observable,
   pinnedStream: computed,
   load: action,

@@ -15,6 +15,22 @@ export interface UserDevices {
   audioInDevices: MediaDeviceInfo[];
 }
 
+export type RoomData = RoomDataStat | RoomDataChat;
+interface RoomDataStat {
+  type: "stat";
+  payload: RoomStat;
+}
+interface RoomDataChat {
+  type: "chat";
+  payload: {
+    text: string;
+  };
+}
+
+export interface RoomStat {
+  displayName: string;
+}
+
 /* Types for skyway-js */
 export interface Peer extends EventEmitter {
   id: string;
@@ -45,6 +61,7 @@ interface Room extends EventEmitter {
 
   on(ev: "stream", cb: (stream: RoomStream) => void): this;
   on(ev: "peerLeave", cb: (peerId: string) => void): this;
-  // on(ev: "data", cb: (data: {}) => void): this;
-  // once(ev: "close", cb: () => void): this;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  on(ev: "data", cb: (data: { src: string; data: any }) => void): this;
+  once(ev: "close", cb: () => void): this;
 }

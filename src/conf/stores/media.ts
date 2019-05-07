@@ -53,6 +53,14 @@ class MediaStore {
     return stream;
   }
 
+  get stat() {
+    return {
+      isVideoDisabled: !this.isUserVideoEnabled,
+      isAudioMuted: this.isAudioTrackMuted,
+      isVideoMuted: this.isVideoTrackMuted
+    };
+  }
+
   setUserTrack(track: MediaStreamTrack) {
     if (track.kind === "video") {
       if (this.videoTrack instanceof MediaStreamTrack) {
@@ -112,6 +120,7 @@ decorate(MediaStore, {
   videoInDevices: observable.shallow,
   isAudioTrackMuted: observable,
   isVideoTrackMuted: observable,
+  stat: computed,
   isReady: computed,
   isUserVideoEnabled: computed,
   stream: computed,
