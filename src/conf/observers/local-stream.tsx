@@ -1,28 +1,23 @@
 import * as React from "react";
-import { useContext } from "react";
+import { useContext, useCallback } from "react";
 import { FunctionComponent } from "react";
 import { Observer } from "mobx-react";
 import { StoreContext } from "../contexts";
 import LocalStreamLayout from "../components/local-stream-layout";
 import { Video } from "../components/video";
+import { openSettings } from "../effects/local-stream";
 
 const LocalStream: FunctionComponent<{}> = () => {
   const store = useContext(StoreContext);
 
+  const onClickOpenSettings = useCallback(openSettings(store), [store]);
+
   console.count("LocalStream.render()");
 
-  const { media, client, ui } = store;
+  const { media, client } = store;
   return (
     <LocalStreamLayout
-      controller={
-        <Observer>
-          {() => {
-            console.count("LocalStream.controller.render()");
-
-            return <button onClick={() => (ui.isSettingsOpen = true)} />;
-          }}
-        </Observer>
-      }
+      onClickOpenSettings={onClickOpenSettings}
       meta={
         <Observer>
           {() => {
