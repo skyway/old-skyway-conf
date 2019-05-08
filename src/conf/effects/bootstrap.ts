@@ -65,31 +65,49 @@ export const ensureAudioDevice = ({
 };
 
 export const loadClient = ({ client }: RootStore): EffectCallback => () => {
-  log("initClient");
+  log("loadClient()");
 
   client.load({
     ua: navigator.userAgent,
     name: localStorage.getItem("SkyWayConf.dispName") || "YOUR_NAME"
   });
   log("client loaded", toJS(client.browser));
+};
+
+export const listenStoreChanges = ({
+  client,
+  media,
+  notification
+}: RootStore): EffectCallback => () => {
+  log("listenStoreChanges()");
 
   const disposers = [
     reaction(
+      () => media.isAudioTrackMuted,
+      muted => notification.showInfo(`${muted ? "Mute" : "Unmute"} audio track`)
+    ),
+    reaction(
+      () => media.isVideoTrackMuted,
+      muted => notification.showInfo(`${muted ? "Mute" : "Unmute"} video track`)
+    ),
+    reaction(
       () => client.displayName,
-      name => localStorage.setItem("SkyWayConf.dispName", name)
+      name => {
+        localStorage.setItem("SkyWayConf.dispName", name);
+        notification.showInfo("Display name saved");
+      },
+      { delay: 2000 }
     )
   ];
 
-  return () => {
-    disposers.forEach(d => d());
-  };
+  return () => disposers.forEach(d => d());
 };
 
 export const listenGlobalEvents = ({
   media,
   ui
 }: RootStore): EffectCallback => () => {
-  log("listenGlobalEvents");
+  log("listenGlobalEvents()");
 
   const reloadOnHashChange = () => location.reload(true);
   const reloadOnDeviceAddOrRemoved = async () => {

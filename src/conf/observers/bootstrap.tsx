@@ -6,6 +6,7 @@ import { StoreContext } from "../contexts";
 import {
   checkRoomSetting,
   ensureAudioDevice,
+  listenStoreChanges,
   listenGlobalEvents,
   loadClient
 } from "../effects/bootstrap";
@@ -20,6 +21,7 @@ const Bootstrap: FunctionComponent<Props> = ({ children }: Props) => {
 
   useEffect(checkRoomSetting(store), [store]);
   useEffect(ensureAudioDevice(store), [store]);
+  useEffect(listenStoreChanges(store), [store]);
   useEffect(listenGlobalEvents(store), [store]);
   useEffect(loadClient(store), [store]);
 
