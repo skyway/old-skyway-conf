@@ -1,8 +1,7 @@
 import * as React from "react";
 import { FunctionComponent } from "react";
-import { css } from "@emotion/core";
-import { globalColors } from "../../shared/global-style";
 import { IconButton } from "./icon";
+import StreamController from "./stream-controller";
 import VADetector from "./va-detector";
 
 interface Props {
@@ -33,39 +32,28 @@ const LocalStreamController: FunctionComponent<Props> = ({
   const audioIcon = isAudioMuted ? "mic_off" : "mic";
 
   return (
-    <div css={wrapperStyle}>
-      <div>{displayName}</div>
-      <div css={buttonStyle}>
-        <VADetector stream={stream} />
-        {isVideoDisabled ? null : (
+    <StreamController
+      displayName={displayName}
+      controllers={
+        <>
+          {isVideoDisabled ? null : (
+            <IconButton
+              name={videoIcon}
+              title={isVideoMuted ? "Unmute" : "Mute"}
+              onClick={() => onClickToggleVideoMuted()}
+            />
+          )}
           <IconButton
-            name={videoIcon}
-            title={isVideoMuted ? "Unmute" : "Mute"}
-            onClick={() => onClickToggleVideoMuted()}
+            name={audioIcon}
+            title={isAudioMuted ? "Unmute" : "Mute"}
+            onClick={() => onClickToggleAudioMuted()}
           />
-        )}
-        <IconButton
-          name={audioIcon}
-          title={isAudioMuted ? "Unmute" : "Mute"}
-          onClick={() => onClickToggleAudioMuted()}
-        />
-        <IconButton name="settings" onClick={() => onClickOpenSettings()} />
-      </div>
-    </div>
+          <VADetector stream={stream} />
+          <IconButton name="settings" onClick={() => onClickOpenSettings()} />
+        </>
+      }
+    />
   );
 };
 
 export default LocalStreamController;
-
-const wrapperStyle = css({
-  display: "grid",
-  gridTemplateColumns: "1fr auto",
-  padding: 4,
-  color: globalColors.white,
-  backgroundColor: "rgba(0, 0, 0, 0.8)",
-  fontSize: ".8rem"
-});
-
-const buttonStyle = css({
-  display: "inline-flex"
-});

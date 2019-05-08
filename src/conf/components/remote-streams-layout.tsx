@@ -31,7 +31,9 @@ const RemoteStreamsLayout: FunctionComponent<Props> = ({
           onClick={() => onClickSetPinned(peerId)}
         >
           <div css={controllerStyle}>
-            {stat !== null ? <RemoteStreamController {...stat} /> : null}
+            {stat !== null ? (
+              <RemoteStreamController {...stat} stream={stream} />
+            ) : null}
           </div>
           <div
             css={
