@@ -17,7 +17,7 @@ class NotificationStore {
         type: "info",
         text
       },
-      1000
+      2000
     );
   }
 
@@ -28,7 +28,7 @@ class NotificationStore {
         type: "person",
         text: `${name} joined`
       },
-      2000
+      5000
     );
   }
 
@@ -39,7 +39,7 @@ class NotificationStore {
         type: "person",
         text: `${name} left`
       },
-      2000
+      5000
     );
   }
 
