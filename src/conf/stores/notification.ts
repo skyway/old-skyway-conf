@@ -1,6 +1,6 @@
 import { decorate, observable, action } from "mobx";
 import { IObservableArray } from "mobx";
-import { NotificationItem, NotificationInfo } from "../utils/types";
+import { NotificationItem } from "../utils/types";
 
 class NotificationStore {
   items: IObservableArray<NotificationItem>;
@@ -10,18 +10,23 @@ class NotificationStore {
     this.items = [];
   }
 
-  show() {
-    const item: NotificationInfo = {
+  showInfo(text: string) {
+    this.show({
       id: Date.now(),
       type: "info",
-      text: "Welcome"
-    };
+      text
+    });
+  }
+
+  private show(item: NotificationItem) {
     this.items.push(item);
     setTimeout(() => this.items.remove(item), 30000);
   }
 }
 decorate(NotificationStore, {
+  // @ts-ignore: to use private accessor
   items: observable.shallow,
+  showInfo: action,
   show: action
 });
 

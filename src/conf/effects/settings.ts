@@ -114,7 +114,7 @@ export const joinConference = (store: RootStore) => () => {
 };
 
 const joinRoom = (store: RootStore) => {
-  const { room, ui, media, client } = store;
+  const { room, ui, media, client, notification } = store;
 
   if (room.name === null || room.mode === null) {
     throw ui.showError(new Error("Room name or mode is undefined!"));
@@ -142,6 +142,7 @@ const joinRoom = (store: RootStore) => {
   }
 
   log("joined room", confRoom);
+  notification.showInfo(`You joined the room ${room.name}`);
 
   const disposers = [
     reaction(
