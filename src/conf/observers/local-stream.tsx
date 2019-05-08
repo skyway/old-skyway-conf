@@ -6,15 +6,18 @@ import { StoreContext } from "../contexts";
 import LocalStreamLayout from "../components/local-stream-layout";
 import LocalStreamController from "../components/local-stream-controller";
 import Video from "../components/video";
-import { openSettings, toggleMuted } from "../effects/local-stream";
+import {
+  openSettings,
+  toggleAudioMuted,
+  toggleVideoMuted
+} from "../effects/local-stream";
 
 const LocalStream: FunctionComponent<{}> = () => {
   const store = useContext(StoreContext);
 
   const onClickOpenSettings = useCallback(openSettings(store), [store]);
-  const onClickToggleMuted = useCallback(toggleMuted(store), [store]);
-
-  console.count("LocalStream.render()");
+  const onClickToggleAudioMuted = useCallback(toggleAudioMuted(store), [store]);
+  const onClickToggleVideoMuted = useCallback(toggleVideoMuted(store), [store]);
 
   const { media, client } = store;
   return (
@@ -27,7 +30,8 @@ const LocalStream: FunctionComponent<{}> = () => {
               isVideoDisabled={!media.isUserVideoEnabled}
               isVideoMuted={media.isVideoTrackMuted}
               isAudioMuted={media.isAudioTrackMuted}
-              onClickToggleMuted={onClickToggleMuted}
+              onClickToggleAudioMuted={onClickToggleAudioMuted}
+              onClickToggleVideoMuted={onClickToggleVideoMuted}
               onClickOpenSettings={onClickOpenSettings}
             />
           )}
@@ -35,11 +39,7 @@ const LocalStream: FunctionComponent<{}> = () => {
       }
       video={
         <Observer>
-          {() => {
-            console.count("LocalStream.video.render()");
-
-            return <Video stream={media.stream} isMine={true} />;
-          }}
+          {() => <Video stream={media.stream} isMine={true} />}
         </Observer>
       }
     />

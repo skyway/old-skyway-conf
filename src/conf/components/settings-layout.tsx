@@ -2,19 +2,28 @@ import * as React from "react";
 import { FunctionComponent, ReactNode } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
+import Modal from "../components/modal";
 
 interface Props {
   video: ReactNode;
-  children: ReactNode;
+  client: ReactNode;
+  media: ReactNode;
+  onClickCloser: () => void;
 }
 const SettingsLayout: FunctionComponent<Props> = ({
   video,
-  children
+  client,
+  media,
+  onClickCloser
 }: Props) => (
-  <div css={wrapperStyle}>
-    <div css={videoStyle}>{video}</div>
-    {children}
-  </div>
+  <Modal>
+    <div css={wrapperStyle}>
+      <div css={videoStyle}>{video}</div>
+      {client}
+      {media}
+      <button onClick={() => onClickCloser()}>OK</button>
+    </div>
+  </Modal>
 );
 
 export default SettingsLayout;

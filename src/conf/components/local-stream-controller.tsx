@@ -9,7 +9,8 @@ interface Props {
   isVideoDisabled: boolean;
   isVideoMuted: boolean;
   isAudioMuted: boolean;
-  onClickToggleMuted: (kind: MediaStreamTrack["kind"]) => void;
+  onClickToggleAudioMuted: () => void;
+  onClickToggleVideoMuted: () => void;
   onClickOpenSettings: () => void;
 }
 const LocalStreamController: FunctionComponent<Props> = ({
@@ -17,7 +18,8 @@ const LocalStreamController: FunctionComponent<Props> = ({
   isVideoDisabled,
   isVideoMuted,
   isAudioMuted,
-  onClickToggleMuted,
+  onClickToggleAudioMuted,
+  onClickToggleVideoMuted,
   onClickOpenSettings
 }: Props) => {
   const videoIcon = isVideoDisabled
@@ -35,13 +37,13 @@ const LocalStreamController: FunctionComponent<Props> = ({
           <IconButton
             name={videoIcon}
             title={isVideoMuted ? "Unmute" : "Mute"}
-            onClick={() => onClickToggleMuted("video")}
+            onClick={() => onClickToggleVideoMuted()}
           />
         )}
         <IconButton
           name={audioIcon}
           title={isAudioMuted ? "Unmute" : "Mute"}
-          onClick={() => onClickToggleMuted("audio")}
+          onClick={() => onClickToggleAudioMuted()}
         />
         <IconButton name="settings" onClick={() => onClickOpenSettings()} />
         <IconButton name="info" onClick={() => alert("TODO")} />

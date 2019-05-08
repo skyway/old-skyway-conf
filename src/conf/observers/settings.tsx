@@ -3,19 +3,21 @@ import { useContext, useCallback } from "react";
 import { FunctionComponent } from "react";
 import { Observer } from "mobx-react";
 import { StoreContext } from "../contexts";
-import Modal from "../components/modal";
 import Video from "../components/video";
 import VADetector from "../components/va-detector";
+import { IconButton } from "../components/icon";
 import SettingsLayout from "../components/settings-layout";
 import SettingsNameEdit from "../components/settings-name-edit";
 import SettingsDeviceSelector from "../components/settings-device-selector";
 import {
   changeDispName,
   enableVideo,
-  changeDeviceId,
+  changeVideoDeviceId,
+  changeAudioDeviceId,
   closeSettings,
   joinConference,
-  toggleMuted
+  toggleVideoMuted,
+  toggleAudioMuted
 } from "../effects/settings";
 
 const Settings: FunctionComponent<{}> = () => {
@@ -23,10 +25,16 @@ const Settings: FunctionComponent<{}> = () => {
 
   const onChangeDispName = useCallback(changeDispName(store), [store]);
   const onClickEnableVideo = useCallback(enableVideo(store), [store]);
-  const onChangeDeviceId = useCallback(changeDeviceId(store), [store]);
+  const onChangeVideoDeviceId = useCallback(changeVideoDeviceId(store), [
+    store
+  ]);
+  const onChangeAudioDeviceId = useCallback(changeAudioDeviceId(store), [
+    store
+  ]);
   const onClickJoinConference = useCallback(joinConference(store), [store]);
   const onClickCloseSettings = useCallback(closeSettings(store), [store]);
-  const onClickToggleMuted = useCallback(toggleMuted(store), [store]);
+  const onClickToggleAudioMuted = useCallback(toggleAudioMuted(store), [store]);
+  const onClickToggleVideoMuted = useCallback(toggleVideoMuted(store), [store]);
 
   const { ui, media, room, client } = store;
   return (
@@ -37,55 +45,55 @@ const Settings: FunctionComponent<{}> = () => {
         }
 
         return (
-          <Modal>
-            <SettingsLayout
-              video={<Video stream={media.stream} isMine={true} />}
-            >
+          <SettingsLayout
+            video={<Video stream={media.stream} isMine={true} />}
+            client={
               <SettingsNameEdit
                 defaultDispName={client.displayName}
-                onChangeDispName={name => onChangeDispName(name)}
+                onChangeDispName={onChangeDispName}
               />
-              <div>
-                {media.isUserVideoEnabled ? (
-                  <>
-                    <SettingsDeviceSelector
-                      deviceId={media.videoDeviceId || ""}
-                      inDevices={media.videoInDevices}
-                      onChangeDeviceId={deviceId =>
-                        onChangeDeviceId("video", deviceId)
-                      }
-                    />
-                    <button onClick={() => onClickToggleMuted("video")}>
-                      {media.isVideoTrackMuted ? "unmute" : "mute"}
-                    </button>
-                  </>
-                ) : (
-                  <button onClick={onClickEnableVideo}>enable video</button>
-                )}
-              </div>
-              <div>
-                <SettingsDeviceSelector
-                  deviceId={media.audioDeviceId || ""}
-                  inDevices={media.audioInDevices}
-                  onChangeDeviceId={deviceId =>
-                    onChangeDeviceId("audio", deviceId)
-                  }
-                />
-                <button onClick={() => onClickToggleMuted("audio")}>
-                  {media.isAudioTrackMuted ? "unmute" : "mute"}
-                </button>
-                <VADetector stream={media.stream} />
-              </div>
-
-              <button
-                onClick={
-                  room.isJoined ? onClickCloseSettings : onClickJoinConference
-                }
-              >
-                OK
-              </button>
-            </SettingsLayout>
-          </Modal>
+            }
+            media={
+              <>
+                <div>
+                  {media.isUserVideoEnabled ? (
+                    <>
+                      <SettingsDeviceSelector
+                        deviceId={media.videoDeviceId || ""}
+                        inDevices={media.videoInDevices}
+                        onChangeDeviceId={onChangeVideoDeviceId}
+                      />
+                      <IconButton
+                        name={
+                          media.isVideoTrackMuted ? "videocam_off" : "videocam"
+                        }
+                        title={media.isVideoTrackMuted ? "Unmute" : "Mute"}
+                        onClick={onClickToggleVideoMuted}
+                      />
+                    </>
+                  ) : (
+                    <button onClick={onClickEnableVideo}>enable video</button>
+                  )}
+                </div>
+                <div>
+                  <SettingsDeviceSelector
+                    deviceId={media.audioDeviceId || ""}
+                    inDevices={media.audioInDevices}
+                    onChangeDeviceId={onChangeAudioDeviceId}
+                  />
+                  <IconButton
+                    name={media.isAudioTrackMuted ? "mic_off" : "mic"}
+                    title={media.isAudioTrackMuted ? "Unmute" : "Mute"}
+                    onClick={onClickToggleAudioMuted}
+                  />
+                  <VADetector stream={media.stream} />
+                </div>
+              </>
+            }
+            onClickCloser={
+              room.isJoined ? onClickCloseSettings : onClickJoinConference
+            }
+          />
         );
       }}
     </Observer>

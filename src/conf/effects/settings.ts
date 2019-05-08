@@ -60,34 +60,37 @@ export const enableVideo = (store: RootStore) => async () => {
   }
 };
 
-export const changeDeviceId = ({ media, ui }: RootStore) => async (
-  kind: MediaStreamTrack["kind"],
+export const changeAudioDeviceId = ({ media, ui }: RootStore) => async (
   deviceId: string
 ) => {
-  log("changeDeviceId", kind, deviceId);
+  log("changeAudioDeviceId", deviceId);
 
-  if (kind === "audio") {
-    media.audioDeviceId = deviceId;
-    const audioTrack = await getUserAudioTrack(deviceId).catch(err => {
-      throw ui.showError(err);
-    });
-    media.setUserTrack(audioTrack);
-  }
+  media.audioDeviceId = deviceId;
+  const audioTrack = await getUserAudioTrack(deviceId).catch(err => {
+    throw ui.showError(err);
+  });
+  media.setUserTrack(audioTrack);
+};
+export const changeVideoDeviceId = ({ media, ui }: RootStore) => async (
+  deviceId: string
+) => {
+  log("changeVideoDeviceId", deviceId);
 
-  if (kind === "video") {
-    media.videoDeviceId = deviceId;
-    const videoTrack = await getUserVideoTrack(deviceId).catch(err => {
-      throw ui.showError(err);
-    });
-    media.setUserTrack(videoTrack);
-  }
+  media.videoDeviceId = deviceId;
+  const videoTrack = await getUserVideoTrack(deviceId).catch(err => {
+    throw ui.showError(err);
+  });
+  media.setUserTrack(videoTrack);
 };
 
-export const toggleMuted = ({ media }: RootStore) => (
-  kind: MediaStreamTrack["kind"]
-) => {
-  log("toggleMuted()", kind);
-  media.toggleMuted(kind);
+export const toggleAudioMuted = ({ media }: RootStore) => () => {
+  log("toggleAudioMuted()");
+  media.toggleMuted("audio");
+};
+
+export const toggleVideoMuted = ({ media }: RootStore) => () => {
+  log("toggleVideoMuted()");
+  media.toggleMuted("video");
 };
 
 export const closeSettings = ({ ui }: RootStore) => () => {

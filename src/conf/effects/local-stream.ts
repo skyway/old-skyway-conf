@@ -7,9 +7,12 @@ export const openSettings = ({ ui }: RootStore) => () => {
   ui.isSettingsOpen = true;
 };
 
-export const toggleMuted = ({ media }: RootStore) => (
-  kind: MediaStreamTrack["kind"]
-) => {
-  log("toggleMuted()", kind);
-  media.toggleMuted(kind);
+export const toggleAudioMuted = ({ media }: RootStore) => () => {
+  log("toggleAudioMuted()");
+  media.toggleMuted("audio");
+};
+
+export const toggleVideoMuted = ({ media }: RootStore) => () => {
+  log("toggleVideoMuted()");
+  media.toggleMuted("video");
 };
