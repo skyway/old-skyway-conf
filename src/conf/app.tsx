@@ -1,6 +1,7 @@
 import * as React from "react";
 import Bootstrap from "./observers/bootstrap";
 import Settings from "./observers/settings";
+import Notification from "./observers/notification";
 import PinnedStream from "./observers/pinned-stream";
 import LocalStream from "./observers/local-stream";
 import RemoteStreams from "./observers/remote-streams";
@@ -35,9 +36,7 @@ class App extends React.Component<{}, State> {
           <Main>
             <PinnedStream />
           </Main>
-          <LeftMenu>
-            <LocalStream />
-          </LeftMenu>
+          <LeftMenu top={<Notification />} bottom={<LocalStream />} />
           <RightMenu>
             <RemoteStreams />
           </RightMenu>
