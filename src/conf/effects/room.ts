@@ -62,7 +62,7 @@ export const joinRoom = (store: RootStore) => {
 
   confRoom.on("stream", (stream: RoomStream) => {
     log("on('stream')", stream);
-    room.addStream(stream);
+    room.streams.set(stream.peerId, stream);
 
     // send back stat as welcome message
     confRoom.send({
@@ -70,20 +70,34 @@ export const joinRoom = (store: RootStore) => {
       payload: { ...client.stat, ...media.stat }
     });
   });
+
   confRoom.on("peerLeave", (peerId: string) => {
     log("on('peerLeave')", peerId);
+
+    const stat = room.stats.get(peerId);
+    if (stat) {
+      notification.showLeave(stat.displayName);
+    }
     room.removeStream(peerId);
   });
+
   confRoom.on("data", ({ src, data }) => {
     const { type, payload }: RoomData = data;
     log(`on('data/${type}')`, payload);
 
     if (type === "stat") {
-      room.addStat(src, payload as RoomStat);
+      const stat = payload as RoomStat;
+      // undefined means first time = just joined
+      if (!room.stats.get(src)) {
+        notification.showJoin(stat.displayName);
+      }
+      room.stats.set(src, stat);
     }
   });
+
   confRoom.once("close", () => {
     log("on('close')");
+    notification.showInfo("room closed! trying re-connect..");
 
     disposers.forEach(d => d());
 

@@ -52,17 +52,9 @@ class RoomStore {
     this.peer = peer;
   }
 
-  addStream(stream: RoomStream) {
-    this.streams.set(stream.peerId, stream);
-  }
-
   removeStream(peerId: string) {
     this.streams.delete(peerId);
     this.stats.delete(peerId);
-  }
-
-  addStat(peerId: string, stat: RoomStat) {
-    this.stats.set(peerId, stat);
   }
 
   cleanUp() {
@@ -84,7 +76,6 @@ decorate(RoomStore, {
   pinnedId: observable,
   pinnedStream: computed,
   load: action,
-  addStream: action,
   removeStream: action,
   cleanUp: action
 });
