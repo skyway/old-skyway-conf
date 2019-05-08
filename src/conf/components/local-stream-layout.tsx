@@ -1,20 +1,46 @@
 import * as React from "react";
-import { FunctionComponent, ReactNode } from "react";
+import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
+import LocalStreamController from "../components/local-stream-controller";
+import Video from "../components/video";
 
 interface Props {
-  controller: ReactNode;
-  video: ReactNode;
+  stream: MediaStream;
+  displayName: string;
+  isVideoDisabled: boolean;
+  isVideoTrackMuted: boolean;
+  isAudioTrackMuted: boolean;
+  onClickToggleAudioMuted: () => void;
+  onClickToggleVideoMuted: () => void;
+  onClickOpenSettings: () => void;
 }
 const LocalStreamLayout: FunctionComponent<Props> = ({
-  controller,
-  video
+  stream,
+  displayName,
+  isVideoDisabled,
+  isVideoTrackMuted,
+  isAudioTrackMuted,
+  onClickToggleAudioMuted,
+  onClickToggleVideoMuted,
+  onClickOpenSettings
 }: Props) => {
   return (
     <div css={wrapperStyle}>
-      <div css={controllerStyle}>{controller}</div>
-      <div css={videoStyle}>{video}</div>
+      <div css={controllerStyle}>
+        <LocalStreamController
+          displayName={displayName}
+          isVideoDisabled={isVideoDisabled}
+          isVideoMuted={isVideoTrackMuted}
+          isAudioMuted={isAudioTrackMuted}
+          onClickToggleAudioMuted={onClickToggleAudioMuted}
+          onClickToggleVideoMuted={onClickToggleVideoMuted}
+          onClickOpenSettings={onClickOpenSettings}
+        />
+      </div>
+      <div css={videoStyle}>
+        <Video stream={stream} isMine={true} />
+      </div>
     </div>
   );
 };
