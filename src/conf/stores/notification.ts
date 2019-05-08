@@ -20,7 +20,7 @@ class NotificationStore {
 
   private show(item: NotificationItem) {
     this.items.push(item);
-    setTimeout(() => this.items.remove(item), 30000);
+    setTimeout(() => this.items.remove(item), 2000);
   }
 }
 decorate(NotificationStore, {
