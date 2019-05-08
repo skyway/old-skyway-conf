@@ -1,6 +1,6 @@
 import { decorate, observable, action } from "mobx";
 import { IObservableArray } from "mobx";
-import { NotificationItem } from "../utils/types";
+import { NotificationItem, NotificationInfo } from "../utils/types";
 
 class NotificationStore {
   items: IObservableArray<NotificationItem>;
@@ -11,9 +11,9 @@ class NotificationStore {
   }
 
   show() {
-    const item = {
+    const item: NotificationInfo = {
       id: Date.now(),
-      type: "announcement",
+      type: "info",
       text: "Welcome"
     };
     this.items.push(item);

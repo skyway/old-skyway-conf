@@ -34,11 +34,24 @@ export interface RoomStat {
   isAudioMuted: boolean;
 }
 
-export interface NotificationItem {
+export interface NotificationInfo {
   id: number;
-  type: string;
+  type: "info";
   text: string;
 }
+export interface NotificationChat {
+  id: number;
+  type: "chat";
+}
+export interface NotificationPerson {
+  id: number;
+  type: "person";
+  name: string;
+}
+export type NotificationItem =
+  | NotificationInfo
+  | NotificationChat
+  | NotificationPerson;
 
 /* Types for skyway-js */
 export interface Peer extends EventEmitter {
