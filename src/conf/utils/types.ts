@@ -68,3 +68,10 @@ interface Room extends EventEmitter {
   on(ev: "data", cb: (data: { src: string; data: any }) => void): this;
   once(ev: "close", cb: () => void): this;
 }
+
+export type Hark = (stream: MediaStream) => Harker;
+interface Harker {
+  stop(): void;
+  on(ev: "speaking", cb: () => void): this;
+  on(ev: "stopped_speaking", cb: () => void): this;
+}

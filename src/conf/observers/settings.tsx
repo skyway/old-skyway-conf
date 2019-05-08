@@ -5,6 +5,7 @@ import { Observer } from "mobx-react";
 import { StoreContext } from "../contexts";
 import Modal from "../components/modal";
 import Video from "../components/video";
+import VADetector from "../components/va-detector";
 import SettingsLayout from "../components/settings-layout";
 import SettingsNameEdit from "../components/settings-name-edit";
 import SettingsDeviceSelector from "../components/settings-device-selector";
@@ -73,6 +74,7 @@ const Settings: FunctionComponent<{}> = () => {
                 <button onClick={() => onClickToggleMuted("audio")}>
                   {media.isAudioTrackMuted ? "unmute" : "mute"}
                 </button>
+                <VADetector stream={media.stream} />
               </div>
 
               <button
