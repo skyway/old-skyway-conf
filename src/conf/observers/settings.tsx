@@ -48,8 +48,8 @@ const Settings: FunctionComponent<{}> = () => {
             onClickEnableVideo={onClickEnableVideo}
             videoDeviceId={media.videoDeviceId || ""}
             audioDeviceId={media.audioDeviceId || ""}
-            videoInDevices={media.videoInDevices}
-            audioInDevices={media.audioInDevices}
+            videoInDevices={media.videoInDevices.slice()}
+            audioInDevices={media.audioInDevices.slice()}
             onChangeVideoDeviceId={onChangeVideoDeviceId}
             onChangeAudioDeviceId={onChangeAudioDeviceId}
             isVideoTrackMuted={media.isVideoTrackMuted}

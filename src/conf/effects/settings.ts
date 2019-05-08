@@ -31,6 +31,7 @@ export const enableVideo = (store: RootStore) => async () => {
   // if not found just return
   if (videoInDevices.length === 0) {
     log("video devices are not found...");
+    // TODO: notify
     return;
   }
 
