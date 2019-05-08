@@ -3,8 +3,10 @@ import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
 import { IconButton } from "./icon";
+import VADetector from "./va-detector";
 
 interface Props {
+  stream: MediaStream;
   displayName: string;
   isVideoDisabled: boolean;
   isVideoMuted: boolean;
@@ -14,6 +16,7 @@ interface Props {
   onClickOpenSettings: () => void;
 }
 const LocalStreamController: FunctionComponent<Props> = ({
+  stream,
   displayName,
   isVideoDisabled,
   isVideoMuted,
@@ -33,6 +36,7 @@ const LocalStreamController: FunctionComponent<Props> = ({
     <div css={wrapperStyle}>
       <div>{displayName}</div>
       <div css={buttonStyle}>
+        <VADetector stream={stream} />
         {isVideoDisabled ? null : (
           <IconButton
             name={videoIcon}
@@ -46,7 +50,6 @@ const LocalStreamController: FunctionComponent<Props> = ({
           onClick={() => onClickToggleAudioMuted()}
         />
         <IconButton name="settings" onClick={() => onClickOpenSettings()} />
-        <IconButton name="info" onClick={() => alert("TODO")} />
       </div>
     </div>
   );
@@ -64,6 +67,5 @@ const wrapperStyle = css({
 });
 
 const buttonStyle = css({
-  display: "inline-flex",
-  textAlign: "right"
+  display: "inline-flex"
 });

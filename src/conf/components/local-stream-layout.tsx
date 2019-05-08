@@ -24,26 +24,25 @@ const LocalStreamLayout: FunctionComponent<Props> = ({
   onClickToggleAudioMuted,
   onClickToggleVideoMuted,
   onClickOpenSettings
-}: Props) => {
-  return (
-    <div css={wrapperStyle}>
-      <div css={controllerStyle}>
-        <LocalStreamController
-          displayName={displayName}
-          isVideoDisabled={isVideoDisabled}
-          isVideoMuted={isVideoTrackMuted}
-          isAudioMuted={isAudioTrackMuted}
-          onClickToggleAudioMuted={onClickToggleAudioMuted}
-          onClickToggleVideoMuted={onClickToggleVideoMuted}
-          onClickOpenSettings={onClickOpenSettings}
-        />
-      </div>
-      <div css={videoStyle}>
-        <Video stream={stream} isMine={true} />
-      </div>
+}: Props) => (
+  <div css={wrapperStyle}>
+    <div css={controllerStyle}>
+      <LocalStreamController
+        stream={stream}
+        displayName={displayName}
+        isVideoDisabled={isVideoDisabled}
+        isVideoMuted={isVideoTrackMuted}
+        isAudioMuted={isAudioTrackMuted}
+        onClickToggleAudioMuted={onClickToggleAudioMuted}
+        onClickToggleVideoMuted={onClickToggleVideoMuted}
+        onClickOpenSettings={onClickOpenSettings}
+      />
     </div>
-  );
-};
+    <div css={videoStyle}>
+      <Video stream={stream} isMine={true} />
+    </div>
+  </div>
+);
 
 export default LocalStreamLayout;
 

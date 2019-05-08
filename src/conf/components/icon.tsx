@@ -32,6 +32,7 @@ const iconStyle = css({
 
 const buttonStyle = css({
   padding: "0 1px",
+  height: fontSize,
   appearance: "none",
   border: "none",
   background: "none",
