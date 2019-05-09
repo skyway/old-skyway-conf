@@ -5,6 +5,7 @@ import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
 import Modal from "../components/modal";
 import { IconButton } from "../components/icon";
+import ChatMessage from "../components/chat-message";
 import { RoomChat } from "../utils/types";
 
 interface Props {
@@ -12,7 +13,7 @@ interface Props {
   onClickSend: (text: string) => void;
   onClickCloser: () => void;
 }
-const SettingsLayout: FunctionComponent<Props> = ({
+const ChatLayout: FunctionComponent<Props> = ({
   chats,
   onClickCloser,
   onClickSend
@@ -31,12 +32,7 @@ const SettingsLayout: FunctionComponent<Props> = ({
         </div>
         <div css={scrollerStyle}>
           {chats.map(chat => (
-            <div key={chat.id} style={chat.isMine ? { color: "gray" } : {}}>
-              <div>
-                from: {chat.from} / at: {chat.time}
-              </div>
-              {chat.text}
-            </div>
+            <ChatMessage key={chat.id} chat={chat} />
           ))}
         </div>
         <div css={editorStyle}>
@@ -57,7 +53,7 @@ const SettingsLayout: FunctionComponent<Props> = ({
   );
 };
 
-export default SettingsLayout;
+export default ChatLayout;
 
 const wrapperStyle = css({
   display: "grid",
