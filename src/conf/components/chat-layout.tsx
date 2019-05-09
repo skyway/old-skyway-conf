@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
@@ -24,13 +24,22 @@ const ChatLayout: FunctionComponent<Props> = ({
     setBuffer("");
   }, [buffer, onClickSend]);
 
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (scrollerRef.current === null) {
+      return;
+    }
+    const $scroller = scrollerRef.current;
+    $scroller.scrollTo({ top: $scroller.scrollHeight, behavior: "smooth" });
+  }, [chats, scrollerRef]);
+
   return (
     <Modal>
       <div css={wrapperStyle}>
         <div css={headStyle}>
           <IconButton name="close" onClick={onClickCloser} />
         </div>
-        <div css={scrollerStyle}>
+        <div css={scrollerStyle} ref={scrollerRef}>
           {chats.map(chat => (
             <ChatMessage key={chat.id} chat={chat} />
           ))}

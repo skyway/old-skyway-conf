@@ -23,6 +23,7 @@ const wrapperStyle = css({
   width: "85%",
   padding: "4px 8px",
   marginTop: 8,
+  marginBottom: 8,
   wordBreak: "break-word",
   borderRadius: 2,
   border: `1px solid ${globalColors.gray}`
