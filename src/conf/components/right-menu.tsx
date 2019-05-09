@@ -4,23 +4,32 @@ import { FunctionComponent, ReactNode } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
 import { zIndex, rightMenuWidth, rightMenuTogglerHeight } from "../utils/style";
-import { Icon } from "./icon";
+import { IconButton } from "./icon";
 
 interface Props {
-  content1: ReactNode;
+  children: ReactNode;
+  openers: ReactNode[];
 }
-const RightMenu: FunctionComponent<Props> = ({ content1 }) => {
+const RightMenu: FunctionComponent<Props> = ({ children, openers }) => {
   const [isVisible, setVisible] = useState(true);
 
   return (
     <div css={wrapperStyle} className={isVisible ? visibleClass : ""}>
-      <div css={scrollerStyle}>{content1}</div>
-      <div
-        css={[knobStyle, togglerStyle]}
-        onClick={() => setVisible(!isVisible)}
-      >
-        <Icon name={isVisible ? "chevron_right" : "chevron_left"} />
+      <div css={scrollerStyle}>{children}</div>
+      <div css={[knobStyle, togglerStyle]}>
+        <IconButton
+          name={isVisible ? "chevron_right" : "chevron_left"}
+          onClick={() => setVisible(!isVisible)}
+        />
       </div>
+      {openers.map((opener, idx) => (
+        <div
+          key={idx}
+          css={[knobStyle, css({ top: rightMenuTogglerHeight * (idx + 1) })]}
+        >
+          {opener}
+        </div>
+      ))}
     </div>
   );
 };

@@ -46,15 +46,14 @@ const LocalStreamLayout: FunctionComponent<Props> = ({
 
 export default LocalStreamLayout;
 
-const videoWidth = 220;
 const wrapperStyle = css({
   position: "relative",
   outline: `1px solid ${globalColors.gray}`
 });
 
 const videoStyle = css({
-  width: videoWidth,
-  height: (videoWidth / 4) * 3
+  width: (165 / 3) * 4,
+  height: 165
 });
 
 const controllerStyle = css({

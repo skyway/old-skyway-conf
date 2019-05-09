@@ -2,6 +2,7 @@ import * as React from "react";
 import Bootstrap from "./observers/bootstrap";
 import Settings from "./observers/settings";
 import Notification from "./observers/notification";
+import { ChatOpener } from "./observers/chat";
 import PinnedStream from "./observers/pinned-stream";
 import LocalStream from "./observers/local-stream";
 import RemoteStreams from "./observers/remote-streams";
@@ -37,7 +38,9 @@ class App extends React.Component<{}, State> {
             <PinnedStream />
           </Main>
           <LeftMenu top={<Notification />} bottom={<LocalStream />} />
-          <RightMenu content1={<RemoteStreams />} />
+          <RightMenu openers={[<ChatOpener key="chat" />]}>
+            <RemoteStreams />
+          </RightMenu>
 
           {/* Modal Layer */}
           <Settings />
