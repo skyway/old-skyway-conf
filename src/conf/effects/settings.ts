@@ -66,7 +66,7 @@ export const enableUserVideo = ({ media, ui, room }: RootStore) => async () => {
 
 export const disableUserVideo = ({ media, room, ui }: RootStore) => () => {
   log("disableUserVideo()");
-  skipReplaceStream(() => media.deleteUserTrack("video"));
+  skipReplaceStream(() => media.deleteVideoTrack());
 
   if (room.isJoined) {
     log("re-entering room to use audio+video -> audio");

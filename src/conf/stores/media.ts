@@ -1,6 +1,6 @@
 import { decorate, observable, computed, action } from "mobx";
 import { IObservableArray } from "mobx";
-import { UserDevices } from "../utils/types";
+import { UserDevices, VideoType } from "../utils/types";
 
 class MediaStore {
   videoInDevices: IObservableArray<MediaDeviceInfo>;
@@ -9,6 +9,7 @@ class MediaStore {
   videoDeviceId: string | null;
   audioTrack: MediaStreamTrack | null;
   videoTrack: MediaStreamTrack | null;
+  videoType: VideoType | null;
   isAudioTrackMuted: boolean;
   isVideoTrackMuted: boolean;
 
@@ -21,6 +22,7 @@ class MediaStore {
     this.videoDeviceId = null;
     this.audioTrack = null;
     this.videoTrack = null;
+    this.videoType = null;
     this.isVideoTrackMuted = false;
     this.isAudioTrackMuted = true;
   }
@@ -63,6 +65,7 @@ class MediaStore {
         this.videoTrack.stop();
       }
       this.videoTrack = track;
+      this.videoType = "camera";
     }
     if (track.kind === "audio") {
       if (this.audioTrack instanceof MediaStreamTrack) {
@@ -72,12 +75,13 @@ class MediaStore {
     }
   }
 
-  deleteUserTrack(kind: "video") {
-    if (kind === "video" && this.videoTrack !== null) {
+  deleteVideoTrack() {
+    if (this.videoTrack !== null) {
       this.videoTrack.stop();
       this.videoTrack = null;
       this.videoInDevices.clear();
       this.videoDeviceId = null;
+      this.videoType = null;
     }
   }
 
@@ -134,7 +138,7 @@ decorate(MediaStore, {
   isUserVideoEnabled: computed,
   stream: computed,
   setUserTrack: action,
-  deleteUserTrack: action,
+  deleteVideoTrack: action,
   setDevices: action,
   toggleMuted: action,
   setDefaultDeviceId: action
