@@ -8,9 +8,7 @@ class UiStore {
   constructor() {
     this.error = null;
     this.isSettingsOpen = true;
-    // TODO: debug
-    // this.isChatOpen = false;
-    this.isChatOpen = true;
+    this.isChatOpen = false;
   }
 
   showError(err: Error): Error {
