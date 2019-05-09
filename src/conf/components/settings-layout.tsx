@@ -61,6 +61,9 @@ const SettingsLayout: FunctionComponent<Props> = ({
       <div>
         {isUserVideoEnabled ? (
           <>
+            <button onClick={onClickDisableUserVideo}>
+              disable user video
+            </button>
             <SettingsDeviceSelector
               deviceId={videoDeviceId || ""}
               inDevices={videoInDevices}
@@ -71,9 +74,6 @@ const SettingsLayout: FunctionComponent<Props> = ({
               title={isVideoTrackMuted ? "Unmute" : "Mute"}
               onClick={onClickToggleVideoMuted}
             />
-            <button onClick={onClickDisableUserVideo}>
-              disable user video
-            </button>
           </>
         ) : (
           <button onClick={onClickEnableUserVideo}>enable user video</button>
