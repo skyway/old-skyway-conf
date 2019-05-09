@@ -12,6 +12,12 @@ import RootStore from "../stores";
 
 const log = debug("effect:room");
 
+let skipReplaceStream = false;
+export const setSkipReplaceStream = (bool: boolean) => {
+  log("setSkipReplaceStream()", bool);
+  skipReplaceStream = bool;
+};
+
 export const joinRoom = (store: RootStore) => {
   log("joinRoom()");
   const { room, ui, media, client, notification } = store;
@@ -48,8 +54,13 @@ export const joinRoom = (store: RootStore) => {
     reaction(
       () => media.stream,
       stream => {
-        log("reaction:replaceStream()");
-        confRoom.replaceStream(stream);
+        // wanna skip while re-entering
+        if (skipReplaceStream) {
+          log("reaction:replaceStream() skipped");
+        } else {
+          log("reaction:replaceStream()");
+          confRoom.replaceStream(stream);
+        }
       }
     ),
     reaction(
