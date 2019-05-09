@@ -71,6 +71,8 @@ export const loadClient = ({ client }: RootStore): EffectCallback => () => {
 
   client.load({
     ua: navigator.userAgent,
+    hasGetDisplayMedia:
+      typeof navigator.mediaDevices.getDisplayMedia === "function",
     name: localStorage.getItem("SkyWayConf.dispName") || "YOUR_NAME"
   });
   log("client loaded", toJS(client.browser));

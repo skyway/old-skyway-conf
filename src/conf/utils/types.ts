@@ -8,6 +8,7 @@ export interface RoomInit {
 export interface ClientInit {
   name: string;
   ua: string;
+  hasGetDisplayMedia: boolean;
 }
 
 export interface UserDevices {
