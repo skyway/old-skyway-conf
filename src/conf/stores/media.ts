@@ -30,10 +30,7 @@ class MediaStore {
   }
 
   get isUserVideoEnabled(): boolean {
-    if (this.videoTrack !== null) {
-      return true;
-    }
-    return false;
+    return this.videoTrack !== null;
   }
 
   get stream(): MediaStream {
@@ -73,6 +70,13 @@ class MediaStore {
         this.audioTrack.stop();
       }
       this.audioTrack = track;
+    }
+  }
+
+  deleteUserTrack(kind: "video") {
+    if (kind === "video" && this.videoTrack !== null) {
+      this.videoTrack.stop();
+      this.videoTrack = null;
     }
   }
 
@@ -125,6 +129,7 @@ decorate(MediaStore, {
   isUserVideoEnabled: computed,
   stream: computed,
   setUserTrack: action,
+  deleteUserTrack: action,
   setDevices: action,
   toggleMuted: action,
   setDefaultDeviceId: action
