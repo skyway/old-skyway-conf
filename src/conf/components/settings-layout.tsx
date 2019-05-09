@@ -48,7 +48,7 @@ const SettingsLayout: FunctionComponent<Props> = ({
   <Modal>
     <div css={wrapperStyle}>
       <div css={videoStyle}>
-        <Video stream={stream} isMine={true} />
+        <Video stream={stream} isReverse={true} isVideoOnly={true} />
       </div>
       <SettingsNameEdit
         defaultDispName={defaultDispName}

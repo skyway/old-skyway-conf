@@ -39,7 +39,7 @@ const LocalStreamLayout: FunctionComponent<Props> = ({
       />
     </div>
     <div css={videoStyle}>
-      <Video stream={stream} isMine={true} />
+      <Video stream={stream} isReverse={true} isVideoOnly={true} />
     </div>
   </div>
 );

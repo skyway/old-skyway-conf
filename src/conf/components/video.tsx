@@ -9,12 +9,12 @@ const _log = debug("component:video");
 
 interface Props {
   stream: MediaStream;
-  isMine?: boolean;
+  isReverse?: boolean;
   isVideoOnly?: boolean;
 }
 const Video: FunctionComponent<Props> = ({
   stream,
-  isMine = false,
+  isReverse = false,
   isVideoOnly = false
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -43,13 +43,11 @@ const Video: FunctionComponent<Props> = ({
   return (
     <>
       <video
-        css={isMine ? [videoStyle, mineVideoStyle] : videoStyle}
+        css={isReverse ? [videoStyle, reverseVideoStyle] : videoStyle}
         ref={videoRef}
         muted={true}
       />
-      {isVideoOnly ? null : (
-        <audio css={audioStyle} ref={audioRef} muted={isMine} />
-      )}
+      {isVideoOnly ? null : <audio css={audioStyle} ref={audioRef} />}
     </>
   );
 };
@@ -69,6 +67,6 @@ const videoStyle = css({
   pointerEvents: "none"
 });
 
-const mineVideoStyle = css({
+const reverseVideoStyle = css({
   transform: "scaleX(-1)"
 });
