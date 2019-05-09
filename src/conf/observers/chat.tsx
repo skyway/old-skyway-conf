@@ -5,7 +5,7 @@ import { Observer } from "mobx-react";
 import { StoreContext } from "../contexts";
 import { IconButton } from "../components/icon";
 import ChatLayout from "../components/chat-layout";
-import { openChat, closeChat } from "../effects/chat";
+import { openChat, closeChat, sendChat } from "../effects/chat";
 
 export const ChatOpener: FunctionComponent<{}> = () => {
   const store = useContext(StoreContext);
@@ -23,6 +23,7 @@ export const Chat: FunctionComponent<{}> = () => {
   const store = useContext(StoreContext);
 
   const onClickCloseChat = useCallback(closeChat(store), [store]);
+  const onClickSendChat = useCallback(sendChat(store), [store]);
 
   const { ui } = store;
   return (
@@ -32,7 +33,12 @@ export const Chat: FunctionComponent<{}> = () => {
           return <></>;
         }
 
-        return <ChatLayout onClickCloser={onClickCloseChat} />;
+        return (
+          <ChatLayout
+            onClickCloser={onClickCloseChat}
+            onClickSend={onClickSendChat}
+          />
+        );
       }}
     </Observer>
   );
