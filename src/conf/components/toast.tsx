@@ -20,10 +20,8 @@ export default Toast;
 const wrapperStyle = css({
   display: "flex",
   alignItems: "center",
-  minWidth: 200,
   padding: "4px 8px",
   marginBottom: 4,
-  whiteSpace: "nowrap",
   fontSize: ".8rem",
   borderRadius: 2,
   backgroundColor: globalColors.white,
@@ -32,5 +30,9 @@ const wrapperStyle = css({
 });
 
 const textStyle = css({
-  textIndent: 4
+  textIndent: 4,
+  width: 200,
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+  textOverflow: "ellipsis"
 });

@@ -111,6 +111,8 @@ export const joinRoom = (store: RootStore) => {
         const chat = payload as RoomChat;
         log("on('data/chat')", chat);
 
+        // notify only when chat is closed
+        ui.isChatOpen || notification.showChat(chat.from, chat.text);
         room.addRemoteChat(chat);
         break;
       }

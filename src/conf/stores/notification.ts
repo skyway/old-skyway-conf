@@ -21,6 +21,17 @@ class NotificationStore {
     );
   }
 
+  showChat(from: string, text: string) {
+    this.show(
+      {
+        id: Date.now(),
+        type: "chat",
+        text: `${from}: ${text}`
+      },
+      3000
+    );
+  }
+
   showJoin(name: string) {
     this.show(
       {
