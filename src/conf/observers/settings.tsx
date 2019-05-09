@@ -7,6 +7,7 @@ import SettingsLayout from "../components/settings-layout";
 import {
   changeDispName,
   enableUserVideo,
+  disableUserVideo,
   changeVideoDeviceId,
   changeAudioDeviceId,
   closeSettings,
@@ -20,6 +21,7 @@ const Settings: FunctionComponent<{}> = () => {
 
   const onChangeDispName = useCallback(changeDispName(store), [store]);
   const onClickEnableUserVideo = useCallback(enableUserVideo(store), [store]);
+  const onClickDisableUserVideo = useCallback(disableUserVideo(store), [store]);
   const onChangeVideoDeviceId = useCallback(changeVideoDeviceId(store), [
     store
   ]);
@@ -46,6 +48,7 @@ const Settings: FunctionComponent<{}> = () => {
             onChangeDispName={onChangeDispName}
             isUserVideoEnabled={media.isUserVideoEnabled}
             onClickEnableUserVideo={onClickEnableUserVideo}
+            onClickDisableUserVideo={onClickDisableUserVideo}
             videoDeviceId={media.videoDeviceId || ""}
             audioDeviceId={media.audioDeviceId || ""}
             videoInDevices={media.videoInDevices.slice()}

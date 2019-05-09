@@ -24,6 +24,7 @@ interface Props {
   onClickToggleVideoMuted: () => void;
   onClickToggleAudioMuted: () => void;
   onClickEnableUserVideo: () => void;
+  onClickDisableUserVideo: () => void;
   onChangeDispName: (name: string) => void;
   onClickCloser: () => void;
 }
@@ -42,6 +43,7 @@ const SettingsLayout: FunctionComponent<Props> = ({
   onClickToggleVideoMuted,
   onClickToggleAudioMuted,
   onClickEnableUserVideo,
+  onClickDisableUserVideo,
   onChangeDispName,
   onClickCloser
 }: Props) => (
@@ -67,6 +69,7 @@ const SettingsLayout: FunctionComponent<Props> = ({
               title={isVideoTrackMuted ? "Unmute" : "Mute"}
               onClick={onClickToggleVideoMuted}
             />
+            <button onClick={onClickDisableUserVideo}>disable user video</button>
           </>
         ) : (
           <button onClick={onClickEnableUserVideo}>enable user video</button>

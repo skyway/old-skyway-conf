@@ -38,14 +38,13 @@ class MediaStore {
 
     if (this.audioTrack instanceof MediaStreamTrack) {
       stream.addTrack(this.audioTrack);
-    }
-    if (this.videoTrack instanceof MediaStreamTrack) {
-      stream.addTrack(this.videoTrack);
+      this.audioTrack.enabled = !this.isAudioTrackMuted;
     }
 
-    // apply muted state
-    this.videoTrack && (this.videoTrack.enabled = !this.isVideoTrackMuted);
-    this.audioTrack && (this.audioTrack.enabled = !this.isAudioTrackMuted);
+    if (this.videoTrack instanceof MediaStreamTrack) {
+      stream.addTrack(this.videoTrack);
+      this.videoTrack.enabled = !this.isVideoTrackMuted;
+    }
 
     return stream;
   }
@@ -77,6 +76,8 @@ class MediaStore {
     if (kind === "video" && this.videoTrack !== null) {
       this.videoTrack.stop();
       this.videoTrack = null;
+      this.videoInDevices.clear();
+      this.videoDeviceId = null;
     }
   }
 

@@ -14,9 +14,8 @@ export const changeDispName = ({ client }: RootStore) => (name: string) => {
   client.displayName = name;
 };
 
-export const enableUserVideo = (store: RootStore) => async () => {
+export const enableUserVideo = ({ media, ui, room }: RootStore) => async () => {
   log("enableUserVideo()");
-  const { media, ui, room } = store;
 
   const { videoInDevices } = await getUserDevices().catch(err => {
     throw ui.showError(err);
@@ -53,6 +52,13 @@ export const enableUserVideo = (store: RootStore) => async () => {
     // force close the room, triggers re-entering
     room.room.close();
   }
+};
+
+export const disableUserVideo = ({ media }: RootStore) => () => {
+  log("disableUserVideo()");
+  media.deleteUserTrack("video");
+
+  // TODO: re-enter the room if joined
 };
 
 export const changeAudioDeviceId = ({ media, ui }: RootStore) => async (
