@@ -37,9 +37,7 @@ class App extends React.Component<{}, State> {
             <PinnedStream />
           </Main>
           <LeftMenu top={<Notification />} bottom={<LocalStream />} />
-          <RightMenu>
-            <RemoteStreams />
-          </RightMenu>
+          <RightMenu content1={<RemoteStreams />} />
 
           {/* Modal Layer */}
           <Settings />
