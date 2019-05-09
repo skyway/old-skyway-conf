@@ -135,7 +135,7 @@ export const joinRoom = (store: RootStore) => {
       throw ui.showError(err);
     }
 
-    // re-enter the same room automatically
-    joinRoom(store);
+    // re-enter the same room automatically but with delay to ensure leave -> join
+    setTimeout(() => joinRoom(store), 1000);
   });
 };
