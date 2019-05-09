@@ -25,7 +25,7 @@ class MediaStore {
     this.isAudioTrackMuted = true;
   }
 
-  get isReady(): boolean {
+  get isUserAudioEnabled(): boolean {
     return this.audioTrack !== null;
   }
 
@@ -121,7 +121,7 @@ decorate(MediaStore, {
   isAudioTrackMuted: observable,
   isVideoTrackMuted: observable,
   stat: computed,
-  isReady: computed,
+  isUserAudioEnabled: computed,
   isUserVideoEnabled: computed,
   stream: computed,
   setUserTrack: action,
