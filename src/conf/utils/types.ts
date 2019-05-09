@@ -90,3 +90,10 @@ interface Harker {
   on(ev: "speaking", cb: () => void): this;
   on(ev: "stopped_speaking", cb: () => void): this;
 }
+
+/* Types for global */
+declare global {
+  interface MediaDevices {
+    getDisplayMedia(constraints: MediaStreamConstraints): Promise<MediaStream>;
+  }
+}
