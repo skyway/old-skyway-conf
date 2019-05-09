@@ -41,10 +41,16 @@ export const ensureAudioDevice = ({
 
   (async () => {
     // check at least audio input exists
-    const { audioInDevices } = await getUserDevices().catch(err => {
-      throw ui.showError(err);
-    });
+    const { audioInDevices } = await getUserDevices({ audio: true }).catch(
+      err => {
+        throw ui.showError(err);
+      }
+    );
 
+    // must not be happened
+    if (audioInDevices === null) {
+      throw ui.showError(new Error("getUserDevices() returns null"));
+    }
     if (audioInDevices.length === 0) {
       throw ui.showError(new Error("At least one audio input device needed!"));
     }
@@ -57,7 +63,7 @@ export const ensureAudioDevice = ({
     media.setUserTrack(audioTrack);
 
     // and get valid labels...
-    const devices = await getUserDevices().catch(err => {
+    const devices = await getUserDevices({ audio: true }).catch(err => {
       throw ui.showError(err);
     });
     media.setDevices(devices);
@@ -115,14 +121,32 @@ export const listenGlobalEvents = ({
 
   const reloadOnHashChange = () => location.reload(true);
   const reloadOnDeviceAddOrRemoved = async () => {
-    const devices = await getUserDevices().catch(err => {
+    log("devicechange event fired");
+    const { audioInDevices, videoInDevices } = await getUserDevices({
+      video: true,
+      audio: true
+    }).catch(err => {
       throw ui.showError(err);
     });
 
+    // must not be happened
+    if (audioInDevices === null || videoInDevices === null) {
+      throw ui.showError(new Error("getUserDevices() returns null"));
+    }
+
+    const curAudioInDevices = media.audioInDevices;
+    const curVideoInDevices = media.videoInDevices;
+
     // Safari fires this event on updating label(num of devices are not changed)
     if (
-      devices.audioInDevices.length !== media.audioInDevices.length ||
-      devices.videoInDevices.length !== media.videoInDevices.length
+      curAudioInDevices.length &&
+      audioInDevices.length !== curAudioInDevices.length
+    ) {
+      location.reload(true);
+    }
+    if (
+      curVideoInDevices.length &&
+      videoInDevices.length !== curVideoInDevices.length
     ) {
       location.reload(true);
     }

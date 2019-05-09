@@ -82,8 +82,12 @@ class MediaStore {
   }
 
   setDevices({ videoInDevices, audioInDevices }: UserDevices) {
-    this.videoInDevices.replace(videoInDevices);
-    this.audioInDevices.replace(audioInDevices);
+    if (videoInDevices !== null) {
+      this.videoInDevices.replace(videoInDevices);
+    }
+    if (audioInDevices !== null) {
+      this.audioInDevices.replace(audioInDevices);
+    }
 
     this.setDefaultDeviceId();
   }

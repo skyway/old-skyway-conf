@@ -1,6 +1,8 @@
 import { UserDevices } from "./types";
 
-export const getUserDevices = async (): Promise<UserDevices> => {
+export const getUserDevices = async (
+  options: MediaStreamConstraints
+): Promise<UserDevices> => {
   const devices = (await navigator.mediaDevices.enumerateDevices()) || [];
 
   const videoInDevices = [];
@@ -15,7 +17,19 @@ export const getUserDevices = async (): Promise<UserDevices> => {
     }
   }
 
-  return { videoInDevices, audioInDevices };
+  const ret: UserDevices = {
+    videoInDevices: null,
+    audioInDevices: null
+  };
+
+  if (options.video) {
+    ret.videoInDevices = videoInDevices;
+  }
+  if (options.audio) {
+    ret.audioInDevices = audioInDevices;
+  }
+
+  return ret;
 };
 
 export const getUserAudioTrack = async (

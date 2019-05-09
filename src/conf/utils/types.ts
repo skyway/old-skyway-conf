@@ -12,8 +12,8 @@ export interface ClientInit {
 }
 
 export interface UserDevices {
-  videoInDevices: MediaDeviceInfo[];
-  audioInDevices: MediaDeviceInfo[];
+  videoInDevices: MediaDeviceInfo[] | null;
+  audioInDevices: MediaDeviceInfo[] | null;
 }
 
 export type RoomData = RoomDataStat | RoomDataChat;

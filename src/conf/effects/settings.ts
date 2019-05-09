@@ -17,9 +17,16 @@ export const changeDispName = ({ client }: RootStore) => (name: string) => {
 export const enableUserVideo = ({ media, ui, room }: RootStore) => async () => {
   log("enableUserVideo()");
 
-  const { videoInDevices } = await getUserDevices().catch(err => {
-    throw ui.showError(err);
-  });
+  const { videoInDevices } = await getUserDevices({ video: true }).catch(
+    err => {
+      throw ui.showError(err);
+    }
+  );
+
+  // must not be happened
+  if (videoInDevices === null) {
+    throw ui.showError(new Error("getUserDevices() returns null"));
+  }
 
   // if not found just return
   if (videoInDevices.length === 0) {
@@ -33,12 +40,14 @@ export const enableUserVideo = ({ media, ui, room }: RootStore) => async () => {
   const videoTrack = await getUserVideoTrack(deviceId).catch(err => {
     throw ui.showError(err);
   });
+  // may trigger replaceStream()
   skipReplaceStream(() => media.setUserTrack(videoTrack));
 
   // and get valid labels...
-  const devices = await getUserDevices().catch(err => {
+  const devices = await getUserDevices({ video: true }).catch(err => {
     throw ui.showError(err);
   });
+  // may trigger replaceStream()
   skipReplaceStream(() => media.setDevices(devices));
 
   log("devices updated", { ...devices });
