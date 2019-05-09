@@ -12,6 +12,7 @@ import SettingsDeviceSelector from "../components/settings-device-selector";
 interface Props {
   stream: MediaStream;
   defaultDispName: string;
+  isReEntering: boolean;
   isUserVideoEnabled: boolean;
   isVideoTrackMuted: boolean;
   isAudioTrackMuted: boolean;
@@ -31,6 +32,7 @@ interface Props {
 const SettingsLayout: FunctionComponent<Props> = ({
   stream,
   defaultDispName,
+  isReEntering,
   isUserVideoEnabled,
   isVideoTrackMuted,
   isAudioTrackMuted,
@@ -69,7 +71,9 @@ const SettingsLayout: FunctionComponent<Props> = ({
               title={isVideoTrackMuted ? "Unmute" : "Mute"}
               onClick={onClickToggleVideoMuted}
             />
-            <button onClick={onClickDisableUserVideo}>disable user video</button>
+            <button onClick={onClickDisableUserVideo}>
+              disable user video
+            </button>
           </>
         ) : (
           <button onClick={onClickEnableUserVideo}>enable user video</button>
@@ -88,7 +92,7 @@ const SettingsLayout: FunctionComponent<Props> = ({
         />
         <VADetector stream={stream} />
       </div>
-      <button onClick={onClickCloser}>OK</button>
+      <IconButton name="done" onClick={onClickCloser} disabled={isReEntering} />
     </div>
   </Modal>
 );

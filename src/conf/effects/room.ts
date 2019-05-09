@@ -12,10 +12,12 @@ import RootStore from "../stores";
 
 const log = debug("effect:room");
 
-let skipReplaceStream = false;
-export const setSkipReplaceStream = (bool: boolean) => {
-  log("setSkipReplaceStream()", bool);
-  skipReplaceStream = bool;
+let skipReplace = false;
+export const skipReplaceStream = (func: () => void) => {
+  log("skipReplaceStream()");
+  skipReplace = true;
+  func();
+  skipReplace = false;
 };
 
 export const joinRoom = (store: RootStore) => {
@@ -49,13 +51,15 @@ export const joinRoom = (store: RootStore) => {
 
   log("joined room", confRoom);
   notification.showInfo(`You joined the room ${room.name}`);
+  // force set to true
+  ui.isReEntering = false;
 
   const disposers = [
     reaction(
       () => media.stream,
       stream => {
         // wanna skip while re-entering
-        if (skipReplaceStream) {
+        if (skipReplace) {
           log("reaction:replaceStream() skipped");
         } else {
           log("reaction:replaceStream()");
@@ -147,6 +151,6 @@ export const joinRoom = (store: RootStore) => {
     }
 
     // re-enter the same room automatically but with delay to ensure leave -> join
-    setTimeout(() => joinRoom(store), 1000);
+    setTimeout(() => joinRoom(store), 500);
   });
 };

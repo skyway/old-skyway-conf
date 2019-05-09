@@ -5,7 +5,7 @@ import {
   getUserVideoTrack,
   getUserAudioTrack
 } from "../utils/webrtc";
-import { joinRoom, setSkipReplaceStream } from "./room";
+import { joinRoom, skipReplaceStream } from "./room";
 
 const log = debug("effect:settings");
 
@@ -16,7 +16,6 @@ export const changeDispName = ({ client }: RootStore) => (name: string) => {
 
 export const enableUserVideo = ({ media, ui, room }: RootStore) => async () => {
   log("enableUserVideo()");
-  setSkipReplaceStream(true);
 
   const { videoInDevices } = await getUserDevices().catch(err => {
     throw ui.showError(err);
@@ -34,13 +33,13 @@ export const enableUserVideo = ({ media, ui, room }: RootStore) => async () => {
   const videoTrack = await getUserVideoTrack(deviceId).catch(err => {
     throw ui.showError(err);
   });
-  media.setUserTrack(videoTrack);
+  skipReplaceStream(() => media.setUserTrack(videoTrack));
 
   // and get valid labels...
   const devices = await getUserDevices().catch(err => {
     throw ui.showError(err);
   });
-  media.setDevices(devices);
+  skipReplaceStream(() => media.setDevices(devices));
 
   log("devices updated", { ...devices });
 
@@ -51,16 +50,14 @@ export const enableUserVideo = ({ media, ui, room }: RootStore) => async () => {
       throw ui.showError(new Error("Room is null!"));
     }
     // force close the room, triggers re-entering
+    ui.isReEntering = true;
     room.room.close();
-    setSkipReplaceStream(false);
   }
 };
 
 export const disableUserVideo = ({ media, room, ui }: RootStore) => () => {
   log("disableUserVideo()");
-  setSkipReplaceStream(true);
-
-  media.deleteUserTrack("video");
+  skipReplaceStream(() => media.deleteUserTrack("video"));
 
   if (room.isJoined) {
     log("re-entering room to use audio+video -> audio");
@@ -69,8 +66,8 @@ export const disableUserVideo = ({ media, room, ui }: RootStore) => () => {
       throw ui.showError(new Error("Room is null!"));
     }
     // force close the room, triggers re-entering
+    ui.isReEntering = true;
     room.room.close();
-    setSkipReplaceStream(false);
   }
 };
 

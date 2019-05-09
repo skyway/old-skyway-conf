@@ -59,6 +59,7 @@ const Settings: FunctionComponent<{}> = () => {
             isAudioTrackMuted={media.isAudioTrackMuted}
             onClickToggleVideoMuted={onClickToggleVideoMuted}
             onClickToggleAudioMuted={onClickToggleAudioMuted}
+            isReEntering={ui.isReEntering}
             onClickCloser={
               room.isJoined ? onClickCloseSettings : onClickJoinConference
             }
