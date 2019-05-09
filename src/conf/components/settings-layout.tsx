@@ -23,7 +23,7 @@ interface Props {
   onChangeAudioDeviceId: (deviceId: string) => void;
   onClickToggleVideoMuted: () => void;
   onClickToggleAudioMuted: () => void;
-  onClickEnableVideo: () => void;
+  onClickEnableUserVideo: () => void;
   onChangeDispName: (name: string) => void;
   onClickCloser: () => void;
 }
@@ -41,7 +41,7 @@ const SettingsLayout: FunctionComponent<Props> = ({
   onChangeAudioDeviceId,
   onClickToggleVideoMuted,
   onClickToggleAudioMuted,
-  onClickEnableVideo,
+  onClickEnableUserVideo,
   onChangeDispName,
   onClickCloser
 }: Props) => (
@@ -69,7 +69,7 @@ const SettingsLayout: FunctionComponent<Props> = ({
             />
           </>
         ) : (
-          <button onClick={onClickEnableVideo}>enable video</button>
+          <button onClick={onClickEnableUserVideo}>enable user video</button>
         )}
       </div>
       <div>

@@ -14,8 +14,8 @@ export const changeDispName = ({ client }: RootStore) => (name: string) => {
   client.displayName = name;
 };
 
-export const enableVideo = (store: RootStore) => async () => {
-  log("enableVideo()");
+export const enableUserVideo = (store: RootStore) => async () => {
+  log("enableUserVideo()");
   const { media, ui, room } = store;
 
   const { videoInDevices } = await getUserDevices().catch(err => {
