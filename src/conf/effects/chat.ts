@@ -12,11 +12,7 @@ export const closeChat = ({ ui }: RootStore) => () => {
   ui.isChatOpen = false;
 };
 
-export const sendChat = ({ room }: RootStore) => (text: string) => {
-  if (text.length === 0) {
-    return;
-  }
-
+export const sendChat = ({ room, client }: RootStore) => (text: string) => {
   log("sendChat()", text);
-  room;
+  room.addChat(client.displayName, text);
 };

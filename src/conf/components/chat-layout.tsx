@@ -5,12 +5,15 @@ import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
 import Modal from "../components/modal";
 import { IconButton } from "../components/icon";
+import { RoomChat } from "../utils/types";
 
 interface Props {
+  chats: RoomChat[];
   onClickSend: (text: string) => void;
   onClickCloser: () => void;
 }
 const SettingsLayout: FunctionComponent<Props> = ({
+  chats,
   onClickCloser,
   onClickSend
 }: Props) => {
@@ -27,7 +30,13 @@ const SettingsLayout: FunctionComponent<Props> = ({
           <IconButton name="close" onClick={onClickCloser} />
         </div>
         <div css={scrollerStyle}>
-          <div style={{ height: "1000px" }}>contnet</div>
+          {chats.map(chat => (
+            <div key={chat.id}>
+              {chat.from}
+              {chat.time}
+              {chat.text}
+            </div>
+          ))}
         </div>
         <div css={editorStyle}>
           <input

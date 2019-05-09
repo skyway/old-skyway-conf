@@ -25,7 +25,7 @@ export const Chat: FunctionComponent<{}> = () => {
   const onClickCloseChat = useCallback(closeChat(store), [store]);
   const onClickSendChat = useCallback(sendChat(store), [store]);
 
-  const { ui } = store;
+  const { ui, room } = store;
   return (
     <Observer>
       {() => {
@@ -35,6 +35,7 @@ export const Chat: FunctionComponent<{}> = () => {
 
         return (
           <ChatLayout
+            chats={[...room.chats]}
             onClickCloser={onClickCloseChat}
             onClickSend={onClickSendChat}
           />

@@ -5,7 +5,8 @@ import {
   SfuRoom,
   RoomStream,
   RoomData,
-  RoomStat
+  RoomStat,
+  RoomChat
 } from "../utils/types";
 import RootStore from "../stores";
 
@@ -57,6 +58,13 @@ export const joinRoom = (store: RootStore) => {
         log("reaction:send(stat)");
         confRoom.send({ type: "stat", payload: stat });
       }
+    ),
+    reaction(
+      () => room.myLastChat,
+      chat => {
+        log("reaction:send(chat)");
+        confRoom.send({ type: "chat", payload: chat });
+      }
     )
   ];
 
@@ -92,6 +100,10 @@ export const joinRoom = (store: RootStore) => {
         notification.showJoin(stat.displayName);
       }
       room.stats.set(src, stat);
+    }
+    if (type === "chat") {
+      const chat = payload as RoomChat;
+      room.chats.push(chat);
     }
   });
 

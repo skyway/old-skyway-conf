@@ -34,6 +34,13 @@ export interface RoomStat {
   isAudioMuted: boolean;
 }
 
+export interface RoomChat {
+  id: number;
+  text: string;
+  from: string;
+  time: number;
+}
+
 export interface NotificationItem {
   id: number;
   type: "info" | "person" | "chat";
@@ -75,6 +82,7 @@ interface Room extends EventEmitter {
   once(ev: "close", cb: () => void): this;
 }
 
+/* Types for hark */
 export type Hark = (stream: MediaStream) => Harker;
 interface Harker {
   stop(): void;

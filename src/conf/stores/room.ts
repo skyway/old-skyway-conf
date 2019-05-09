@@ -1,11 +1,13 @@
 import { decorate, observable, computed, action } from "mobx";
+import { IObservableArray } from "mobx";
 import {
   RoomInit,
   Peer,
   SfuRoom,
   MeshRoom,
   RoomStream,
-  RoomStat
+  RoomStat,
+  RoomChat
 } from "../utils/types";
 
 class RoomStore {
@@ -15,6 +17,8 @@ class RoomStore {
   id: RoomInit["id"] | null;
   streams: Map<string, RoomStream>;
   stats: Map<string, RoomStat>;
+  myLastChat: RoomChat | null;
+  chats: IObservableArray<RoomChat>;
   pinnedId: string | null;
 
   constructor() {
@@ -28,6 +32,10 @@ class RoomStore {
 
     this.streams = new Map();
     this.stats = new Map();
+    // @ts-ignore: to type IObservableArray
+    this.chats = [];
+    this.myLastChat = null;
+
     this.pinnedId = null;
   }
 
@@ -52,6 +60,18 @@ class RoomStore {
     this.peer = peer;
   }
 
+  addChat(from: string, text: string) {
+    const chat = {
+      id: Math.random(),
+      time: Date.now(),
+      from,
+      text
+    };
+    this.chats.push(chat);
+    // this triggers reaction to send chat for remotes
+    this.myLastChat = chat;
+  }
+
   removeStream(peerId: string) {
     this.streams.delete(peerId);
     this.stats.delete(peerId);
@@ -73,9 +93,12 @@ class RoomStore {
 decorate(RoomStore, {
   streams: observable.shallow,
   stats: observable.shallow,
+  chats: observable.shallow,
+  myLastChat: observable.ref,
   pinnedId: observable,
   pinnedStream: computed,
   load: action,
+  addChat: action,
   removeStream: action,
   cleanUp: action
 });
