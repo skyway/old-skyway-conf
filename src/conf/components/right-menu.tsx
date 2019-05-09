@@ -10,7 +10,7 @@ interface Props {
   children: ReactNode;
   openers: ReactNode[];
 }
-const RightMenu: FunctionComponent<Props> = ({ children, openers }) => {
+const RightMenu: FunctionComponent<Props> = ({ children, openers }: Props) => {
   const [isVisible, setVisible] = useState(true);
 
   return (
