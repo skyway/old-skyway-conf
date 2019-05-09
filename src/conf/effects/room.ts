@@ -62,6 +62,9 @@ export const joinRoom = (store: RootStore) => {
     reaction(
       () => room.myLastChat,
       chat => {
+        if (chat === null) {
+          return;
+        }
         log("reaction:send(chat)");
         confRoom.send({ type: "chat", payload: chat });
       }
@@ -91,19 +94,29 @@ export const joinRoom = (store: RootStore) => {
 
   confRoom.on("data", ({ src, data }) => {
     const { type, payload }: RoomData = data;
-    log(`on('data/${type}')`, payload);
 
-    if (type === "stat") {
-      const stat = payload as RoomStat;
-      // undefined means first time = just joined
-      if (!room.stats.get(src)) {
-        notification.showJoin(stat.displayName);
+    switch (type) {
+      case "stat": {
+        const stat = payload as RoomStat;
+        log("on('data/stat')", stat);
+
+        // undefined means first time = just joined
+        if (!room.stats.get(src)) {
+          notification.showJoin(stat.displayName);
+        }
+        room.stats.set(src, stat);
+        break;
       }
-      room.stats.set(src, stat);
-    }
-    if (type === "chat") {
-      const chat = payload as RoomChat;
-      room.chats.push(chat);
+      case "chat": {
+        const chat = payload as RoomChat;
+        log("on('data/chat')", chat);
+
+        room.addRemoteChat(chat);
+        break;
+      }
+      default: {
+        log(`on('data/unknown') discard...`);
+      }
     }
   });
 

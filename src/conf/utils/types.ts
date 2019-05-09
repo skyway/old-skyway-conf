@@ -39,6 +39,7 @@ export interface RoomChat {
   text: string;
   from: string;
   time: number;
+  isMine: boolean;
 }
 
 export interface NotificationItem {

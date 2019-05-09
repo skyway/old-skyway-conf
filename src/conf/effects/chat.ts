@@ -14,5 +14,5 @@ export const closeChat = ({ ui }: RootStore) => () => {
 
 export const sendChat = ({ room, client }: RootStore) => (text: string) => {
   log("sendChat()", text);
-  room.addChat(client.displayName, text);
+  room.addLocalChat(client.displayName, text);
 };

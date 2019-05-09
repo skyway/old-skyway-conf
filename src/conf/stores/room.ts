@@ -35,7 +35,6 @@ class RoomStore {
     // @ts-ignore: to type IObservableArray
     this.chats = [];
     this.myLastChat = null;
-
     this.pinnedId = null;
   }
 
@@ -60,16 +59,22 @@ class RoomStore {
     this.peer = peer;
   }
 
-  addChat(from: string, text: string) {
+  addLocalChat(from: string, text: string) {
     const chat = {
       id: Math.random(),
       time: Date.now(),
+      isMine: true,
       from,
       text
     };
     this.chats.push(chat);
     // this triggers reaction to send chat for remotes
     this.myLastChat = chat;
+  }
+
+  addRemoteChat(chat: RoomChat) {
+    chat.isMine = false;
+    this.chats.push(chat);
   }
 
   removeStream(peerId: string) {
@@ -87,6 +92,8 @@ class RoomStore {
     );
     this.streams.clear();
     this.stats.clear();
+    this.chats.length = 0;
+    this.myLastChat = null;
     this.room = null;
   }
 }
@@ -98,7 +105,8 @@ decorate(RoomStore, {
   pinnedId: observable,
   pinnedStream: computed,
   load: action,
-  addChat: action,
+  addLocalChat: action,
+  addRemoteChat: action,
   removeStream: action,
   cleanUp: action
 });

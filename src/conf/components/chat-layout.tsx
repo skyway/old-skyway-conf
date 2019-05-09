@@ -31,9 +31,10 @@ const SettingsLayout: FunctionComponent<Props> = ({
         </div>
         <div css={scrollerStyle}>
           {chats.map(chat => (
-            <div key={chat.id}>
-              {chat.from}
-              {chat.time}
+            <div key={chat.id} style={chat.isMine ? { color: "gray" } : {}}>
+              <div>
+                from: {chat.from} / at: {chat.time}
+              </div>
               {chat.text}
             </div>
           ))}
