@@ -14,14 +14,21 @@ export const Icon: FunctionComponent<Props> = ({ name }: Props) => (
 
 interface ButtonProps extends Props {
   onClick: () => void;
+  disabled?: boolean;
   title?: string;
 }
 export const IconButton: FunctionComponent<ButtonProps> = ({
   name,
   title,
+  disabled,
   onClick
 }: ButtonProps) => (
-  <button title={title} onClick={onClick} css={buttonStyle}>
+  <button
+    title={title}
+    disabled={disabled}
+    onClick={onClick}
+    css={disabled ? [buttonStyle, disabledStyle] : buttonStyle}
+  >
     <Icon name={name} />
   </button>
 );
@@ -38,4 +45,9 @@ const buttonStyle = css({
   background: "none",
   color: "inherit",
   cursor: "pointer"
+});
+
+const disabledStyle = css({
+  opacity: 0.6,
+  cursor: "not-allowed"
 });

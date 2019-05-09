@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
@@ -15,6 +15,10 @@ const SettingsLayout: FunctionComponent<Props> = ({
   onClickSend
 }: Props) => {
   const [buffer, setBuffer] = useState("");
+  const onSend = useCallback(() => {
+    onClickSend(buffer);
+    setBuffer("");
+  }, [buffer, onClickSend]);
 
   return (
     <Modal>
@@ -32,7 +36,11 @@ const SettingsLayout: FunctionComponent<Props> = ({
             onChange={ev => setBuffer(ev.target.value)}
             css={inputStyle}
           />
-          <IconButton name="send" onClick={() => onClickSend(buffer)} />
+          <IconButton
+            name="send"
+            disabled={buffer.length === 0}
+            onClick={onSend}
+          />
         </div>
       </div>
     </Modal>
