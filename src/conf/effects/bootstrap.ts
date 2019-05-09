@@ -24,6 +24,8 @@ export const checkRoomSetting = ({
     const peer = await initPeer().catch(err => {
       throw ui.showError(err);
     });
+    // just log it, do not trust them
+    peer.on("error", console.error);
     room.load({ mode: roomType as RoomInit["mode"], id: roomName }, peer);
 
     log(`room: ${roomType}/${roomName}`);
