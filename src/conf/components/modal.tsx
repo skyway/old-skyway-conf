@@ -1,6 +1,6 @@
 import * as React from "react";
 import { FunctionComponent, ReactNode } from "react";
-import { css } from "@emotion/core";
+import { css, keyframes } from "@emotion/core";
 import { zIndex } from "../utils/style";
 
 interface Props {
@@ -16,8 +16,10 @@ const wrapperStyle = css({
   left: 0,
   right: 0,
   bottom: 0,
-  backgroundColor: "rgba(0, 0, 0, 0.8)",
-  zIndex: zIndex.modal
+  zIndex: zIndex.modal,
+  backgroundColor: "rgba(0, 0, 0, .8)",
+  willChange: "opacity",
+  animation: `${keyframes`from { opacity: 0; } to { opacity: 1; }`} .4s ease`
 });
 
 export default Modal;

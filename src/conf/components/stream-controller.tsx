@@ -24,7 +24,7 @@ const wrapperStyle = css({
   gridTemplateColumns: "1fr auto",
   padding: 4,
   color: globalColors.white,
-  backgroundColor: "rgba(0, 0, 0, 0.8)",
+  backgroundColor: "rgba(0, 0, 0, .5)",
   fontSize: ".8rem"
 });
 

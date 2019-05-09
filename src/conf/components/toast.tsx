@@ -28,7 +28,7 @@ const wrapperStyle = css({
   borderRadius: 2,
   backgroundColor: globalColors.white,
   willChange: "transform",
-  animation: `${keyframes`from { transform: translateX(-200%); }`} .1s ease`
+  animation: `${keyframes`from { transform: translateX(-200%); }`} .2s ease`
 });
 
 const textStyle = css({
