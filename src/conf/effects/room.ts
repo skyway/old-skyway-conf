@@ -1,5 +1,5 @@
 import debug from "debug";
-import { reaction } from "mobx";
+import { reaction, observe } from "mobx";
 import {
   MeshRoom,
   SfuRoom,
@@ -11,14 +11,6 @@ import {
 import RootStore from "../stores";
 
 const log = debug("effect:room");
-
-let skipReplace = false;
-export const skipReplaceStream = (func: () => void) => {
-  log("skipReplaceStream()");
-  skipReplace = true;
-  func();
-  skipReplace = false;
-};
 
 export const joinRoom = (store: RootStore) => {
   log("joinRoom()");
@@ -56,18 +48,6 @@ export const joinRoom = (store: RootStore) => {
 
   const disposers = [
     reaction(
-      () => media.stream,
-      stream => {
-        // wanna skip while re-entering
-        if (skipReplace) {
-          log("reaction:replaceStream() skipped");
-        } else {
-          log("reaction:replaceStream()");
-          confRoom.replaceStream(stream);
-        }
-      }
-    ),
-    reaction(
       () => ({ ...media.stat, ...client.stat }),
       stat => {
         log("reaction:send(stat)");
@@ -83,7 +63,30 @@ export const joinRoom = (store: RootStore) => {
         log("reaction:send(chat)");
         confRoom.send({ type: "chat", payload: chat });
       }
-    )
+    ),
+    observe(media, "videoType", change => {
+      log("observe(media.videoType)");
+      if (!room.isJoined) {
+        log("do nothing before room join");
+        return;
+      }
+      const hasVideoEnabledOrDisabled =
+        change.oldValue === null || change.newValue === null;
+
+      if (!hasVideoEnabledOrDisabled) {
+        log("just change video by replaceStream(), no need to re-enter");
+        confRoom.replaceStream(media.stream);
+        return;
+      }
+
+      log("need to re-enter the room to add/remove video");
+      if (room.room === null) {
+        throw ui.showError(new Error("Room is null!"));
+      }
+      // force close the room, triggers re-entering
+      ui.isReEntering = true;
+      room.room.close();
+    })
   ];
 
   confRoom.on("stream", (stream: RoomStream) => {

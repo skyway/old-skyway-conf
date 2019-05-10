@@ -3,9 +3,10 @@ import RootStore from "../stores";
 import {
   getUserDevices,
   getUserVideoTrack,
-  getUserAudioTrack
+  getUserAudioTrack,
+  getDisplayVideoTrack
 } from "../utils/webrtc";
-import { joinRoom, skipReplaceStream } from "./room";
+import { joinRoom } from "./room";
 
 const log = debug("effect:settings");
 
@@ -14,7 +15,7 @@ export const changeDispName = ({ client }: RootStore) => (name: string) => {
   client.displayName = name;
 };
 
-export const enableUserVideo = ({ media, ui, room }: RootStore) => async () => {
+export const enableUserVideo = ({ media, ui }: RootStore) => async () => {
   log("enableUserVideo()");
 
   const { videoInDevices } = await getUserDevices({ video: true }).catch(
@@ -41,43 +42,50 @@ export const enableUserVideo = ({ media, ui, room }: RootStore) => async () => {
     throw ui.showError(err);
   });
   // may trigger replaceStream()
-  skipReplaceStream(() => media.setUserTrack(videoTrack));
+  media.setVideoTrack(videoTrack, "camera");
 
   // and get valid labels...
   const devices = await getUserDevices({ video: true }).catch(err => {
     throw ui.showError(err);
   });
-  // may trigger replaceStream()
-  skipReplaceStream(() => media.setDevices(devices));
+  media.setDevices(devices);
 
   log("devices updated", { ...devices });
-
-  if (room.isJoined) {
-    log("re-entering room to use audio -> audio+video");
-
-    if (room.room === null) {
-      throw ui.showError(new Error("Room is null!"));
-    }
-    // force close the room, triggers re-entering
-    ui.isReEntering = true;
-    room.room.close();
-  }
 };
 
-export const disableUserVideo = ({ media, room, ui }: RootStore) => () => {
-  log("disableUserVideo()");
-  skipReplaceStream(() => media.deleteVideoTrack());
+export const enableDisplayVideo = (store: RootStore) => async () => {
+  log("enableDisplayVideo()");
+  const { media, ui } = store;
 
-  if (room.isJoined) {
-    log("re-entering room to use audio+video -> audio");
-
-    if (room.room === null) {
-      throw ui.showError(new Error("Room is null!"));
+  const videoTrack = await getDisplayVideoTrack().catch(err => {
+    if (err.name === "NotAllowedError") {
+      // cancelled
+    } else {
+      throw ui.showError(err);
     }
-    // force close the room, triggers re-entering
-    ui.isReEntering = true;
-    room.room.close();
+  });
+
+  if (!(videoTrack instanceof MediaStreamTrack)) {
+    log("selection cancelled");
+    return;
   }
+
+  videoTrack.addEventListener("ended", disableDisplayVideo(store), {
+    once: true
+  });
+
+  // may trigger replaceStream()
+  media.setVideoTrack(videoTrack, "display");
+};
+
+export const disableUserVideo = ({ media }: RootStore) => () => {
+  log("disableUserVideo()");
+  media.deleteVideoTrack();
+};
+
+export const disableDisplayVideo = ({ media }: RootStore) => () => {
+  log("disableDisplayVideo()");
+  media.deleteVideoTrack();
 };
 
 export const changeAudioDeviceId = ({ media, ui }: RootStore) => async (
@@ -89,7 +97,7 @@ export const changeAudioDeviceId = ({ media, ui }: RootStore) => async (
   const audioTrack = await getUserAudioTrack(deviceId).catch(err => {
     throw ui.showError(err);
   });
-  media.setUserTrack(audioTrack);
+  media.setAudioTrack(audioTrack);
 };
 export const changeVideoDeviceId = ({ media, ui }: RootStore) => async (
   deviceId: string
@@ -100,7 +108,7 @@ export const changeVideoDeviceId = ({ media, ui }: RootStore) => async (
   const videoTrack = await getUserVideoTrack(deviceId).catch(err => {
     throw ui.showError(err);
   });
-  media.setUserTrack(videoTrack);
+  media.setAudioTrack(videoTrack);
 };
 
 export const toggleAudioMuted = ({ media }: RootStore) => () => {

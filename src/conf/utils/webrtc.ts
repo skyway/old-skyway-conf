@@ -52,7 +52,7 @@ export const getUserVideoTrack = async (
     .then(stream => stream.getVideoTracks()[0]);
 };
 
-export const getScreenVideoTrack = async (): Promise<MediaStreamTrack> => {
+export const getDisplayVideoTrack = async (): Promise<MediaStreamTrack> => {
   return navigator.mediaDevices
     .getDisplayMedia({ video: true })
     .then(stream => stream.getVideoTracks()[0]);

@@ -7,11 +7,11 @@ class MediaStore {
   audioInDevices: IObservableArray<MediaDeviceInfo>;
   audioDeviceId: string | null;
   videoDeviceId: string | null;
-  audioTrack: MediaStreamTrack | null;
-  videoTrack: MediaStreamTrack | null;
-  videoType: VideoType | null;
   isAudioTrackMuted: boolean;
   isVideoTrackMuted: boolean;
+  videoType: VideoType;
+  private audioTrack: MediaStreamTrack | null;
+  private videoTrack: MediaStreamTrack | null;
 
   constructor() {
     // @ts-ignore: to type IObservableArray
@@ -20,19 +20,20 @@ class MediaStore {
     this.audioInDevices = [];
     this.audioDeviceId = null;
     this.videoDeviceId = null;
-    this.audioTrack = null;
-    this.videoTrack = null;
-    this.videoType = null;
     this.isVideoTrackMuted = false;
     this.isAudioTrackMuted = true;
+    this.videoType = null;
+    this.audioTrack = null;
+    this.videoTrack = null;
   }
 
+  // TODO: maybe rename
   get isUserAudioEnabled(): boolean {
-    return this.audioTrack !== null;
+    return this.audioInDevices.length !== 0;
   }
 
-  get isUserVideoEnabled(): boolean {
-    return this.videoTrack !== null;
+  get isVideoEnabled(): boolean {
+    return this.videoType !== null;
   }
 
   get stream(): MediaStream {
@@ -53,26 +54,26 @@ class MediaStore {
 
   get stat() {
     return {
-      isVideoDisabled: !this.isUserVideoEnabled,
+      // TODO: rename
+      isVideoDisabled: !this.isVideoEnabled,
       isAudioMuted: this.isAudioTrackMuted,
       isVideoMuted: this.isVideoTrackMuted
     };
   }
 
-  setUserTrack(track: MediaStreamTrack) {
-    if (track.kind === "video") {
-      if (this.videoTrack instanceof MediaStreamTrack) {
-        this.videoTrack.stop();
-      }
-      this.videoTrack = track;
-      this.videoType = "camera";
+  setAudioTrack(track: MediaStreamTrack) {
+    if (this.audioTrack instanceof MediaStreamTrack) {
+      this.audioTrack.stop();
     }
-    if (track.kind === "audio") {
-      if (this.audioTrack instanceof MediaStreamTrack) {
-        this.audioTrack.stop();
-      }
-      this.audioTrack = track;
+    this.audioTrack = track;
+  }
+
+  setVideoTrack(track: MediaStreamTrack, type: VideoType) {
+    if (this.videoTrack instanceof MediaStreamTrack) {
+      this.videoTrack.stop();
     }
+    this.videoTrack = track;
+    this.videoType = type;
   }
 
   deleteVideoTrack() {
@@ -133,11 +134,13 @@ decorate(MediaStore, {
   videoInDevices: observable.shallow,
   isAudioTrackMuted: observable,
   isVideoTrackMuted: observable,
+  videoType: observable,
   stat: computed,
   isUserAudioEnabled: computed,
-  isUserVideoEnabled: computed,
+  isVideoEnabled: computed,
   stream: computed,
-  setUserTrack: action,
+  setAudioTrack: action,
+  setVideoTrack: action,
   deleteVideoTrack: action,
   setDevices: action,
   toggleMuted: action,

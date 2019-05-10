@@ -2,6 +2,7 @@ import * as React from "react";
 import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
+import { VideoType } from "../utils/types";
 import Modal from "../components/modal";
 import Video from "../components/video";
 import VADetector from "../components/va-detector";
@@ -12,8 +13,9 @@ import SettingsDeviceSelector from "../components/settings-device-selector";
 interface Props {
   stream: MediaStream;
   defaultDispName: string;
+  hasGetDisplayMedia: boolean;
   isReEntering: boolean;
-  isUserVideoEnabled: boolean;
+  videoType: VideoType;
   isVideoTrackMuted: boolean;
   isAudioTrackMuted: boolean;
   videoDeviceId: string;
@@ -26,14 +28,17 @@ interface Props {
   onClickToggleAudioMuted: () => void;
   onClickEnableUserVideo: () => void;
   onClickDisableUserVideo: () => void;
+  onClickEnableDisplayVideo: () => void;
+  onClickDisableDisplayVideo: () => void;
   onChangeDispName: (name: string) => void;
   onClickCloser: () => void;
 }
 const SettingsLayout: FunctionComponent<Props> = ({
   stream,
   defaultDispName,
+  hasGetDisplayMedia,
   isReEntering,
-  isUserVideoEnabled,
+  videoType,
   isVideoTrackMuted,
   isAudioTrackMuted,
   videoDeviceId,
@@ -46,6 +51,8 @@ const SettingsLayout: FunctionComponent<Props> = ({
   onClickToggleAudioMuted,
   onClickEnableUserVideo,
   onClickDisableUserVideo,
+  onClickEnableDisplayVideo,
+  onClickDisableDisplayVideo,
   onChangeDispName,
   onClickCloser
 }: Props) => (
@@ -59,7 +66,7 @@ const SettingsLayout: FunctionComponent<Props> = ({
         onChangeDispName={onChangeDispName}
       />
       <div>
-        {isUserVideoEnabled ? (
+        {videoType === "camera" ? (
           <>
             <button onClick={onClickDisableUserVideo}>
               disable user video
@@ -79,6 +86,19 @@ const SettingsLayout: FunctionComponent<Props> = ({
           <button onClick={onClickEnableUserVideo}>enable user video</button>
         )}
       </div>
+      {hasGetDisplayMedia ? (
+        <div>
+          {videoType === "display" ? (
+            <button onClick={onClickDisableDisplayVideo}>
+              disable display video
+            </button>
+          ) : (
+            <button onClick={onClickEnableDisplayVideo}>
+              enable display video
+            </button>
+          )}
+        </div>
+      ) : null}
       <div>
         <SettingsDeviceSelector
           deviceId={audioDeviceId || ""}

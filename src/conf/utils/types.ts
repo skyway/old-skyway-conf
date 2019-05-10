@@ -16,7 +16,7 @@ export interface UserDevices {
   audioInDevices: MediaDeviceInfo[] | null;
 }
 
-export type VideoType = "camera" | "display";
+export type VideoType = "camera" | "display" | null;
 
 export type RoomData = RoomDataStat | RoomDataChat;
 interface RoomDataStat {

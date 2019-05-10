@@ -8,6 +8,8 @@ import {
   changeDispName,
   enableUserVideo,
   disableUserVideo,
+  enableDisplayVideo,
+  disableDisplayVideo,
   changeVideoDeviceId,
   changeAudioDeviceId,
   closeSettings,
@@ -22,6 +24,12 @@ const Settings: FunctionComponent<{}> = () => {
   const onChangeDispName = useCallback(changeDispName(store), [store]);
   const onClickEnableUserVideo = useCallback(enableUserVideo(store), [store]);
   const onClickDisableUserVideo = useCallback(disableUserVideo(store), [store]);
+  const onClickEnableDisplayVideo = useCallback(enableDisplayVideo(store), [
+    store
+  ]);
+  const onClickDisableDisplayVideo = useCallback(disableDisplayVideo(store), [
+    store
+  ]);
   const onChangeVideoDeviceId = useCallback(changeVideoDeviceId(store), [
     store
   ]);
@@ -45,10 +53,13 @@ const Settings: FunctionComponent<{}> = () => {
           <SettingsLayout
             stream={media.stream}
             defaultDispName={client.displayName}
+            hasGetDisplayMedia={client.hasGetDisplayMedia}
             onChangeDispName={onChangeDispName}
-            isUserVideoEnabled={media.isUserVideoEnabled}
+            videoType={media.videoType}
             onClickEnableUserVideo={onClickEnableUserVideo}
             onClickDisableUserVideo={onClickDisableUserVideo}
+            onClickEnableDisplayVideo={onClickEnableDisplayVideo}
+            onClickDisableDisplayVideo={onClickDisableDisplayVideo}
             videoDeviceId={media.videoDeviceId || ""}
             audioDeviceId={media.audioDeviceId || ""}
             videoInDevices={media.videoInDevices.slice()}

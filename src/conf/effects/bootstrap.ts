@@ -60,7 +60,7 @@ export const ensureAudioDevice = ({
     const audioTrack = await getUserAudioTrack(deviceId).catch(err => {
       throw ui.showError(err);
     });
-    media.setUserTrack(audioTrack);
+    media.setAudioTrack(audioTrack);
 
     // and get valid labels...
     const devices = await getUserDevices({ audio: true }).catch(err => {
