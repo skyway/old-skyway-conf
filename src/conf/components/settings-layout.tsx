@@ -12,7 +12,6 @@ import SettingsStreamController from "./settings-stream-controller";
 
 interface Props {
   stream: MediaStream;
-  // TODO: default..?
   defaultDispName: string;
   browser: ClientBrowser;
   hasGetDisplayMedia: boolean;
