@@ -72,16 +72,31 @@ export const ensureAudioDevice = ({
   })();
 };
 
-export const loadClient = ({ client }: RootStore): EffectCallback => () => {
+export const loadClient = ({ client, ui }: RootStore): EffectCallback => () => {
   log("loadClient()");
 
-  client.load({
-    ua: navigator.userAgent,
-    hasGetDisplayMedia:
-      typeof navigator.mediaDevices.getDisplayMedia === "function",
-    name: localStorage.getItem("SkyWayConf.dispName") || "YOUR_NAME"
-  });
-  log("client loaded", toJS(client.browser));
+  (async () => {
+    // check video device exists
+    const { videoInDevices } = await getUserDevices({ video: true }).catch(
+      err => {
+        throw ui.showError(err);
+      }
+    );
+
+    // must not be happened
+    if (videoInDevices === null) {
+      throw ui.showError(new Error("getUserDevices() returns null"));
+    }
+
+    client.load({
+      ua: navigator.userAgent,
+      hasUserVideoDevice: videoInDevices.length !== 0,
+      hasGetDisplayMedia:
+        typeof navigator.mediaDevices.getDisplayMedia === "function",
+      name: localStorage.getItem("SkyWayConf.dispName") || "YOUR_NAME"
+    });
+    log("client loaded", toJS(client));
+  })();
 };
 
 export const listenStoreChanges = ({

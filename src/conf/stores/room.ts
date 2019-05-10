@@ -17,8 +17,8 @@ class RoomStore {
   id: RoomInit["id"] | null;
   streams: Map<string, RoomStream>;
   stats: Map<string, RoomStat>;
-  myLastChat: RoomChat | null;
   chats: IObservableArray<RoomChat>;
+  myLastChat: RoomChat | null;
   pinnedId: string | null;
 
   constructor() {
@@ -98,11 +98,17 @@ class RoomStore {
   }
 }
 decorate(RoomStore, {
+  peer: observable.ref,
+  room: observable.ref,
+  mode: observable,
+  id: observable,
   streams: observable.shallow,
   stats: observable.shallow,
   chats: observable.shallow,
   myLastChat: observable.ref,
   pinnedId: observable,
+  name: computed,
+  isJoined: computed,
   pinnedStream: computed,
   load: action,
   addLocalChat: action,

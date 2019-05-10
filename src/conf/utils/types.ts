@@ -9,6 +9,7 @@ export interface ClientInit {
   name: string;
   ua: string;
   hasGetDisplayMedia: boolean;
+  hasUserVideoDevice: boolean;
 }
 
 export interface UserDevices {

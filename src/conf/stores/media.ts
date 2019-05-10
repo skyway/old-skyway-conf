@@ -3,8 +3,8 @@ import { IObservableArray } from "mobx";
 import { UserDevices, VideoType } from "../utils/types";
 
 class MediaStore {
-  videoInDevices: IObservableArray<MediaDeviceInfo>;
   audioInDevices: IObservableArray<MediaDeviceInfo>;
+  videoInDevices: IObservableArray<MediaDeviceInfo>;
   audioDeviceId: string | null;
   videoDeviceId: string | null;
   isAudioTrackMuted: boolean;
@@ -15,9 +15,9 @@ class MediaStore {
 
   constructor() {
     // @ts-ignore: to type IObservableArray
-    this.videoInDevices = [];
-    // @ts-ignore: to type IObservableArray
     this.audioInDevices = [];
+    // @ts-ignore: to type IObservableArray
+    this.videoInDevices = [];
     this.audioDeviceId = null;
     this.videoDeviceId = null;
     this.isVideoTrackMuted = false;
@@ -126,15 +126,15 @@ class MediaStore {
 }
 decorate(MediaStore, {
   // @ts-ignore: to use private accessor
-  audioDeviceId: observable,
-  videoDeviceId: observable,
-  audioTrack: observable.ref,
-  videoTrack: observable.ref,
   audioInDevices: observable.shallow,
   videoInDevices: observable.shallow,
+  audioDeviceId: observable,
+  videoDeviceId: observable,
   isAudioTrackMuted: observable,
   isVideoTrackMuted: observable,
   videoType: observable,
+  audioTrack: observable.ref,
+  videoTrack: observable.ref,
   stat: computed,
   isUserAudioEnabled: computed,
   isVideoEnabled: computed,
