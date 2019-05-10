@@ -50,7 +50,7 @@ export const enableUserVideo = ({ media, ui }: RootStore) => async () => {
   });
   media.setDevices(devices);
 
-  log("devices updated", { ...devices });
+  log("video devices", devices.videoInDevices);
 };
 
 export const enableDisplayVideo = (store: RootStore) => async () => {

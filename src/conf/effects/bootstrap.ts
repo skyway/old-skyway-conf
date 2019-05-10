@@ -68,7 +68,7 @@ export const ensureAudioDevice = ({
     });
     media.setDevices(devices);
 
-    log("devices updated", { ...devices });
+    log("audio devices", devices.audioInDevices);
   })();
 };
 
