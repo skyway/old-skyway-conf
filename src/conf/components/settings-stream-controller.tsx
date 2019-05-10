@@ -21,32 +21,25 @@ const SettingsStreamController: FunctionComponent<Props> = ({
   isAudioMuted,
   onClickToggleAudioMuted,
   onClickToggleVideoMuted
-}: Props) => {
-  const videoIcon = isVideoMuted ? "videocam_off" : "videocam";
-  const audioIcon = isAudioMuted ? "mic_off" : "mic";
-
-  return (
-    <StreamController
-      displayName={displayName}
-      controllers={
-        <>
-          {isVideoDisabled ? null : (
-            <IconButton
-              name={videoIcon}
-              title={isVideoMuted ? "Unmute" : "Mute"}
-              onClick={() => onClickToggleVideoMuted()}
-            />
-          )}
+}: Props) => (
+  <StreamController
+    displayName={displayName}
+    controllers={
+      <>
+        {isVideoDisabled ? null : (
           <IconButton
-            name={audioIcon}
-            title={isAudioMuted ? "Unmute" : "Mute"}
-            onClick={() => onClickToggleAudioMuted()}
+            name={isVideoMuted ? "videocam_off" : "videocam"}
+            onClick={onClickToggleVideoMuted}
           />
-          <VADetector stream={stream} />
-        </>
-      }
-    />
-  );
-};
+        )}
+        <IconButton
+          name={isAudioMuted ? "mic_off" : "mic"}
+          onClick={onClickToggleAudioMuted}
+        />
+        <VADetector stream={stream} />
+      </>
+    }
+  />
+);
 
 export default SettingsStreamController;

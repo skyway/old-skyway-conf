@@ -18,22 +18,19 @@ const RemoteStreamController: FunctionComponent<Props> = ({
   isVideoDisabled,
   isVideoMuted,
   isAudioMuted
-}: Props) => {
-  const videoIcon = isVideoMuted ? "videocam_off" : "videocam";
-  const audioIcon = isAudioMuted ? "mic_off" : "mic";
-
-  return (
-    <StreamController
-      displayName={displayName}
-      controllers={
-        <>
-          {isVideoDisabled ? null : <Icon name={videoIcon} />}
-          <Icon name={audioIcon} />
-          <VADetector stream={stream} />
-        </>
-      }
-    />
-  );
-};
+}: Props) => (
+  <StreamController
+    displayName={displayName}
+    controllers={
+      <>
+        {isVideoDisabled ? null : (
+          <Icon name={isVideoMuted ? "videocam_off" : "videocam"} />
+        )}
+        <Icon name={isAudioMuted ? "mic_off" : "mic"} />
+        <VADetector stream={stream} />
+      </>
+    }
+  />
+);
 
 export default RemoteStreamController;

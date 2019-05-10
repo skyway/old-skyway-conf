@@ -15,16 +15,13 @@ export const Icon: FunctionComponent<Props> = ({ name }: Props) => (
 interface ButtonProps extends Props {
   onClick: () => void;
   disabled?: boolean;
-  title?: string;
 }
 export const IconButton: FunctionComponent<ButtonProps> = ({
   name,
-  title,
   disabled,
   onClick
 }: ButtonProps) => (
   <button
-    title={title}
     disabled={disabled}
     onClick={onClick}
     css={disabled ? [buttonStyle, disabledStyle] : buttonStyle}

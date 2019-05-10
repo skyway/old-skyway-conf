@@ -29,5 +29,6 @@ const wrapperStyle = css({
 });
 
 const buttonStyle = css({
-  display: "inline-flex"
+  display: "inline-flex",
+  alignItems: "center"
 });
