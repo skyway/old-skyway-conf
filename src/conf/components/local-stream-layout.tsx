@@ -2,12 +2,14 @@ import * as React from "react";
 import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
-import LocalStreamController from "../components/local-stream-controller";
-import Video from "../components/video";
+import { VideoType } from "../utils/types";
+import LocalStreamController from "./local-stream-controller";
+import Video from "./video";
 
 interface Props {
   stream: MediaStream;
   displayName: string;
+  videoType: VideoType;
   isVideoDisabled: boolean;
   isVideoTrackMuted: boolean;
   isAudioTrackMuted: boolean;
@@ -18,6 +20,7 @@ interface Props {
 const LocalStreamLayout: FunctionComponent<Props> = ({
   stream,
   displayName,
+  videoType,
   isVideoDisabled,
   isVideoTrackMuted,
   isAudioTrackMuted,
@@ -26,6 +29,13 @@ const LocalStreamLayout: FunctionComponent<Props> = ({
   onClickOpenSettings
 }: Props) => (
   <div css={wrapperStyle}>
+    <div css={videoStyle}>
+      <Video
+        stream={stream}
+        isReverse={videoType === "camera"}
+        isVideoOnly={true}
+      />
+    </div>
     <div css={controllerStyle}>
       <LocalStreamController
         stream={stream}
@@ -37,9 +47,6 @@ const LocalStreamLayout: FunctionComponent<Props> = ({
         onClickToggleVideoMuted={onClickToggleVideoMuted}
         onClickOpenSettings={onClickOpenSettings}
       />
-    </div>
-    <div css={videoStyle}>
-      <Video stream={stream} isReverse={true} isVideoOnly={true} />
     </div>
   </div>
 );
