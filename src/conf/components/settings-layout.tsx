@@ -5,10 +5,10 @@ import { globalColors } from "../../shared/global-style";
 import { VideoType } from "../utils/types";
 import Modal from "./modal";
 import Video from "./video";
-import VADetector from "./va-detector";
 import { IconButton } from "./icon";
 import SettingsNameEdit from "./settings-name-edit";
 import SettingsDeviceSelector from "./settings-device-selector";
+import SettingsStreamController from "./settings-stream-controller";
 
 interface Props {
   stream: MediaStream;
@@ -16,6 +16,7 @@ interface Props {
   hasGetDisplayMedia: boolean;
   hasUserVideoDevice: boolean;
   isReEntering: boolean;
+  isVideoDisabled: boolean;
   videoType: VideoType;
   isVideoTrackMuted: boolean;
   isAudioTrackMuted: boolean;
@@ -40,6 +41,7 @@ const SettingsLayout: FunctionComponent<Props> = ({
   hasGetDisplayMedia,
   hasUserVideoDevice,
   isReEntering,
+  isVideoDisabled,
   videoType,
   isVideoTrackMuted,
   isAudioTrackMuted,
@@ -66,6 +68,17 @@ const SettingsLayout: FunctionComponent<Props> = ({
           isReverse={videoType === "camera"}
           isVideoOnly={true}
         />
+        <div css={controllerStyle}>
+          <SettingsStreamController
+            stream={stream}
+            displayName=""
+            isVideoDisabled={isVideoDisabled}
+            isVideoMuted={isVideoTrackMuted}
+            isAudioMuted={isAudioTrackMuted}
+            onClickToggleAudioMuted={onClickToggleAudioMuted}
+            onClickToggleVideoMuted={onClickToggleVideoMuted}
+          />
+        </div>
       </div>
       <SettingsNameEdit
         defaultDispName={defaultDispName}
@@ -83,11 +96,6 @@ const SettingsLayout: FunctionComponent<Props> = ({
                 inDevices={videoInDevices}
                 onChangeDeviceId={onChangeVideoDeviceId}
               />
-              <IconButton
-                name={isVideoTrackMuted ? "videocam_off" : "videocam"}
-                title={isVideoTrackMuted ? "Unmute" : "Mute"}
-                onClick={onClickToggleVideoMuted}
-              />
             </>
           ) : (
             <button onClick={onClickEnableUserVideo}>enable user video</button>
@@ -101,11 +109,6 @@ const SettingsLayout: FunctionComponent<Props> = ({
               <button onClick={onClickDisableDisplayVideo}>
                 disable display video
               </button>
-              <IconButton
-                name={isVideoTrackMuted ? "videocam_off" : "videocam"}
-                title={isVideoTrackMuted ? "Unmute" : "Mute"}
-                onClick={onClickToggleVideoMuted}
-              />
             </>
           ) : (
             <button onClick={onClickEnableDisplayVideo}>
@@ -120,12 +123,6 @@ const SettingsLayout: FunctionComponent<Props> = ({
           inDevices={audioInDevices}
           onChangeDeviceId={onChangeAudioDeviceId}
         />
-        <IconButton
-          name={isAudioTrackMuted ? "mic_off" : "mic"}
-          title={isAudioTrackMuted ? "Unmute" : "Mute"}
-          onClick={onClickToggleAudioMuted}
-        />
-        <VADetector stream={stream} />
       </div>
       <IconButton name="done" onClick={onClickCloser} disabled={isReEntering} />
     </div>
@@ -141,6 +138,15 @@ const wrapperStyle = css({
 });
 
 const videoStyle = css({
+  position: "relative",
   width: "100%",
   height: 360
+});
+
+const controllerStyle = css({
+  position: "absolute",
+  left: 0,
+  right: 0,
+  bottom: 0,
+  zIndex: 1
 });

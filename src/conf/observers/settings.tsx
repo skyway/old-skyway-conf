@@ -57,6 +57,7 @@ const Settings: FunctionComponent<{}> = () => {
             hasUserVideoDevice={client.hasUserVideoDevice}
             onChangeDispName={onChangeDispName}
             videoType={media.videoType}
+            isVideoDisabled={!media.isVideoEnabled}
             onClickEnableUserVideo={onClickEnableUserVideo}
             onClickDisableUserVideo={onClickDisableUserVideo}
             onClickEnableDisplayVideo={onClickEnableDisplayVideo}

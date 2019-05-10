@@ -35,18 +35,18 @@ const LocalStreamLayout: FunctionComponent<Props> = ({
         isReverse={videoType === "camera"}
         isVideoOnly={true}
       />
-    </div>
-    <div css={controllerStyle}>
-      <LocalStreamController
-        stream={stream}
-        displayName={displayName}
-        isVideoDisabled={isVideoDisabled}
-        isVideoMuted={isVideoTrackMuted}
-        isAudioMuted={isAudioTrackMuted}
-        onClickToggleAudioMuted={onClickToggleAudioMuted}
-        onClickToggleVideoMuted={onClickToggleVideoMuted}
-        onClickOpenSettings={onClickOpenSettings}
-      />
+      <div css={controllerStyle}>
+        <LocalStreamController
+          stream={stream}
+          displayName={displayName}
+          isVideoDisabled={isVideoDisabled}
+          isVideoMuted={isVideoTrackMuted}
+          isAudioMuted={isAudioTrackMuted}
+          onClickToggleAudioMuted={onClickToggleAudioMuted}
+          onClickToggleVideoMuted={onClickToggleVideoMuted}
+          onClickOpenSettings={onClickOpenSettings}
+        />
+      </div>
     </div>
   </div>
 );
@@ -54,11 +54,11 @@ const LocalStreamLayout: FunctionComponent<Props> = ({
 export default LocalStreamLayout;
 
 const wrapperStyle = css({
-  position: "relative",
   outline: `1px solid ${globalColors.gray}`
 });
 
 const videoStyle = css({
+  position: "relative",
   width: (165 / 3) * 4,
   height: 165
 });

@@ -37,13 +37,13 @@ const RemoteStreamsLayout: FunctionComponent<Props> = ({
               <Icon name="present_to_all" />
             </div>
           ) : null}
-          <div css={controllerStyle}>
-            {stat !== null ? (
-              <RemoteStreamController {...stat} stream={stream} />
-            ) : null}
-          </div>
           <div css={videoStyle}>
             <Video stream={stream} />
+            <div css={controllerStyle}>
+              {stat !== null ? (
+                <RemoteStreamController {...stat} stream={stream} />
+              ) : null}
+            </div>
           </div>
         </div>
       );
@@ -93,6 +93,7 @@ const controllerStyle = css({
 });
 
 const videoStyle = css({
+  position: "relative",
   // 4:3
   height: (rightMenuWidth / 4) * 3
 });
