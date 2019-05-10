@@ -54,6 +54,7 @@ const Settings: FunctionComponent<{}> = () => {
             stream={media.stream}
             defaultDispName={client.displayName}
             hasGetDisplayMedia={client.hasGetDisplayMedia}
+            hasUserVideoDevice={client.hasUserVideoDevice}
             onChangeDispName={onChangeDispName}
             videoType={media.videoType}
             onClickEnableUserVideo={onClickEnableUserVideo}

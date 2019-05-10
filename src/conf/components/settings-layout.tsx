@@ -14,6 +14,7 @@ interface Props {
   stream: MediaStream;
   defaultDispName: string;
   hasGetDisplayMedia: boolean;
+  hasUserVideoDevice: boolean;
   isReEntering: boolean;
   videoType: VideoType;
   isVideoTrackMuted: boolean;
@@ -37,6 +38,7 @@ const SettingsLayout: FunctionComponent<Props> = ({
   stream,
   defaultDispName,
   hasGetDisplayMedia,
+  hasUserVideoDevice,
   isReEntering,
   videoType,
   isVideoTrackMuted,
@@ -65,27 +67,29 @@ const SettingsLayout: FunctionComponent<Props> = ({
         defaultDispName={defaultDispName}
         onChangeDispName={onChangeDispName}
       />
-      <div>
-        {videoType === "camera" ? (
-          <>
-            <button onClick={onClickDisableUserVideo}>
-              disable user video
-            </button>
-            <SettingsDeviceSelector
-              deviceId={videoDeviceId || ""}
-              inDevices={videoInDevices}
-              onChangeDeviceId={onChangeVideoDeviceId}
-            />
-            <IconButton
-              name={isVideoTrackMuted ? "videocam_off" : "videocam"}
-              title={isVideoTrackMuted ? "Unmute" : "Mute"}
-              onClick={onClickToggleVideoMuted}
-            />
-          </>
-        ) : (
-          <button onClick={onClickEnableUserVideo}>enable user video</button>
-        )}
-      </div>
+      {hasUserVideoDevice ? (
+        <div>
+          {videoType === "camera" ? (
+            <>
+              <button onClick={onClickDisableUserVideo}>
+                disable user video
+              </button>
+              <SettingsDeviceSelector
+                deviceId={videoDeviceId || ""}
+                inDevices={videoInDevices}
+                onChangeDeviceId={onChangeVideoDeviceId}
+              />
+              <IconButton
+                name={isVideoTrackMuted ? "videocam_off" : "videocam"}
+                title={isVideoTrackMuted ? "Unmute" : "Mute"}
+                onClick={onClickToggleVideoMuted}
+              />
+            </>
+          ) : (
+            <button onClick={onClickEnableUserVideo}>enable user video</button>
+          )}
+        </div>
+      ) : null}
       {hasGetDisplayMedia ? (
         <div>
           {videoType === "display" ? (
