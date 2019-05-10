@@ -28,12 +28,9 @@ export const enableUserVideo = ({ media, ui }: RootStore) => async () => {
   if (videoInDevices === null) {
     throw ui.showError(new Error("getUserDevices() returns null"));
   }
-
-  // if not found just return
+  // must not be happened
   if (videoInDevices.length === 0) {
-    log("video devices are not found...");
-    // TODO: notify
-    return;
+    throw ui.showError(new Error("At leaset one video input device needed!"));
   }
 
   // keep video track
