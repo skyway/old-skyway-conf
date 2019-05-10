@@ -58,6 +58,7 @@ const headStyle = css({
   height: rightMenuTogglerHeight,
   padding: 4,
   boxSizing: "border-box",
+  fontSize: ".8rem",
   textAlign: "center"
 });
 
