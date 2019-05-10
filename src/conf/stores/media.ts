@@ -27,8 +27,7 @@ class MediaStore {
     this.videoTrack = null;
   }
 
-  // TODO: maybe rename
-  get isUserAudioEnabled(): boolean {
+  get isAudioEnabled(): boolean {
     return this.audioInDevices.length !== 0;
   }
 
@@ -136,7 +135,7 @@ decorate(MediaStore, {
   audioTrack: observable.ref,
   videoTrack: observable.ref,
   stat: computed,
-  isUserAudioEnabled: computed,
+  isAudioEnabled: computed,
   isVideoEnabled: computed,
   stream: computed,
   setAudioTrack: action,

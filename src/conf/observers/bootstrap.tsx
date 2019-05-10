@@ -33,7 +33,7 @@ const Bootstrap: FunctionComponent<Props> = ({ children }: Props) => {
           return <ErrorDetail error={ui.error} />;
         }
 
-        if (!(client.isReady && media.isUserAudioEnabled)) {
+        if (!(client.isReady && media.isAudioEnabled)) {
           return <Loader />;
         }
 
