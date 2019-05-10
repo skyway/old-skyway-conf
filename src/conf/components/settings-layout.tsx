@@ -93,9 +93,16 @@ const SettingsLayout: FunctionComponent<Props> = ({
       {hasGetDisplayMedia ? (
         <div>
           {videoType === "display" ? (
-            <button onClick={onClickDisableDisplayVideo}>
-              disable display video
-            </button>
+            <>
+              <button onClick={onClickDisableDisplayVideo}>
+                disable display video
+              </button>
+              <IconButton
+                name={isVideoTrackMuted ? "videocam_off" : "videocam"}
+                title={isVideoTrackMuted ? "Unmute" : "Mute"}
+                onClick={onClickToggleVideoMuted}
+              />
+            </>
           ) : (
             <button onClick={onClickEnableDisplayVideo}>
               enable display video
