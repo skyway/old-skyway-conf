@@ -53,6 +53,7 @@ const Settings: FunctionComponent<{}> = () => {
           <SettingsLayout
             stream={media.stream}
             defaultDispName={client.displayName}
+            browser={client.browser}
             hasGetDisplayMedia={client.hasGetDisplayMedia}
             hasUserVideoDevice={client.hasUserVideoDevice}
             onChangeDispName={onChangeDispName}

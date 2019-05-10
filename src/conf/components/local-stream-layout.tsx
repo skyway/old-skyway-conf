@@ -2,13 +2,14 @@ import * as React from "react";
 import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
-import { VideoType } from "../utils/types";
+import { ClientBrowser, VideoType } from "../utils/types";
 import LocalStreamController from "./local-stream-controller";
 import Video from "./video";
 
 interface Props {
   stream: MediaStream;
   displayName: string;
+  browser: ClientBrowser;
   videoType: VideoType;
   isVideoTrackMuted: boolean;
   isAudioTrackMuted: boolean;
@@ -19,6 +20,7 @@ interface Props {
 const LocalStreamLayout: FunctionComponent<Props> = ({
   stream,
   displayName,
+  browser,
   videoType,
   isVideoTrackMuted,
   isAudioTrackMuted,
@@ -37,6 +39,7 @@ const LocalStreamLayout: FunctionComponent<Props> = ({
         <LocalStreamController
           stream={stream}
           displayName={displayName}
+          browser={browser}
           isVideoDisabled={videoType === null}
           isVideoMuted={isVideoTrackMuted}
           isAudioMuted={isAudioTrackMuted}

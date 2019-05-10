@@ -12,6 +12,11 @@ export interface ClientInit {
   hasUserVideoDevice: boolean;
 }
 
+export interface ClientBrowser {
+  name: string;
+  version: string;
+}
+
 export interface UserDevices {
   videoInDevices: MediaDeviceInfo[] | null;
   audioInDevices: MediaDeviceInfo[] | null;
@@ -33,6 +38,7 @@ interface RoomDataChat {
 
 export interface RoomStat {
   displayName: string;
+  browser: ClientBrowser;
   isVideoDisabled: boolean;
   isVideoMuted: boolean;
   isAudioMuted: boolean;

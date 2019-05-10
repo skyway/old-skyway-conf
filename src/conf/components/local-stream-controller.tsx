@@ -1,5 +1,6 @@
 import * as React from "react";
 import { FunctionComponent } from "react";
+import { ClientBrowser } from "../utils/types";
 import { IconButton } from "./icon";
 import StreamController from "./stream-controller";
 import VADetector from "./va-detector";
@@ -7,6 +8,7 @@ import VADetector from "./va-detector";
 interface Props {
   stream: MediaStream;
   displayName: string;
+  browser: ClientBrowser;
   isVideoDisabled: boolean;
   isVideoMuted: boolean;
   isAudioMuted: boolean;
@@ -17,6 +19,7 @@ interface Props {
 const LocalStreamController: FunctionComponent<Props> = ({
   stream,
   displayName,
+  browser,
   isVideoDisabled,
   isVideoMuted,
   isAudioMuted,
@@ -26,6 +29,7 @@ const LocalStreamController: FunctionComponent<Props> = ({
 }: Props) => (
   <StreamController
     displayName={displayName}
+    browser={browser}
     controllers={
       <>
         {isVideoDisabled ? null : (

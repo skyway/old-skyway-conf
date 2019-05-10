@@ -29,6 +29,7 @@ const LocalStream: FunctionComponent<{}> = () => {
           <LocalStreamLayout
             stream={media.stream}
             displayName={client.displayName}
+            browser={client.browser}
             videoType={media.videoType}
             isVideoTrackMuted={media.isVideoTrackMuted}
             isAudioTrackMuted={media.isAudioTrackMuted}

@@ -2,7 +2,7 @@ import * as React from "react";
 import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
-import { VideoType } from "../utils/types";
+import { VideoType, ClientBrowser } from "../utils/types";
 import Modal from "./modal";
 import Video from "./video";
 import { IconButton } from "./icon";
@@ -12,7 +12,9 @@ import SettingsStreamController from "./settings-stream-controller";
 
 interface Props {
   stream: MediaStream;
+  // TODO: default..?
   defaultDispName: string;
+  browser: ClientBrowser;
   hasGetDisplayMedia: boolean;
   hasUserVideoDevice: boolean;
   isReEntering: boolean;
@@ -37,6 +39,7 @@ interface Props {
 const SettingsLayout: FunctionComponent<Props> = ({
   stream,
   defaultDispName,
+  browser,
   hasGetDisplayMedia,
   hasUserVideoDevice,
   isReEntering,
@@ -70,6 +73,7 @@ const SettingsLayout: FunctionComponent<Props> = ({
           <SettingsStreamController
             stream={stream}
             displayName=""
+            browser={browser}
             isVideoDisabled={videoType === null}
             isVideoMuted={isVideoTrackMuted}
             isAudioMuted={isAudioTrackMuted}
