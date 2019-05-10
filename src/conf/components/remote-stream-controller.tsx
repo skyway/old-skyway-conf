@@ -19,11 +19,7 @@ const RemoteStreamController: FunctionComponent<Props> = ({
   isVideoMuted,
   isAudioMuted
 }: Props) => {
-  const videoIcon = isVideoDisabled
-    ? "videocam_off"
-    : isVideoMuted
-    ? "videocam_off"
-    : "videocam";
+  const videoIcon = isVideoMuted ? "videocam_off" : "videocam";
   const audioIcon = isAudioMuted ? "mic_off" : "mic";
 
   return (
