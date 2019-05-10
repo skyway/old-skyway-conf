@@ -17,22 +17,28 @@ const LocalStream: FunctionComponent<{}> = () => {
   const onClickToggleAudioMuted = useCallback(toggleAudioMuted(store), [store]);
   const onClickToggleVideoMuted = useCallback(toggleVideoMuted(store), [store]);
 
-  const { media, client } = store;
+  const { media, client, ui } = store;
   return (
     <Observer>
-      {() => (
-        <LocalStreamLayout
-          stream={media.stream}
-          displayName={client.displayName}
-          videoType={media.videoType}
-          isVideoDisabled={!media.isVideoEnabled}
-          isVideoTrackMuted={media.isVideoTrackMuted}
-          isAudioTrackMuted={media.isAudioTrackMuted}
-          onClickToggleAudioMuted={onClickToggleAudioMuted}
-          onClickToggleVideoMuted={onClickToggleVideoMuted}
-          onClickOpenSettings={onClickOpenSettings}
-        />
-      )}
+      {() => {
+        if (ui.isSettingsOpen) {
+          return <></>;
+        }
+
+        return (
+          <LocalStreamLayout
+            stream={media.stream}
+            displayName={client.displayName}
+            videoType={media.videoType}
+            isVideoDisabled={!media.isVideoEnabled}
+            isVideoTrackMuted={media.isVideoTrackMuted}
+            isAudioTrackMuted={media.isAudioTrackMuted}
+            onClickToggleAudioMuted={onClickToggleAudioMuted}
+            onClickToggleVideoMuted={onClickToggleVideoMuted}
+            onClickOpenSettings={onClickOpenSettings}
+          />
+        );
+      }}
     </Observer>
   );
 };
