@@ -31,10 +31,6 @@ class MediaStore {
     return this.audioInDevices.length !== 0;
   }
 
-  get isVideoEnabled(): boolean {
-    return this.videoType !== null;
-  }
-
   get stream(): MediaStream {
     const stream = new MediaStream();
 
@@ -53,8 +49,7 @@ class MediaStore {
 
   get stat() {
     return {
-      // TODO: rename
-      isVideoDisabled: !this.isVideoEnabled,
+      isVideoDisabled: this.videoType === null,
       isAudioMuted: this.isAudioTrackMuted,
       isVideoMuted: this.isVideoTrackMuted
     };
@@ -136,7 +131,6 @@ decorate(MediaStore, {
   videoTrack: observable.ref,
   stat: computed,
   isAudioEnabled: computed,
-  isVideoEnabled: computed,
   stream: computed,
   setAudioTrack: action,
   setVideoTrack: action,

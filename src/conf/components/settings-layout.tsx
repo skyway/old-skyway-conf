@@ -16,7 +16,6 @@ interface Props {
   hasGetDisplayMedia: boolean;
   hasUserVideoDevice: boolean;
   isReEntering: boolean;
-  isVideoDisabled: boolean;
   videoType: VideoType;
   isVideoTrackMuted: boolean;
   isAudioTrackMuted: boolean;
@@ -41,7 +40,6 @@ const SettingsLayout: FunctionComponent<Props> = ({
   hasGetDisplayMedia,
   hasUserVideoDevice,
   isReEntering,
-  isVideoDisabled,
   videoType,
   isVideoTrackMuted,
   isAudioTrackMuted,
@@ -72,7 +70,7 @@ const SettingsLayout: FunctionComponent<Props> = ({
           <SettingsStreamController
             stream={stream}
             displayName=""
-            isVideoDisabled={isVideoDisabled}
+            isVideoDisabled={videoType === null}
             isVideoMuted={isVideoTrackMuted}
             isAudioMuted={isAudioTrackMuted}
             onClickToggleAudioMuted={onClickToggleAudioMuted}

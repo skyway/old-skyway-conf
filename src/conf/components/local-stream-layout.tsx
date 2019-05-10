@@ -10,7 +10,6 @@ interface Props {
   stream: MediaStream;
   displayName: string;
   videoType: VideoType;
-  isVideoDisabled: boolean;
   isVideoTrackMuted: boolean;
   isAudioTrackMuted: boolean;
   onClickToggleAudioMuted: () => void;
@@ -21,7 +20,6 @@ const LocalStreamLayout: FunctionComponent<Props> = ({
   stream,
   displayName,
   videoType,
-  isVideoDisabled,
   isVideoTrackMuted,
   isAudioTrackMuted,
   onClickToggleAudioMuted,
@@ -39,7 +37,7 @@ const LocalStreamLayout: FunctionComponent<Props> = ({
         <LocalStreamController
           stream={stream}
           displayName={displayName}
-          isVideoDisabled={isVideoDisabled}
+          isVideoDisabled={videoType === null}
           isVideoMuted={isVideoTrackMuted}
           isAudioMuted={isAudioTrackMuted}
           onClickToggleAudioMuted={onClickToggleAudioMuted}
