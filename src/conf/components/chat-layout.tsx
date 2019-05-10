@@ -3,10 +3,10 @@ import { useState, useCallback, useRef, useEffect } from "react";
 import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
-import Modal from "../components/modal";
-import { IconButton } from "../components/icon";
-import ChatMessage from "../components/chat-message";
 import { RoomChat } from "../utils/types";
+import Modal from "./modal";
+import { IconButton } from "./icon";
+import ChatMessage from "./chat-message";
 
 interface Props {
   chats: RoomChat[];

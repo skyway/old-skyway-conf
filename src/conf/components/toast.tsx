@@ -2,7 +2,7 @@ import * as React from "react";
 import { FunctionComponent } from "react";
 import { css, keyframes } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
-import { Icon } from "../components/icon";
+import { Icon } from "./icon";
 
 interface Props {
   type: string;

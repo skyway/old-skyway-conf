@@ -3,12 +3,12 @@ import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
 import { VideoType } from "../utils/types";
-import Modal from "../components/modal";
-import Video from "../components/video";
-import VADetector from "../components/va-detector";
-import { IconButton } from "../components/icon";
-import SettingsNameEdit from "../components/settings-name-edit";
-import SettingsDeviceSelector from "../components/settings-device-selector";
+import Modal from "./modal";
+import Video from "./video";
+import VADetector from "./va-detector";
+import { IconButton } from "./icon";
+import SettingsNameEdit from "./settings-name-edit";
+import SettingsDeviceSelector from "./settings-device-selector";
 
 interface Props {
   stream: MediaStream;
