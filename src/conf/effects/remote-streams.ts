@@ -3,6 +3,8 @@ import RootStore from "../stores";
 const log = debug("effect:remote-streams");
 
 export const setPinned = ({ room }: RootStore) => (id: string) => {
-  log("setPinned()", id);
-  room.pinnedId = room.pinnedId === id ? null : id;
+  const pinnedId = room.pinnedId === id ? null : id;
+  log("setPinned()", pinnedId);
+
+  room.pinnedId = pinnedId;
 };
