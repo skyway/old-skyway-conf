@@ -8,7 +8,8 @@ import Video from "./video";
 import { IconButton } from "./icon";
 import SettingsNameEdit from "./settings-name-edit";
 import SettingsDeviceSelector from "./settings-device-selector";
-import SettingsStreamController from "./settings-stream-controller";
+import StreamController from "./stream-controller";
+import VADetector from "./va-detector";
 
 interface Props {
   stream: MediaStream;
@@ -69,15 +70,24 @@ const SettingsLayout: FunctionComponent<Props> = ({
           isVideoOnly={true}
         />
         <div css={controllerStyle}>
-          <SettingsStreamController
-            stream={stream}
+          <StreamController
             displayName=""
             browser={browser}
-            isVideoDisabled={videoType === null}
-            isVideoMuted={isVideoTrackMuted}
-            isAudioMuted={isAudioTrackMuted}
-            onClickToggleAudioMuted={onClickToggleAudioMuted}
-            onClickToggleVideoMuted={onClickToggleVideoMuted}
+            controllers={
+              <>
+                {videoType === null ? null : (
+                  <IconButton
+                    name={isVideoTrackMuted ? "videocam_off" : "videocam"}
+                    onClick={onClickToggleVideoMuted}
+                  />
+                )}
+                <IconButton
+                  name={isAudioTrackMuted ? "mic_off" : "mic"}
+                  onClick={onClickToggleAudioMuted}
+                />
+                <VADetector stream={stream} />
+              </>
+            }
           />
         </div>
       </div>

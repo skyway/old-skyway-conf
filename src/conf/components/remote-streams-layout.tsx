@@ -4,9 +4,10 @@ import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
 import { RoomStream, RoomStat } from "../utils/types";
 import { rightMenuWidth, rightMenuTogglerHeight } from "../utils/style";
-import RemoteStreamController from "./remote-stream-controller";
 import Video from "./video";
+import StreamController from "./stream-controller";
 import { Icon } from "./icon";
+import VADetector from "./va-detector";
 
 interface Props {
   streams: [string, RoomStream][];
@@ -41,7 +42,21 @@ const RemoteStreamsLayout: FunctionComponent<Props> = ({
             <Video stream={stream} />
             <div css={controllerStyle}>
               {stat !== null ? (
-                <RemoteStreamController {...stat} stream={stream} />
+                <StreamController
+                  displayName={stat.displayName}
+                  browser={stat.browser}
+                  controllers={
+                    <>
+                      {stat.isVideoDisabled ? null : (
+                        <Icon
+                          name={stat.isVideoMuted ? "videocam_off" : "videocam"}
+                        />
+                      )}
+                      <Icon name={stat.isAudioMuted ? "mic_off" : "mic"} />
+                      <VADetector stream={stream} />
+                    </>
+                  }
+                />
               ) : null}
             </div>
           </div>

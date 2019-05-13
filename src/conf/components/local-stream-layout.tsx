@@ -3,8 +3,10 @@ import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
 import { ClientBrowser, VideoType } from "../utils/types";
-import LocalStreamController from "./local-stream-controller";
+import StreamController from "./stream-controller";
 import Video from "./video";
+import { IconButton } from "./icon";
+import VADetector from "./va-detector";
 
 interface Props {
   stream: MediaStream;
@@ -36,16 +38,25 @@ const LocalStreamLayout: FunctionComponent<Props> = ({
         isVideoOnly={true}
       />
       <div css={controllerStyle}>
-        <LocalStreamController
-          stream={stream}
+        <StreamController
           displayName={displayName}
           browser={browser}
-          isVideoDisabled={videoType === null}
-          isVideoMuted={isVideoTrackMuted}
-          isAudioMuted={isAudioTrackMuted}
-          onClickToggleAudioMuted={onClickToggleAudioMuted}
-          onClickToggleVideoMuted={onClickToggleVideoMuted}
-          onClickOpenSettings={onClickOpenSettings}
+          controllers={
+            <>
+              {videoType === null ? null : (
+                <IconButton
+                  name={isVideoTrackMuted ? "videocam_off" : "videocam"}
+                  onClick={onClickToggleVideoMuted}
+                />
+              )}
+              <IconButton
+                name={isAudioTrackMuted ? "mic_off" : "mic"}
+                onClick={onClickToggleAudioMuted}
+              />
+              <VADetector stream={stream} />
+              <IconButton name="settings" onClick={onClickOpenSettings} />
+            </>
+          }
         />
       </div>
     </div>
