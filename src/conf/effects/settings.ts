@@ -52,7 +52,7 @@ export const enableUserVideo = ({ media, ui }: RootStore) => async () => {
 
 export const enableDisplayVideo = (store: RootStore) => async () => {
   log("enableDisplayVideo()");
-  const { media, ui } = store;
+  const { media, ui, notification } = store;
 
   const videoTrack = await getDisplayVideoTrack().catch(err => {
     if (err.name === "NotAllowedError") {
@@ -63,7 +63,8 @@ export const enableDisplayVideo = (store: RootStore) => async () => {
   });
 
   if (!(videoTrack instanceof MediaStreamTrack)) {
-    log("selection cancelled");
+    notification.showInfo("Display selection was cancelled");
+    log("selection was cancelled");
     return;
   }
 
@@ -71,6 +72,10 @@ export const enableDisplayVideo = (store: RootStore) => async () => {
     once: true
   });
 
+  // videoType changed display -> display
+  if (media.videoType === "display") {
+    notification.showInfo("Display was changed");
+  }
   // may trigger replaceStream()
   media.setVideoTrack(videoTrack, "display");
 };

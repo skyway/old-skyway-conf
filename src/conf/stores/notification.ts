@@ -11,52 +11,40 @@ class NotificationStore {
   }
 
   showInfo(text: string) {
-    this.show(
-      {
-        id: Date.now(),
-        type: "info",
-        text
-      },
-      2000
-    );
+    this.show({
+      id: Math.random(),
+      type: "info",
+      text
+    });
   }
 
   showChat(from: string, text: string) {
-    this.show(
-      {
-        id: Date.now(),
-        type: "chat",
-        text: `${from}: ${text}`
-      },
-      3000
-    );
+    this.show({
+      id: Math.random(),
+      type: "chat",
+      text: `${from}: ${text}`
+    });
   }
 
   showJoin(name: string) {
-    this.show(
-      {
-        id: Date.now(),
-        type: "person",
-        text: `${name} joined`
-      },
-      5000
-    );
+    this.show({
+      id: Math.random(),
+      type: "person",
+      text: `${name} joined`
+    });
   }
 
   showLeave(name: string) {
-    this.show(
-      {
-        id: Date.now(),
-        type: "person",
-        text: `${name} left`
-      },
-      5000
-    );
+    this.show({
+      id: Math.random(),
+      type: "person",
+      text: `${name} left`
+    });
   }
 
-  private show(item: NotificationItem, time: number) {
+  private show(item: NotificationItem) {
     this.items.push(item);
-    setTimeout(() => this.items.remove(item), time);
+    setTimeout(() => this.items.remove(item), 4000);
   }
 }
 decorate(NotificationStore, {

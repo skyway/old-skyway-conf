@@ -67,17 +67,18 @@ class MediaStore {
       this.videoTrack.stop();
     }
     this.videoTrack = track;
+    this.videoDeviceId = null;
     this.videoType = type;
   }
 
   deleteVideoTrack() {
-    if (this.videoTrack !== null) {
+    if (this.videoTrack instanceof MediaStreamTrack) {
       this.videoTrack.stop();
-      this.videoTrack = null;
-      this.videoInDevices.clear();
-      this.videoDeviceId = null;
-      this.videoType = null;
     }
+    this.videoTrack = null;
+    this.videoDeviceId = null;
+    this.videoType = null;
+    this.videoInDevices.clear();
   }
 
   setDevices({ videoInDevices, audioInDevices }: UserDevices) {

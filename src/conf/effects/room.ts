@@ -42,8 +42,8 @@ export const joinRoom = (store: RootStore) => {
   }
 
   log("joined room", confRoom);
-  notification.showInfo(`You joined the room ${room.name}`);
-  // force set to true
+
+  // force set to false
   ui.isReEntering = false;
 
   const disposers = [
@@ -86,6 +86,7 @@ export const joinRoom = (store: RootStore) => {
       // force close the room, triggers re-entering
       ui.isReEntering = true;
       room.room.close();
+      notification.showInfo("Re-enter the room to add/remove video");
     })
   ];
 

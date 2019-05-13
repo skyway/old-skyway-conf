@@ -1,5 +1,5 @@
 import { EffectCallback } from "react";
-import { toJS, reaction } from "mobx";
+import { toJS, reaction, observe } from "mobx";
 import debug from "debug";
 import { isValidRoomName, isValidRoomType } from "../../shared/validate";
 import { getUserDevices, getUserAudioTrack } from "../utils/webrtc";
@@ -102,19 +102,53 @@ export const loadClient = ({ client, ui }: RootStore): EffectCallback => () => {
 export const listenStoreChanges = ({
   client,
   media,
+  room,
   notification
 }: RootStore): EffectCallback => () => {
   log("listenStoreChanges()");
 
   const disposers = [
     reaction(
+      () => room.isJoined,
+      isJoined =>
+        isJoined && notification.showInfo(`You joined the room ${room.name}`)
+    ),
+    reaction(
       () => media.isAudioTrackMuted,
-      muted => notification.showInfo(`${muted ? "Mute" : "Unmute"} audio track`)
+      muted => notification.showInfo(`Audio was ${muted ? "muted" : "unmuted"}`)
     ),
     reaction(
       () => media.isVideoTrackMuted,
-      muted => notification.showInfo(`${muted ? "Mute" : "Unmute"} video track`)
+      muted => notification.showInfo(`Video was ${muted ? "muted" : "unmuted"}`)
     ),
+    observe(media, "videoDeviceId", change => {
+      if (change.oldValue === null) {
+        notification.showInfo("Camera was enabled");
+        return;
+      }
+      if (change.newValue === null) {
+        notification.showInfo("Camera was disabled");
+      } else {
+        notification.showInfo("Camera device was changed");
+      }
+    }),
+    observe(media, "audioDeviceId", change => {
+      if (change.oldValue === null) {
+        // skip initial value
+        return;
+      }
+      if (change.newValue !== null) {
+        notification.showInfo("Mic device was changed");
+      }
+    }),
+    observe(media, "videoType", change => {
+      if (change.newValue === "display") {
+        notification.showInfo("Display was enabled");
+      }
+      if (change.oldValue === "display") {
+        notification.showInfo("Display was disabled");
+      }
+    }),
     reaction(
       () => client.displayName,
       name => {
