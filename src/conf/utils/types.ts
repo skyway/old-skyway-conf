@@ -31,13 +31,11 @@ interface RoomDataStat {
 }
 interface RoomDataChat {
   type: "chat";
-  payload: {
-    text: string;
-  };
+  payload: RoomChat;
 }
 interface RoomDataCast {
   type: "cast";
-  payload: {};
+  payload: RoomCast;
 }
 
 export interface RoomStat {
@@ -54,6 +52,10 @@ export interface RoomChat {
   from: string;
   time: number;
   isMine: boolean;
+}
+
+export interface RoomCast {
+  from: string;
 }
 
 export interface NotificationItem {

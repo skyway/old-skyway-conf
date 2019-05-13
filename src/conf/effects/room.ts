@@ -6,7 +6,8 @@ import {
   RoomStream,
   RoomData,
   RoomStat,
-  RoomChat
+  RoomChat,
+  RoomCast
 } from "../utils/types";
 import RootStore from "../stores";
 
@@ -68,7 +69,7 @@ export const joinRoom = (store: RootStore) => {
       () => room.castRequestCount,
       () => {
         log("reaction:send(cast)");
-        confRoom.send({ type: "cast", payload: {} });
+        confRoom.send({ type: "cast", payload: { from: client.displayName } });
       }
     ),
     observe(media, "videoType", change => {
@@ -143,8 +144,10 @@ export const joinRoom = (store: RootStore) => {
         break;
       }
       case "cast": {
-        log("on('data/cast')", src);
+        const cast = payload as RoomCast;
+        log("on('data/cast')", cast);
         room.pinnedId = src;
+        notification.showInfo(`Video was casted by ${cast.from}`);
         break;
       }
       default: {
