@@ -39,16 +39,19 @@ export const BrowserIcon: FunctionComponent<ClientBrowser> = ({
 
 interface ButtonProps extends Props {
   onClick: () => void;
+  title?: string;
   disabled?: boolean;
 }
 export const IconButton: FunctionComponent<ButtonProps> = ({
   name,
+  title,
   disabled,
   onClick
 }: ButtonProps) => (
   <button
     disabled={disabled}
     onClick={onClick}
+    title={title}
     css={disabled ? [buttonStyle, disabledStyle] : buttonStyle}
   >
     <Icon name={name} />

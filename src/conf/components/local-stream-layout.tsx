@@ -41,9 +41,9 @@ const LocalStreamLayout: FunctionComponent<Props> = ({
       />
       <div css={actionStyle}>
         {videoType === null ? null : (
-          <IconButton name="cast" onClick={onClickCastVideo} />
+          <IconButton name="cast" title="Cast your video" onClick={onClickCastVideo} />
         )}
-        <IconButton name="settings" onClick={onClickOpenSettings} />
+        <IconButton name="settings" title="Open settings" onClick={onClickOpenSettings} />
       </div>
       <div css={controllerStyle}>
         <StreamController
@@ -54,11 +54,13 @@ const LocalStreamLayout: FunctionComponent<Props> = ({
               {videoType === null ? null : (
                 <IconButton
                   name={isVideoTrackMuted ? "videocam_off" : "videocam"}
+                  title={isVideoTrackMuted ? "Unmute video" : "Mute video"}
                   onClick={onClickToggleVideoMuted}
                 />
               )}
               <IconButton
                 name={isAudioTrackMuted ? "mic_off" : "mic"}
+                title={isAudioTrackMuted ? "Unmute audio" : "Mute audio"}
                 onClick={onClickToggleAudioMuted}
               />
               <VADetector stream={stream} />

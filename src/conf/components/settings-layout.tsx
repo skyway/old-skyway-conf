@@ -86,11 +86,13 @@ const SettingsLayout: FunctionComponent<Props> = ({
                 {videoType === null ? null : (
                   <IconButton
                     name={isVideoTrackMuted ? "videocam_off" : "videocam"}
+                    title={isVideoTrackMuted ? "Unmute video" : "Mute video"}
                     onClick={onClickToggleVideoMuted}
                   />
                 )}
                 <IconButton
                   name={isAudioTrackMuted ? "mic_off" : "mic"}
+                  title={isAudioTrackMuted ? "Unmute audio" : "Mute audio"}
                   onClick={onClickToggleAudioMuted}
                 />
                 <VADetector stream={stream} />

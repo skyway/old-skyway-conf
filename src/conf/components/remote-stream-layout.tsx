@@ -35,6 +35,7 @@ const RemoteStreamLayout: FunctionComponent<Props> = ({
         <div css={pinnedStyle}>
           <IconButton
             name={isPinned ? "cancel_presentation" : "present_to_all"}
+            title="Pin this video"
             onClick={onClickSetPinned}
           />
         </div>
