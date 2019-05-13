@@ -37,7 +37,7 @@ const LocalStream: FunctionComponent<{}> = () => {
             isAudioTrackMuted={media.isAudioTrackMuted}
             onClickToggleAudioMuted={onClickToggleAudioMuted}
             onClickToggleVideoMuted={onClickToggleVideoMuted}
-          onClickCastVideo={onClickCastVideo}
+            onClickCastVideo={onClickCastVideo}
             onClickOpenSettings={onClickOpenSettings}
           />
         );
