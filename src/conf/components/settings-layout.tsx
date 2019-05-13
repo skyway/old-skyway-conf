@@ -6,9 +6,12 @@ import { VideoType, ClientBrowser } from "../utils/types";
 import Modal from "./modal";
 import Video from "./video";
 import { IconButton, Icon } from "./icon";
-import { SettingsItem, SettingsItemDevice } from "./settings-item";
+import { SettingsItemName, SettingsItemDevice } from "./settings-item";
 import SettingsNameEdit from "./settings-name-edit";
-import SettingsDeviceSelector from "./settings-device-selector";
+import {
+  SettingsDeviceSelector,
+  SettingsDeviceToggler
+} from "./settings-device-selector";
 import StreamController from "./stream-controller";
 import VADetector from "./va-detector";
 
@@ -97,14 +100,14 @@ const SettingsLayout: FunctionComponent<Props> = ({
         </div>
       </div>
 
-      <SettingsItem label="NAME">
+      <SettingsItemName label="NAME">
         <SettingsNameEdit
           defaultDispName={defaultDispName}
           onChangeDispName={onChangeDispName}
         />
-      </SettingsItem>
+      </SettingsItemName>
       <SettingsItemDevice label="MIC.">
-        <button disabled>Disable</button>
+        <SettingsDeviceToggler label="Disable" disabled={true} />
         <SettingsDeviceSelector
           deviceId={audioDeviceId || ""}
           inDevices={audioInDevices}
@@ -115,7 +118,10 @@ const SettingsLayout: FunctionComponent<Props> = ({
         <SettingsItemDevice label="CAMERA">
           {videoType === "camera" ? (
             <>
-              <button onClick={onClickDisableUserVideo}>Disable</button>
+              <SettingsDeviceToggler
+                label="Disable"
+                onClick={onClickDisableUserVideo}
+              />
               <SettingsDeviceSelector
                 deviceId={videoDeviceId || ""}
                 inDevices={videoInDevices}
@@ -123,7 +129,10 @@ const SettingsLayout: FunctionComponent<Props> = ({
               />
             </>
           ) : (
-            <button onClick={onClickEnableUserVideo}>Enable</button>
+            <SettingsDeviceToggler
+              label="Enable"
+              onClick={onClickEnableUserVideo}
+            />
           )}
         </SettingsItemDevice>
       ) : null}
@@ -131,13 +140,20 @@ const SettingsLayout: FunctionComponent<Props> = ({
         <SettingsItemDevice label="DISPLAY">
           {videoType === "display" ? (
             <>
-              <button onClick={onClickDisableDisplayVideo}>Disable</button>
-              <button onClick={onClickEnableDisplayVideo}>
-                Use another display
-              </button>
+              <SettingsDeviceToggler
+                label="Disable"
+                onClick={onClickDisableDisplayVideo}
+              />
+              <SettingsDeviceToggler
+                label="Use another dispaly"
+                onClick={onClickEnableDisplayVideo}
+              />
             </>
           ) : (
-            <button onClick={onClickEnableDisplayVideo}>Enable</button>
+            <SettingsDeviceToggler
+              label="Enable"
+              onClick={onClickEnableDisplayVideo}
+            />
           )}
         </SettingsItemDevice>
       ) : null}

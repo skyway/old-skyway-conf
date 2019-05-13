@@ -16,7 +16,7 @@ export const SettingsItemDevice: FunctionComponent<Props> = ({
   </div>
 );
 
-export const SettingsItem: FunctionComponent<Props> = ({
+export const SettingsItemName: FunctionComponent<Props> = ({
   label,
   children
 }: Props) => (
@@ -32,14 +32,16 @@ const wrapperStyle = css({
 
 const deviceStyle = css({
   display: "grid",
-  gridTemplateColumns: "80px 60px 1fr",
-  gridGap: 8
+  gridTemplateColumns: "80px 72px 1fr",
+  gridGap: 8,
+  alignItems: "center"
 });
 
 const nameStyle = css({
   display: "grid",
   gridTemplateColumns: "80px 1fr",
-  gridGap: 8
+  gridGap: 8,
+  alignItems: "center"
 });
 
 const labelStyle = css({

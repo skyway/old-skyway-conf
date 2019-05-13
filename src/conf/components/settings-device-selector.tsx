@@ -7,7 +7,7 @@ interface Props {
   inDevices: MediaDeviceInfo[];
   onChangeDeviceId: (deviceId: string) => void;
 }
-const SettingsDeviceSelector: FunctionComponent<Props> = ({
+export const SettingsDeviceSelector: FunctionComponent<Props> = ({
   deviceId,
   inDevices,
   onChangeDeviceId
@@ -15,7 +15,7 @@ const SettingsDeviceSelector: FunctionComponent<Props> = ({
   <select
     value={deviceId || ""}
     onChange={ev => onChangeDeviceId(ev.target.value)}
-    css={selectStyle}
+    css={formStyle}
   >
     {inDevices.map(device => (
       <option key={device.deviceId} value={device.deviceId}>
@@ -25,10 +25,23 @@ const SettingsDeviceSelector: FunctionComponent<Props> = ({
   </select>
 );
 
-export default SettingsDeviceSelector;
+interface TogglerProps {
+  label: string;
+  disabled?: boolean;
+  onClick?: () => void;
+}
+export const SettingsDeviceToggler: FunctionComponent<TogglerProps> = ({
+  label,
+  disabled,
+  onClick
+}: TogglerProps) => (
+  <button css={formStyle} disabled={disabled ? true : false} onClick={onClick}>
+    {label}
+  </button>
+);
 
-const selectStyle = css({
+const formStyle = css({
   boxSizing: "border-box",
   width: "100%",
-  fontSize: "1.1rem"
+  height: "100%"
 });
