@@ -58,9 +58,10 @@ export interface RoomCast {
   from: string;
 }
 
+export type NotificationType = "info" | "person" | "chat";
 export interface NotificationItem {
   id: number;
-  type: "info" | "person" | "chat";
+  type: NotificationType;
   text: string;
 }
 

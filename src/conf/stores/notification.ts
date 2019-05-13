@@ -1,6 +1,6 @@
 import { decorate, observable, action } from "mobx";
 import { IObservableArray } from "mobx";
-import { NotificationItem } from "../utils/types";
+import { NotificationItem, NotificationType } from "../utils/types";
 
 class NotificationStore {
   items: IObservableArray<NotificationItem>;
@@ -11,38 +11,23 @@ class NotificationStore {
   }
 
   showInfo(text: string) {
-    this.show({
-      id: Math.random(),
-      type: "info",
-      text
-    });
+    this.show("info", text);
   }
 
   showChat(from: string, text: string) {
-    this.show({
-      id: Math.random(),
-      type: "chat",
-      text: `${from}: ${text}`
-    });
+    this.show("chat", `${from}: ${text}`);
   }
 
   showJoin(name: string) {
-    this.show({
-      id: Math.random(),
-      type: "person",
-      text: `${name} joined`
-    });
+    this.show("person", `${name} joined`);
   }
 
   showLeave(name: string) {
-    this.show({
-      id: Math.random(),
-      type: "person",
-      text: `${name} left`
-    });
+    this.show("person", `${name} left`);
   }
 
-  private show(item: NotificationItem) {
+  private show(type: NotificationType, text: string) {
+    const item: NotificationItem = { id: Math.random(), type, text };
     this.items.push(item);
     setTimeout(() => this.items.remove(item), 4000);
   }
