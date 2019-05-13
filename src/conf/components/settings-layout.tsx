@@ -100,7 +100,7 @@ const SettingsLayout: FunctionComponent<Props> = ({
         />
       </SettingsItem>
       <SettingsItemDevice label="MIC.">
-        <button disabled>disable</button>
+        <button disabled>Disable</button>
         <SettingsDeviceSelector
           deviceId={audioDeviceId || ""}
           inDevices={audioInDevices}
@@ -111,7 +111,7 @@ const SettingsLayout: FunctionComponent<Props> = ({
         <SettingsItemDevice label="CAMERA">
           {videoType === "camera" ? (
             <>
-              <button onClick={onClickDisableUserVideo}>disable</button>
+              <button onClick={onClickDisableUserVideo}>Disable</button>
               <SettingsDeviceSelector
                 deviceId={videoDeviceId || ""}
                 inDevices={videoInDevices}
@@ -119,21 +119,23 @@ const SettingsLayout: FunctionComponent<Props> = ({
               />
             </>
           ) : (
-            <button onClick={onClickEnableUserVideo}>enable</button>
+            <button onClick={onClickEnableUserVideo}>Enable</button>
           )}
         </SettingsItemDevice>
       ) : null}
       {hasGetDisplayMedia ? (
-        <SettingsItem label="DISPLAY">
+        <SettingsItemDevice label="DISPLAY">
           {videoType === "display" ? (
             <>
-              <button onClick={onClickDisableDisplayVideo}>disable</button>
-              <button onClick={onClickEnableDisplayVideo}>re-select</button>
+              <button onClick={onClickDisableDisplayVideo}>Disable</button>
+              <button onClick={onClickEnableDisplayVideo}>
+                Use another display
+              </button>
             </>
           ) : (
-            <button onClick={onClickEnableDisplayVideo}>enable</button>
+            <button onClick={onClickEnableDisplayVideo}>Enable</button>
           )}
-        </SettingsItem>
+        </SettingsItemDevice>
       ) : null}
 
       <IconButton name="done" onClick={onClickCloser} disabled={isReEntering} />
