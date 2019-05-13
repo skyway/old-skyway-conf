@@ -120,6 +120,9 @@ const SettingsLayout: FunctionComponent<Props> = ({
               <button onClick={onClickDisableDisplayVideo}>
                 disable display video
               </button>
+              <button onClick={onClickEnableDisplayVideo}>
+                re-select display video
+              </button>
             </>
           ) : (
             <button onClick={onClickEnableDisplayVideo}>
@@ -129,6 +132,7 @@ const SettingsLayout: FunctionComponent<Props> = ({
         </div>
       ) : null}
       <div>
+        <button disabled>disable audio</button>
         <SettingsDeviceSelector
           deviceId={audioDeviceId || ""}
           inDevices={audioInDevices}
