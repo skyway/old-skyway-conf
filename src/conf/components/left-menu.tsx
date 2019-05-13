@@ -4,12 +4,10 @@ import { css } from "@emotion/core";
 import { zIndex } from "../utils/style";
 
 interface Props {
-  top: ReactNode;
   bottom: ReactNode;
 }
-const LeftMenu: FunctionComponent<Props> = ({ top, bottom }: Props) => (
+const LeftMenu: FunctionComponent<Props> = ({ bottom }: Props) => (
   <div css={wrapperStyle}>
-    <div css={topStyle}>{top}</div>
     <div css={bottomStyle}>{bottom}</div>
   </div>
 );
@@ -22,12 +20,6 @@ const wrapperStyle = css({
   left: 0,
   bottom: 0,
   zIndex: zIndex.base
-});
-
-const topStyle = css({
-  position: "absolute",
-  top: 8,
-  left: 8
 });
 
 const bottomStyle = css({

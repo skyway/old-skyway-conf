@@ -37,7 +37,7 @@ class App extends React.Component<{}, State> {
           <Main>
             <PinnedStream />
           </Main>
-          <LeftMenu top={<Notification />} bottom={<LocalStream />} />
+          <LeftMenu bottom={<LocalStream />} />
           <RightMenu openers={[<ChatOpener key="chat" />]}>
             <RemoteStreams />
           </RightMenu>
@@ -45,6 +45,7 @@ class App extends React.Component<{}, State> {
           {/* Modal Layer */}
           <Settings />
           <Chat />
+          <Notification />
         </Bootstrap>
       </Layout>
     );
