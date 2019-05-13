@@ -5,7 +5,7 @@ import { globalColors } from "../../shared/global-style";
 import { VideoType, ClientBrowser } from "../utils/types";
 import Modal from "./modal";
 import Video from "./video";
-import { IconButton } from "./icon";
+import { IconButton, Icon } from "./icon";
 import { SettingsItem, SettingsItemDevice } from "./settings-item";
 import SettingsNameEdit from "./settings-name-edit";
 import SettingsDeviceSelector from "./settings-device-selector";
@@ -26,6 +26,7 @@ interface Props {
   audioDeviceId: string;
   videoInDevices: MediaDeviceInfo[];
   audioInDevices: MediaDeviceInfo[];
+  isJoined: boolean;
   onChangeVideoDeviceId: (deviceId: string) => void;
   onChangeAudioDeviceId: (deviceId: string) => void;
   onClickToggleVideoMuted: () => void;
@@ -35,7 +36,8 @@ interface Props {
   onClickEnableDisplayVideo: () => void;
   onClickDisableDisplayVideo: () => void;
   onChangeDispName: (name: string) => void;
-  onClickCloser: () => void;
+  onClickCloseSettings: () => void;
+  onClickJoinConference: () => void;
 }
 const SettingsLayout: FunctionComponent<Props> = ({
   stream,
@@ -51,6 +53,7 @@ const SettingsLayout: FunctionComponent<Props> = ({
   audioDeviceId,
   videoInDevices,
   audioInDevices,
+  isJoined,
   onChangeVideoDeviceId,
   onChangeAudioDeviceId,
   onClickToggleVideoMuted,
@@ -60,7 +63,8 @@ const SettingsLayout: FunctionComponent<Props> = ({
   onClickEnableDisplayVideo,
   onClickDisableDisplayVideo,
   onChangeDispName,
-  onClickCloser
+  onClickCloseSettings,
+  onClickJoinConference
 }: Props) => (
   <Modal>
     <div css={wrapperStyle}>
@@ -138,7 +142,16 @@ const SettingsLayout: FunctionComponent<Props> = ({
         </SettingsItemDevice>
       ) : null}
 
-      <IconButton name="done" onClick={onClickCloser} disabled={isReEntering} />
+      <div css={buttonWrapStyle}>
+        <button
+          css={doneButtonStyle}
+          onClick={isJoined ? onClickCloseSettings : onClickJoinConference}
+          disabled={isReEntering}
+        >
+          <Icon name={isJoined ? "done" : "meeting_room"} />
+          <span>{isJoined ? "CLOSE SETTINGS" : "ENTER THIS ROOM"}</span>
+        </button>
+      </div>
     </div>
   </Modal>
 );
@@ -147,7 +160,7 @@ export default SettingsLayout;
 
 const wrapperStyle = css({
   width: 480,
-  margin: "100px auto 0",
+  margin: "64px auto 0",
   backgroundColor: globalColors.white
 });
 
@@ -163,4 +176,29 @@ const controllerStyle = css({
   right: 0,
   bottom: 0,
   zIndex: 1
+});
+
+const buttonWrapStyle = css({
+  padding: 16,
+  textAlign: "center"
+});
+
+const doneButtonStyle = css({
+  display: "inline-flex",
+  alignItems: "center",
+  backgroundColor: globalColors.blue,
+  color: globalColors.white,
+  height: 40,
+  border: 0,
+  cursor: "pointer",
+  padding: "0 24px",
+  fontSize: 16,
+  borderRadius: 2,
+  "&:hover": {
+    opacity: 0.8
+  },
+  "&:disabled": {
+    pointerEvents: "none",
+    backgroundColor: globalColors.gray
+  }
 });
