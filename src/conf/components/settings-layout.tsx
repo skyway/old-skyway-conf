@@ -102,63 +102,65 @@ const SettingsLayout: FunctionComponent<Props> = ({
         </div>
       </div>
 
-      <SettingsItemName label="NAME">
-        <SettingsNameEdit
-          defaultDispName={defaultDispName}
-          onChangeDispName={onChangeDispName}
-        />
-      </SettingsItemName>
-      <SettingsItemDevice label="MIC.">
-        <SettingsDeviceToggler label="Disable" disabled={true} />
-        <SettingsDeviceSelector
-          deviceId={audioDeviceId || ""}
-          inDevices={audioInDevices}
-          onChangeDeviceId={onChangeAudioDeviceId}
-        />
-      </SettingsItemDevice>
-      {hasUserVideoDevice ? (
-        <SettingsItemDevice label="CAMERA">
-          {videoType === "camera" ? (
-            <>
-              <SettingsDeviceToggler
-                label="Disable"
-                onClick={onClickDisableUserVideo}
-              />
-              <SettingsDeviceSelector
-                deviceId={videoDeviceId || ""}
-                inDevices={videoInDevices}
-                onChangeDeviceId={onChangeVideoDeviceId}
-              />
-            </>
-          ) : (
-            <SettingsDeviceToggler
-              label="Enable"
-              onClick={onClickEnableUserVideo}
-            />
-          )}
+      <div css={settingsStyle}>
+        <SettingsItemName label="NAME">
+          <SettingsNameEdit
+            defaultDispName={defaultDispName}
+            onChangeDispName={onChangeDispName}
+          />
+        </SettingsItemName>
+        <SettingsItemDevice label="MIC.">
+          <SettingsDeviceToggler label="Disable" disabled={true} />
+          <SettingsDeviceSelector
+            deviceId={audioDeviceId || ""}
+            inDevices={audioInDevices}
+            onChangeDeviceId={onChangeAudioDeviceId}
+          />
         </SettingsItemDevice>
-      ) : null}
-      {hasGetDisplayMedia ? (
-        <SettingsItemDevice label="DISPLAY">
-          {videoType === "display" ? (
-            <>
+        {hasUserVideoDevice ? (
+          <SettingsItemDevice label="CAMERA">
+            {videoType === "camera" ? (
+              <>
+                <SettingsDeviceToggler
+                  label="Disable"
+                  onClick={onClickDisableUserVideo}
+                />
+                <SettingsDeviceSelector
+                  deviceId={videoDeviceId || ""}
+                  inDevices={videoInDevices}
+                  onChangeDeviceId={onChangeVideoDeviceId}
+                />
+              </>
+            ) : (
               <SettingsDeviceToggler
-                label="Disable"
-                onClick={onClickDisableDisplayVideo}
+                label="Enable"
+                onClick={onClickEnableUserVideo}
               />
+            )}
+          </SettingsItemDevice>
+        ) : null}
+        {hasGetDisplayMedia ? (
+          <SettingsItemDevice label="DISPLAY">
+            {videoType === "display" ? (
+              <>
+                <SettingsDeviceToggler
+                  label="Disable"
+                  onClick={onClickDisableDisplayVideo}
+                />
+                <SettingsDeviceToggler
+                  label="Use another dispaly"
+                  onClick={onClickEnableDisplayVideo}
+                />
+              </>
+            ) : (
               <SettingsDeviceToggler
-                label="Use another dispaly"
+                label="Enable"
                 onClick={onClickEnableDisplayVideo}
               />
-            </>
-          ) : (
-            <SettingsDeviceToggler
-              label="Enable"
-              onClick={onClickEnableDisplayVideo}
-            />
-          )}
-        </SettingsItemDevice>
-      ) : null}
+            )}
+          </SettingsItemDevice>
+        ) : null}
+      </div>
 
       <div css={buttonWrapStyle}>
         <button
@@ -202,8 +204,12 @@ const controllerStyle = css({
   zIndex: 1
 });
 
+const settingsStyle = css({
+  margin: "16px 24px"
+});
+
 const buttonWrapStyle = css({
-  padding: 16,
+  padding: "8px 16px",
   textAlign: "center"
 });
 

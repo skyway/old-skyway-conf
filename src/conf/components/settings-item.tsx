@@ -27,7 +27,7 @@ export const SettingsItemName: FunctionComponent<Props> = ({
 );
 
 const wrapperStyle = css({
-  margin: "8px 24px"
+  margin: "8px auto"
 });
 
 const deviceStyle = css({
