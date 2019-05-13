@@ -27,7 +27,7 @@ const RoomCreate: FunctionComponent<Props> = props => {
       }}
     >
       <div css={itemStyle}>
-        <div>NAME:</div>
+        <div>ROOM ID</div>
         <input
           type="text"
           placeholder="room-name"
@@ -45,7 +45,7 @@ const RoomCreate: FunctionComponent<Props> = props => {
       </span>
 
       <div css={itemStyle}>
-        <div>TYPE:</div>
+        <div>ROOM TYPE</div>
         {["mesh", "sfu"].map(type => (
           <label key={type} css={roomTypeStyle}>
             <input
@@ -66,8 +66,7 @@ const RoomCreate: FunctionComponent<Props> = props => {
           type="submit"
           disabled={!isValidRoomName(roomName)}
         >
-          <i className="material-icons">meeting_room</i>
-          <span>CREATE ROOM</span>
+          CREATE ROOM
         </button>
       </div>
     </form>
@@ -90,7 +89,7 @@ const itemStyle = css({
   height: 40,
   marginBottom: 4,
   "& > div": {
-    width: 80
+    width: 100
   }
 });
 
@@ -123,8 +122,6 @@ const buttonWrapStyle = css({
 });
 
 const createButtonStyle = css({
-  display: "inline-flex",
-  alignItems: "center",
   backgroundColor: globalColors.blue,
   color: globalColors.white,
   height: 40,
@@ -133,11 +130,8 @@ const createButtonStyle = css({
   padding: "0 24px",
   fontSize: 16,
   borderRadius: 2,
-  "&:hover": {
-    opacity: 0.8
-  },
   "&:disabled": {
-    pointerEvents: "none",
-    backgroundColor: globalColors.gray
+    backgroundColor: globalColors.gray,
+    cursor: "not-allowed"
   }
 });
