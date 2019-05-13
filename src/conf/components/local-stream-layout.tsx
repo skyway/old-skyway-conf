@@ -41,9 +41,17 @@ const LocalStreamLayout: FunctionComponent<Props> = ({
       />
       <div css={actionStyle}>
         {videoType === null ? null : (
-          <IconButton name="cast" title="Cast your video" onClick={onClickCastVideo} />
+          <IconButton
+            name="cast"
+            title="Cast your video"
+            onClick={onClickCastVideo}
+          />
         )}
-        <IconButton name="settings" title="Open settings" onClick={onClickOpenSettings} />
+        <IconButton
+          name="settings"
+          title="Open settings"
+          onClick={onClickOpenSettings}
+        />
       </div>
       <div css={controllerStyle}>
         <StreamController
