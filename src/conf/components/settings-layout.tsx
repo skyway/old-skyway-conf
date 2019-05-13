@@ -6,6 +6,7 @@ import { VideoType, ClientBrowser } from "../utils/types";
 import Modal from "./modal";
 import Video from "./video";
 import { IconButton } from "./icon";
+import { SettingsItem, SettingsItemDevice } from "./settings-item";
 import SettingsNameEdit from "./settings-name-edit";
 import SettingsDeviceSelector from "./settings-device-selector";
 import StreamController from "./stream-controller";
@@ -91,17 +92,26 @@ const SettingsLayout: FunctionComponent<Props> = ({
           />
         </div>
       </div>
-      <SettingsNameEdit
-        defaultDispName={defaultDispName}
-        onChangeDispName={onChangeDispName}
-      />
+
+      <SettingsItem label="NAME">
+        <SettingsNameEdit
+          defaultDispName={defaultDispName}
+          onChangeDispName={onChangeDispName}
+        />
+      </SettingsItem>
+      <SettingsItemDevice label="MIC.">
+        <button disabled>disable</button>
+        <SettingsDeviceSelector
+          deviceId={audioDeviceId || ""}
+          inDevices={audioInDevices}
+          onChangeDeviceId={onChangeAudioDeviceId}
+        />
+      </SettingsItemDevice>
       {hasUserVideoDevice ? (
-        <div>
+        <SettingsItemDevice label="CAMERA">
           {videoType === "camera" ? (
             <>
-              <button onClick={onClickDisableUserVideo}>
-                disable user video
-              </button>
+              <button onClick={onClickDisableUserVideo}>disable</button>
               <SettingsDeviceSelector
                 deviceId={videoDeviceId || ""}
                 inDevices={videoInDevices}
@@ -109,36 +119,23 @@ const SettingsLayout: FunctionComponent<Props> = ({
               />
             </>
           ) : (
-            <button onClick={onClickEnableUserVideo}>enable user video</button>
+            <button onClick={onClickEnableUserVideo}>enable</button>
           )}
-        </div>
+        </SettingsItemDevice>
       ) : null}
       {hasGetDisplayMedia ? (
-        <div>
+        <SettingsItem label="DISPLAY">
           {videoType === "display" ? (
             <>
-              <button onClick={onClickDisableDisplayVideo}>
-                disable display video
-              </button>
-              <button onClick={onClickEnableDisplayVideo}>
-                re-select display video
-              </button>
+              <button onClick={onClickDisableDisplayVideo}>disable</button>
+              <button onClick={onClickEnableDisplayVideo}>re-select</button>
             </>
           ) : (
-            <button onClick={onClickEnableDisplayVideo}>
-              enable display video
-            </button>
+            <button onClick={onClickEnableDisplayVideo}>enable</button>
           )}
-        </div>
+        </SettingsItem>
       ) : null}
-      <div>
-        <button disabled>disable audio</button>
-        <SettingsDeviceSelector
-          deviceId={audioDeviceId || ""}
-          inDevices={audioInDevices}
-          onChangeDeviceId={onChangeAudioDeviceId}
-        />
-      </div>
+
       <IconButton name="done" onClick={onClickCloser} disabled={isReEntering} />
     </div>
   </Modal>

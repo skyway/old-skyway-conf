@@ -1,5 +1,6 @@
 import * as React from "react";
 import { FunctionComponent } from "react";
+import { css } from "@emotion/core";
 
 interface Props {
   deviceId: string;
@@ -14,6 +15,7 @@ const SettingsDeviceSelector: FunctionComponent<Props> = ({
   <select
     value={deviceId || ""}
     onChange={ev => onChangeDeviceId(ev.target.value)}
+    css={selectStyle}
   >
     {inDevices.map(device => (
       <option key={device.deviceId} value={device.deviceId}>
@@ -24,3 +26,9 @@ const SettingsDeviceSelector: FunctionComponent<Props> = ({
 );
 
 export default SettingsDeviceSelector;
+
+const selectStyle = css({
+  boxSizing: "border-box",
+  width: "100%",
+  fontSize: "1.1rem"
+});
