@@ -4,7 +4,6 @@ import MediaStore from "./media";
 import RoomStore from "./room";
 import NotificationStore from "./notification";
 
-// TODO: should be function returns object..?
 class RootStore {
   ui: UiStore;
   client: ClientStore;
