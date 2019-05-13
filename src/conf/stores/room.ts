@@ -20,6 +20,7 @@ class RoomStore {
   chats: IObservableArray<RoomChat>;
   myLastChat: RoomChat | null;
   pinnedId: string | null;
+  castRequestCount: number;
 
   constructor() {
     // Peer instance
@@ -36,6 +37,7 @@ class RoomStore {
     this.chats = [];
     this.myLastChat = null;
     this.pinnedId = null;
+    this.castRequestCount = 0;
   }
 
   get name(): string {
@@ -107,6 +109,7 @@ decorate(RoomStore, {
   chats: observable.shallow,
   myLastChat: observable.ref,
   pinnedId: observable,
+  castRequestCount: observable,
   name: computed,
   isJoined: computed,
   pinnedStream: computed,

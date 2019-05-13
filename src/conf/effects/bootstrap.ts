@@ -150,6 +150,10 @@ export const listenStoreChanges = ({
       }
     }),
     reaction(
+      () => room.castRequestCount,
+      () => notification.showInfo("Your video was casted to everyone")
+    ),
+    reaction(
       () => client.displayName,
       name => {
         localStorage.setItem("SkyWayConf.dispName", name);

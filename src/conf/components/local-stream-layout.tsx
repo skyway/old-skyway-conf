@@ -17,6 +17,7 @@ interface Props {
   isAudioTrackMuted: boolean;
   onClickToggleAudioMuted: () => void;
   onClickToggleVideoMuted: () => void;
+  onClickCastVideo: () => void;
   onClickOpenSettings: () => void;
 }
 const LocalStreamLayout: FunctionComponent<Props> = ({
@@ -28,6 +29,7 @@ const LocalStreamLayout: FunctionComponent<Props> = ({
   isAudioTrackMuted,
   onClickToggleAudioMuted,
   onClickToggleVideoMuted,
+  onClickCastVideo,
   onClickOpenSettings
 }: Props) => (
   <div css={wrapperStyle}>
@@ -37,6 +39,12 @@ const LocalStreamLayout: FunctionComponent<Props> = ({
         isReverse={videoType === "camera"}
         isVideoOnly={true}
       />
+      <div css={actionStyle}>
+        {videoType === null ? null : (
+          <IconButton name="cast" onClick={onClickCastVideo} />
+        )}
+        <IconButton name="settings" onClick={onClickOpenSettings} />
+      </div>
       <div css={controllerStyle}>
         <StreamController
           displayName={displayName}
@@ -54,7 +62,6 @@ const LocalStreamLayout: FunctionComponent<Props> = ({
                 onClick={onClickToggleAudioMuted}
               />
               <VADetector stream={stream} />
-              <IconButton name="settings" onClick={onClickOpenSettings} />
             </>
           }
         />
@@ -82,4 +89,14 @@ const controllerStyle = css({
   right: 0,
   bottom: 0,
   zIndex: 1
+});
+
+const actionStyle = css({
+  position: "absolute",
+  top: 4,
+  right: 4,
+  zIndex: 1,
+  display: "flex",
+  alignItems: "center",
+  color: globalColors.white
 });

@@ -64,6 +64,13 @@ export const joinRoom = (store: RootStore) => {
         confRoom.send({ type: "chat", payload: chat });
       }
     ),
+    reaction(
+      () => room.castRequestCount,
+      () => {
+        log("reaction:send(cast)");
+        confRoom.send({ type: "cast", payload: {} });
+      }
+    ),
     observe(media, "videoType", change => {
       log("observe(media.videoType)");
       if (!room.isJoined) {
@@ -133,6 +140,11 @@ export const joinRoom = (store: RootStore) => {
         // notify only when chat is closed
         ui.isChatOpen || notification.showChat(chat.from, chat.text);
         room.addRemoteChat(chat);
+        break;
+      }
+      case "cast": {
+        log("on('data/cast')", src);
+        room.pinnedId = src;
         break;
       }
       default: {

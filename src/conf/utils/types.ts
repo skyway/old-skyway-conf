@@ -24,7 +24,7 @@ export interface UserDevices {
 
 export type VideoType = "camera" | "display" | null;
 
-export type RoomData = RoomDataStat | RoomDataChat;
+export type RoomData = RoomDataStat | RoomDataChat | RoomDataCast;
 interface RoomDataStat {
   type: "stat";
   payload: RoomStat;
@@ -34,6 +34,10 @@ interface RoomDataChat {
   payload: {
     text: string;
   };
+}
+interface RoomDataCast {
+  type: "cast";
+  payload: {};
 }
 
 export interface RoomStat {

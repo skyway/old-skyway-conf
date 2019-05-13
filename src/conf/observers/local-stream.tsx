@@ -6,6 +6,7 @@ import { StoreContext } from "../contexts";
 import LocalStreamLayout from "../components/local-stream-layout";
 import {
   openSettings,
+  castVideo,
   toggleAudioMuted,
   toggleVideoMuted
 } from "../effects/local-stream";
@@ -13,6 +14,7 @@ import {
 const LocalStream: FunctionComponent<{}> = () => {
   const store = useContext(StoreContext);
 
+  const onClickCastVideo = useCallback(castVideo(store), [store]);
   const onClickOpenSettings = useCallback(openSettings(store), [store]);
   const onClickToggleAudioMuted = useCallback(toggleAudioMuted(store), [store]);
   const onClickToggleVideoMuted = useCallback(toggleVideoMuted(store), [store]);
@@ -35,6 +37,7 @@ const LocalStream: FunctionComponent<{}> = () => {
             isAudioTrackMuted={media.isAudioTrackMuted}
             onClickToggleAudioMuted={onClickToggleAudioMuted}
             onClickToggleVideoMuted={onClickToggleVideoMuted}
+          onClickCastVideo={onClickCastVideo}
             onClickOpenSettings={onClickOpenSettings}
           />
         );
