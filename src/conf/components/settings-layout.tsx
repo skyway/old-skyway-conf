@@ -164,8 +164,14 @@ const SettingsLayout: FunctionComponent<Props> = ({
           onClick={isJoined ? onClickCloseSettings : onClickJoinConference}
           disabled={isReEntering}
         >
-          <Icon name={isJoined ? "done" : "meeting_room"} />
-          <span>{isJoined ? "CLOSE SETTINGS" : "ENTER THIS ROOM"}</span>
+          {isReEntering ? (
+            "RE-ENTERING THE ROOM"
+          ) : (
+            <>
+              <Icon name={isJoined ? "done" : "meeting_room"} />
+              <span>{isJoined ? "CLOSE SETTINGS" : "ENTER THIS ROOM"}</span>
+            </>
+          )}
         </button>
       </div>
     </div>
@@ -210,11 +216,8 @@ const doneButtonStyle = css({
   padding: "0 24px",
   fontSize: 16,
   borderRadius: 2,
-  "&:hover": {
-    opacity: 0.8
-  },
   "&:disabled": {
-    pointerEvents: "none",
+    cursor: "not-allowed",
     backgroundColor: globalColors.gray
   }
 });
