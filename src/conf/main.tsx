@@ -9,9 +9,6 @@ import App from "./app";
 const log = debug("main");
 
 (async () => {
-  // TODO: debug
-  localStorage.setItem("debug", "(main|effect|component)*");
-
   log(`${name} v${version}`);
   document.title += ` v${version}`;
 
