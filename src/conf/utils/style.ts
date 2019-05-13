@@ -3,5 +3,5 @@ export const zIndex = {
   modal: 100
 };
 
-export const rightMenuWidth = 200;
+export const rightMenuWidth = 220;
 export const rightMenuTogglerHeight = 32;

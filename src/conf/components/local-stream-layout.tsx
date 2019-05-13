@@ -69,10 +69,11 @@ const wrapperStyle = css({
   outline: `1px solid ${globalColors.gray}`
 });
 
+const localStreamWidth = 240;
 const videoStyle = css({
   position: "relative",
-  width: (165 / 3) * 4,
-  height: 165
+  width: localStreamWidth,
+  height: (localStreamWidth / 4) * 3
 });
 
 const controllerStyle = css({
