@@ -5,8 +5,8 @@ export const isValidRoomType = (type: string): boolean => {
   return false;
 };
 
-export const maxRoomNameLength = 16;
-export const roomNameRe = "^[0-9a-z_-]{4,16}$";
-export const isValidRoomName = (name: string): boolean => {
-  return new RegExp(roomNameRe).test(name);
+export const maxRoomIdLength = 16;
+export const roomIdRe = "^[0-9a-z_-]{4,16}$";
+export const isValidRoomId = (name: string): boolean => {
+  return new RegExp(roomIdRe).test(name);
 };

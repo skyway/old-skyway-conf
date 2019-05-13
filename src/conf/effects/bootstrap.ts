@@ -1,7 +1,7 @@
 import { EffectCallback } from "react";
 import { toJS, reaction, observe } from "mobx";
 import debug from "debug";
-import { isValidRoomName, isValidRoomType } from "../../shared/validate";
+import { isValidRoomId, isValidRoomType } from "../../shared/validate";
 import { getUserDevices, getUserAudioTrack } from "../utils/webrtc";
 import { initPeer } from "../utils/skyway";
 import { RoomInit } from "../utils/types";
@@ -14,9 +14,9 @@ export const checkRoomSetting = ({
   room
 }: RootStore): EffectCallback => () => {
   log("checkRoomSetting()");
-  const [, roomType, roomName] = location.hash.split("/");
+  const [, roomType, roomId] = location.hash.split("/");
 
-  if (!(isValidRoomType(roomType) && isValidRoomName(roomName))) {
+  if (!(isValidRoomType(roomType) && isValidRoomId(roomId))) {
     throw ui.showError(new Error("Invalid room type and/or room name."));
   }
 
@@ -26,9 +26,9 @@ export const checkRoomSetting = ({
     });
     // just log it, do not trust them
     peer.on("error", console.error);
-    room.load({ mode: roomType as RoomInit["mode"], id: roomName }, peer);
+    room.load({ mode: roomType as RoomInit["mode"], id: roomId }, peer);
 
-    log(`room: ${roomType}/${roomName}`);
+    log(`room: ${roomType}/${roomId}`);
     log("peer instance created");
   })();
 };
