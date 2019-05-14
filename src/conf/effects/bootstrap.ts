@@ -60,13 +60,13 @@ export const ensureAudioDevice = ({
     const audioTrack = await getUserAudioTrack(deviceId).catch(err => {
       throw ui.showError(err);
     });
-    media.setAudioTrack(audioTrack);
+    media.setAudioTrack(audioTrack, deviceId);
 
     // and get valid labels...
     const devices = await getUserDevices({ audio: true }).catch(err => {
       throw ui.showError(err);
     });
-    media.setDevices(devices);
+    media.setAudioDevices(devices);
 
     log("audio devices", devices.audioInDevices);
   })();
@@ -115,38 +115,29 @@ export const listenStoreChanges = ({
     ),
     reaction(
       () => media.isAudioTrackMuted,
-      muted => notification.showInfo(`Audio was ${muted ? "muted" : "unmuted"}`)
+      muted =>
+        notification.showInfo(`Mic input was ${muted ? "muted" : "unmuted"}`)
     ),
     reaction(
       () => media.isVideoTrackMuted,
       muted => notification.showInfo(`Video was ${muted ? "muted" : "unmuted"}`)
     ),
-    observe(media, "videoDeviceId", change => {
-      if (change.oldValue === null) {
-        notification.showInfo("Camera was enabled");
-        return;
-      }
-      if (change.newValue === null) {
-        notification.showInfo("Camera was disabled");
-      } else {
-        notification.showInfo("Camera device was changed");
-      }
-    }),
     observe(media, "audioDeviceId", change => {
       if (change.oldValue === null) {
         // skip initial value
         return;
       }
-      if (change.newValue !== null) {
-        notification.showInfo("Mic device was changed");
-      }
+      notification.showInfo("Mic input was changed");
     }),
-    observe(media, "videoType", change => {
-      if (change.newValue === "display") {
-        notification.showInfo("Display was enabled");
+    observe(media, "videoDeviceId", change => {
+      if (change.oldValue === null) {
+        notification.showInfo("Video input was enabled");
+        return;
       }
-      if (change.oldValue === "display") {
-        notification.showInfo("Display was disabled");
+      if (change.newValue !== null) {
+        notification.showInfo("Video input was changed");
+      } else {
+        notification.showInfo("Video input was disabled");
       }
     }),
     reaction(
