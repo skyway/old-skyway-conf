@@ -72,10 +72,6 @@ export const enableDisplayVideo = (store: RootStore) => async () => {
     once: true
   });
 
-  // videoType changed display -> display
-  if (media.videoType === "display") {
-    notification.showInfo("Display was changed");
-  }
   // may trigger replaceStream()
   media.setVideoTrack(videoTrack, "display", videoTrack.label);
 };

@@ -64,18 +64,15 @@ class MediaStore {
   }
 
   setVideoTrack(track: MediaStreamTrack, type: VideoType, deviceId: string) {
-    this.deleteVideoTrack();
-
+    if (this.videoTrack instanceof MediaStreamTrack) {
+      this.videoTrack.stop();
+    }
     this.videoTrack = track;
     this.videoType = type;
     this.videoDeviceId = deviceId;
   }
 
   deleteVideoTrack() {
-    if (this.videoType === "camera") {
-      this.videoInDevices.clear();
-    }
-
     if (this.videoTrack instanceof MediaStreamTrack) {
       this.videoTrack.stop();
     }
