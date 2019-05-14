@@ -4,5 +4,8 @@ export const zIndex = {
   notification: 1000
 };
 
-export const rightMenuWidth = 220;
+// 768 = iPad device-width, if smaller apply small size
+export const modalContentWidth = window.innerWidth > 768 - 1 ? 600 : 300;
+
+export const rightMenuWidth = 280;
 export const rightMenuTogglerHeight = 32;

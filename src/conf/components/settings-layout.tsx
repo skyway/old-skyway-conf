@@ -3,6 +3,7 @@ import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
 import { VideoType, ClientBrowser } from "../utils/types";
+import { modalContentWidth } from "../utils/style";
 import Modal from "./modal";
 import Video from "./video";
 import { IconButton, Icon } from "./icon";
@@ -184,17 +185,17 @@ const SettingsLayout: FunctionComponent<Props> = ({
 
 export default SettingsLayout;
 
-const videoWidth = 400;
 const wrapperStyle = css({
-  width: videoWidth,
+  width: modalContentWidth,
   margin: "32px auto 0",
+  boxSizing: "border-box",
   backgroundColor: globalColors.white
 });
 
 const videoStyle = css({
   position: "relative",
   width: "100%",
-  height: (videoWidth / 4) * 3
+  height: (modalContentWidth / 4) * 3
 });
 
 const controllerStyle = css({
