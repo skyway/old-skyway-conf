@@ -72,21 +72,22 @@ export const joinRoom = (store: RootStore) => {
         confRoom.send({ type: "cast", payload: { from: client.displayName } });
       }
     ),
-    observe(media, "videoType", change => {
-      log("observe(media.videoType)");
+    observe(media, "videoDeviceId", change => {
+      log("observe(media.videoDeviceId)");
       if (!room.isJoined) {
         log("do nothing before room join");
         return;
       }
-      const hasVideoEnabledOrDisabled =
-        change.oldValue === null || change.newValue === null;
 
-      if (!hasVideoEnabledOrDisabled) {
+      // camera OR display was changed, not need to re-enter
+      if (change.oldValue !== null && change.newValue !== null) {
         log("just change video by replaceStream(), no need to re-enter");
         confRoom.replaceStream(media.stream);
         return;
       }
 
+      // camera OR display was enabled, need to re-enter
+      // camera OR display was disabled, need to re-enter
       log("need to re-enter the room to add/remove video");
       if (room.room === null) {
         throw ui.showError(new Error("Room is null!"));
