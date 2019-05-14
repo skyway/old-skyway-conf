@@ -110,7 +110,7 @@ export const changeVideoDeviceId = ({ media, ui }: RootStore) => async (
   const videoTrack = await getUserVideoTrack(deviceId).catch(err => {
     throw ui.showError(err);
   });
-  media.setAudioTrack(videoTrack);
+  media.setVideoTrack(videoTrack, "camera");
 };
 
 export const toggleAudioMuted = ({ media }: RootStore) => () => {
