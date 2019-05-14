@@ -55,41 +55,45 @@ class MediaStore {
     };
   }
 
-  setAudioTrack(track: MediaStreamTrack) {
+  setAudioTrack(track: MediaStreamTrack, deviceId: string) {
     if (this.audioTrack instanceof MediaStreamTrack) {
       this.audioTrack.stop();
     }
     this.audioTrack = track;
+    this.audioDeviceId = deviceId;
   }
 
-  setVideoTrack(track: MediaStreamTrack, type: VideoType) {
-    if (this.videoTrack instanceof MediaStreamTrack) {
-      this.videoTrack.stop();
-    }
+  setVideoTrack(track: MediaStreamTrack, type: VideoType, deviceId: string) {
+    this.deleteVideoTrack();
+
     this.videoTrack = track;
-    this.videoDeviceId = null;
     this.videoType = type;
+    this.videoDeviceId = deviceId;
   }
 
   deleteVideoTrack() {
+    if (this.videoType === "camera") {
+      this.videoInDevices.clear();
+    }
+
     if (this.videoTrack instanceof MediaStreamTrack) {
       this.videoTrack.stop();
     }
     this.videoTrack = null;
-    this.videoDeviceId = null;
     this.videoType = null;
-    this.videoInDevices.clear();
+    this.videoDeviceId = null;
   }
 
-  setDevices({ videoInDevices, audioInDevices }: UserDevices) {
-    if (videoInDevices !== null) {
-      this.videoInDevices.replace(videoInDevices);
-    }
+  setAudioDevices({ audioInDevices }: UserDevices) {
     if (audioInDevices !== null) {
       this.audioInDevices.replace(audioInDevices);
     }
+  }
 
-    this.setDefaultDeviceId();
+  setVideoDevices({ videoInDevices }: UserDevices) {
+    if (videoInDevices !== null) {
+      this.videoInDevices.replace(videoInDevices);
+    }
   }
 
   toggleMuted(kind: MediaStreamTrack["kind"]) {
@@ -98,24 +102,6 @@ class MediaStore {
     }
     if (kind === "audio") {
       this.isAudioTrackMuted = !this.isAudioTrackMuted;
-    }
-  }
-
-  private setDefaultDeviceId() {
-    if (this.audioDeviceId === null) {
-      const [defaultAudioDevice] = this.audioInDevices;
-      // may be undefined
-      if (defaultAudioDevice instanceof MediaDeviceInfo) {
-        this.audioDeviceId = defaultAudioDevice.deviceId;
-      }
-    }
-
-    if (this.videoDeviceId === null) {
-      const [defaultVideoDevice] = this.videoInDevices;
-      // may be undefined
-      if (defaultVideoDevice instanceof MediaDeviceInfo) {
-        this.videoDeviceId = defaultVideoDevice.deviceId;
-      }
     }
   }
 }
@@ -136,9 +122,9 @@ decorate(MediaStore, {
   setAudioTrack: action,
   setVideoTrack: action,
   deleteVideoTrack: action,
-  setDevices: action,
-  toggleMuted: action,
-  setDefaultDeviceId: action
+  setAudioDevices: action,
+  setVideoDevices: action,
+  toggleMuted: action
 });
 
 export default MediaStore;

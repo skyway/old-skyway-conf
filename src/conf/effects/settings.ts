@@ -39,13 +39,13 @@ export const enableUserVideo = ({ media, ui }: RootStore) => async () => {
     throw ui.showError(err);
   });
   // may trigger replaceStream()
-  media.setVideoTrack(videoTrack, "camera");
+  media.setVideoTrack(videoTrack, "camera", deviceId);
 
   // and get valid labels...
   const devices = await getUserDevices({ video: true }).catch(err => {
     throw ui.showError(err);
   });
-  media.setDevices(devices);
+  media.setVideoDevices(devices);
 
   log("video devices", devices.videoInDevices);
 };
@@ -77,7 +77,7 @@ export const enableDisplayVideo = (store: RootStore) => async () => {
     notification.showInfo("Display was changed");
   }
   // may trigger replaceStream()
-  media.setVideoTrack(videoTrack, "display");
+  media.setVideoTrack(videoTrack, "display", videoTrack.label);
 };
 
 export const disableUserVideo = ({ media }: RootStore) => () => {
@@ -95,22 +95,20 @@ export const changeAudioDeviceId = ({ media, ui }: RootStore) => async (
 ) => {
   log("changeAudioDeviceId", deviceId);
 
-  media.audioDeviceId = deviceId;
   const audioTrack = await getUserAudioTrack(deviceId).catch(err => {
     throw ui.showError(err);
   });
-  media.setAudioTrack(audioTrack);
+  media.setAudioTrack(audioTrack, deviceId);
 };
 export const changeVideoDeviceId = ({ media, ui }: RootStore) => async (
   deviceId: string
 ) => {
   log("changeVideoDeviceId", deviceId);
 
-  media.videoDeviceId = deviceId;
   const videoTrack = await getUserVideoTrack(deviceId).catch(err => {
     throw ui.showError(err);
   });
-  media.setVideoTrack(videoTrack, "camera");
+  media.setVideoTrack(videoTrack, "camera", deviceId);
 };
 
 export const toggleAudioMuted = ({ media }: RootStore) => () => {
