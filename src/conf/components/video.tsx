@@ -45,6 +45,7 @@ const Video: FunctionComponent<Props> = ({
       <video
         css={isReverse ? [videoStyle, reverseVideoStyle] : videoStyle}
         ref={videoRef}
+        playsInline
         muted={true}
       />
       {isVideoOnly ? null : <audio css={audioStyle} ref={audioRef} />}
