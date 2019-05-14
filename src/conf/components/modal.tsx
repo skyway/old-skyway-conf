@@ -17,6 +17,7 @@ const wrapperStyle = css({
   right: 0,
   bottom: 0,
   zIndex: zIndex.modal,
+  overflow: "auto",
   backgroundColor: "rgba(0, 0, 0, .8)",
   willChange: "opacity",
   animation: `${keyframes`from { opacity: 0; } to { opacity: 1; }`} .4s ease`

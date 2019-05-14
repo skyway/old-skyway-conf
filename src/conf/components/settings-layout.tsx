@@ -184,16 +184,17 @@ const SettingsLayout: FunctionComponent<Props> = ({
 
 export default SettingsLayout;
 
+const videoWidth = 400;
 const wrapperStyle = css({
-  width: 480,
-  margin: "64px auto 0",
+  width: videoWidth,
+  margin: "32px auto 0",
   backgroundColor: globalColors.white
 });
 
 const videoStyle = css({
   position: "relative",
   width: "100%",
-  height: 360
+  height: (videoWidth / 4) * 3
 });
 
 const controllerStyle = css({
@@ -205,11 +206,11 @@ const controllerStyle = css({
 });
 
 const settingsStyle = css({
-  margin: "16px 24px"
+  margin: 16
 });
 
 const buttonWrapStyle = css({
-  padding: "8px 16px",
+  padding: 16,
   textAlign: "center"
 });
 

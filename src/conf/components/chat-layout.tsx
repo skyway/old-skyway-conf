@@ -69,7 +69,7 @@ const wrapperStyle = css({
   gridTemplateRows: "20px 1fr 20px",
   width: 300,
   height: "80%",
-  margin: "10% auto 0",
+  margin: "32px auto 0",
   padding: 8,
   backgroundColor: globalColors.white
 });
