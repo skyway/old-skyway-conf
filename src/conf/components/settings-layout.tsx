@@ -224,7 +224,7 @@ const doneButtonStyle = css({
   border: 0,
   cursor: "pointer",
   padding: "0 24px",
-  fontSize: 16,
+  fontSize: "1.2rem",
   borderRadius: 2,
   "&:disabled": {
     cursor: "not-allowed",
