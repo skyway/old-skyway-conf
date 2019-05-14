@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FunctionComponent } from "react";
+import { FunctionComponent, SyntheticEvent } from "react";
 import { css } from "@emotion/core";
 import { fontSize, base64Image } from "../../shared/global-style";
 import { ClientBrowser } from "../utils/types";
@@ -38,7 +38,7 @@ export const BrowserIcon: FunctionComponent<ClientBrowser> = ({
 };
 
 interface ButtonProps extends Props {
-  onClick: () => void;
+  onClick: (ev: SyntheticEvent<HTMLButtonElement>) => void;
   title?: string;
   disabled?: boolean;
 }
