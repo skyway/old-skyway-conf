@@ -82,6 +82,9 @@ class RoomStore {
   removeStream(peerId: string) {
     this.streams.delete(peerId);
     this.stats.delete(peerId);
+    if (this.pinnedId === peerId) {
+      this.pinnedId = null;
+    }
   }
 
   cleanUp() {
