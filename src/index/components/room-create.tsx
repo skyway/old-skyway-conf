@@ -31,6 +31,7 @@ const RoomCreate: FunctionComponent<Props> = props => {
         <input
           type="text"
           value={roomId}
+          placeholder="room-name"
           onChange={ev => setRoomId(ev.target.value)}
           onBlur={() => setRoomIdValid(isValidRoomId(roomId))}
           required
@@ -45,18 +46,20 @@ const RoomCreate: FunctionComponent<Props> = props => {
 
       <div css={itemStyle}>
         <div>ROOM TYPE</div>
-        {["mesh", "sfu"].map(type => (
-          <label key={type} css={roomTypeStyle}>
-            <input
-              type="radio"
-              onChange={() => setRoomType(type)}
-              value={roomType}
-              checked={roomType === type}
-              name="room-type"
-            />{" "}
-            {type}
-          </label>
-        ))}
+        <div>
+          {["sfu", "mesh"].map(type => (
+            <label key={type} css={roomTypeStyle}>
+              <input
+                type="radio"
+                onChange={() => setRoomType(type)}
+                value={roomType}
+                checked={roomType === type}
+                name="room-type"
+              />{" "}
+              {type}
+            </label>
+          ))}
+        </div>
       </div>
 
       <div css={buttonWrapStyle}>
@@ -75,28 +78,27 @@ const RoomCreate: FunctionComponent<Props> = props => {
 export default RoomCreate;
 
 const wrapperStyle = css({
-  margin: "24px auto 40px",
   backgroundColor: globalColors.white,
   border: `1px solid ${globalColors.gray}`,
-  padding: 24,
+  padding: 16,
   borderRadius: 2
 });
 
 const itemStyle = css({
-  display: "flex",
+  display: "grid",
   alignItems: "center",
+  gridTemplateColumns: "88px 1fr",
   height: 40,
-  marginBottom: 4,
-  "& > div": {
-    width: 100
-  }
+  marginBottom: 4
 });
 
 const roomIdStyle = css({
+  width: "100%",
+  boxSizing: "border-box",
   appearance: "none",
   border: 0,
   borderBottom: `1px solid ${globalColors.gray}`,
-  fontSize: 20,
+  fontSize: "1.2rem",
   padding: "4px 8px",
   "&:focus": {
     borderColor: globalColors.blue
@@ -105,12 +107,12 @@ const roomIdStyle = css({
 
 const tipStyle = css({
   color: globalColors.red,
-  fontSize: 12
+  fontSize: ".8rem"
 });
 
 const roomTypeStyle = css({
   margin: "0 8px",
-  fontSize: 20,
+  fontSize: "1.2rem",
   "& > input": {
     verticalAlign: "middle"
   }
@@ -127,7 +129,7 @@ const createButtonStyle = css({
   border: 0,
   cursor: "pointer",
   padding: "0 24px",
-  fontSize: 16,
+  fontSize: "1.2rem",
   borderRadius: 2,
   "&:disabled": {
     backgroundColor: globalColors.gray,

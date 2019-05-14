@@ -11,7 +11,7 @@ const Layout: FunctionComponent<Props> = ({ children }: Props) => (
     <h1 css={headStyle}>SkyWay Conference</h1>
     <p css={pStyle}>Video conference on web browser</p>
 
-    {children}
+    <div css={contentStyle}>{children}</div>
 
     <p css={pStyle}>
       No registration or installs! Just create a room and share the link.
@@ -40,13 +40,21 @@ const wrapperStyle = css({
   justifyContent: "center"
 });
 
+const contentStyle = css({
+  width: "90%",
+  maxWidth: 400,
+  margin: "0 auto"
+});
+
 const headStyle = css({
   margin: 0,
+  marginBottom: -8,
   color: globalColors.lightblue,
-  fontSize: "3rem"
+  fontSize: "2.5rem"
 });
 
 const pStyle = css({
+  margin: "16px auto",
   color: globalColors.lightblue,
   fontSize: "1.2rem"
 });
