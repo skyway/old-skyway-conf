@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require("path");
+const { dependencies } = require("./package");
 
-const rootPath = path.resolve("");
+const rootPath = path.resolve(".");
 
 const config = {
   mode: "development",
@@ -26,6 +27,17 @@ const config = {
         use: ["babel-loader"]
       }
     ]
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: new RegExp(Object.keys(dependencies).join("|")),
+          name: "vendor",
+          chunks: "all"
+        }
+      }
+    }
   },
   devServer: {
     contentBase: `${rootPath}/docs`,
