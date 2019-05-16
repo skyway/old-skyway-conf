@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
@@ -31,59 +32,82 @@ const LocalStreamLayout: FunctionComponent<Props> = ({
   onClickToggleVideoMuted,
   onClickCastVideo,
   onClickOpenSettings
-}: Props) => (
-  <div css={wrapperStyle}>
-    <div css={videoStyle}>
-      <Video
-        stream={stream}
-        isReverse={videoType === "camera"}
-        isVideoOnly={true}
-      />
-      <div css={actionStyle}>
-        {videoType === null ? null : (
+}: Props) => {
+  const [isMinimize, setMinimize] = useState(false);
+
+  return (
+    <div css={isMinimize ? [wrapperStyle, minimizeStyle] : wrapperStyle}>
+      <div css={videoStyle}>
+        <Video
+          stream={stream}
+          isReverse={videoType === "camera"}
+          isVideoOnly={true}
+        />
+        <div css={actionStyle}>
+          {videoType === null ? null : (
+            <IconButton
+              name="cast"
+              title="Cast your video"
+              onClick={onClickCastVideo}
+            />
+          )}
           <IconButton
-            name="cast"
-            title="Cast your video"
-            onClick={onClickCastVideo}
+            name="settings"
+            title="Open settings"
+            onClick={onClickOpenSettings}
           />
-        )}
-        <IconButton
-          name="settings"
-          title="Open settings"
-          onClick={onClickOpenSettings}
-        />
-      </div>
-      <div css={controllerStyle}>
-        <StreamController
-          displayName={displayName}
-          browser={browser}
-          controllers={
-            <>
-              {videoType === null ? null : (
+          {isMinimize ? (
+            <IconButton
+              name="maximize"
+              title="Maximize"
+              onClick={() => setMinimize(false)}
+            />
+          ) : (
+            <IconButton
+              name="minimize"
+              title="Minimize"
+              onClick={() => setMinimize(true)}
+            />
+          )}
+        </div>
+        <div css={controllerStyle}>
+          <StreamController
+            displayName={displayName}
+            browser={browser}
+            controllers={
+              <>
+                {videoType === null ? null : (
+                  <IconButton
+                    name={isVideoTrackMuted ? "videocam_off" : "videocam"}
+                    title={isVideoTrackMuted ? "Unmute video" : "Mute video"}
+                    onClick={onClickToggleVideoMuted}
+                  />
+                )}
                 <IconButton
-                  name={isVideoTrackMuted ? "videocam_off" : "videocam"}
-                  title={isVideoTrackMuted ? "Unmute video" : "Mute video"}
-                  onClick={onClickToggleVideoMuted}
+                  name={isAudioTrackMuted ? "mic_off" : "mic"}
+                  title={isAudioTrackMuted ? "Unmute audio" : "Mute audio"}
+                  onClick={onClickToggleAudioMuted}
                 />
-              )}
-              <IconButton
-                name={isAudioTrackMuted ? "mic_off" : "mic"}
-                title={isAudioTrackMuted ? "Unmute audio" : "Mute audio"}
-                onClick={onClickToggleAudioMuted}
-              />
-              <VADetector stream={stream} />
-            </>
-          }
-        />
+                <VADetector stream={stream} />
+              </>
+            }
+          />
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default LocalStreamLayout;
 
 const wrapperStyle = css({
-  outline: `1px solid ${globalColors.gray}`
+  outline: `1px solid ${globalColors.gray}`,
+  transition: "all .2s ease",
+  willChange: "transform"
+});
+
+const minimizeStyle = css({
+  transform: "translateY(90%)"
 });
 
 const localStreamWidth = 240;
