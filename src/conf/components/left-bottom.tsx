@@ -4,15 +4,15 @@ import { css } from "@emotion/core";
 import { zIndex } from "../utils/style";
 
 interface Props {
-  bottom: ReactNode;
+  children: ReactNode;
 }
-const LeftMenu: FunctionComponent<Props> = ({ bottom }: Props) => (
+const LeftBottom: FunctionComponent<Props> = ({ children }: Props) => (
   <div css={wrapperStyle}>
-    <div css={bottomStyle}>{bottom}</div>
+    <div css={bottomStyle}>{children}</div>
   </div>
 );
 
-export default LeftMenu;
+export default LeftBottom;
 
 const wrapperStyle = css({
   position: "absolute",

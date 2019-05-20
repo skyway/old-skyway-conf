@@ -9,7 +9,7 @@ import RemoteStreams from "./observers/remote-streams";
 import Layout from "./components/layout";
 import ErrorDetail from "./components/error-detail";
 import Main from "./components/main";
-import LeftMenu from "./components/left-menu";
+import LeftBottom from "./components/left-bottom";
 import RightMenu from "./components/right-menu";
 
 interface State {
@@ -37,7 +37,9 @@ class App extends React.Component<{}, State> {
           <Main>
             <PinnedStream />
           </Main>
-          <LeftMenu bottom={<LocalStream />} />
+          <LeftBottom>
+            <LocalStream />
+          </LeftBottom>
           <RightMenu openers={[<ChatOpener key="chat" />]}>
             <RemoteStreams />
           </RightMenu>
