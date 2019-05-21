@@ -31,7 +31,16 @@ Web conference app using SkyWay JS-SDK.
 - switch audio / video / display devices
 - show voice-activity
 - edit display name
+- display browser info
 - send chat
 - show local stream
+  - mirror my video
 - show remote streams
 - pin one of remote streams
+- cast my stream
+- try to re-enter the room on disconnect
+- notify events
+  - remote user join
+  - remote user leave
+  - remote user chat
+  - local action information
