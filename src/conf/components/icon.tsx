@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FunctionComponent, SyntheticEvent } from "react";
 import { css } from "@emotion/core";
-import { fontSize, base64Image } from "../../shared/global-style";
+import { fontSize } from "../../shared/global-style";
 import { ClientBrowser } from "../utils/types";
 
 interface Props {
@@ -18,20 +18,21 @@ export const BrowserIcon: FunctionComponent<ClientBrowser> = ({
   version
 }: ClientBrowser) => {
   let src = null;
-  if (name === "Chrome") {
-    src = base64Image.chrome;
-  }
-  if (name === "Firefox") {
-    src = base64Image.firefox;
-  }
-  if (name === "Safari") {
-    src = base64Image.safari;
+  switch (name) {
+    case "Chrome":
+    case "Firefox":
+    case "Safari":
+      src = `./images/conf/icon-${name.toLowerCase()}.svg`;
+      break;
+    case "Microsoft Edge":
+      src = "./images/conf/icon-edge.svg";
+      break;
   }
 
   const title = `${name} v${version}`;
 
   return src !== null ? (
-    <img css={iconStyle} src={src} alt={title} title={title} />
+    <img css={imgStyle} src={src} alt={title} title={title} />
   ) : (
     <Icon name="info" />
   );
@@ -60,6 +61,10 @@ export const IconButton: FunctionComponent<ButtonProps> = ({
 
 const iconStyle = css({
   fontSize
+});
+
+const imgStyle = css({
+  height: fontSize
 });
 
 const buttonStyle = css({
