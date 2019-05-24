@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState } from "react";
 import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
@@ -22,26 +21,21 @@ const RemoteStreamLayout: FunctionComponent<Props> = ({
   isPinned,
   onClickSetPinned
 }: Props) => {
-  const [isHover, setHover] = useState(false);
   const isVideoDisabled = stat && stat.isVideoDisabled ? true : false;
 
   return (
-    <div
-      css={wrapperStyle}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-    >
-      {!isVideoDisabled && isHover ? (
-        <div css={pinnedStyle}>
-          <IconButton
-            name={isPinned ? "cancel_presentation" : "present_to_all"}
-            title="Pin this video"
-            onClick={onClickSetPinned}
-          />
-        </div>
-      ) : null}
+    <>
       <div css={videoStyle}>
         <Video stream={stream} />
+        <div css={actionStyle}>
+          {!isVideoDisabled ? (
+            <IconButton
+              name={isPinned ? "cancel_presentation" : "present_to_all"}
+              title="Pin this video"
+              onClick={onClickSetPinned}
+            />
+          ) : null}
+        </div>
         <div css={controllerStyle}>
           {stat !== null ? (
             <StreamController
@@ -62,32 +56,15 @@ const RemoteStreamLayout: FunctionComponent<Props> = ({
           ) : null}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
 export default RemoteStreamLayout;
 
-const wrapperStyle = css({
-  position: "relative"
-});
-
-const pinnedStyle = css({
-  position: "absolute",
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  zIndex: 1,
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  backgroundColor: "rgba(0, 0, 0, .8)",
-
-  "& > button": {
-    transform: "scale(2)",
-    color: globalColors.white
-  }
+const videoStyle = css({
+  position: "relative",
+  height: (rightMenuWidth / 4) * 3
 });
 
 const controllerStyle = css({
@@ -95,11 +72,15 @@ const controllerStyle = css({
   left: 0,
   right: 0,
   bottom: 0,
-  zIndex: 10
+  zIndex: 1
 });
 
-const videoStyle = css({
-  position: "relative",
-  // 4:3
-  height: (rightMenuWidth / 4) * 3
+const actionStyle = css({
+  position: "absolute",
+  top: 4,
+  right: 4,
+  zIndex: 1,
+  display: "flex",
+  alignItems: "center",
+  color: globalColors.white
 });
