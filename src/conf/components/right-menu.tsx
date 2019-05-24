@@ -58,7 +58,8 @@ const wrapperStyle = css({
 
 const scrollerStyle = css({
   height: "100%",
-  overflowY: "scroll"
+  overflowY: "scroll",
+  overflowScrolling: "touch"
 });
 
 const knobStyle = css({

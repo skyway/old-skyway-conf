@@ -81,7 +81,8 @@ const headStyle = css({
 });
 
 const scrollerStyle = css({
-  overflowY: "scroll"
+  overflowY: "scroll",
+  overflowScrolling: "touch"
 });
 
 const editorStyle = css({
