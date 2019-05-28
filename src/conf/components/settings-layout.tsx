@@ -80,7 +80,7 @@ const SettingsLayout: FunctionComponent<Props> = ({
         />
         <div css={controllerStyle}>
           <StreamController
-            displayName=""
+            displayName={`v${browser.version}`}
             browser={browser}
             controllers={
               <>
