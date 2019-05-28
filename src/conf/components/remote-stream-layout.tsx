@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
@@ -8,6 +9,7 @@ import Video from "./video";
 import StreamController from "./stream-controller";
 import { Icon, IconButton } from "./icon";
 import VADetector from "./va-detector";
+import StreamInfo from "./stream-info";
 
 interface Props {
   stream: RoomStream;
@@ -22,6 +24,7 @@ const RemoteStreamLayout: FunctionComponent<Props> = ({
   onClickSetPinned
 }: Props) => {
   const isVideoDisabled = stat && stat.isVideoDisabled ? true : false;
+  const [isInfoShown, setInfoShown] = useState(false);
 
   return (
     <>
@@ -35,7 +38,17 @@ const RemoteStreamLayout: FunctionComponent<Props> = ({
               onClick={onClickSetPinned}
             />
           ) : null}
+          <IconButton
+            name="info"
+            title="Toggle stream info"
+            onClick={() => setInfoShown(!isInfoShown)}
+          />
         </div>
+        {isInfoShown ? (
+          <div css={infoStyle}>
+            <StreamInfo stream={stream} />
+          </div>
+        ) : null}
         <div css={controllerStyle}>
           {stat !== null ? (
             <StreamController
@@ -67,6 +80,15 @@ const videoStyle = css({
   height: (rightMenuWidth / 4) * 3
 });
 
+const infoStyle = css({
+  position: "absolute",
+  left: 0,
+  right: 0,
+  top: 0,
+  bottom: 0,
+  zIndex: 10
+});
+
 const controllerStyle = css({
   position: "absolute",
   left: 0,
@@ -79,7 +101,7 @@ const actionStyle = css({
   position: "absolute",
   top: 4,
   right: 4,
-  zIndex: 1,
+  zIndex: 100,
   display: "flex",
   alignItems: "center",
   color: globalColors.white

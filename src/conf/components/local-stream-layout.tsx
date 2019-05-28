@@ -8,6 +8,7 @@ import StreamController from "./stream-controller";
 import Video from "./video";
 import { IconButton } from "./icon";
 import VADetector from "./va-detector";
+import StreamInfo from "./stream-info";
 
 interface Props {
   stream: MediaStream;
@@ -34,6 +35,7 @@ const LocalStreamLayout: FunctionComponent<Props> = ({
   onClickOpenSettings
 }: Props) => {
   const [isMinimize, setMinimize] = useState(false);
+  const [isInfoShown, setInfoShown] = useState(false);
 
   return (
     <div css={isMinimize ? [wrapperStyle, minimizeStyle] : wrapperStyle}>
@@ -51,6 +53,11 @@ const LocalStreamLayout: FunctionComponent<Props> = ({
               onClick={onClickCastVideo}
             />
           )}
+          <IconButton
+            name="info"
+            title="Toggle stream info"
+            onClick={() => setInfoShown(!isInfoShown)}
+          />
           <IconButton
             name="settings"
             title="Open settings"
@@ -70,6 +77,11 @@ const LocalStreamLayout: FunctionComponent<Props> = ({
             />
           )}
         </div>
+        {isInfoShown ? (
+          <div css={infoStyle}>
+            <StreamInfo stream={stream} />
+          </div>
+        ) : null}
         <div css={controllerStyle}>
           <StreamController
             displayName={displayName}
@@ -117,6 +129,15 @@ const videoStyle = css({
   height: (localStreamWidth / 4) * 3
 });
 
+const infoStyle = css({
+  position: "absolute",
+  left: 0,
+  right: 0,
+  top: 0,
+  bottom: 0,
+  zIndex: 10
+});
+
 const controllerStyle = css({
   position: "absolute",
   left: 0,
@@ -129,7 +150,7 @@ const actionStyle = css({
   position: "absolute",
   top: 4,
   right: 4,
-  zIndex: 1,
+  zIndex: 100,
   display: "flex",
   alignItems: "center",
   color: globalColors.white
