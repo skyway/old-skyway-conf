@@ -1,7 +1,11 @@
 import { EffectCallback } from "react";
 import { toJS, reaction, observe } from "mobx";
 import debug from "debug";
-import { isValidRoomId, isValidRoomType } from "../../shared/validate";
+import {
+  isValidRoomId,
+  isValidRoomType,
+  roomIdRe
+} from "../../shared/validate";
 import { getUserDevices, getUserAudioTrack } from "../utils/webrtc";
 import { initPeer } from "../utils/skyway";
 import { RoomInit } from "../utils/types";
@@ -16,8 +20,17 @@ export const checkRoomSetting = ({
   log("checkRoomSetting()");
   const [, roomType, roomId] = location.hash.split("/");
 
-  if (!(isValidRoomType(roomType) && isValidRoomId(roomId))) {
-    throw ui.showError(new Error("Invalid room type and/or room name."));
+  if (!isValidRoomType(roomType)) {
+    throw ui.showError(
+      new Error("Invalid room type! it should be `sfu` or `mesh`.")
+    );
+  }
+  if (!isValidRoomId(roomId)) {
+    throw ui.showError(
+      new Error(
+        `Invalid room name! it should be match \`${roomIdRe.toString()}\`.`
+      )
+    );
   }
 
   (async () => {
