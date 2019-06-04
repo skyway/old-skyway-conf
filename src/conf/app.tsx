@@ -3,6 +3,7 @@ import Bootstrap from "./observers/bootstrap";
 import Settings from "./observers/settings";
 import Notification from "./observers/notification";
 import { ChatOpener, Chat } from "./observers/chat";
+import { StatsOpener, Stats } from "./observers/stats";
 import PinnedStream from "./observers/pinned-stream";
 import LocalStream from "./observers/local-stream";
 import RemoteStreams from "./observers/remote-streams";
@@ -40,13 +41,16 @@ class App extends React.Component<{}, State> {
           <LeftBottom>
             <LocalStream />
           </LeftBottom>
-          <RightMenu openers={[<ChatOpener key="chat" />]}>
+          <RightMenu
+            openers={[<ChatOpener key="chat" />, <StatsOpener key="stats" />]}
+          >
             <RemoteStreams />
           </RightMenu>
 
           {/* Modal Layer */}
           <Settings />
           <Chat />
+          <Stats />
           <Notification />
         </Bootstrap>
       </Layout>
