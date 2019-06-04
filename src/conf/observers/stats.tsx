@@ -24,7 +24,7 @@ export const Stats: FunctionComponent<{}> = () => {
 
   const onClickCloseStats = useCallback(closeStats(store), [store]);
 
-  const { ui } = store;
+  const { ui, room } = store;
   return (
     <Observer>
       {() => {
@@ -32,7 +32,12 @@ export const Stats: FunctionComponent<{}> = () => {
           return <></>;
         }
 
-        return <StatsLayout onClickCloser={onClickCloseStats} />;
+        return (
+          <StatsLayout
+            isSfu={room.mode === "sfu"}
+            onClickCloser={onClickCloseStats}
+          />
+        );
       }}
     </Observer>
   );
