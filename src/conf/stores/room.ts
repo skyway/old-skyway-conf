@@ -7,7 +7,8 @@ import {
   MeshRoom,
   RoomStream,
   RoomStat,
-  RoomChat
+  RoomChat,
+  ConfStats
 } from "../utils/types";
 
 class RoomStore {
@@ -21,6 +22,7 @@ class RoomStore {
   myLastChat: RoomChat | null;
   pinnedId: string | null;
   castRequestCount: number;
+  confStats: ConfStats | null;
 
   constructor() {
     // Peer instance
@@ -38,6 +40,7 @@ class RoomStore {
     this.myLastChat = null;
     this.pinnedId = null;
     this.castRequestCount = 0;
+    this.confStats = null;
   }
 
   get name(): string {
@@ -126,6 +129,7 @@ decorate(RoomStore, {
   myLastChat: observable.ref,
   pinnedId: observable,
   castRequestCount: observable,
+  confStats: observable,
   name: computed,
   isJoined: computed,
   pinnedStream: computed,

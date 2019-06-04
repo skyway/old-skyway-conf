@@ -9,7 +9,14 @@ export const openStats = ({ ui, room }: RootStore) => () => {
 
   const timer = setInterval(() => {
     const pc = room.getPeerConnection();
+    // TODO: getStats()
+    // TODO: parse and generate our stats
     console.warn(pc);
+
+    const stats = {
+      timestamp: Date.now()
+    };
+    room.confStats = stats;
   }, 1000);
 
   // wait for closer

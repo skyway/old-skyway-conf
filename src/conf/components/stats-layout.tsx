@@ -3,15 +3,18 @@ import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
 import { modalContentWidth } from "../utils/style";
+import { ConfStats } from "../utils/types";
 import Modal from "./modal";
 import { IconButton } from "./icon";
 
 interface Props {
   isSfu: boolean;
+  stats: ConfStats | null;
   onClickCloser: () => void;
 }
 const StatsLayout: FunctionComponent<Props> = ({
   isSfu,
+  stats,
   onClickCloser
 }: Props) => (
   <Modal>
@@ -20,7 +23,9 @@ const StatsLayout: FunctionComponent<Props> = ({
         <IconButton name="close" onClick={onClickCloser} />
       </div>
       {isSfu ? (
-        <div css={scrollerStyle} />
+        <div css={scrollerStyle}>
+          <pre css={statsStyle}>{JSON.stringify(stats, null, 2)}</pre>
+        </div>
       ) : (
         <div css={naStyle}>Stats view is not available in mesh room type.</div>
       )}
@@ -46,8 +51,15 @@ const headStyle = css({
 });
 
 const scrollerStyle = css({
-  overflowY: "scroll",
+  margin: 0,
+  padding: 4,
+  boxSizing: "border-box",
+  overflow: "scroll",
   overflowScrolling: "touch"
+});
+
+const statsStyle = css({
+  fontSize: ".8rem"
 });
 
 const naStyle = css({
