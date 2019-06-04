@@ -87,6 +87,19 @@ class RoomStore {
     }
   }
 
+  getPeerConnection(): RTCPeerConnection | null {
+    if (this.mode !== "sfu") {
+      return null;
+    }
+    if (this.room === null) {
+      return null;
+    }
+
+    // @ts-ignore: to get private refs
+    const pc: RTCPeerConnection = this.room._negotiator._pc;
+    return pc;
+  }
+
   cleanUp() {
     if (this.room === null) {
       throw new Error("Room is null!");
@@ -120,6 +133,7 @@ decorate(RoomStore, {
   addLocalChat: action,
   addRemoteChat: action,
   removeStream: action,
+  getPeerConnection: action,
   cleanUp: action
 });
 
