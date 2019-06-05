@@ -7,16 +7,17 @@ export const openStats = ({ ui, room }: RootStore) => () => {
   log("openStats()");
   ui.isStatsOpen = true;
 
-  const timer = setInterval(() => {
+  const timer = setInterval(async () => {
     const pc = room.getPeerConnection();
-    // TODO: getStats()
-    // TODO: parse and generate our stats
-    console.warn(pc);
+    if (pc === null) {
+      return;
+    }
 
-    const stats = {
-      timestamp: Date.now()
-    };
-    room.confStats = stats;
+    const statsReport = await pc.getStats().catch(err => {
+      log("getStats() error", err);
+      return null;
+    });
+    room.confStats = statsReport;
   }, 1000);
 
   // wait for closer

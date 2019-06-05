@@ -65,10 +65,6 @@ export interface NotificationItem {
   text: string;
 }
 
-export interface ConfStats {
-  timestamp: number;
-}
-
 /* Types for skyway-js */
 export interface Peer extends EventEmitter {
   id: string;

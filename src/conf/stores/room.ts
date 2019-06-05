@@ -7,8 +7,7 @@ import {
   MeshRoom,
   RoomStream,
   RoomStat,
-  RoomChat,
-  ConfStats
+  RoomChat
 } from "../utils/types";
 
 class RoomStore {
@@ -22,7 +21,7 @@ class RoomStore {
   myLastChat: RoomChat | null;
   pinnedId: string | null;
   castRequestCount: number;
-  confStats: ConfStats | null;
+  confStats: RTCStatsReport | null;
 
   constructor() {
     // Peer instance

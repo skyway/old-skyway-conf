@@ -3,13 +3,12 @@ import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
 import { modalContentWidth } from "../utils/style";
-import { ConfStats } from "../utils/types";
 import Modal from "./modal";
 import { IconButton } from "./icon";
 
 interface Props {
   isSfu: boolean;
-  stats: ConfStats | null;
+  stats: RTCStatsReport | null;
   onClickCloser: () => void;
 }
 const StatsLayout: FunctionComponent<Props> = ({
@@ -24,7 +23,11 @@ const StatsLayout: FunctionComponent<Props> = ({
       </div>
       {isSfu ? (
         <div css={scrollerStyle}>
-          <pre css={statsStyle}>{JSON.stringify(stats, null, 2)}</pre>
+          <pre css={statsStyle}>
+            {stats === null
+              ? "Loading..."
+              : JSON.stringify([...stats], null, 2)}
+          </pre>
         </div>
       ) : (
         <div css={naStyle}>Stats view is not available in mesh room type.</div>
