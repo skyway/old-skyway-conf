@@ -3,12 +3,13 @@ import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
 import { modalContentWidth } from "../utils/style";
+import { StatsReport } from "../utils/types";
 import Modal from "./modal";
 import { IconButton } from "./icon";
 
 interface Props {
   isSfu: boolean;
-  stats: RTCStatsReport | null;
+  stats: StatsReport | null;
   onClickCloser: () => void;
 }
 const StatsLayout: FunctionComponent<Props> = ({
@@ -24,9 +25,7 @@ const StatsLayout: FunctionComponent<Props> = ({
       {isSfu ? (
         <div css={scrollerStyle}>
           <pre css={statsStyle}>
-            {stats === null
-              ? "Loading..."
-              : JSON.stringify([...stats], null, 2)}
+            {stats === null ? "Loading..." : JSON.stringify(stats, null, 2)}
           </pre>
         </div>
       ) : (

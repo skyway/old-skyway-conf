@@ -1,4 +1,4 @@
-import { UserDevices } from "./types";
+import { UserDevices, StatsReport } from "./types";
 
 export const getUserDevices = async (
   options: MediaStreamConstraints
@@ -56,4 +56,14 @@ export const getDisplayVideoTrack = async (): Promise<MediaStreamTrack> => {
   return navigator.mediaDevices
     .getDisplayMedia({ video: true })
     .then(stream => stream.getVideoTracks()[0]);
+};
+
+export const normalizeStatsReport = (
+  statsReport: RTCStatsReport
+): StatsReport => {
+  const res: StatsReport = {};
+  for (const [key, value] of statsReport) {
+    res[key] = value;
+  }
+  return res;
 };

@@ -1,6 +1,8 @@
 import debug from "debug";
 import { when } from "mobx";
 import RootStore from "../stores";
+import { normalizeStatsReport } from "../utils/webrtc";
+
 const log = debug("effect:stats");
 
 export const openStats = ({ ui, room }: RootStore) => () => {
@@ -17,7 +19,8 @@ export const openStats = ({ ui, room }: RootStore) => () => {
       log("getStats() error", err);
       return null;
     });
-    room.confStats = statsReport;
+    room.confStats =
+      statsReport !== null ? normalizeStatsReport(statsReport) : null;
   }, 1000);
 
   // wait for closer
