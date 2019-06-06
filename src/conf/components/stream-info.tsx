@@ -20,6 +20,7 @@ const StreamInfo: FunctionComponent<Props> = ({ stream }) => {
 
       setInfo({
         timestamp: Date.now(),
+        streamId: stream.id,
         video: vTrack
           ? {
               trackId: vTrack.id,
