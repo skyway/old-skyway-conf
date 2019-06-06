@@ -32,6 +32,7 @@ Web conference app using SkyWay JS-SDK.
 - show voice-activity
 - edit display name
 - display browser info
+- dispaly stream info
 - send chat
 - show local stream
   - mirror my video
@@ -44,3 +45,4 @@ Web conference app using SkyWay JS-SDK.
   - remote user leave
   - remote user chat
   - local action information
+- display stats report(SFU only)
