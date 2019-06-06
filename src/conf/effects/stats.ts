@@ -9,7 +9,10 @@ export const openStats = ({ ui, room }: RootStore) => () => {
   log("openStats()");
   ui.isStatsOpen = true;
 
-  const timer = setInterval(async () => {
+  let timer = 0;
+  const updateStats = async () => {
+    timer = requestAnimationFrame(updateStats);
+
     const pc = room.getPeerConnection();
     if (pc === null) {
       return;
@@ -25,14 +28,15 @@ export const openStats = ({ ui, room }: RootStore) => () => {
     } else {
       room.confStats.clear();
     }
-  }, 1000);
+  };
+  timer = requestAnimationFrame(updateStats);
 
   // wait for closer
   when(
     () => !ui.isStatsOpen,
     () => {
       log("stop stats collector");
-      clearInterval(timer);
+      cancelAnimationFrame(timer);
     }
   );
 };
