@@ -19,8 +19,12 @@ export const openStats = ({ ui, room }: RootStore) => () => {
       log("getStats() error", err);
       return null;
     });
-    room.confStats =
-      statsReport !== null ? normalizeStatsReport(statsReport) : null;
+
+    if (statsReport !== null) {
+      room.confStats.replace(normalizeStatsReport(statsReport));
+    } else {
+      room.confStats.clear();
+    }
   }, 1000);
 
   // wait for closer

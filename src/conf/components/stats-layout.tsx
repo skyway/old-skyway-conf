@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
@@ -9,37 +10,77 @@ import { IconButton } from "./icon";
 
 interface Props {
   isSfu: boolean;
-  stats: StatsReport | null;
+  stats: StatsReport[];
   onClickCloser: () => void;
 }
 const StatsLayout: FunctionComponent<Props> = ({
   isSfu,
   stats,
   onClickCloser
-}: Props) => (
-  <Modal>
-    <div css={wrapperStyle}>
-      <div css={headStyle}>
-        <IconButton name="close" onClick={onClickCloser} />
-      </div>
-      {isSfu ? (
-        <div css={scrollerStyle}>
-          <pre css={statsStyle}>
-            {stats === null ? "Loading..." : JSON.stringify(stats, null, 2)}
-          </pre>
+}: Props) => {
+  const [searchKey, setSearchKey] = useState("");
+  const filteredStats = filterStats(stats, searchKey);
+
+  return (
+    <Modal>
+      <div css={wrapperStyle}>
+        <div css={headStyle}>
+          <IconButton name="close" onClick={onClickCloser} />
         </div>
-      ) : (
-        <div css={naStyle}>Stats view is not available in mesh room type.</div>
-      )}
-    </div>
-  </Modal>
-);
+        <input
+          type="text"
+          placeholder="filter stats"
+          value={searchKey}
+          onChange={ev => setSearchKey(ev.target.value)}
+        />
+        {isSfu ? (
+          <div css={scrollerStyle}>
+            <pre css={statsStyle}>
+              {filteredStats === null
+                ? "Loading..."
+                : JSON.stringify(filteredStats, null, 2)}
+            </pre>
+          </div>
+        ) : (
+          <div css={naStyle}>
+            Stats view is not available in mesh room type.
+          </div>
+        )}
+      </div>
+    </Modal>
+  );
+};
 
 export default StatsLayout;
 
+const filterStats = (stats: StatsReport[], searchKey: string) => {
+  // stats not ready
+  if (stats.length === 0) {
+    return null;
+  }
+
+  // stats ready + no search
+  const res: { [key: string]: StatsReport["value"] } = {};
+  if (searchKey.trim().length === 0) {
+    for (const stat of stats) {
+      res[stat.key] = stat.value;
+    }
+    return res;
+  }
+
+  // search stats
+  for (const stat of stats) {
+    if (stat.index.includes(searchKey)) {
+      res[stat.key] = stat.value;
+    }
+  }
+
+  return res;
+};
+
 const wrapperStyle = css({
   display: "grid",
-  gridTemplateRows: "20px 1fr",
+  gridTemplateRows: "20px 20px 1fr",
   width: modalContentWidth,
   height: "80%",
   boxSizing: "border-box",
@@ -53,14 +94,14 @@ const headStyle = css({
 });
 
 const scrollerStyle = css({
-  margin: 0,
-  padding: 4,
   boxSizing: "border-box",
   overflow: "scroll",
   overflowScrolling: "touch"
 });
 
 const statsStyle = css({
+  margin: 0,
+  padding: 4,
   fontSize: ".8rem"
 });
 

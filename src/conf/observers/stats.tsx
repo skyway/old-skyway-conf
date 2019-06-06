@@ -35,7 +35,7 @@ export const Stats: FunctionComponent<{}> = () => {
         return (
           <StatsLayout
             isSfu={room.mode === "sfu"}
-            stats={room.confStats}
+            stats={[...room.confStats]}
             onClickCloser={onClickCloseStats}
           />
         );

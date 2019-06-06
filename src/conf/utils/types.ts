@@ -66,7 +66,9 @@ export interface NotificationItem {
 }
 
 export interface StatsReport {
-  [key: string]: object;
+  key: string;
+  value: object;
+  index: string;
 }
 
 /* Types for skyway-js */

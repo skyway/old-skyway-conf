@@ -60,10 +60,10 @@ export const getDisplayVideoTrack = async (): Promise<MediaStreamTrack> => {
 
 export const normalizeStatsReport = (
   statsReport: RTCStatsReport
-): StatsReport => {
-  const res: StatsReport = {};
+): StatsReport[] => {
+  const res = [];
   for (const [key, value] of statsReport) {
-    res[key] = value;
+    res.push({ key, value, index: JSON.stringify(value) });
   }
   return res;
 };
