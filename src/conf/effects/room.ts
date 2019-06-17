@@ -1,14 +1,7 @@
 import debug from "debug";
 import { reaction, observe } from "mobx";
-import {
-  MeshRoom,
-  SfuRoom,
-  RoomStream,
-  RoomData,
-  RoomStat,
-  RoomChat,
-  RoomCast
-} from "../utils/types";
+import { MeshRoom, SfuRoom, RoomStream } from "skyway-js";
+import { RoomData, RoomStat, RoomChat, RoomCast } from "../utils/types";
 import RootStore from "../stores";
 
 const log = debug("effect:room");

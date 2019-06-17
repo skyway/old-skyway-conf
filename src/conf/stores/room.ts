@@ -1,15 +1,7 @@
 import { decorate, observable, computed, action } from "mobx";
 import { IObservableArray } from "mobx";
-import {
-  RoomInit,
-  Peer,
-  SfuRoom,
-  MeshRoom,
-  RoomStream,
-  RoomStat,
-  RoomChat,
-  StatsReport
-} from "../utils/types";
+import Peer, { RoomStream, SfuRoom, MeshRoom } from "skyway-js";
+import { RoomInit, RoomStat, RoomChat, StatsReport } from "../utils/types";
 
 class RoomStore {
   peer: Peer | null;
