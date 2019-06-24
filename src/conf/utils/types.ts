@@ -1,7 +1,5 @@
-import { EventEmitter } from "events";
-
 export interface RoomInit {
-  mode: RoomTypes;
+  mode: "sfu" | "mesh";
   id: string;
 }
 
@@ -69,41 +67,6 @@ export interface StatsReport {
   key: string;
   value: object;
   index: string;
-}
-
-/* Types for skyway-js */
-export interface Peer extends EventEmitter {
-  id: string;
-
-  joinRoom<T>(name: string, options?: RoomOptions): T;
-
-  on(ev: "error", cb: (err: Error) => void): this;
-  once(ev: "open", cb: (id: string) => void): this;
-  once(ev: "error", cb: (err: Error) => void): this;
-}
-export type SfuRoom = Room;
-export type MeshRoom = Room;
-export interface RoomStream extends MediaStream {
-  peerId: string;
-}
-
-type RoomTypes = "mesh" | "sfu";
-interface RoomOptions {
-  mode?: RoomTypes;
-  stream?: MediaStream;
-}
-
-interface Room extends EventEmitter {
-  id: string;
-  send(payload: {}): void;
-  replaceStream(stream: MediaStream): void;
-  close(): void;
-
-  on(ev: "stream", cb: (stream: RoomStream) => void): this;
-  on(ev: "peerLeave", cb: (peerId: string) => void): this;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  on(ev: "data", cb: (data: { src: string; data: any }) => void): this;
-  once(ev: "close", cb: () => void): this;
 }
 
 /* Types for hark */
