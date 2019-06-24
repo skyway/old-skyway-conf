@@ -22,6 +22,8 @@ Web conference app using SkyWay JS-SDK.
 
 ### conf
 
+- parse room type and name from `location.hash`
+- parse some options from `location.query`
 - require audio device to enter
 - send media
   - audio
