@@ -1,9 +1,10 @@
 import * as React from "react";
 import { useState } from "react";
 import { FunctionComponent } from "react";
+import { RoomStream } from "skyway-js";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
-import { RoomStream, RoomStat } from "../utils/types";
+import { RoomStat } from "../utils/types";
 import { rightMenuWidth } from "../utils/style";
 import Video from "./video";
 import StreamController from "./stream-controller";

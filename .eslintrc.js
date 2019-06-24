@@ -26,6 +26,7 @@ module.exports = {
   rules: {
     "no-console": "off",
     "no-debugger": "off",
+    "no-dupe-class-members": "off",
     "no-else-return": "error",
     "no-self-compare": "error",
     "no-void": "error",
