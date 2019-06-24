@@ -19,6 +19,7 @@ export const checkRoomSetting = ({
 }: RootStore): EffectCallback => () => {
   log("checkRoomSetting()");
   const [, roomType, roomId] = location.hash.split("/");
+  const params = new URLSearchParams(location.search);
 
   if (!isValidRoomType(roomType)) {
     throw ui.showError(
@@ -34,7 +35,7 @@ export const checkRoomSetting = ({
   }
 
   (async () => {
-    const peer = await initPeer().catch(err => {
+    const peer = await initPeer(params.has("turn")).catch(err => {
       throw ui.showError(err);
     });
     // just log it, do not trust them
