@@ -1,3 +1,7 @@
+# 2.5.2
+
+- Update version of dependencies
+
 # 2.5.1
 
 - Switch `skyway-js` to npm from CDN
