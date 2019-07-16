@@ -1,3 +1,7 @@
+# 2.5.3
+
+- Update version of dependencies
+
 # 2.5.2
 
 - Update version of dependencies
