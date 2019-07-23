@@ -13,13 +13,11 @@ const ReactionLayout: FunctionComponent<Props> = ({ onClickSend }: Props) => {
   return (
     <div css={wrapperStyle}>
       {reactions.map(reaction => (
-        <button
-          key={reaction}
-          css={reactionStyle}
-          onClick={() => onClickSend(reaction)}
-        >
-          {reaction}
-        </button>
+        <div key={reaction} css={boxStyle}>
+          <button css={reactionStyle} onClick={() => onClickSend(reaction)}>
+            <i css={emojiStyle}>{reaction}</i>
+          </button>
+        </div>
       ))}
     </div>
   );
@@ -29,23 +27,31 @@ export default ReactionLayout;
 
 const wrapperStyle = css({
   position: "absolute",
-  right: rightMenuTogglerHeight,
   top: 0,
+  right: rightMenuTogglerHeight,
+  zIndex: zIndex.modal
+});
+
+const boxStyle = css({
+  height: rightMenuTogglerHeight,
   width: rightMenuTogglerHeight,
-  zIndex: zIndex.modal,
+  boxSizing: "border-box",
   backgroundColor: globalColors.gray,
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center"
+  borderBottom: `1px solid ${globalColors.white}`
 });
 
 const reactionStyle = css({
-  height: rightMenuTogglerHeight,
-  fontSize: "1.2rem",
+  width: "100%",
+  height: "100%",
+  padding: "0 1",
   appearance: "none",
   border: "none",
   background: "none",
   color: "inherit",
-  cursor: "pointer",
-  borderBottom: `1px solid ${globalColors.white}`
+  cursor: "pointer"
+});
+
+const emojiStyle = css({
+  fontSize: "1.0rem",
+  fontStyle: "normal"
 });
