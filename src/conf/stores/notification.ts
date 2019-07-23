@@ -18,6 +18,10 @@ class NotificationStore {
     this.show("chat", `${from}: ${text}`);
   }
 
+  showReaction(from: string, reaction: string) {
+    this.show("insert_emoticon", `${from}: ${reaction}`);
+  }
+
   showJoin(name: string) {
     this.show("person", `${name} joined`);
   }
@@ -36,6 +40,8 @@ decorate(NotificationStore, {
   // @ts-ignore: to use private accessor
   items: observable.shallow,
   showInfo: action,
+  showChat: action,
+  showReaction: action,
   showJoin: action,
   showLeave: action,
   show: action

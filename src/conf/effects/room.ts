@@ -1,7 +1,13 @@
 import debug from "debug";
 import { reaction, observe } from "mobx";
 import { MeshRoom, SfuRoom, RoomStream } from "skyway-js";
-import { RoomData, RoomStat, RoomChat, RoomCast } from "../utils/types";
+import {
+  RoomData,
+  RoomStat,
+  RoomChat,
+  RoomReaction,
+  RoomCast
+} from "../utils/types";
 import RootStore from "../stores";
 
 const log = debug("effect:room");
@@ -56,6 +62,16 @@ export const joinRoom = (store: RootStore) => {
         }
         log("reaction:send(chat)");
         confRoom.send({ type: "chat", payload: chat });
+      }
+    ),
+    reaction(
+      () => room.myLastReaction,
+      reaction => {
+        if (reaction === null) {
+          return;
+        }
+        log("reaction:send(reaction)");
+        confRoom.send({ type: "reaction", payload: reaction });
       }
     ),
     reaction(
@@ -135,6 +151,11 @@ export const joinRoom = (store: RootStore) => {
         // notify only when chat is closed
         ui.isChatOpen || notification.showChat(chat.from, chat.text);
         room.addRemoteChat(chat);
+        break;
+      }
+      case "reaction": {
+        const reaction = payload as RoomReaction;
+        notification.showReaction(reaction.from, reaction.reaction);
         break;
       }
       case "cast": {

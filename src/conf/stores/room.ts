@@ -1,7 +1,13 @@
 import { decorate, observable, computed, action } from "mobx";
 import { IObservableArray } from "mobx";
 import Peer, { RoomStream, SfuRoom, MeshRoom } from "skyway-js";
-import { RoomInit, RoomStat, RoomChat, StatsReport } from "../utils/types";
+import {
+  RoomInit,
+  RoomStat,
+  RoomChat,
+  RoomReaction,
+  StatsReport
+} from "../utils/types";
 
 class RoomStore {
   peer: Peer | null;
@@ -12,6 +18,7 @@ class RoomStore {
   stats: Map<string, RoomStat>;
   chats: IObservableArray<RoomChat>;
   myLastChat: RoomChat | null;
+  myLastReaction: RoomReaction | null;
   pinnedId: string | null;
   castRequestCount: number;
   confStats: IObservableArray<StatsReport>;
@@ -30,6 +37,7 @@ class RoomStore {
     // @ts-ignore: to type IObservableArray
     this.chats = [];
     this.myLastChat = null;
+    this.myLastReaction = null;
     this.pinnedId = null;
     this.castRequestCount = 0;
     // @ts-ignore: to type IObservableArray
@@ -73,6 +81,11 @@ class RoomStore {
   addRemoteChat(chat: RoomChat) {
     chat.isMine = false;
     this.chats.push(chat);
+  }
+
+  addReaction(from: string, reaction: string) {
+    // this triggers reaction to send reaction for remotes
+    this.myLastReaction = { from, reaction };
   }
 
   removeStream(peerId: string) {
@@ -120,6 +133,7 @@ decorate(RoomStore, {
   stats: observable.shallow,
   chats: observable.shallow,
   myLastChat: observable.ref,
+  myLastReaction: observable.ref,
   pinnedId: observable,
   castRequestCount: observable,
   confStats: observable.shallow,

@@ -22,7 +22,11 @@ export interface UserDevices {
 
 export type VideoType = "camera" | "display" | null;
 
-export type RoomData = RoomDataStat | RoomDataChat | RoomDataCast;
+export type RoomData =
+  | RoomDataStat
+  | RoomDataChat
+  | RoomDataReaction
+  | RoomDataCast;
 interface RoomDataStat {
   type: "stat";
   payload: RoomStat;
@@ -30,6 +34,10 @@ interface RoomDataStat {
 interface RoomDataChat {
   type: "chat";
   payload: RoomChat;
+}
+interface RoomDataReaction {
+  type: "reaction";
+  payload: RoomReaction;
 }
 interface RoomDataCast {
   type: "cast";
@@ -52,11 +60,16 @@ export interface RoomChat {
   isMine: boolean;
 }
 
+export interface RoomReaction {
+  from: string;
+  reaction: string;
+}
+
 export interface RoomCast {
   from: string;
 }
 
-export type NotificationType = "info" | "person" | "chat";
+export type NotificationType = "info" | "person" | "chat" | "insert_emoticon";
 export interface NotificationItem {
   id: number;
   type: NotificationType;
