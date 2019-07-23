@@ -4,10 +4,10 @@ import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
 import { rightMenuTogglerHeight, zIndex } from "../utils/style";
 
-const reactions = ["🆗", "🆖", "💯", "🙇"];
+const reactions = ["👍", "👎", "👏", "✋", "🆗", "🆖", "💯", "💩"];
 
 interface Props {
-  onClickSend: (text: string) => void;
+  onClickSend: (reaction: string) => void;
 }
 const ReactionLayout: FunctionComponent<Props> = ({ onClickSend }: Props) => {
   return (
