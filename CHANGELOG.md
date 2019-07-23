@@ -1,3 +1,12 @@
+# 2.6.0
+
+- Add reaction feature
+  - from right menu
+  - let's emoji communication!
+- Use different duration for each notification types
+  - chat notification stays a bit longer
+- Some cosmetic changes
+
 # 2.5.3
 
 - Update version of dependencies
