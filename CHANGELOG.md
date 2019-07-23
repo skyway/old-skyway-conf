@@ -1,3 +1,7 @@
+# 2.6.1
+
+- Fix styles
+
 # 2.6.0
 
 - Add reaction feature

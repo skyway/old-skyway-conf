@@ -36,6 +36,7 @@ Web conference app using SkyWay JS-SDK.
 - display browser info
 - dispaly stream info
 - send chat
+- send reaction emoji
 - show local stream
   - mirror my video
 - show remote streams
