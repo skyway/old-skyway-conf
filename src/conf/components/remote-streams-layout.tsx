@@ -19,7 +19,9 @@ const RemoteStreamsLayout: FunctionComponent<Props> = ({
   onClickSetPinned
 }: Props) => (
   <div css={wrapperStyle}>
-    <div css={headStyle}>{streams.length} participants</div>
+    <div css={headStyle}>
+      <span css={numberStyle}>{streams.length}</span> participant(s)
+    </div>
     {streams.map(([peerId, stream]) => {
       const entry = stats.find(([id]) => id === peerId);
       const stat = entry ? entry[1] : null;
@@ -49,4 +51,9 @@ const headStyle = css({
   boxSizing: "border-box",
   fontSize: ".8rem",
   textAlign: "center"
+});
+
+const numberStyle = css({
+  fontSize: ".9rem",
+  fontWeight: "bold"
 });
