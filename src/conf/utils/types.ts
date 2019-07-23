@@ -70,11 +70,20 @@ export interface StatsReport {
 }
 
 /* Types for hark */
-export type Hark = (stream: MediaStream) => Harker;
+export type Hark = (stream: MediaStream, options?: HarkOptions) => Harker;
+interface HarkOptions {
+  interval?: number;
+  threshold?: number;
+  play?: boolean;
+  audioContext?: AudioContext;
+}
 interface Harker {
   stop(): void;
+  setInterval(interval: number): void;
+  setThreshold(db: number): void;
   on(ev: "speaking", cb: () => void): this;
   on(ev: "stopped_speaking", cb: () => void): this;
+  on(ev: "volume_change", cb: (db: number) => void): this;
 }
 
 /* Types for global */

@@ -12,7 +12,7 @@ interface Props {
 const VADetector: FunctionComponent<Props> = ({ stream }) => {
   const [isSpeaking, setSpeaking] = useState(false);
   useEffect(() => {
-    const harker = hark(stream);
+    const harker = hark(stream, { threshold: -75 });
     harker.on("speaking", () => setSpeaking(true));
     harker.on("stopped_speaking", () => setSpeaking(false));
     return () => harker.stop();
