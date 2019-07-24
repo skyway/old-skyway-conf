@@ -1,3 +1,8 @@
+# 2.6.2
+
+- Add notification for sending reaction
+- Add some reaction emoji
+
 # 2.6.1
 
 - Fix styles
