@@ -4,7 +4,7 @@ import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
 import { rightMenuTogglerHeight, zIndex } from "../utils/style";
 
-const reactions = ["👍", "👎", "👏", "✋", "🆗", "🆖", "💯", "💩"];
+const reactions = ["👍", "👎", "👏", "✋", "🆗", "🆖", "🆒", "💯", "💩", "😭"];
 
 interface Props {
   onClickSend: (reaction: string) => void;
