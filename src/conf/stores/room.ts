@@ -8,6 +8,7 @@ import {
   RoomReaction,
   StatsReport
 } from "../utils/types";
+import { getPeerConnectionFromSfuRoom } from "../utils/skyway";
 
 class RoomStore {
   peer: Peer | null;
@@ -104,9 +105,7 @@ class RoomStore {
       return null;
     }
 
-    // @ts-ignore: to get private refs
-    const pc: RTCPeerConnection = this.room._negotiator._pc;
-    return pc;
+    return getPeerConnectionFromSfuRoom(this.room as SfuRoom);
   }
 
   cleanUp() {
