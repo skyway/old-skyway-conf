@@ -39,6 +39,7 @@ module.exports = {
       "error",
       { accessibility: "no-public" }
     ],
+    "@typescript-eslint/ban-ts-ignore": "off",
     "@typescript-eslint/no-use-before-define": "off",
 
     "react/prop-types": "off",

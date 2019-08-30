@@ -45,15 +45,15 @@ class ClientStore {
     this.parsedBrowser = parse(ua);
   }
 }
+// @ts-ignore: to use private accessor
 decorate(ClientStore, {
-  // @ts-ignore: to use private accessor
   hasGetDisplayMedia: observable,
   hasUserVideoDevice: observable,
   isReady: observable,
   displayName: observable,
   parsedBrowser: observable.ref,
-  browser: computed,
   stat: computed,
+  browser: computed,
   load: action
 });
 

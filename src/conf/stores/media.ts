@@ -102,8 +102,9 @@ class MediaStore {
     }
   }
 }
+
+// @ts-ignore: to use private accessor
 decorate(MediaStore, {
-  // @ts-ignore: to use private accessor
   audioInDevices: observable.shallow,
   videoInDevices: observable.shallow,
   audioDeviceId: observable,

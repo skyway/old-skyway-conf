@@ -36,8 +36,9 @@ class NotificationStore {
     setTimeout(() => this.items.remove(item), duration);
   }
 }
+
+// @ts-ignore: to use private accessor
 decorate(NotificationStore, {
-  // @ts-ignore: to use private accessor
   items: observable.shallow,
   showInfo: action,
   showChat: action,
