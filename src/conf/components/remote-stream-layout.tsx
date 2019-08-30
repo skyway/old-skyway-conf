@@ -45,9 +45,9 @@ const RemoteStreamLayout: FunctionComponent<Props> = ({
             onClick={() => setInfoShown(!isInfoShown)}
           />
         </div>
-        {isInfoShown ? (
+        {isInfoShown && stat !== null ? (
           <div css={infoStyle}>
-            <StreamInfo stream={stream} />
+            <StreamInfo stream={stream} browser={stat.browser} />
           </div>
         ) : null}
         <div css={controllerStyle}>

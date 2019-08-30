@@ -2,12 +2,14 @@ import * as React from "react";
 import { memo, useEffect, useState } from "react";
 import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
+import { ClientBrowser } from "../utils/types";
 import { globalColors } from "../../shared/global-style";
 
 interface Props {
   stream: MediaStream;
+  browser: ClientBrowser;
 }
-const StreamInfo: FunctionComponent<Props> = ({ stream }) => {
+const StreamInfo: FunctionComponent<Props> = ({ stream, browser }) => {
   const [info, setInfo] = useState({});
   useEffect(() => {
     let timer = 0;
@@ -20,6 +22,8 @@ const StreamInfo: FunctionComponent<Props> = ({ stream }) => {
 
       setInfo({
         timestamp: Date.now(),
+        browserName: browser.name,
+        browserVersion: `v${browser.version}`,
         streamId: stream.id,
         video: vTrack
           ? {
@@ -39,7 +43,7 @@ const StreamInfo: FunctionComponent<Props> = ({ stream }) => {
     timer = requestAnimationFrame(updateInfo);
 
     return () => cancelAnimationFrame(timer);
-  }, [stream, setInfo]);
+  }, [stream, browser, setInfo]);
 
   return <pre css={wrapperStyle}>{JSON.stringify(info, null, 2)}</pre>;
 };

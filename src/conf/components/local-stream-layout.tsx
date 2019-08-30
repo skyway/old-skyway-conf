@@ -79,7 +79,7 @@ const LocalStreamLayout: FunctionComponent<Props> = ({
         </div>
         {isInfoShown ? (
           <div css={infoStyle}>
-            <StreamInfo stream={stream} />
+            <StreamInfo stream={stream} browser={browser} />
           </div>
         ) : null}
         <div css={controllerStyle}>
