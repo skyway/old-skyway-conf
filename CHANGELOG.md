@@ -1,3 +1,8 @@
+# 2.6.3
+
+- Show browser info w/o mouseover
+- Update version of dev dependencies
+
 # 2.6.2
 
 - Add notification for sending reaction
