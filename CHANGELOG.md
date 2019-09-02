@@ -1,3 +1,7 @@
+# 2.6.4
+
+- Update version of dev/prod dependencies
+
 # 2.6.3
 
 - Show browser info w/o mouseover
