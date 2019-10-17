@@ -101,6 +101,9 @@ const SettingsLayout: FunctionComponent<Props> = ({
             }
           />
         </div>
+        {!isJoined && isAudioTrackMuted ? (
+          <div css={noteStyle}>Your mic. is default muted 👇</div>
+        ) : null}
       </div>
 
       <div css={settingsStyle}>
@@ -204,6 +207,16 @@ const controllerStyle = css({
   right: 0,
   bottom: 0,
   zIndex: 1
+});
+
+const noteStyle = css({
+  position: "absolute",
+  right: 16,
+  bottom: 20,
+  zIndex: 1,
+  padding: 4,
+  color: globalColors.white,
+  fontSize: ".8rem"
 });
 
 const settingsStyle = css({
