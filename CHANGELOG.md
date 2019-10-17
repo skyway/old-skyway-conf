@@ -1,3 +1,12 @@
+# 2.7.0
+
+- Add flag to use H264
+  - but currently SkyWay supports this only in mesh room
+
+# 2.6.5
+
+- Update version of dev/prod dependencies
+
 # 2.6.4
 
 - Update version of dev/prod dependencies
