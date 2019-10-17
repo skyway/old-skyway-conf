@@ -40,7 +40,14 @@ export const checkRoomSetting = ({
     });
     // just log it, do not trust them
     peer.on("error", console.error);
-    room.load({ mode: roomType as RoomInit["mode"], id: roomId }, peer);
+    room.load(
+      {
+        mode: roomType as RoomInit["mode"],
+        id: roomId,
+        useH264: params.has("h264")
+      },
+      peer
+    );
 
     log(`room: ${roomType}/${roomId}`);
     log("peer instance created");

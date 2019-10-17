@@ -23,16 +23,15 @@ export const joinRoom = (store: RootStore) => {
     throw ui.showError(new Error("Peer is not created!"));
   }
 
+  const roomOptions = { mode: room.mode, stream: media.stream };
+  if (room.useH264) {
+    Object.assign(roomOptions, { videoCodec: "H264" });
+  }
+
   if (room.mode === "mesh") {
-    room.room = room.peer.joinRoom<MeshRoom>(room.name, {
-      mode: "mesh",
-      stream: media.stream
-    });
+    room.room = room.peer.joinRoom<MeshRoom>(room.name, roomOptions);
   } else if (room.mode === "sfu") {
-    room.room = room.peer.joinRoom<SfuRoom>(room.name, {
-      mode: "sfu",
-      stream: media.stream
-    });
+    room.room = room.peer.joinRoom<SfuRoom>(room.name, roomOptions);
   }
 
   const confRoom = room.room;
@@ -42,6 +41,7 @@ export const joinRoom = (store: RootStore) => {
   }
 
   log("joined room", confRoom);
+  log("w/ options:", roomOptions);
 
   // force set to false
   ui.isReEntering = false;

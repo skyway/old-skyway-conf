@@ -1,6 +1,7 @@
 export interface RoomInit {
   mode: "sfu" | "mesh";
   id: string;
+  useH264: boolean;
 }
 
 export interface ClientInit {

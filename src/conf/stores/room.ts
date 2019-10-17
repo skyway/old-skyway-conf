@@ -15,6 +15,7 @@ class RoomStore {
   room: SfuRoom | MeshRoom | null;
   mode: RoomInit["mode"] | null;
   id: RoomInit["id"] | null;
+  useH264: RoomInit["useH264"];
   streams: Map<string, RoomStream>;
   stats: Map<string, RoomStat>;
   chats: IObservableArray<RoomChat>;
@@ -32,6 +33,7 @@ class RoomStore {
     // room name = mode + id
     this.mode = null;
     this.id = null;
+    this.useH264 = false;
 
     this.streams = new Map();
     this.stats = new Map();
@@ -60,9 +62,10 @@ class RoomStore {
     return this.streams.get(this.pinnedId) || null;
   }
 
-  load({ mode, id }: RoomInit, peer: Peer) {
+  load({ mode, id, useH264 }: RoomInit, peer: Peer) {
     this.mode = mode;
     this.id = id;
+    this.useH264 = useH264;
     this.peer = peer;
   }
 
