@@ -1,3 +1,7 @@
+# 2.7.1
+
+- Add notes that microphone is default muted
+
 # 2.7.0
 
 - Add flag to use H264
