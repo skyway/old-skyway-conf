@@ -1,3 +1,7 @@
+# 2.7.2
+
+- Update version of dev/prod dependencies
+
 # 2.7.1
 
 - Add notes that microphone is default muted
