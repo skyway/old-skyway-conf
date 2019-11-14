@@ -78,7 +78,8 @@ export default RemoteStreamLayout;
 
 const videoStyle = css({
   position: "relative",
-  height: (rightMenuWidth / 4) * 3
+  height: (rightMenuWidth / 4) * 3,
+  backgroundColor: globalColors.black
 });
 
 const infoStyle = css({

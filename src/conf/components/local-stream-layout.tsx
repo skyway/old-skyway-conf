@@ -126,7 +126,8 @@ const localStreamWidth = 240;
 const videoStyle = css({
   position: "relative",
   width: localStreamWidth,
-  height: (localStreamWidth / 4) * 3
+  height: (localStreamWidth / 4) * 3,
+  backgroundColor: globalColors.black
 });
 
 const infoStyle = css({

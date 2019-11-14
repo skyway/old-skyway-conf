@@ -3,7 +3,6 @@ import { useRef, useEffect, memo } from "react";
 import { FunctionComponent } from "react";
 import debug from "debug";
 import { css } from "@emotion/core";
-import { globalColors } from "../../shared/global-style";
 
 const _log = debug("component:video");
 
@@ -17,38 +16,47 @@ const Video: FunctionComponent<Props> = ({
   isReverse = false,
   isVideoOnly = false
 }) => {
+  const isNoAudio = stream.getAudioTracks().length === 0;
+  const isNoVideo = stream.getVideoTracks().length === 0;
   const videoRef = useRef<HTMLVideoElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const log = _log.extend(stream.id);
 
   useEffect(() => {
-    if (videoRef.current === null) {
-      return;
-    }
     const $video = videoRef.current;
-    log("useEffect(): assign and play stream");
-    $video.srcObject = stream;
-    $video.paused && $video.play();
-  }, [videoRef, log, stream]);
-  useEffect(() => {
-    if (isVideoOnly || audioRef.current === null) {
+    if (isNoVideo || $video === null) {
       return;
     }
+
+    log("useEffect(): assign and play stream for video");
+    $video.srcObject !== stream && ($video.srcObject = stream);
+    $video.paused && $video.play();
+  }, [isNoVideo, videoRef, log, stream]);
+  useEffect(() => {
     const $audio = audioRef.current;
-    $audio.srcObject = stream;
+    if (isNoAudio || isVideoOnly || $audio === null) {
+      return;
+    }
+
+    log("useEffect(): assign and play stream for audio");
+    $audio.srcObject !== stream && ($audio.srcObject = stream);
     $audio.paused && $audio.play();
-  }, [isVideoOnly, audioRef, stream]);
+  }, [isNoAudio, isVideoOnly, audioRef, log, stream]);
 
   log("render()", [...stream.getTracks()]);
   return (
     <>
-      <video
-        css={isReverse ? [videoStyle, reverseVideoStyle] : videoStyle}
-        ref={videoRef}
-        playsInline
-        muted={true}
-      />
-      {isVideoOnly ? null : <audio css={audioStyle} ref={audioRef} />}
+      {isNoVideo ? null : (
+        <video
+          css={isReverse ? [videoStyle, reverseVideoStyle] : videoStyle}
+          ref={videoRef}
+          playsInline
+          muted={true}
+        />
+      )}
+      {isVideoOnly || isNoAudio ? null : (
+        <audio css={audioStyle} ref={audioRef} />
+      )}
     </>
   );
 };
@@ -60,7 +68,6 @@ const audioStyle = css({
 });
 
 const videoStyle = css({
-  backgroundColor: globalColors.black,
   width: "100%",
   height: "100%",
   maxWidth: "100%",

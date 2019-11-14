@@ -198,7 +198,8 @@ const wrapperStyle = css({
 const videoStyle = css({
   position: "relative",
   width: "100%",
-  height: (modalContentWidth / 4) * 3
+  height: (modalContentWidth / 4) * 3,
+  backgroundColor: globalColors.black
 });
 
 const controllerStyle = css({
