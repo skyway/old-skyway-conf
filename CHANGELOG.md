@@ -1,3 +1,7 @@
+# 2.7.4
+
+- Update version of dev/prod dependencies
+
 # 2.7.3
 
 - Add some performance tuning
