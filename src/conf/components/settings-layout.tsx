@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
-import { globalColors } from "../../shared/global-style";
+import { globalColors, animation } from "../../shared/global-style";
 import { VideoType, ClientBrowser } from "../utils/types";
 import { modalContentWidth } from "../utils/style";
 import Modal from "./modal";
@@ -102,7 +102,7 @@ const SettingsLayout: FunctionComponent<Props> = ({
           />
         </div>
         {!isJoined && isAudioTrackMuted ? (
-          <div css={noteStyle}>Your mic. is default muted 👇</div>
+          <div css={noteStyle}>Click here to unmute your mic.👇</div>
         ) : null}
       </div>
 
@@ -217,6 +217,8 @@ const noteStyle = css({
   zIndex: 1,
   padding: 4,
   color: globalColors.white,
+  willChange: "opacity",
+  animation: `${animation.blink} 1s linear infinite`,
   fontSize: ".8rem"
 });
 

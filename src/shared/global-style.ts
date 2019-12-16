@@ -1,4 +1,4 @@
-import { css } from "@emotion/core";
+import { css, keyframes } from "@emotion/core";
 
 export const fontSize = 16;
 
@@ -10,6 +10,15 @@ export const globalColors = {
   white: "#fff",
   black: "#111"
 };
+
+const blink = keyframes`
+    0% { opacity: 0 }
+   50% { opacity: 0 }
+   51% { opacity: 1 }
+  100% { opacity: 1 }
+`;
+
+export const animation = { blink };
 
 export const globalStyle = css({
   html: {
