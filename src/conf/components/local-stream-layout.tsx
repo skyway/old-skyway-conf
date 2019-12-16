@@ -64,13 +64,13 @@ const LocalStreamLayout: FunctionComponent<Props> = ({
           />
           {isMinimize ? (
             <IconButton
-              name="maximize"
+              name="keyboard_arrow_right"
               title="Maximize"
               onClick={() => setMinimize(false)}
             />
           ) : (
             <IconButton
-              name="minimize"
+              name="keyboard_arrow_left"
               title="Minimize"
               onClick={() => setMinimize(true)}
             />
@@ -117,7 +117,7 @@ const wrapperStyle = css({
 });
 
 const minimizeStyle = css({
-  transform: "translateY(90%)"
+  transform: "translateX(-85%)"
 });
 
 const localStreamWidth = 240;
