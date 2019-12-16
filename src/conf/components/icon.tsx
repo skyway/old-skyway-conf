@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FunctionComponent, SyntheticEvent } from "react";
 import { css } from "@emotion/core";
-import { fontSize } from "../../shared/global-style";
+import { fontSize, globalColors } from "../../shared/global-style";
 import { ClientBrowser } from "../utils/types";
 
 interface Props {
@@ -60,7 +60,8 @@ export const IconButton: FunctionComponent<ButtonProps> = ({
 );
 
 const iconStyle = css({
-  fontSize
+  fontSize,
+  textShadow: `0 0 1px ${globalColors.black}`
 });
 
 const imgStyle = css({
