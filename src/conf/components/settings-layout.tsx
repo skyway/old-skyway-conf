@@ -14,6 +14,7 @@ import {
   SettingsDeviceToggler
 } from "./settings-device-selector";
 import StreamController from "./stream-controller";
+import VADetector from "./va-detector";
 
 interface Props {
   stream: MediaStream;
@@ -78,6 +79,7 @@ const SettingsLayout: FunctionComponent<Props> = ({
           isVideoOnly={true}
         />
         <div css={controllerStyle}>
+          <VADetector stream={stream} />
           <StreamController
             displayName={`v${browser.version}`}
             browser={browser}

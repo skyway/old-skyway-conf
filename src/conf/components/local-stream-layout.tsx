@@ -8,6 +8,7 @@ import StreamController from "./stream-controller";
 import Video from "./video";
 import { IconButton } from "./icon";
 import StreamInfo from "./stream-info";
+import VADetector from "./va-detector";
 
 interface Props {
   stream: MediaStream;
@@ -82,6 +83,7 @@ const LocalStreamLayout: FunctionComponent<Props> = ({
           </div>
         ) : null}
         <div css={controllerStyle}>
+          <VADetector stream={stream} />
           <StreamController
             displayName={displayName}
             browser={browser}

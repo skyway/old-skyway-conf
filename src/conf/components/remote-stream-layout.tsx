@@ -10,6 +10,7 @@ import Video from "./video";
 import StreamController from "./stream-controller";
 import { Icon, IconButton } from "./icon";
 import StreamInfo from "./stream-info";
+import VADetector from "./va-detector";
 
 interface Props {
   stream: RoomStream;
@@ -51,20 +52,23 @@ const RemoteStreamLayout: FunctionComponent<Props> = ({
         ) : null}
         <div css={controllerStyle}>
           {stat !== null ? (
-            <StreamController
-              displayName={stat.displayName}
-              browser={stat.browser}
-              controllers={
-                <>
-                  {stat.isVideoDisabled ? null : (
-                    <Icon
-                      name={stat.isVideoMuted ? "videocam_off" : "videocam"}
-                    />
-                  )}
-                  <Icon name={stat.isAudioMuted ? "mic_off" : "mic"} />
-                </>
-              }
-            />
+            <>
+              <VADetector stream={stream} />
+              <StreamController
+                displayName={stat.displayName}
+                browser={stat.browser}
+                controllers={
+                  <>
+                    {stat.isVideoDisabled ? null : (
+                      <Icon
+                        name={stat.isVideoMuted ? "videocam_off" : "videocam"}
+                      />
+                    )}
+                    <Icon name={stat.isAudioMuted ? "mic_off" : "mic"} />
+                  </>
+                }
+              />
+            </>
           ) : null}
         </div>
       </div>
