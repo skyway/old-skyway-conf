@@ -7,7 +7,6 @@ import { ClientBrowser, VideoType } from "../utils/types";
 import StreamController from "./stream-controller";
 import Video from "./video";
 import { IconButton } from "./icon";
-import VADetector from "./va-detector";
 import StreamInfo from "./stream-info";
 
 interface Props {
@@ -100,7 +99,6 @@ const LocalStreamLayout: FunctionComponent<Props> = ({
                   title={isAudioTrackMuted ? "Unmute audio" : "Mute audio"}
                   onClick={onClickToggleAudioMuted}
                 />
-                <VADetector stream={stream} />
               </>
             }
           />

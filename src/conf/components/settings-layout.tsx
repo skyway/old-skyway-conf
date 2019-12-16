@@ -14,7 +14,6 @@ import {
   SettingsDeviceToggler
 } from "./settings-device-selector";
 import StreamController from "./stream-controller";
-import VADetector from "./va-detector";
 
 interface Props {
   stream: MediaStream;
@@ -96,7 +95,6 @@ const SettingsLayout: FunctionComponent<Props> = ({
                   title={isAudioTrackMuted ? "Unmute audio" : "Mute audio"}
                   onClick={onClickToggleAudioMuted}
                 />
-                <VADetector stream={stream} />
               </>
             }
           />
@@ -212,8 +210,8 @@ const controllerStyle = css({
 
 const noteStyle = css({
   position: "absolute",
-  right: 16,
-  bottom: 20,
+  right: 0,
+  bottom: 24,
   zIndex: 1,
   padding: 4,
   color: globalColors.white,

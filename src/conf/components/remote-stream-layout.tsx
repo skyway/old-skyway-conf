@@ -9,7 +9,6 @@ import { rightMenuWidth } from "../utils/style";
 import Video from "./video";
 import StreamController from "./stream-controller";
 import { Icon, IconButton } from "./icon";
-import VADetector from "./va-detector";
 import StreamInfo from "./stream-info";
 
 interface Props {
@@ -63,7 +62,6 @@ const RemoteStreamLayout: FunctionComponent<Props> = ({
                     />
                   )}
                   <Icon name={stat.isAudioMuted ? "mic_off" : "mic"} />
-                  <VADetector stream={stream} />
                 </>
               }
             />
