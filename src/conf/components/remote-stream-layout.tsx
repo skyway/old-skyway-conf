@@ -35,12 +35,14 @@ const RemoteStreamLayout: FunctionComponent<Props> = ({
           {!isVideoDisabled ? (
             <IconButton
               name={isPinned ? "cancel_presentation" : "present_to_all"}
+              showEdge={true}
               title="Pin this video"
               onClick={onClickSetPinned}
             />
           ) : null}
           <IconButton
             name="info"
+            showEdge={true}
             title="Toggle stream info"
             onClick={() => setInfoShown(!isInfoShown)}
           />

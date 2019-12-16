@@ -49,29 +49,34 @@ const LocalStreamLayout: FunctionComponent<Props> = ({
           {videoType === null ? null : (
             <IconButton
               name="cast"
+              showEdge={true}
               title="Cast your video"
               onClick={onClickCastVideo}
             />
           )}
           <IconButton
             name="info"
+            showEdge={true}
             title="Toggle stream info"
             onClick={() => setInfoShown(!isInfoShown)}
           />
           <IconButton
             name="settings"
+            showEdge={true}
             title="Open settings"
             onClick={onClickOpenSettings}
           />
           {isMinimize ? (
             <IconButton
               name="keyboard_arrow_right"
+              showEdge={true}
               title="Maximize"
               onClick={() => setMinimize(false)}
             />
           ) : (
             <IconButton
               name="keyboard_arrow_left"
+              showEdge={true}
               title="Minimize"
               onClick={() => setMinimize(true)}
             />

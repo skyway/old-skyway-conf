@@ -6,9 +6,13 @@ import { ClientBrowser } from "../utils/types";
 
 interface Props {
   name: string;
+  showEdge?: boolean;
 }
-export const Icon: FunctionComponent<Props> = ({ name }: Props) => (
-  <i className="material-icons" css={iconStyle}>
+export const Icon: FunctionComponent<Props> = ({ name, showEdge }: Props) => (
+  <i
+    className="material-icons"
+    css={showEdge ? [iconStyle, edgedStyle] : iconStyle}
+  >
     {name}
   </i>
 );
@@ -45,6 +49,7 @@ interface ButtonProps extends Props {
 }
 export const IconButton: FunctionComponent<ButtonProps> = ({
   name,
+  showEdge,
   title,
   disabled,
   onClick
@@ -55,12 +60,15 @@ export const IconButton: FunctionComponent<ButtonProps> = ({
     title={title}
     css={disabled ? [buttonStyle, disabledStyle] : buttonStyle}
   >
-    <Icon name={name} />
+    <Icon name={name} showEdge={showEdge} />
   </button>
 );
 
 const iconStyle = css({
-  fontSize,
+  fontSize
+});
+
+const edgedStyle = css({
   textShadow: `0 0 1px ${globalColors.black}`
 });
 
