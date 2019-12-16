@@ -1,3 +1,10 @@
+# 2.7.5
+
+- Improve some UIs
+  - add edge shadows for white icon on white bg
+  - intro new VAD visualizer
+  - fix minimized view
+
 # 2.7.4
 
 - Update version of dev/prod dependencies
