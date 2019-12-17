@@ -1,3 +1,7 @@
+# 2.7.6
+
+- Fix proper icon not shown for MS-Edge
+
 # 2.7.5
 
 - Improve some UIs
