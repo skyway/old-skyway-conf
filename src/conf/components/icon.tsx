@@ -28,7 +28,7 @@ export const BrowserIcon: FunctionComponent<ClientBrowser> = ({
     case "Safari":
       src = `./images/conf/icon-${name.toLowerCase()}.svg`;
       break;
-    case "Edge":
+    case "Microsoft Edge":
       src = "./images/conf/icon-edge.svg";
       break;
   }
