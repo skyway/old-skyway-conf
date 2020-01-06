@@ -1,3 +1,7 @@
+# 2.7.7
+
+- Update version of dev/prod dependencies
+
 # 2.7.6
 
 - Fix proper icon not shown for MS-Edge
