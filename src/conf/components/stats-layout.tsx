@@ -86,14 +86,17 @@ const headStyle = css({
 
 const scrollerStyle = css({
   boxSizing: "border-box",
-  overflow: "scroll",
+  overflow: "hidden",
+  overflowY: "scroll",
   overflowScrolling: "touch"
 });
 
 const statsStyle = css({
   margin: 0,
   padding: 4,
-  fontSize: ".8rem"
+  fontSize: ".8rem",
+  whiteSpace: "pre-wrap",
+  wordBreak: "break-all"
 });
 
 const naStyle = css({
