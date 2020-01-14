@@ -7,12 +7,6 @@ import { modalContentWidth } from "../utils/style";
 import Modal from "./modal";
 import { IconButton } from "./icon";
 
-interface StatsReport {
-  key: string;
-  value: object;
-  index: string;
-}
-
 interface Props {
   isSfu: boolean;
   stats: RTCStatsReport | null;
@@ -24,7 +18,7 @@ const StatsLayout: FunctionComponent<Props> = ({
   onClickCloser
 }: Props) => {
   const [searchKey, setSearchKey] = useState("");
-  const filteredStats = filterStats(normalizeStatsReport(stats), searchKey);
+  const filteredStats = filterStats(stats, searchKey.trim());
 
   return (
     <Modal>
@@ -58,42 +52,20 @@ const StatsLayout: FunctionComponent<Props> = ({
 
 export default StatsLayout;
 
-const normalizeStatsReport = (
-  statsReport: RTCStatsReport | null
-): StatsReport[] => {
-  if (statsReport === null) {
-    return [];
-  }
-
-  const res = [];
-  for (const [key, value] of statsReport) {
-    res.push({ key, value, index: JSON.stringify(value) });
-  }
-  return res;
-};
-
-const filterStats = (stats: StatsReport[], searchKey: string) => {
+const filterStats = (stats: RTCStatsReport | null, searchKey: string) => {
   // stats not ready
-  if (stats.length === 0) {
+  if (!stats || stats.size === 0) {
     return null;
   }
 
-  // stats ready + no search
-  const res: { [key: string]: StatsReport["value"] } = {};
-  if (searchKey.trim().length === 0) {
-    for (const stat of stats) {
-      res[stat.key] = stat.value;
-    }
-    return res;
-  }
-
-  // search stats
-  for (const stat of stats) {
-    if (stat.index.includes(searchKey)) {
-      res[stat.key] = stat.value;
+  const res: { [key: string]: unknown } = {};
+  for (const [key, value] of stats) {
+    const index = JSON.stringify(value);
+    // empty string is treated as included
+    if (index.includes(searchKey)) {
+      res[key] = value;
     }
   }
-
   return res;
 };
 
