@@ -9,10 +9,8 @@ export const openStats = ({ ui, room }: RootStore) => () => {
   log("openStats()");
   ui.isStatsOpen = true;
 
-  let timer = 0;
-  const updateStats = async () => {
-    timer = requestAnimationFrame(updateStats);
-
+  // 1000ms is enough(same as chrome://webrtc-internals)
+  const timer = setInterval(async () => {
     const pc = room.getPeerConnection();
     if (pc === null) {
       return;
@@ -23,20 +21,20 @@ export const openStats = ({ ui, room }: RootStore) => () => {
       return null;
     });
 
-    if (statsReport !== null) {
-      room.confStats.replace(normalizeStatsReport(statsReport));
-    } else {
+    if (statsReport === null) {
       room.confStats.clear();
+      return;
     }
-  };
-  timer = requestAnimationFrame(updateStats);
+
+    room.confStats.replace(normalizeStatsReport(statsReport));
+  }, 1000);
 
   // wait for closer
   when(
     () => !ui.isStatsOpen,
     () => {
       log("stop stats collector");
-      cancelAnimationFrame(timer);
+      clearInterval(timer);
     }
   );
 };
