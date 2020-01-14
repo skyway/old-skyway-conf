@@ -1,7 +1,6 @@
 import debug from "debug";
 import { when } from "mobx";
 import RootStore from "../stores";
-import { normalizeStatsReport } from "../utils/webrtc";
 
 const log = debug("effect:stats");
 
@@ -16,17 +15,9 @@ export const openStats = ({ ui, room }: RootStore) => () => {
       return;
     }
 
-    const statsReport = await pc.getStats().catch(err => {
-      log("getStats() error", err);
-      return null;
-    });
-
-    if (statsReport === null) {
-      room.confStats.clear();
-      return;
-    }
-
-    room.confStats.replace(normalizeStatsReport(statsReport));
+    pc.getStats()
+      .then(statsReport => (room.confStats = statsReport))
+      .catch(err => log("getStats() error", err));
   }, 1000);
 
   // wait for closer

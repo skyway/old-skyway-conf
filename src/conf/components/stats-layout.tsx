@@ -4,13 +4,18 @@ import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
 import { modalContentWidth } from "../utils/style";
-import { StatsReport } from "../utils/types";
 import Modal from "./modal";
 import { IconButton } from "./icon";
 
+interface StatsReport {
+  key: string;
+  value: object;
+  index: string;
+}
+
 interface Props {
   isSfu: boolean;
-  stats: StatsReport[];
+  stats: RTCStatsReport | null;
   onClickCloser: () => void;
 }
 const StatsLayout: FunctionComponent<Props> = ({
@@ -19,7 +24,7 @@ const StatsLayout: FunctionComponent<Props> = ({
   onClickCloser
 }: Props) => {
   const [searchKey, setSearchKey] = useState("");
-  const filteredStats = filterStats(stats, searchKey);
+  const filteredStats = filterStats(normalizeStatsReport(stats), searchKey);
 
   return (
     <Modal>
@@ -52,6 +57,20 @@ const StatsLayout: FunctionComponent<Props> = ({
 };
 
 export default StatsLayout;
+
+const normalizeStatsReport = (
+  statsReport: RTCStatsReport | null
+): StatsReport[] => {
+  if (statsReport === null) {
+    return [];
+  }
+
+  const res = [];
+  for (const [key, value] of statsReport) {
+    res.push({ key, value, index: JSON.stringify(value) });
+  }
+  return res;
+};
 
 const filterStats = (stats: StatsReport[], searchKey: string) => {
   // stats not ready

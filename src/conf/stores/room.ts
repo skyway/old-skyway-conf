@@ -1,13 +1,7 @@
 import { decorate, observable, computed, action } from "mobx";
 import { IObservableArray } from "mobx";
 import Peer, { RoomStream, SfuRoom, MeshRoom } from "skyway-js";
-import {
-  RoomInit,
-  RoomStat,
-  RoomChat,
-  RoomReaction,
-  StatsReport
-} from "../utils/types";
+import { RoomInit, RoomStat, RoomChat, RoomReaction } from "../utils/types";
 import { getPeerConnectionFromSfuRoom } from "../utils/skyway";
 
 class RoomStore {
@@ -23,7 +17,7 @@ class RoomStore {
   myLastReaction: RoomReaction | null;
   pinnedId: string | null;
   castRequestCount: number;
-  confStats: IObservableArray<StatsReport>;
+  confStats: RTCStatsReport | null;
 
   constructor() {
     // Peer instance
@@ -43,8 +37,7 @@ class RoomStore {
     this.myLastReaction = null;
     this.pinnedId = null;
     this.castRequestCount = 0;
-    // @ts-ignore: to type IObservableArray
-    this.confStats = [];
+    this.confStats = null;
   }
 
   get name(): string {
@@ -138,7 +131,7 @@ decorate(RoomStore, {
   myLastReaction: observable.ref,
   pinnedId: observable,
   castRequestCount: observable,
-  confStats: observable.shallow,
+  confStats: observable.ref,
   name: computed,
   isJoined: computed,
   pinnedStream: computed,

@@ -77,12 +77,6 @@ export interface NotificationItem {
   text: string;
 }
 
-export interface StatsReport {
-  key: string;
-  value: object;
-  index: string;
-}
-
 /* Types for hark */
 export type Hark = (stream: MediaStream, options?: HarkOptions) => Harker;
 interface HarkOptions {
