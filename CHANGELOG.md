@@ -1,3 +1,7 @@
+# 2.7.8
+
+- Improve performance of stats panel
+
 # 2.7.7
 
 - Update version of dev/prod dependencies
