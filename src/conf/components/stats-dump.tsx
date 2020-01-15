@@ -23,7 +23,11 @@ const StatsDump: FunctionComponent<Props> = ({ rtcStats }: Props) => {
       <pre css={statsStyle}>
         {filteredStats === null
           ? "Loading..."
-          : JSON.stringify(filteredStats, null, 2)}
+          : `${filteredStats.size} report(s) found.\n${JSON.stringify(
+              filteredStats.reports,
+              null,
+              2
+            )}`}
       </pre>
     </>
   );
@@ -37,15 +41,17 @@ const filterStats = (stats: RTCStatsReport, searchKey: string) => {
     return null;
   }
 
+  let size = 0;
   const res: { [key: string]: unknown } = {};
   for (const [key, value] of stats) {
     const index = JSON.stringify(value);
     // empty string is treated as included
     if (index.includes(searchKey)) {
       res[key] = value;
+      size++;
     }
   }
-  return res;
+  return { reports: res, size };
 };
 
 const inputStyle = css({
