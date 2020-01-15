@@ -13,10 +13,10 @@ const log = debug("main");
   document.title += ` v${version}`;
 
   render(
-    <>
+    <React.StrictMode>
       <Global styles={globalStyle} />
       <App />
-    </>,
+    </React.StrictMode>,
     document.getElementById("app-root")
   );
 })().catch(err => console.error(err));
