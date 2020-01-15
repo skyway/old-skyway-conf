@@ -1,11 +1,11 @@
 import * as React from "react";
-import { useState } from "react";
 import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
 import { globalColors } from "../../shared/global-style";
 import { modalContentWidth } from "../utils/style";
 import Modal from "./modal";
 import { IconButton } from "./icon";
+import StatsDump from "./stats-dump";
 
 interface Props {
   isSfu: boolean;
@@ -16,62 +16,28 @@ const StatsLayout: FunctionComponent<Props> = ({
   isSfu,
   rtcStats,
   onClickCloser
-}: Props) => {
-  const [searchKey, setSearchKey] = useState("");
-  const filteredStats = filterStats(rtcStats, searchKey.trim());
-
-  return (
-    <Modal>
-      <div css={wrapperStyle}>
-        <div css={headStyle}>
-          <IconButton name="close" onClick={onClickCloser} />
-        </div>
-        <input
-          type="text"
-          placeholder="filter stats"
-          value={searchKey}
-          onChange={ev => setSearchKey(ev.target.value)}
-        />
-        {isSfu ? (
-          <div css={scrollerStyle}>
-            <pre css={statsStyle}>
-              {filteredStats === null
-                ? "Loading..."
-                : JSON.stringify(filteredStats, null, 2)}
-            </pre>
-          </div>
-        ) : (
-          <div css={naStyle}>
-            Stats view is not available in mesh room type.
-          </div>
-        )}
+}: Props) => (
+  <Modal>
+    <div css={wrapperStyle}>
+      <div css={headStyle}>
+        <IconButton name="close" onClick={onClickCloser} />
       </div>
-    </Modal>
-  );
-};
+      {isSfu ? (
+        <div css={scrollerStyle}>
+          <StatsDump rtcStats={rtcStats} />
+        </div>
+      ) : (
+        <div css={naStyle}>Stats view is not available in mesh room type.</div>
+      )}
+    </div>
+  </Modal>
+);
 
 export default StatsLayout;
 
-const filterStats = (stats: RTCStatsReport | null, searchKey: string) => {
-  // stats not ready
-  if (!stats || stats.size === 0) {
-    return null;
-  }
-
-  const res: { [key: string]: unknown } = {};
-  for (const [key, value] of stats) {
-    const index = JSON.stringify(value);
-    // empty string is treated as included
-    if (index.includes(searchKey)) {
-      res[key] = value;
-    }
-  }
-  return res;
-};
-
 const wrapperStyle = css({
   display: "grid",
-  gridTemplateRows: "20px 20px 1fr",
+  gridTemplateRows: "20px 1fr",
   width: modalContentWidth,
   height: "80%",
   boxSizing: "border-box",
@@ -89,14 +55,6 @@ const scrollerStyle = css({
   overflow: "hidden",
   overflowY: "scroll",
   overflowScrolling: "touch"
-});
-
-const statsStyle = css({
-  margin: 0,
-  padding: 4,
-  fontSize: ".8rem",
-  whiteSpace: "pre-wrap",
-  wordBreak: "break-all"
 });
 
 const naStyle = css({
