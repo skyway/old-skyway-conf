@@ -11,9 +11,7 @@ const StatsSummary: FunctionComponent<Props> = ({ rtcStats }: Props) => {
   return (
     <div css={wrapperStyle}>
       <pre css={statsStyle}>
-        {summarizedStats === null
-          ? "Loading..."
-          : JSON.stringify(summarizedStats, null, 2)}
+        {summarizedStats === null ? "Loading..." : summarizedStats}
       </pre>
     </div>
   );
@@ -23,16 +21,22 @@ export default StatsSummary;
 
 const summarizeStats = (stats: RTCStatsReport) => {
   const { localCandidate, remoteCandidate } = extractCandidatePair(stats);
-  const outboundRtps = extractOutboundRtps(stats);
+  const { audioOutbounds, videoOutbounds } = extractOutboundRtps(stats);
+  const { audioInbounds, videoInbounds } = extractInboundRtps(stats);
 
-  const res: { [key: string]: unknown } = {
-    localCandidate,
-    remoteCandidate,
-    outboundRtps
-  };
+  return `
+# ice-candidate
+- local: ${localCandidate.type} ${localCandidate.protocol}://${localCandidate.address}:${localCandidate.port}
+- remote: ${remoteCandidate.type} ${remoteCandidate.protocol}://${remoteCandidate.address}:${remoteCandidate.port}
 
-  console.warn(res);
-  return res;
+# outbounds(send)
+- ${audioOutbounds.size} audio(s): ${audioOutbounds.bytesSent} bytes ${audioOutbounds.packetsSent} packets
+- ${videoOutbounds.size} video(s): ${videoOutbounds.bytesSent} bytes ${videoOutbounds.packetsSent} packets
+
+# inbounds(recv)
+- ${audioInbounds.size} audio(s): ${audioInbounds.bytesReceived} bytes, ${audioInbounds.packetsReceived} packets, ${audioInbounds.packetsLost} packets lost
+- ${videoInbounds.size} video(s): ${videoInbounds.bytesReceived} bytes, ${videoInbounds.packetsReceived} packets, ${videoInbounds.packetsLost} packets lost
+  `.trim();
 };
 
 const extractCandidatePair = (stats: RTCStatsReport) => {
@@ -68,10 +72,10 @@ const extractCandidatePair = (stats: RTCStatsReport) => {
       type: localReport.candidateType
     },
     remoteCandidate: {
-      address: localReport.address || localReport.ip, // Chrome
-      port: localReport.port,
-      protocol: localReport.protocol,
-      type: localReport.candidateType
+      address: remoteReport.address || remoteReport.ip, // Chrome
+      port: remoteReport.port,
+      protocol: remoteReport.protocol,
+      type: remoteReport.candidateType
     }
   };
 };
@@ -84,14 +88,70 @@ const extractOutboundRtps = (stats: RTCStatsReport) => {
     console.warn("outbound-rtp reports are found more than 2!");
   }
 
-  const summarized = outboundRtps.map(stat => ({
-    ssrc: stat.ssrc,
-    kind: stat.kind || stat.mediaType, // Safari
-    bytesSent: stat.bytesSent,
-    packetsSent: stat.packetsSent
-  }));
+  const outbounds = {
+    video: {
+      size: 0,
+      bytesSent: 0,
+      packetsSent: 0
+    },
+    audio: {
+      size: 0,
+      bytesSent: 0,
+      packetsSent: 0
+    }
+  };
+  for (const stat of outboundRtps) {
+    const kind: "audio" | "video" = stat.kind || stat.mediaType; // Safari
+    if (kind !== "audio" && kind !== "video") {
+      console.warn("unknown outbound rtp kind found!");
+    }
 
-  return summarized;
+    outbounds[kind].size += 1;
+    outbounds[kind].bytesSent += stat.bytesSent;
+    outbounds[kind].packetsSent += stat.packetsSent;
+  }
+
+  return {
+    audioOutbounds: outbounds.audio,
+    videoOutbounds: outbounds.video
+  };
+};
+
+const extractInboundRtps = (stats: RTCStatsReport) => {
+  const inboundRtps = [...stats.values()].filter(
+    stat => stat.type === "inbound-rtp"
+  );
+
+  const inbounds = {
+    video: {
+      size: 0,
+      bytesReceived: 0,
+      packetsReceived: 0,
+      packetsLost: 0
+    },
+    audio: {
+      size: 0,
+      bytesReceived: 0,
+      packetsReceived: 0,
+      packetsLost: 0
+    }
+  };
+  for (const stat of inboundRtps) {
+    const kind: "audio" | "video" = stat.kind || stat.mediaType; // Safari
+    if (kind !== "audio" && kind !== "video") {
+      console.warn("unknown outbound rtp kind found!");
+    }
+
+    inbounds[kind].size += 1;
+    inbounds[kind].bytesReceived += stat.bytesReceived;
+    inbounds[kind].packetsReceived += stat.packetsReceived;
+    inbounds[kind].packetsLost += stat.packetsLost;
+  }
+
+  return {
+    audioInbounds: inbounds.audio,
+    videoInbounds: inbounds.video
+  };
 };
 
 const wrapperStyle = css({
