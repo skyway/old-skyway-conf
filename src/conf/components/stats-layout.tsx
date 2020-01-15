@@ -9,16 +9,16 @@ import { IconButton } from "./icon";
 
 interface Props {
   isSfu: boolean;
-  stats: RTCStatsReport | null;
+  rtcStats: RTCStatsReport | null;
   onClickCloser: () => void;
 }
 const StatsLayout: FunctionComponent<Props> = ({
   isSfu,
-  stats,
+  rtcStats,
   onClickCloser
 }: Props) => {
   const [searchKey, setSearchKey] = useState("");
-  const filteredStats = filterStats(stats, searchKey.trim());
+  const filteredStats = filterStats(rtcStats, searchKey.trim());
 
   return (
     <Modal>

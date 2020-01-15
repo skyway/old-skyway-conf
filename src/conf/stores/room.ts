@@ -17,7 +17,7 @@ class RoomStore {
   myLastReaction: RoomReaction | null;
   pinnedId: string | null;
   castRequestCount: number;
-  confStats: RTCStatsReport | null;
+  rtcStats: RTCStatsReport | null;
 
   constructor() {
     // Peer instance
@@ -37,7 +37,7 @@ class RoomStore {
     this.myLastReaction = null;
     this.pinnedId = null;
     this.castRequestCount = 0;
-    this.confStats = null;
+    this.rtcStats = null;
   }
 
   get name(): string {
@@ -131,7 +131,7 @@ decorate(RoomStore, {
   myLastReaction: observable.ref,
   pinnedId: observable,
   castRequestCount: observable,
-  confStats: observable.ref,
+  rtcStats: observable.ref,
   name: computed,
   isJoined: computed,
   pinnedStream: computed,
