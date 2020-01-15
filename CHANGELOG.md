@@ -1,3 +1,11 @@
+# 2.7.9
+
+- Improve stats panel
+  - show filtered count
+- Refactor
+  - internal components structure
+  - use `React.StrictMode` for development
+
 # 2.7.8
 
 - Improve performance of stats panel
