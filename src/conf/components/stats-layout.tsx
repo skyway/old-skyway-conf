@@ -5,6 +5,7 @@ import { globalColors } from "../../shared/global-style";
 import { modalContentWidth } from "../utils/style";
 import Modal from "./modal";
 import { IconButton } from "./icon";
+import StatsSummary from "./stats-summary";
 import StatsDump from "./stats-dump";
 
 interface Props {
@@ -24,6 +25,7 @@ const StatsLayout: FunctionComponent<Props> = ({
       </div>
       {isSfu ? (
         <div css={scrollerStyle}>
+          <StatsSummary rtcStats={rtcStats} />
           <StatsDump rtcStats={rtcStats} />
         </div>
       ) : (
