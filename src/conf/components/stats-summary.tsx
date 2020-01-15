@@ -22,14 +22,26 @@ const StatsSummary: FunctionComponent<Props> = ({ rtcStats }: Props) => {
 export default StatsSummary;
 
 const summarizeStats = (stats: RTCStatsReport) => {
-  const statsValues = [...stats.values()];
+  const { localCandidate, remoteCandidate } = extractCandidatePair(stats);
+  const outboundRtps = extractOutboundRtps(stats);
 
+  const res: { [key: string]: unknown } = {
+    localCandidate,
+    remoteCandidate,
+    outboundRtps
+  };
+
+  console.warn(res);
+  return res;
+};
+
+const extractCandidatePair = (stats: RTCStatsReport) => {
   // find candidates using now
-  const candidatePairs = statsValues.filter(
+  const candidatePairs = [...stats.values()].filter(
     stat => stat.type === "candidate-pair"
   );
   const selectedPairs = candidatePairs.filter(stat => {
-    // Firefox
+    // Firefox only
     if ("selected" in stat) return stat.selected && stat.nominated;
     return stat.nominated;
   });
@@ -38,53 +50,48 @@ const summarizeStats = (stats: RTCStatsReport) => {
   }
 
   const [{ localCandidateId, remoteCandidateId }] = selectedPairs;
-  const localCandidate = stats.get(localCandidateId);
-  const remoteCandidate = stats.get(remoteCandidateId);
+  const localReport = stats.get(localCandidateId);
+  const remoteReport = stats.get(remoteCandidateId);
 
-  if (!localCandidate) {
+  if (!localReport) {
     console.warn("localCandidate not found!");
   }
-  if (!remoteCandidate) {
+  if (!remoteReport) {
     console.warn("remoteCandidate not found!");
   }
 
-  console.log(localCandidate);
-  console.log(remoteCandidate);
-
-  const res: { [key: string]: unknown } = {};
-  for (const value of [remoteCandidate, localCandidate]) {
-    switch (value.type) {
-      case "local-candidate": {
-        res.localCandidate = {
-          address: value.address || value.ip || "N/A",
-          port: value.port || "N/A",
-          protocol: value.protocol || "N/A",
-          type: value.candidateType || "N/A",
-          // for Chrome
-          network: value.networkType || "N/A"
-        };
-        break;
-      }
-      case "remote-candidate": {
-        res.remoteCandidate = {
-          address: value.address || value.ip || "N/A",
-          port: value.port || "N/A",
-          protocol: value.protocol || "N/A",
-          type: value.candidateType || "N/A"
-        };
-        break;
-      }
-      case "inbound-rtp": {
-        break;
-      }
-      case "outbound-rtp": {
-        break;
-      }
+  return {
+    localCandidate: {
+      address: localReport.address || localReport.ip, // Chrome
+      port: localReport.port,
+      protocol: localReport.protocol,
+      type: localReport.candidateType
+    },
+    remoteCandidate: {
+      address: localReport.address || localReport.ip, // Chrome
+      port: localReport.port,
+      protocol: localReport.protocol,
+      type: localReport.candidateType
     }
+  };
+};
+
+const extractOutboundRtps = (stats: RTCStatsReport) => {
+  const outboundRtps = [...stats.values()].filter(
+    stat => stat.type === "outbound-rtp"
+  );
+  if (outboundRtps.length > 2) {
+    console.warn("outbound-rtp reports are found more than 2!");
   }
 
-  console.warn(res);
-  return res;
+  const summarized = outboundRtps.map(stat => ({
+    ssrc: stat.ssrc,
+    kind: stat.kind || stat.mediaType, // Safari
+    bytesSent: stat.bytesSent,
+    packetsSent: stat.packetsSent
+  }));
+
+  return summarized;
 };
 
 const wrapperStyle = css({
