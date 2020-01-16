@@ -20,26 +20,52 @@ const StatsSummary: FunctionComponent<Props> = ({ rtcStats }: Props) => {
 export default StatsSummary;
 
 const summarizeStats = (stats: RTCStatsReport) => {
-  const { localCandidate, remoteCandidate } = extractCandidatePair(stats);
+  const candidatePairs = extractCandidatePairs(stats);
   const { audioOutbounds, videoOutbounds } = extractOutboundRtps(stats);
   const { audioInbounds, videoInbounds } = extractInboundRtps(stats);
 
   return `
-# ice-candidate
-- local: ${localCandidate.type} ${localCandidate.protocol}://${localCandidate.address}:${localCandidate.port}
-- remote: ${remoteCandidate.type} ${remoteCandidate.protocol}://${remoteCandidate.address}:${remoteCandidate.port}
+# Active ICE candidate pairs
+${candidatePairs.map(({ localCandidate, remoteCandidate }, idx) =>
+  `
+## Pair ${idx + 1}
+- local: ${localCandidate.type} ${localCandidate.protocol}://${
+    localCandidate.address
+  }:${localCandidate.port}
+- remote: ${remoteCandidate.type} ${remoteCandidate.protocol}://${
+    remoteCandidate.address
+  }:${remoteCandidate.port}
+`.trim()
+)}
 
-# outbounds(send)
-- ${audioOutbounds.size} audio(s): ${audioOutbounds.bytesSent} bytes ${audioOutbounds.packetsSent} packets
-- ${videoOutbounds.size} video(s): ${videoOutbounds.bytesSent} bytes ${videoOutbounds.packetsSent} packets
+# Outbounds(sent)
+## Audio
+- ${audioOutbounds.bytesSent} bytes total
+- ${audioOutbounds.packetsSent} packets total
 
-# inbounds(recv)
-- ${audioInbounds.size} audio(s): ${audioInbounds.bytesReceived} bytes, ${audioInbounds.packetsReceived} packets, ${audioInbounds.packetsLost} packets lost
-- ${videoInbounds.size} video(s): ${videoInbounds.bytesReceived} bytes, ${videoInbounds.packetsReceived} packets, ${videoInbounds.packetsLost} packets lost
+## Video
+- ${videoOutbounds.bytesSent} bytes total
+- ${videoOutbounds.packetsSent} packets total
+
+# Inbounds(received)
+## Audio
+- ${audioInbounds.size} audio(s)
+- ${audioInbounds.bytesReceived} bytes total
+- ${audioInbounds.packetsReceived} packets total, ${
+    audioInbounds.packetsLost
+  } packets lost total
+
+## Video
+- ${videoInbounds.size} video(s)
+- ${videoInbounds.bytesReceived} bytes total
+- ${videoInbounds.packetsReceived} packets total, ${
+    videoInbounds.packetsLost
+  } packets lost total
   `.trim();
 };
 
-const extractCandidatePair = (stats: RTCStatsReport) => {
+// TODO: utils
+const extractCandidatePairs = (stats: RTCStatsReport) => {
   // find candidates using now
   const candidatePairs = [...stats.values()].filter(
     stat => stat.type === "candidate-pair"
@@ -49,35 +75,37 @@ const extractCandidatePair = (stats: RTCStatsReport) => {
     if ("selected" in stat) return stat.selected && stat.nominated;
     return stat.nominated;
   });
-  if (selectedPairs.length !== 1) {
-    console.warn("selected pairs are found more than 1!");
-  }
 
-  const [{ localCandidateId, remoteCandidateId }] = selectedPairs;
-  const localReport = stats.get(localCandidateId);
-  const remoteReport = stats.get(remoteCandidateId);
+  return selectedPairs.map(({ localCandidateId, remoteCandidateId }) => {
+    const localReport = stats.get(localCandidateId);
+    const remoteReport = stats.get(remoteCandidateId);
 
-  if (!localReport) {
-    console.warn("localCandidate not found!");
-  }
-  if (!remoteReport) {
-    console.warn("remoteCandidate not found!");
-  }
-
-  return {
-    localCandidate: {
-      address: localReport.address || localReport.ip, // Chrome
-      port: localReport.port,
-      protocol: localReport.protocol,
-      type: localReport.candidateType
-    },
-    remoteCandidate: {
-      address: remoteReport.address || remoteReport.ip, // Chrome
-      port: remoteReport.port,
-      protocol: remoteReport.protocol,
-      type: remoteReport.candidateType
+    if (!localReport) {
+      console.warn("localCandidate not found!");
     }
-  };
+    if (!remoteReport) {
+      console.warn("remoteCandidate not found!");
+    }
+
+    return {
+      localCandidate: localReport
+        ? {
+            address: localReport.address || localReport.ip, // Chrome
+            port: localReport.port,
+            protocol: localReport.protocol,
+            type: localReport.candidateType
+          }
+        : {},
+      remoteCandidate: remoteReport
+        ? {
+            address: remoteReport.address || remoteReport.ip, // Chrome
+            port: remoteReport.port,
+            protocol: remoteReport.protocol,
+            type: remoteReport.candidateType
+          }
+        : {}
+    };
+  });
 };
 
 const extractOutboundRtps = (stats: RTCStatsReport) => {
@@ -90,12 +118,10 @@ const extractOutboundRtps = (stats: RTCStatsReport) => {
 
   const outbounds = {
     video: {
-      size: 0,
       bytesSent: 0,
       packetsSent: 0
     },
     audio: {
-      size: 0,
       bytesSent: 0,
       packetsSent: 0
     }
@@ -103,10 +129,9 @@ const extractOutboundRtps = (stats: RTCStatsReport) => {
   for (const stat of outboundRtps) {
     const kind: "audio" | "video" = stat.kind || stat.mediaType; // Safari
     if (kind !== "audio" && kind !== "video") {
-      console.warn("unknown outbound rtp kind found!");
+      console.warn(`unknown outbound rtp kind: ${kind} found!`);
     }
 
-    outbounds[kind].size += 1;
     outbounds[kind].bytesSent += stat.bytesSent;
     outbounds[kind].packetsSent += stat.packetsSent;
   }
