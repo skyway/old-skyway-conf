@@ -26,17 +26,20 @@ const summarizeStats = (stats: RTCStatsReport) => {
 
   return `
 # Active ICE candidate pairs
-${candidatePairs.map(({ localCandidate, remoteCandidate }, idx) =>
-  `
+${candidatePairs
+  .map(({ localCandidate, remoteCandidate }, idx) =>
+    `
 ## Pair ${idx + 1}
 - local: ${localCandidate.type} ${localCandidate.protocol}://${
-    localCandidate.address
-  }:${localCandidate.port}
+      localCandidate.address
+    }:${localCandidate.port}
 - remote: ${remoteCandidate.type} ${remoteCandidate.protocol}://${
-    remoteCandidate.address
-  }:${remoteCandidate.port}
+      remoteCandidate.address
+    }:${remoteCandidate.port}
 `.trim()
-)}
+  )
+  .join("\n")
+  .trim()}
 
 # Outbounds(sent)
 ## Audio
@@ -48,19 +51,44 @@ ${candidatePairs.map(({ localCandidate, remoteCandidate }, idx) =>
 - ${videoOutbounds.packetsSent} packets total
 
 # Inbounds(received)
-## Audio
+## Total
 - ${audioInbounds.size} audio(s)
-- ${audioInbounds.bytesReceived} bytes total
-- ${audioInbounds.packetsReceived} packets total, ${
+  - ${audioInbounds.bytesReceived} bytes total
+  - ${audioInbounds.packetsReceived} packets total, ${
     audioInbounds.packetsLost
   } packets lost total
-
-## Video
 - ${videoInbounds.size} video(s)
-- ${videoInbounds.bytesReceived} bytes total
-- ${videoInbounds.packetsReceived} packets total, ${
+  - ${videoInbounds.bytesReceived} bytes total
+  - ${videoInbounds.packetsReceived} packets total, ${
     videoInbounds.packetsLost
   } packets lost total
+
+## Details
+${audioInbounds.items
+  .map((item, idx) =>
+    `
+- Audio ${idx + 1}: ${item.ssrc}
+  - ${item.bytesReceived} bytes total
+  - ${item.packetsReceived} packets total, ${
+      item.packetsLost
+    } packets lost total
+`.trim()
+  )
+  .join("\n")
+  .trim()}
+${videoInbounds.items
+  .map((item, idx) =>
+    `
+- Video ${idx + 1}: ${item.ssrc}
+  - ${item.bytesReceived} bytes total
+  - ${item.packetsReceived} packets total, ${
+      item.packetsLost
+    } packets lost total
+`.trim()
+  )
+  .join("\n")
+  .trim()}
+
   `.trim();
 };
 
@@ -152,25 +180,35 @@ const extractInboundRtps = (stats: RTCStatsReport) => {
       size: 0,
       bytesReceived: 0,
       packetsReceived: 0,
-      packetsLost: 0
+      packetsLost: 0,
+      items: [] as { [key: string]: number }[]
     },
     audio: {
       size: 0,
       bytesReceived: 0,
       packetsReceived: 0,
-      packetsLost: 0
+      packetsLost: 0,
+      items: [] as { [key: string]: number }[]
     }
   };
   for (const stat of inboundRtps) {
     const kind: "audio" | "video" = stat.kind || stat.mediaType; // Safari
     if (kind !== "audio" && kind !== "video") {
-      console.warn("unknown outbound rtp kind found!");
+      console.warn(`unknown outbound rtp kind: ${kind} found!`);
     }
 
+    // calc total
     inbounds[kind].size += 1;
     inbounds[kind].bytesReceived += stat.bytesReceived;
     inbounds[kind].packetsReceived += stat.packetsReceived;
     inbounds[kind].packetsLost += stat.packetsLost;
+    // each items
+    inbounds[kind].items.push({
+      bytesReceived: stat.bytesReceived,
+      packetsReceived: stat.packetsReceived,
+      packetsLost: stat.packetsLost,
+      ssrc: stat.ssrc
+    });
   }
 
   return {
