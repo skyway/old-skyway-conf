@@ -15,7 +15,7 @@ const StatsDump: FunctionComponent<Props> = ({ rtcStats }: Props) => {
     <>
       <input
         type="text"
-        placeholder="filter stats"
+        placeholder="filter stat reports"
         value={searchKey}
         onChange={ev => setSearchKey(ev.target.value)}
         css={inputStyle}
