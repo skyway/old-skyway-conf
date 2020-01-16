@@ -25,8 +25,14 @@ const StatsLayout: FunctionComponent<Props> = ({
       </div>
       {isSfu ? (
         <div css={scrollerStyle}>
-          <StatsSummary rtcStats={rtcStats} />
-          <StatsDump rtcStats={rtcStats} />
+          <details open>
+            <summary>Stats summary</summary>
+            <StatsSummary rtcStats={rtcStats} />
+          </details>
+          <details>
+            <summary>Stats dump</summary>
+            <StatsDump rtcStats={rtcStats} />
+          </details>
         </div>
       ) : (
         <div css={naStyle}>Stats view is not available in mesh room type.</div>
