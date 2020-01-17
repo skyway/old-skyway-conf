@@ -49,3 +49,5 @@ Web conference app using SkyWay JS-SDK.
   - remote user chat
   - local action information
 - display stats report(SFU only)
+  - filter reports by string
+  - show summary

@@ -1,3 +1,8 @@
+# 2.8.0
+
+- Add stats summary view
+- Fix video recvonly case in mesh room
+
 # 2.7.9
 
 - Improve stats panel
