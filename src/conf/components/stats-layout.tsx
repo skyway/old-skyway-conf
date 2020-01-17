@@ -5,6 +5,7 @@ import { globalColors } from "../../shared/global-style";
 import { modalContentWidth } from "../utils/style";
 import Modal from "./modal";
 import { IconButton } from "./icon";
+import StatsSummary from "./stats-summary";
 import StatsDump from "./stats-dump";
 
 interface Props {
@@ -24,7 +25,14 @@ const StatsLayout: FunctionComponent<Props> = ({
       </div>
       {isSfu ? (
         <div css={scrollerStyle}>
-          <StatsDump rtcStats={rtcStats} />
+          <details open>
+            <summary>Stats summary</summary>
+            <StatsSummary rtcStats={rtcStats} />
+          </details>
+          <details>
+            <summary>Stats dump</summary>
+            <StatsDump rtcStats={rtcStats} />
+          </details>
         </div>
       ) : (
         <div css={naStyle}>Stats view is not available in mesh room type.</div>
