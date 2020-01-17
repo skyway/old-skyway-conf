@@ -23,7 +23,12 @@ export const joinRoom = (store: RootStore) => {
     throw ui.showError(new Error("Peer is not created!"));
   }
 
-  const roomOptions = { mode: room.mode, stream: media.stream };
+  const roomOptions = {
+    mode: room.mode,
+    stream: media.stream,
+    // this app requires audio, but video is optional
+    videoReceiveEnabled: true
+  };
   if (room.useH264) {
     Object.assign(roomOptions, { videoCodec: "H264" });
   }
