@@ -1,8 +1,13 @@
+type MediaKind = "audio" | "video";
+interface StatsItem {
+  [key: string]: string | number;
+}
+
 export const extractCandidatePairs = (stats: RTCStatsReport) => {
-  // find candidates using now
   const candidatePairs = [...stats.values()].filter(
     stat => stat.type === "candidate-pair"
   );
+  // find candidates using now
   const selectedPairs = candidatePairs.filter(stat => {
     // Firefox only
     if ("selected" in stat) return stat.selected && stat.nominated;
@@ -13,6 +18,7 @@ export const extractCandidatePairs = (stats: RTCStatsReport) => {
     const localReport = stats.get(localCandidateId);
     const remoteReport = stats.get(remoteCandidateId);
 
+    // must not be happened
     if (!localReport) {
       console.warn("localCandidate not found!");
     }
@@ -61,7 +67,7 @@ export const extractOutboundRtps = (stats: RTCStatsReport) => {
     }
   };
   for (const stat of outboundRtps) {
-    const kind: "audio" | "video" = stat.kind || stat.mediaType; // Safari
+    const kind: MediaKind = stat.kind || stat.mediaType; // Safari
     if (kind !== "audio" && kind !== "video") {
       console.warn(`unknown outbound rtp kind: ${kind} found!`);
     }
@@ -90,18 +96,18 @@ export const extractInboundRtps = (stats: RTCStatsReport) => {
       nackCount: 0,
       firCount: 0,
       pliCount: 0,
-      items: [] as { [key: string]: number }[]
+      items: [] as StatsItem[]
     },
     audio: {
       size: 0,
       bytesReceived: 0,
       packetsReceived: 0,
       packetsLost: 0,
-      items: [] as { [key: string]: number }[]
+      items: [] as StatsItem[]
     }
   };
   for (const stat of inboundRtps) {
-    const kind: "audio" | "video" = stat.kind || stat.mediaType; // Safari
+    const kind: MediaKind = stat.kind || stat.mediaType; // Safari
     if (kind !== "audio" && kind !== "video") {
       console.warn(`unknown outbound rtp kind: ${kind} found!`);
     }
@@ -111,18 +117,20 @@ export const extractInboundRtps = (stats: RTCStatsReport) => {
     inbounds[kind].bytesReceived += stat.bytesReceived;
     inbounds[kind].packetsReceived += stat.packetsReceived;
     inbounds[kind].packetsLost += stat.packetsLost;
+    if (kind === "video") {
+      inbounds[kind].nackCount += stat.nackCount;
+      inbounds[kind].firCount += stat.firCount;
+      inbounds[kind].pliCount += stat.pliCount;
+    }
+
     // each items
-    const item: { [key: string]: number } = {
+    const item: StatsItem = {
       bytesReceived: stat.bytesReceived,
       packetsReceived: stat.packetsReceived,
       packetsLost: stat.packetsLost,
       ssrc: stat.ssrc
     };
     if (kind === "video") {
-      inbounds[kind].nackCount += stat.nackCount;
-      inbounds[kind].firCount += stat.firCount;
-      inbounds[kind].pliCount += stat.pliCount;
-
       item.nackCount = stat.nackCount;
       item.firCount = stat.firCount;
       item.pliCount = stat.pliCount;
