@@ -1,3 +1,8 @@
+# 2.8.1
+
+- Fix stats summary calculation logic
+  - Firefox drops some keys for inactive media
+
 # 2.8.0
 
 - Add stats summary view
