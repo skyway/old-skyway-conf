@@ -1,6 +1,6 @@
 type MediaKind = "audio" | "video";
 interface StatsItem {
-  [key: string]: string | number;
+  [key: string]: number;
 }
 
 export const extractCandidatePairs = (stats: RTCStatsReport) => {
@@ -70,6 +70,7 @@ export const extractOutboundRtps = (stats: RTCStatsReport) => {
     const kind: MediaKind = stat.kind || stat.mediaType; // Safari
     if (kind !== "audio" && kind !== "video") {
       console.warn(`unknown outbound rtp kind: ${kind} found!`);
+      continue;
     }
 
     outbounds[kind].bytesSent += stat.bytesSent;
@@ -87,59 +88,70 @@ export const extractInboundRtps = (stats: RTCStatsReport) => {
     stat => stat.type === "inbound-rtp"
   );
 
-  const inbounds = {
-    video: {
-      size: 0,
-      bytesReceived: 0,
-      packetsReceived: 0,
-      packetsLost: 0,
-      nackCount: 0,
-      firCount: 0,
-      pliCount: 0,
-      items: [] as StatsItem[]
-    },
-    audio: {
-      size: 0,
-      bytesReceived: 0,
-      packetsReceived: 0,
-      packetsLost: 0,
-      items: [] as StatsItem[]
-    }
+  const videoInbounds = {
+    size: 0,
+    bytesReceived: 0,
+    packetsReceived: 0,
+    packetsLost: 0,
+    nackCount: 0,
+    firCount: 0,
+    pliCount: 0,
+    items: [] as StatsItem[]
   };
+  const audioInbounds = {
+    size: 0,
+    bytesReceived: 0,
+    packetsReceived: 0,
+    packetsLost: 0,
+    items: [] as StatsItem[]
+  };
+
+  // each items
   for (const stat of inboundRtps) {
-    const kind: MediaKind = stat.kind || stat.mediaType; // Safari
-    if (kind !== "audio" && kind !== "video") {
-      console.warn(`unknown outbound rtp kind: ${kind} found!`);
-    }
-
-    // calc total
-    inbounds[kind].size += 1;
-    inbounds[kind].bytesReceived += stat.bytesReceived;
-    inbounds[kind].packetsReceived += stat.packetsReceived;
-    inbounds[kind].packetsLost += stat.packetsLost;
-    if (kind === "video") {
-      inbounds[kind].nackCount += stat.nackCount;
-      inbounds[kind].firCount += stat.firCount;
-      inbounds[kind].pliCount += stat.pliCount;
-    }
-
-    // each items
     const item: StatsItem = {
       bytesReceived: stat.bytesReceived,
       packetsReceived: stat.packetsReceived,
       packetsLost: stat.packetsLost,
       ssrc: stat.ssrc
     };
-    if (kind === "video") {
-      item.nackCount = stat.nackCount;
-      item.firCount = stat.firCount;
-      item.pliCount = stat.pliCount;
+
+    const kind: MediaKind = stat.kind || stat.mediaType; // Safari
+    if (kind !== "audio" && kind !== "video") {
+      console.warn(`unknown outbound rtp kind: ${kind} found!`);
+      continue;
     }
-    inbounds[kind].items.push(item);
+
+    if (kind === "video") {
+      // Firefox misses these counts for inactive media
+      item.nackCount = stat.nackCount || 0;
+      item.firCount = stat.firCount || 0;
+      item.pliCount = stat.pliCount || 0;
+      videoInbounds.items.push(item);
+    }
+    if (kind === "audio") {
+      audioInbounds.items.push(item);
+    }
+  }
+
+  // calc total
+  for (const item of videoInbounds.items) {
+    videoInbounds.size += 1;
+    videoInbounds.bytesReceived += item.bytesReceived;
+    videoInbounds.packetsReceived += item.packetsReceived;
+    videoInbounds.packetsLost += item.packetsLost;
+    videoInbounds.nackCount += item.nackCount;
+    videoInbounds.firCount += item.firCount;
+    videoInbounds.pliCount += item.pliCount;
+  }
+  for (const item of audioInbounds.items) {
+    audioInbounds.size += 1;
+    audioInbounds.bytesReceived += item.bytesReceived;
+    audioInbounds.packetsReceived += item.packetsReceived;
+    audioInbounds.packetsLost += item.packetsLost;
   }
 
   return {
-    audioInbounds: inbounds.audio,
-    videoInbounds: inbounds.video
+    videoInbounds,
+    audioInbounds
   };
 };
