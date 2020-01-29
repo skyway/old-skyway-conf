@@ -91,7 +91,6 @@ export const changeAudioDeviceId = ({ media, ui }: RootStore) => async (
 ) => {
   log("changeAudioDeviceId", deviceId);
 
-  media.deleteAudioTrack();
   const audioTrack = await getUserAudioTrack(deviceId).catch(err => {
     throw ui.showError(err);
   });
@@ -102,9 +101,6 @@ export const changeVideoDeviceId = ({ media, ui }: RootStore) => async (
 ) => {
   log("changeVideoDeviceId", deviceId);
 
-  // release media first
-  media.deleteVideoTrack();
-  // then, get another media. Otherwise some Android devices crash
   const videoTrack = await getUserVideoTrack(deviceId).catch(err => {
     throw ui.showError(err);
   });
