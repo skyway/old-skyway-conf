@@ -33,7 +33,7 @@ export const globalStyle = css({
     height: "100vh",
     background: `linear-gradient(45deg, ${globalColors.lightblue}, ${globalColors.blue})`
   },
-  "body > div": {
+  "#app-root": {
     height: "100vh",
     overflow: "hidden"
   }
