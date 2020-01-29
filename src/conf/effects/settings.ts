@@ -38,6 +38,8 @@ export const enableUserVideo = ({ media, ui }: RootStore) => async () => {
   const videoTrack = await getUserVideoTrack(deviceId).catch(err => {
     throw ui.showError(err);
   });
+
+  media.releaseVideoDevice();
   // may trigger replaceStream()
   media.setVideoTrack(videoTrack, "camera", deviceId);
 
@@ -56,7 +58,7 @@ export const enableDisplayVideo = (store: RootStore) => async () => {
 
   const videoTrack = await getDisplayVideoTrack().catch(err => {
     if (err.name === "NotAllowedError") {
-      // cancelled
+      // cancelled or not supported
     } else {
       throw ui.showError(err);
     }
@@ -64,7 +66,8 @@ export const enableDisplayVideo = (store: RootStore) => async () => {
 
   if (!(videoTrack instanceof MediaStreamTrack)) {
     notification.showInfo("Display selection was cancelled");
-    log("selection was cancelled");
+    notification.showInfo("Or your device does not support display sharing");
+    log("selection was cancelled or not supported");
     return;
   }
 
@@ -72,6 +75,7 @@ export const enableDisplayVideo = (store: RootStore) => async () => {
     once: true
   });
 
+  media.releaseVideoDevice();
   // may trigger replaceStream()
   media.setVideoTrack(videoTrack, "display", videoTrack.label);
 };
@@ -91,6 +95,7 @@ export const changeAudioDeviceId = ({ media, ui }: RootStore) => async (
 ) => {
   log("changeAudioDeviceId", deviceId);
 
+  media.releaseAudioDevice();
   const audioTrack = await getUserAudioTrack(deviceId).catch(err => {
     throw ui.showError(err);
   });
@@ -101,6 +106,9 @@ export const changeVideoDeviceId = ({ media, ui }: RootStore) => async (
 ) => {
   log("changeVideoDeviceId", deviceId);
 
+  // release current device first
+  media.releaseVideoDevice();
+  // then get another device, otherwise some Android will crash
   const videoTrack = await getUserVideoTrack(deviceId).catch(err => {
     throw ui.showError(err);
   });
