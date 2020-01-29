@@ -56,20 +56,26 @@ class MediaStore {
   }
 
   setAudioTrack(track: MediaStreamTrack, deviceId: string) {
-    if (this.audioTrack instanceof MediaStreamTrack) {
-      this.audioTrack.stop();
-    }
     this.audioTrack = track;
     this.audioDeviceId = deviceId;
   }
 
   setVideoTrack(track: MediaStreamTrack, type: VideoType, deviceId: string) {
-    if (this.videoTrack instanceof MediaStreamTrack) {
-      this.videoTrack.stop();
-    }
     this.videoTrack = track;
     this.videoType = type;
     this.videoDeviceId = deviceId;
+  }
+
+  releaseAudioDevice() {
+    if (this.audioTrack instanceof MediaStreamTrack) {
+      this.audioTrack.stop();
+    }
+  }
+
+  releaseVideoDevice() {
+    if (this.videoTrack instanceof MediaStreamTrack) {
+      this.videoTrack.stop();
+    }
   }
 
   deleteVideoTrack() {
@@ -119,6 +125,8 @@ decorate(MediaStore, {
   stream: computed,
   setAudioTrack: action,
   setVideoTrack: action,
+  releaseAudioDevice: action,
+  releaseVideoDevice: action,
   deleteVideoTrack: action,
   setAudioDevices: action,
   setVideoDevices: action,

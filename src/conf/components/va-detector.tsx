@@ -13,6 +13,9 @@ interface Props {
 const VADetector: FunctionComponent<Props> = ({ stream }) => {
   const [decibel, setDecibel] = useState(-Infinity);
   useEffect(() => {
+    // if audio source is changing
+    if (stream.getAudioTracks().length === 0) return;
+
     const harker = hark(stream, { threshold: -75 });
     // db: -100 ~ 0 (silent ~ loud)
     harker.on("volume_change", db => db !== -Infinity && setDecibel(db));
