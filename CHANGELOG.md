@@ -1,3 +1,9 @@
+# 2.8.2
+
+- Fix some Android Chrome crashing when video source changes
+- Fix app styles for root element
+  - Prevent from breaking empty `div` insertion by some extensions
+
 # 2.8.1
 
 - Fix stats summary calculation logic
