@@ -35,20 +35,22 @@ export const getUserDevices = async (
 export const getUserAudioTrack = async (
   deviceId: string
 ): Promise<MediaStreamTrack> => {
+  const constraints =
+    deviceId === "" ? true : { deviceId: { exact: deviceId } };
+
   return navigator.mediaDevices
-    .getUserMedia({
-      audio: { deviceId: { exact: deviceId } }
-    })
+    .getUserMedia({ audio: constraints })
     .then(stream => stream.getAudioTracks()[0]);
 };
 
 export const getUserVideoTrack = async (
   deviceId: string
 ): Promise<MediaStreamTrack> => {
+  const constraints =
+    deviceId === "" ? true : { deviceId: { exact: deviceId } };
+
   return navigator.mediaDevices
-    .getUserMedia({
-      video: { deviceId: { exact: deviceId } }
-    })
+    .getUserMedia({ video: constraints })
     .then(stream => stream.getVideoTracks()[0]);
 };
 

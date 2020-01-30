@@ -29,7 +29,7 @@ const Bootstrap: FunctionComponent<Props> = ({ children }: Props) => {
   return (
     <Observer>
       {() => {
-        if (ui.error instanceof Error) {
+        if (ui.error !== null) {
           return <ErrorDetail error={ui.error} />;
         }
 
