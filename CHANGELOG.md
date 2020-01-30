@@ -1,3 +1,7 @@
+# 2.8.3
+
+- Fix `getUserMedia(constraintsWithDeviceId)` call fails for the really first time
+
 # 2.8.2
 
 - Fix some Android Chrome crashing when video source changes
