@@ -8,8 +8,10 @@ interface Props {
 }
 const Error: FunctionComponent<Props> = ({ error }) => (
   <div css={wrapperStyle}>
-    <h2 css={headStyle}>{error.message}</h2>
-    <pre css={detailStyle}>{error.stack}</pre>
+    <h2 css={headStyle}>{error.message || error.name}</h2>
+    <pre css={detailStyle}>
+      {error.stack || "Stack trace is not available."}
+    </pre>
   </div>
 );
 
