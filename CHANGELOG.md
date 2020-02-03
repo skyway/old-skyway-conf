@@ -1,3 +1,7 @@
+# 2.8.4
+
+- Update dev/prod dependencies
+
 # 2.8.3
 
 - Fix `getUserMedia(constraintsWithDeviceId)` call fails for the really first time
