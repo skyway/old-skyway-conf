@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FunctionComponent, ReactNode } from "react";
 import { css } from "@emotion/core";
-import { globalColors } from "../../shared/global-style";
+import { globalColors, animation } from "../../shared/global-style";
 
 interface Props {
   children: ReactNode;
@@ -32,6 +32,7 @@ export default Layout;
 const wrapperStyle = css({
   backgroundImage: "url(./images/index/bg.jpg)",
   backgroundSize: "cover",
+  animation: `${animation.moveBackground} 30s linear infinite alternate`,
   height: "100vh",
   position: "relative",
   textAlign: "center",

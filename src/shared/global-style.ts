@@ -18,7 +18,12 @@ const blink = keyframes`
   100% { opacity: 1 }
 `;
 
-export const animation = { blink };
+const moveBackground = keyframes`
+    0% { background-position: top left; }
+  100% { background-position: top right; }
+`;
+
+export const animation = { blink, moveBackground };
 
 export const globalStyle = css({
   html: {
