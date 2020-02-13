@@ -1,3 +1,9 @@
+# 2.8.5
+
+- Enhance index app
+  - Add background animation
+  - Apply `React.StrictMode`
+
 # 2.8.4
 
 - Update dev/prod dependencies
