@@ -1,3 +1,10 @@
+# 2.8.6
+
+- Display name is now required to enter
+  - [#100](https://github.com/nttcom-webcore/skyway-conference-dev/issues/100)
+- Sort remote streams(video+audio -> audio only)
+  - [#102](https://github.com/nttcom-webcore/skyway-conference-dev/issues/102)
+
 # 2.8.5
 
 - Enhance index app
