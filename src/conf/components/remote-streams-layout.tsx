@@ -6,8 +6,15 @@ import { RoomStat } from "../utils/types";
 import { rightMenuWidth, rightMenuTogglerHeight } from "../utils/style";
 import RemoteStreamLayout from "./remote-stream-layout";
 
+type StreamEntry = [string, RoomStream];
+const sortByVideo: (a: StreamEntry, b: StreamEntry) => number = (
+  [, aStream],
+  [, bStream]
+) =>
+  aStream.getVideoTracks().length > bStream.getVideoTracks().length ? -1 : 1;
+
 interface Props {
-  streams: [string, RoomStream][];
+  streams: StreamEntry[];
   stats: [string, RoomStat][];
   pinnedId: string;
   onClickSetPinned: (id: string) => void;
@@ -22,7 +29,7 @@ const RemoteStreamsLayout: FunctionComponent<Props> = ({
     <div css={headStyle}>
       <span css={numberStyle}>{streams.length}</span> participant(s)
     </div>
-    {streams.map(([peerId, stream]) => {
+    {streams.sort(sortByVideo).map(([peerId, stream]) => {
       const entry = stats.find(([id]) => id === peerId);
       const stat = entry ? entry[1] : null;
       const isPinned = peerId === pinnedId;
