@@ -18,8 +18,16 @@ class ClientStore {
     this.parsedBrowser = null;
   }
 
+  get isDisplayNameValid(): boolean {
+    if (this.displayName.trim() === "") return false;
+    return true;
+  }
+
   get stat() {
-    return { displayName: this.displayName, browser: this.browser };
+    return {
+      displayName: this.displayName,
+      browser: this.browser
+    };
   }
 
   get browser(): ClientBrowser {
@@ -52,6 +60,7 @@ decorate(ClientStore, {
   isReady: observable,
   displayName: observable,
   parsedBrowser: observable.ref,
+  isDisplayNameValid: computed,
   stat: computed,
   browser: computed,
   load: action

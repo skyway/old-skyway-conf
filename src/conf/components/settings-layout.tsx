@@ -22,7 +22,6 @@ interface Props {
   browser: ClientBrowser;
   hasGetDisplayMedia: boolean;
   hasUserVideoDevice: boolean;
-  isReEntering: boolean;
   videoType: VideoType;
   isVideoTrackMuted: boolean;
   isAudioTrackMuted: boolean;
@@ -30,7 +29,9 @@ interface Props {
   audioDeviceId: string;
   videoInDevices: MediaDeviceInfo[];
   audioInDevices: MediaDeviceInfo[];
+  isReEntering: boolean;
   isJoined: boolean;
+  isDisplayNameValid: boolean;
   onChangeVideoDeviceId: (deviceId: string) => void;
   onChangeAudioDeviceId: (deviceId: string) => void;
   onClickToggleVideoMuted: () => void;
@@ -49,7 +50,6 @@ const SettingsLayout: FunctionComponent<Props> = ({
   browser,
   hasGetDisplayMedia,
   hasUserVideoDevice,
-  isReEntering,
   videoType,
   isVideoTrackMuted,
   isAudioTrackMuted,
@@ -57,7 +57,9 @@ const SettingsLayout: FunctionComponent<Props> = ({
   audioDeviceId,
   videoInDevices,
   audioInDevices,
+  isReEntering,
   isJoined,
+  isDisplayNameValid,
   onChangeVideoDeviceId,
   onChangeAudioDeviceId,
   onClickToggleVideoMuted,
@@ -110,6 +112,7 @@ const SettingsLayout: FunctionComponent<Props> = ({
         <SettingsItemName label="NAME">
           <SettingsNameEdit
             defaultDispName={defaultDispName}
+            isInvalid={!isDisplayNameValid}
             onChangeDispName={onChangeDispName}
           />
         </SettingsItemName>
@@ -170,7 +173,7 @@ const SettingsLayout: FunctionComponent<Props> = ({
         <button
           css={doneButtonStyle}
           onClick={isJoined ? onClickCloseSettings : onClickJoinConference}
-          disabled={isReEntering}
+          disabled={isReEntering || !isDisplayNameValid}
         >
           {isReEntering ? (
             "RE-ENTERING THE ROOM"

@@ -6,10 +6,12 @@ import { globalColors } from "../../shared/global-style";
 
 interface Props {
   defaultDispName: string;
+  isInvalid: boolean;
   onChangeDispName: (name: string) => void;
 }
 const SettingsNameEdit: FunctionComponent<Props> = ({
   defaultDispName,
+  isInvalid,
   onChangeDispName
 }: Props) => {
   const [dispName, setDispName] = useState(defaultDispName);
@@ -20,6 +22,7 @@ const SettingsNameEdit: FunctionComponent<Props> = ({
         type="text"
         value={dispName}
         maxLength={10}
+        placeholder="Enter your name"
         onChange={ev => {
           // ignore while IME compositing
           if (ev.target.value.length > 10) {
@@ -29,7 +32,7 @@ const SettingsNameEdit: FunctionComponent<Props> = ({
           setDispName(name);
           onChangeDispName(name);
         }}
-        css={nameStyle}
+        css={isInvalid ? [nameStyle, invalidStyle] : nameStyle}
       />
     </div>
   );
@@ -48,4 +51,8 @@ const nameStyle = css({
   "&:focus": {
     borderColor: globalColors.blue
   }
+});
+
+const invalidStyle = css({
+  borderColor: globalColors.red
 });

@@ -114,7 +114,7 @@ export const loadClient = ({ client, ui }: RootStore): EffectCallback => () => {
       hasUserVideoDevice: videoInDevices.length !== 0,
       hasGetDisplayMedia:
         typeof navigator.mediaDevices.getDisplayMedia === "function",
-      name: localStorage.getItem("SkyWayConf.dispName") || "YOUR_NAME"
+      name: (localStorage.getItem("SkyWayConf.dispName") || "").trim()
     });
     log("client loaded", toJS(client));
   })();
@@ -174,7 +174,7 @@ export const listenStoreChanges = ({
     reaction(
       () => client.displayName,
       name => {
-        localStorage.setItem("SkyWayConf.dispName", name);
+        localStorage.setItem("SkyWayConf.dispName", name.trim());
         notification.showInfo("Display name saved");
       },
       { delay: 2000 }
