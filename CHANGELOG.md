@@ -1,3 +1,7 @@
+# 2.8.7
+
+- Update dev/prod dependencies
+
 # 2.8.6
 
 - Display name is now required to enter
