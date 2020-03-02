@@ -6,6 +6,7 @@ import { getPeerConnectionFromSfuRoom } from "../utils/skyway";
 
 class RoomStore {
   peer: Peer | null;
+  isReady: boolean;
   room: SfuRoom | MeshRoom | null;
   mode: RoomInit["mode"] | null;
   id: RoomInit["id"] | null;
@@ -22,6 +23,7 @@ class RoomStore {
   constructor() {
     // Peer instance
     this.peer = null;
+    this.isReady = false;
     // (Sfu|Mesh)Room instance
     this.room = null;
     // room name = mode + id
@@ -60,6 +62,7 @@ class RoomStore {
     this.id = id;
     this.useH264 = useH264;
     this.peer = peer;
+    this.isReady = true;
   }
 
   addLocalChat(from: string, text: string) {
@@ -121,6 +124,7 @@ class RoomStore {
 }
 decorate(RoomStore, {
   peer: observable.ref,
+  isReady: observable,
   room: observable.ref,
   mode: observable,
   id: observable,

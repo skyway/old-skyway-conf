@@ -25,7 +25,7 @@ const Bootstrap: FunctionComponent<Props> = ({ children }: Props) => {
   useEffect(listenGlobalEvents(store), [store]);
   useEffect(loadClient(store), [store]);
 
-  const { ui, client, media } = store;
+  const { ui, client, room, media } = store;
   return (
     <Observer>
       {() => {
@@ -33,7 +33,7 @@ const Bootstrap: FunctionComponent<Props> = ({ children }: Props) => {
           return <ErrorDetail error={ui.error} />;
         }
 
-        if (!(client.isReady && media.isAudioEnabled)) {
+        if (!(client.isReady && room.isReady && media.isAudioEnabled)) {
           return <Loader />;
         }
 
