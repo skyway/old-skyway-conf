@@ -1,3 +1,8 @@
+# 2.8.8
+
+- Fix "Room name or mode is undefined!" error
+  - It happens when skyway-server is too slow to respond
+
 # 2.8.7
 
 - Update dev/prod dependencies
