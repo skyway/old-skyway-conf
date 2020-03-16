@@ -5,6 +5,7 @@ import Notification from "./observers/notification";
 import { ReactionOpener } from "./observers/reaction";
 import { ChatOpener, Chat } from "./observers/chat";
 import { StatsOpener, Stats } from "./observers/stats";
+import { ExitOpener } from "./observers/exit";
 import PinnedStream from "./observers/pinned-stream";
 import LocalStream from "./observers/local-stream";
 import RemoteStreams from "./observers/remote-streams";
@@ -46,7 +47,8 @@ class App extends React.Component<{}, State> {
             openers={[
               <ChatOpener key="chat" />,
               <ReactionOpener key="reaction" />,
-              <StatsOpener key="stats" />
+              <StatsOpener key="stats" />,
+              <ExitOpener key="exit" />
             ]}
           >
             <RemoteStreams />
