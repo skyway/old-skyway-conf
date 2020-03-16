@@ -1,3 +1,7 @@
+# 2.9.0
+
+- Add exit to app button
+
 # 2.8.8
 
 - Fix "Room name or mode is undefined!" error
