@@ -109,6 +109,8 @@ export const loadClient = ({ client, ui }: RootStore): EffectCallback => () => {
       throw ui.showError(new Error("getUserDevices() returns null"));
     }
 
+    log("video devices", videoInDevices);
+
     client.load({
       ua: navigator.userAgent,
       hasUserVideoDevice: videoInDevices.length !== 0,
