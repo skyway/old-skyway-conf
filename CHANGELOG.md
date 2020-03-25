@@ -1,3 +1,8 @@
+# 2.9.1
+
+- Fix bug: camera devices are not shonw on Safari 13.1
+  - [#93](https://github.com/nttcom-webcore/skyway-conference-dev/issues/93)
+
 # 2.9.0
 
 - Add exit to app button
