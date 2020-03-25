@@ -5,10 +5,9 @@ import { Observer } from "mobx-react";
 import { StoreContext } from "../contexts";
 import {
   checkRoomSetting,
-  ensureAudioDevice,
+  initAudioDeviceAndClient,
   listenStoreChanges,
-  listenGlobalEvents,
-  loadClient
+  listenGlobalEvents
 } from "../effects/bootstrap";
 import ErrorDetail from "../components/error-detail";
 import Loader from "../components/loader";
@@ -20,10 +19,9 @@ const Bootstrap: FunctionComponent<Props> = ({ children }: Props) => {
   const store = useContext(StoreContext);
 
   useEffect(checkRoomSetting(store), [store]);
-  useEffect(ensureAudioDevice(store), [store]);
+  useEffect(initAudioDeviceAndClient(store), [store]);
   useEffect(listenStoreChanges(store), [store]);
   useEffect(listenGlobalEvents(store), [store]);
-  useEffect(loadClient(store), [store]);
 
   const { ui, client, room, media } = store;
   return (

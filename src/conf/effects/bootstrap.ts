@@ -54,27 +54,38 @@ export const checkRoomSetting = ({
   })();
 };
 
-export const ensureAudioDevice = ({
+export const initAudioDeviceAndClient = ({
   ui,
+  client,
   media
 }: RootStore): EffectCallback => () => {
   log("ensureAudioDevice()");
 
   (async () => {
     // check at least audio input exists
-    const { audioInDevices } = await getUserDevices({ audio: true }).catch(
-      err => {
-        throw ui.showError(err);
-      }
-    );
+    const { videoInDevices, audioInDevices } = await getUserDevices({
+      video: true,
+      audio: true
+    }).catch(err => {
+      throw ui.showError(err);
+    });
 
     // must not be happened
+    if (videoInDevices === null) {
+      throw ui.showError(new Error("getUserDevices() returns null"));
+    }
     if (audioInDevices === null) {
       throw ui.showError(new Error("getUserDevices() returns null"));
     }
     if (audioInDevices.length === 0) {
       throw ui.showError(new Error("At least one audio input device needed!"));
     }
+
+    log(
+      "%s audio + %s video builtin devices are found",
+      audioInDevices.length,
+      videoInDevices.length
+    );
 
     // keep audio track
     const [{ deviceId }] = audioInDevices;
@@ -88,29 +99,9 @@ export const ensureAudioDevice = ({
       throw ui.showError(err);
     });
     media.setAudioDevices(devices);
-
     log("audio devices", devices.audioInDevices);
-  })();
-};
 
-export const loadClient = ({ client, ui }: RootStore): EffectCallback => () => {
-  log("loadClient()");
-
-  (async () => {
-    // check video device exists
-    const { videoInDevices } = await getUserDevices({ video: true }).catch(
-      err => {
-        throw ui.showError(err);
-      }
-    );
-
-    // must not be happened
-    if (videoInDevices === null) {
-      throw ui.showError(new Error("getUserDevices() returns null"));
-    }
-
-    log("video devices", videoInDevices);
-
+    // load client
     client.load({
       ua: navigator.userAgent,
       hasUserVideoDevice: videoInDevices.length !== 0,
