@@ -11,19 +11,12 @@ export const globalColors = {
   black: "#111",
 };
 
-const blink = keyframes`
-    0% { opacity: 0 }
-   50% { opacity: 0 }
-   51% { opacity: 1 }
-  100% { opacity: 1 }
-`;
-
-const moveBackground = keyframes`
-    0% { background-position: top left; }
-  100% { background-position: top right; }
-`;
-
-export const animation = { blink, moveBackground };
+export const animation = {
+  moveBackground: keyframes`
+      0% { background-position: top left; }
+    100% { background-position: top right; }
+  `,
+};
 
 export const globalStyle = css({
   html: {
