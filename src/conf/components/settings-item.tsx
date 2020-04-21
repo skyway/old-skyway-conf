@@ -8,7 +8,7 @@ interface Props {
 }
 export const SettingsItemDevice: FunctionComponent<Props> = ({
   label,
-  children
+  children,
 }: Props) => (
   <div css={[wrapperStyle, deviceStyle]}>
     <div css={labelStyle}>{label}</div>
@@ -18,7 +18,7 @@ export const SettingsItemDevice: FunctionComponent<Props> = ({
 
 export const SettingsItemName: FunctionComponent<Props> = ({
   label,
-  children
+  children,
 }: Props) => (
   <div css={[wrapperStyle, nameStyle]}>
     <div css={labelStyle}>{label}</div>
@@ -27,23 +27,23 @@ export const SettingsItemName: FunctionComponent<Props> = ({
 );
 
 const wrapperStyle = css({
-  margin: "8px auto"
+  margin: "8px auto",
 });
 
 const deviceStyle = css({
   display: "grid",
   gridTemplateColumns: "80px 72px 1fr",
   gridGap: 8,
-  alignItems: "center"
+  alignItems: "center",
 });
 
 const nameStyle = css({
   display: "grid",
   gridTemplateColumns: "80px 1fr",
   gridGap: 8,
-  alignItems: "center"
+  alignItems: "center",
 });
 
 const labelStyle = css({
-  textAlign: "center"
+  textAlign: "center",
 });

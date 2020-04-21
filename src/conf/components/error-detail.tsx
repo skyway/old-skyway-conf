@@ -19,13 +19,13 @@ export default Error;
 
 const wrapperStyle = css({
   color: globalColors.white,
-  margin: 16
+  margin: 16,
 });
 
 const headStyle = css({
-  fontWeight: 900
+  fontWeight: 900,
 });
 
 const detailStyle = css({
-  whiteSpace: "pre-wrap"
+  whiteSpace: "pre-wrap",
 });

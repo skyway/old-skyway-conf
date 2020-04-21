@@ -20,7 +20,7 @@ const wrapperStyle = css({
   overflow: "auto",
   backgroundColor: "rgba(0, 0, 0, .8)",
   willChange: "opacity",
-  animation: `${keyframes`from { opacity: 0; } to { opacity: 1; }`} .4s ease`
+  animation: `${keyframes`from { opacity: 0; } to { opacity: 1; }`} .4s ease`,
 });
 
 export default Modal;

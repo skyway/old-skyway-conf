@@ -18,7 +18,7 @@ const VADetector: FunctionComponent<Props> = ({ stream }) => {
 
     const harker = hark(stream, { threshold: -75 });
     // db: -100 ~ 0 (silent ~ loud)
-    harker.on("volume_change", db => db !== -Infinity && setDecibel(db));
+    harker.on("volume_change", (db) => db !== -Infinity && setDecibel(db));
 
     return () => harker.stop();
   }, [stream]);
@@ -34,11 +34,11 @@ const decibelToStyle = (db: number) => {
   const audioLevel = db + 100; // 0 ~ 100
   return {
     height: audioLevel * 0.1, // 0 ~ 10px
-    opacity: audioLevel * 0.01 // 0 ~ 1
+    opacity: audioLevel * 0.01, // 0 ~ 1
   };
 };
 
 const wrapperStyle = css({
   backgroundColor: globalColors.blue,
-  willChange: ["height", "opacity"]
+  willChange: ["height", "opacity"],
 });

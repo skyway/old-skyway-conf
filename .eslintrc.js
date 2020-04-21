@@ -2,18 +2,18 @@ module.exports = {
   env: {
     es6: true,
     browser: true,
-    node: true
+    node: true,
   },
   parser: "@typescript-eslint/parser",
   parserOptions: {
     jsx: true,
-    sourceType: "module"
+    sourceType: "module",
   },
   plugins: ["@typescript-eslint", "react", "react-hooks"],
   settings: {
     react: {
-      version: "detect"
-    }
+      version: "detect",
+    },
   },
   extends: [
     "eslint:recommended",
@@ -21,7 +21,7 @@ module.exports = {
     "plugin:react/recommended",
     "plugin:prettier/recommended",
     "prettier/@typescript-eslint",
-    "prettier/react"
+    "prettier/react",
   ],
   rules: {
     "no-console": "off",
@@ -37,13 +37,13 @@ module.exports = {
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-member-accessibility": [
       "error",
-      { accessibility: "no-public" }
+      { accessibility: "no-public" },
     ],
     "@typescript-eslint/ban-ts-ignore": "off",
     "@typescript-eslint/no-use-before-define": "off",
 
     "react/prop-types": "off",
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "error"
-  }
+    "react-hooks/exhaustive-deps": "error",
+  },
 };

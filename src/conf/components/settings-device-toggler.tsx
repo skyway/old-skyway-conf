@@ -8,7 +8,7 @@ interface Props {
 }
 const SettingsDeviceToggler: FunctionComponent<Props> = ({
   state,
-  onClick
+  onClick,
 }: Props) => (
   <span css={wrapperStyle}>
     <button onClick={onClick}>{state === "ON" ? "OFF" : "ON"}</button>
@@ -18,5 +18,5 @@ const SettingsDeviceToggler: FunctionComponent<Props> = ({
 export default SettingsDeviceToggler;
 
 const wrapperStyle = css({
-  textAlign: "center"
+  textAlign: "center",
 });

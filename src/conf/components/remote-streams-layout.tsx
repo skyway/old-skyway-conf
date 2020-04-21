@@ -23,7 +23,7 @@ const RemoteStreamsLayout: FunctionComponent<Props> = ({
   streams,
   stats,
   pinnedId,
-  onClickSetPinned
+  onClickSetPinned,
 }: Props) => (
   <div css={wrapperStyle}>
     <div css={headStyle}>
@@ -49,7 +49,7 @@ const RemoteStreamsLayout: FunctionComponent<Props> = ({
 export default RemoteStreamsLayout;
 
 const wrapperStyle = css({
-  width: rightMenuWidth
+  width: rightMenuWidth,
 });
 
 const headStyle = css({
@@ -57,10 +57,10 @@ const headStyle = css({
   padding: 4,
   boxSizing: "border-box",
   fontSize: ".8rem",
-  textAlign: "center"
+  textAlign: "center",
 });
 
 const numberStyle = css({
   fontSize: ".9rem",
-  fontWeight: "bold"
+  fontWeight: "bold",
 });

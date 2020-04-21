@@ -15,7 +15,7 @@ import {
   closeSettings,
   joinConference,
   toggleVideoMuted,
-  toggleAudioMuted
+  toggleAudioMuted,
 } from "../effects/settings";
 
 const Settings: FunctionComponent<{}> = () => {
@@ -25,16 +25,16 @@ const Settings: FunctionComponent<{}> = () => {
   const onClickEnableUserVideo = useCallback(enableUserVideo(store), [store]);
   const onClickDisableUserVideo = useCallback(disableUserVideo(store), [store]);
   const onClickEnableDisplayVideo = useCallback(enableDisplayVideo(store), [
-    store
+    store,
   ]);
   const onClickDisableDisplayVideo = useCallback(disableDisplayVideo(store), [
-    store
+    store,
   ]);
   const onChangeVideoDeviceId = useCallback(changeVideoDeviceId(store), [
-    store
+    store,
   ]);
   const onChangeAudioDeviceId = useCallback(changeAudioDeviceId(store), [
-    store
+    store,
   ]);
   const onClickJoinConference = useCallback(joinConference(store), [store]);
   const onClickCloseSettings = useCallback(closeSettings(store), [store]);

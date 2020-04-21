@@ -1,7 +1,7 @@
 export const zIndex = {
   base: 10,
   modal: 100,
-  notification: 1000
+  notification: 1000,
 };
 
 // 768 = iPad device-width, if smaller apply small size

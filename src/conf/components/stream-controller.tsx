@@ -13,7 +13,7 @@ interface Props {
 const StreamController: FunctionComponent<Props> = ({
   displayName,
   browser,
-  controllers
+  controllers,
 }: Props) => (
   <div css={wrapperStyle}>
     <div css={rowStyle}>
@@ -33,10 +33,10 @@ const wrapperStyle = css({
   padding: 4,
   color: globalColors.white,
   backgroundColor: "rgba(0, 0, 0, .5)",
-  fontSize: ".8rem"
+  fontSize: ".8rem",
 });
 
 const rowStyle = css({
   display: "inline-flex",
-  alignItems: "center"
+  alignItems: "center",
 });

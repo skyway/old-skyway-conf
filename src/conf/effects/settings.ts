@@ -4,7 +4,7 @@ import {
   getUserDevices,
   getUserVideoTrack,
   getUserAudioTrack,
-  getDisplayVideoTrack
+  getDisplayVideoTrack,
 } from "../utils/webrtc";
 import { joinRoom } from "./room";
 
@@ -19,7 +19,7 @@ export const enableUserVideo = ({ media, ui }: RootStore) => async () => {
   log("enableUserVideo()");
 
   const { videoInDevices } = await getUserDevices({ video: true }).catch(
-    err => {
+    (err) => {
       throw ui.showError(err);
     }
   );
@@ -35,7 +35,7 @@ export const enableUserVideo = ({ media, ui }: RootStore) => async () => {
 
   // keep video track
   const [{ deviceId }] = videoInDevices;
-  const videoTrack = await getUserVideoTrack(deviceId).catch(err => {
+  const videoTrack = await getUserVideoTrack(deviceId).catch((err) => {
     throw ui.showError(err);
   });
 
@@ -44,7 +44,7 @@ export const enableUserVideo = ({ media, ui }: RootStore) => async () => {
   media.setVideoTrack(videoTrack, "camera", deviceId);
 
   // and get valid labels...
-  const devices = await getUserDevices({ video: true }).catch(err => {
+  const devices = await getUserDevices({ video: true }).catch((err) => {
     throw ui.showError(err);
   });
   media.setVideoDevices(devices);
@@ -56,7 +56,7 @@ export const enableDisplayVideo = (store: RootStore) => async () => {
   log("enableDisplayVideo()");
   const { media, ui, notification } = store;
 
-  const videoTrack = await getDisplayVideoTrack().catch(err => {
+  const videoTrack = await getDisplayVideoTrack().catch((err) => {
     if (err.name === "NotAllowedError") {
       // cancelled or not supported
     } else {
@@ -72,7 +72,7 @@ export const enableDisplayVideo = (store: RootStore) => async () => {
   }
 
   videoTrack.addEventListener("ended", disableDisplayVideo(store), {
-    once: true
+    once: true,
   });
 
   media.releaseVideoDevice();
@@ -96,7 +96,7 @@ export const changeAudioDeviceId = ({ media, ui }: RootStore) => async (
   log("changeAudioDeviceId", deviceId);
 
   media.releaseAudioDevice();
-  const audioTrack = await getUserAudioTrack(deviceId).catch(err => {
+  const audioTrack = await getUserAudioTrack(deviceId).catch((err) => {
     throw ui.showError(err);
   });
   media.setAudioTrack(audioTrack, deviceId);
@@ -109,7 +109,7 @@ export const changeVideoDeviceId = ({ media, ui }: RootStore) => async (
   // release current device first
   media.releaseVideoDevice();
   // then get another device, otherwise some Android will crash
-  const videoTrack = await getUserVideoTrack(deviceId).catch(err => {
+  const videoTrack = await getUserVideoTrack(deviceId).catch((err) => {
     throw ui.showError(err);
   });
   media.setVideoTrack(videoTrack, "camera", deviceId);

@@ -4,7 +4,7 @@ import { css } from "@emotion/core";
 import {
   extractCandidatePairs,
   extractOutboundRtps,
-  extractInboundRtps
+  extractInboundRtps,
 } from "../utils/stats";
 
 interface Props {
@@ -98,11 +98,11 @@ ${videoInbounds.items
 const wrapperStyle = css({
   margin: 0,
   padding: 4,
-  fontSize: ".8rem"
+  fontSize: ".8rem",
 });
 
 const statsStyle = css({
   margin: 0,
   whiteSpace: "pre-wrap",
-  wordBreak: "break-all"
+  wordBreak: "break-all",
 });

@@ -12,7 +12,7 @@ interface Props {
 const ReactionLayout: FunctionComponent<Props> = ({ onClickSend }: Props) => {
   return (
     <div css={wrapperStyle}>
-      {reactions.map(reaction => (
+      {reactions.map((reaction) => (
         <div key={reaction} css={boxStyle}>
           <button css={reactionStyle} onClick={() => onClickSend(reaction)}>
             <i css={emojiStyle}>{reaction}</i>
@@ -29,7 +29,7 @@ const wrapperStyle = css({
   position: "absolute",
   top: 0,
   right: rightMenuTogglerHeight,
-  zIndex: zIndex.modal
+  zIndex: zIndex.modal,
 });
 
 const boxStyle = css({
@@ -37,7 +37,7 @@ const boxStyle = css({
   width: rightMenuTogglerHeight,
   boxSizing: "border-box",
   backgroundColor: globalColors.gray,
-  borderBottom: `1px solid ${globalColors.white}`
+  borderBottom: `1px solid ${globalColors.white}`,
 });
 
 const reactionStyle = css({
@@ -48,10 +48,10 @@ const reactionStyle = css({
   border: "none",
   background: "none",
   color: "inherit",
-  cursor: "pointer"
+  cursor: "pointer",
 });
 
 const emojiStyle = css({
   fontSize: "1.0rem",
-  fontStyle: "normal"
+  fontStyle: "normal",
 });

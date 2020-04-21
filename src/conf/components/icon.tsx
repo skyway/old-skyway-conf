@@ -19,7 +19,7 @@ export const Icon: FunctionComponent<Props> = ({ name, showEdge }: Props) => (
 
 export const BrowserIcon: FunctionComponent<ClientBrowser> = ({
   name,
-  version
+  version,
 }: ClientBrowser) => {
   let src = null;
   switch (name) {
@@ -52,7 +52,7 @@ export const IconButton: FunctionComponent<ButtonProps> = ({
   showEdge,
   title,
   disabled,
-  onClick
+  onClick,
 }: ButtonProps) => (
   <button
     disabled={disabled}
@@ -65,15 +65,15 @@ export const IconButton: FunctionComponent<ButtonProps> = ({
 );
 
 const iconStyle = css({
-  fontSize
+  fontSize,
 });
 
 const edgedStyle = css({
-  textShadow: `0 0 1px ${globalColors.black}`
+  textShadow: `0 0 1px ${globalColors.black}`,
 });
 
 const imgStyle = css({
-  height: fontSize
+  height: fontSize,
 });
 
 const buttonStyle = css({
@@ -83,10 +83,10 @@ const buttonStyle = css({
   border: "none",
   background: "none",
   color: "inherit",
-  cursor: "pointer"
+  cursor: "pointer",
 });
 
 const disabledStyle = css({
   opacity: 0.6,
-  cursor: "not-allowed"
+  cursor: "not-allowed",
 });

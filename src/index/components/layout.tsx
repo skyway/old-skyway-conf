@@ -38,26 +38,26 @@ const wrapperStyle = css({
   textAlign: "center",
   display: "flex",
   flexDirection: "column",
-  justifyContent: "center"
+  justifyContent: "center",
 });
 
 const contentStyle = css({
   width: "90%",
   maxWidth: 400,
-  margin: "0 auto"
+  margin: "0 auto",
 });
 
 const headStyle = css({
   margin: 0,
   marginBottom: -8,
   color: globalColors.lightblue,
-  fontSize: "2.5rem"
+  fontSize: "2.5rem",
 });
 
 const pStyle = css({
   margin: "16px auto",
   color: globalColors.lightblue,
-  fontSize: "1.2rem"
+  fontSize: "1.2rem",
 });
 
 const logoStyle = css({
@@ -65,6 +65,6 @@ const logoStyle = css({
   bottom: 10,
   right: 10,
   "& > img": {
-    height: 40
-  }
+    height: 40,
+  },
 });

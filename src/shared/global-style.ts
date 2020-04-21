@@ -8,7 +8,7 @@ export const globalColors = {
   red: "#ff6673",
   gray: "#eee",
   white: "#fff",
-  black: "#111"
+  black: "#111",
 };
 
 const blink = keyframes`
@@ -27,7 +27,7 @@ export const animation = { blink, moveBackground };
 
 export const globalStyle = css({
   html: {
-    WebkitFontSmoothing: "antialiased"
+    WebkitFontSmoothing: "antialiased",
   },
   body: {
     margin: 0,
@@ -36,10 +36,10 @@ export const globalStyle = css({
     fontWeight: "lighter",
     lineHeight: 1.5,
     height: "100vh",
-    background: `linear-gradient(45deg, ${globalColors.lightblue}, ${globalColors.blue})`
+    background: `linear-gradient(45deg, ${globalColors.lightblue}, ${globalColors.blue})`,
   },
   "#app-root": {
     height: "100vh",
-    overflow: "hidden"
-  }
+    overflow: "hidden",
+  },
 });

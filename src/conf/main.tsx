@@ -19,4 +19,4 @@ const log = debug("main");
     </React.StrictMode>,
     document.getElementById("app-root")
   );
-})().catch(err => console.error(err));
+})().catch((err) => console.error(err));

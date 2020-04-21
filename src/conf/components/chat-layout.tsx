@@ -17,7 +17,7 @@ interface Props {
 const ChatLayout: FunctionComponent<Props> = ({
   chats,
   onClickCloser,
-  onClickSend
+  onClickSend,
 }: Props) => {
   const [buffer, setBuffer] = useState("");
   const onSend = useCallback(() => {
@@ -41,7 +41,7 @@ const ChatLayout: FunctionComponent<Props> = ({
           <IconButton name="close" onClick={onClickCloser} />
         </div>
         <div css={scrollerStyle} ref={scrollerRef}>
-          {chats.map(chat => (
+          {chats.map((chat) => (
             <ChatMessage key={chat.id} chat={chat} />
           ))}
         </div>
@@ -49,7 +49,7 @@ const ChatLayout: FunctionComponent<Props> = ({
           <input
             type="text"
             value={buffer}
-            onChange={ev => setBuffer(ev.target.value)}
+            onChange={(ev) => setBuffer(ev.target.value)}
             css={inputStyle}
           />
           <IconButton
@@ -73,24 +73,24 @@ const wrapperStyle = css({
   boxSizing: "border-box",
   margin: "32px auto 0",
   padding: 8,
-  backgroundColor: globalColors.white
+  backgroundColor: globalColors.white,
 });
 
 const headStyle = css({
-  textAlign: "right"
+  textAlign: "right",
 });
 
 const scrollerStyle = css({
   overflowY: "scroll",
-  overflowScrolling: "touch"
+  overflowScrolling: "touch",
 });
 
 const editorStyle = css({
   display: "flex",
-  alignItems: "center"
+  alignItems: "center",
 });
 
 const inputStyle = css({
   flex: "1 1 auto",
-  marginRight: 8
+  marginRight: 8,
 });

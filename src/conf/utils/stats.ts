@@ -5,10 +5,10 @@ interface StatsItem {
 
 export const extractCandidatePairs = (stats: RTCStatsReport) => {
   const candidatePairs = [...stats.values()].filter(
-    stat => stat.type === "candidate-pair"
+    (stat) => stat.type === "candidate-pair"
   );
   // find candidates using now
-  const selectedPairs = candidatePairs.filter(stat => {
+  const selectedPairs = candidatePairs.filter((stat) => {
     // Firefox only
     if ("selected" in stat) return stat.selected && stat.nominated;
     return stat.nominated;
@@ -32,7 +32,7 @@ export const extractCandidatePairs = (stats: RTCStatsReport) => {
             address: localReport.address || localReport.ip, // Chrome
             port: localReport.port,
             protocol: localReport.protocol,
-            type: localReport.candidateType
+            type: localReport.candidateType,
           }
         : {},
       remoteCandidate: remoteReport
@@ -40,16 +40,16 @@ export const extractCandidatePairs = (stats: RTCStatsReport) => {
             address: remoteReport.address || remoteReport.ip, // Chrome
             port: remoteReport.port,
             protocol: remoteReport.protocol,
-            type: remoteReport.candidateType
+            type: remoteReport.candidateType,
           }
-        : {}
+        : {},
     };
   });
 };
 
 export const extractOutboundRtps = (stats: RTCStatsReport) => {
   const outboundRtps = [...stats.values()].filter(
-    stat => stat.type === "outbound-rtp"
+    (stat) => stat.type === "outbound-rtp"
   );
   // this app allows only audio / video / audio+video, max outbounds is 2
   if (outboundRtps.length > 2) {
@@ -59,12 +59,12 @@ export const extractOutboundRtps = (stats: RTCStatsReport) => {
   const outbounds = {
     video: {
       bytesSent: 0,
-      packetsSent: 0
+      packetsSent: 0,
     },
     audio: {
       bytesSent: 0,
-      packetsSent: 0
-    }
+      packetsSent: 0,
+    },
   };
   for (const stat of outboundRtps) {
     const kind: MediaKind = stat.kind || stat.mediaType; // Safari
@@ -79,13 +79,13 @@ export const extractOutboundRtps = (stats: RTCStatsReport) => {
 
   return {
     audioOutbounds: outbounds.audio,
-    videoOutbounds: outbounds.video
+    videoOutbounds: outbounds.video,
   };
 };
 
 export const extractInboundRtps = (stats: RTCStatsReport) => {
   const inboundRtps = [...stats.values()].filter(
-    stat => stat.type === "inbound-rtp"
+    (stat) => stat.type === "inbound-rtp"
   );
 
   const videoInbounds = {
@@ -96,14 +96,14 @@ export const extractInboundRtps = (stats: RTCStatsReport) => {
     nackCount: 0,
     firCount: 0,
     pliCount: 0,
-    items: [] as StatsItem[]
+    items: [] as StatsItem[],
   };
   const audioInbounds = {
     size: 0,
     bytesReceived: 0,
     packetsReceived: 0,
     packetsLost: 0,
-    items: [] as StatsItem[]
+    items: [] as StatsItem[],
   };
 
   // each items
@@ -112,7 +112,7 @@ export const extractInboundRtps = (stats: RTCStatsReport) => {
       bytesReceived: stat.bytesReceived,
       packetsReceived: stat.packetsReceived,
       packetsLost: stat.packetsLost,
-      ssrc: stat.ssrc
+      ssrc: stat.ssrc,
     };
 
     const kind: MediaKind = stat.kind || stat.mediaType; // Safari
@@ -152,6 +152,6 @@ export const extractInboundRtps = (stats: RTCStatsReport) => {
 
   return {
     videoInbounds,
-    audioInbounds
+    audioInbounds,
   };
 };

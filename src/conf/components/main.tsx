@@ -17,5 +17,5 @@ const wrapperStyle = css({
   height: "100%",
   backgroundImage: "url(./images/logo.svg)",
   backgroundRepeat: "no-repeat",
-  backgroundPosition: "center center"
+  backgroundPosition: "center center",
 });

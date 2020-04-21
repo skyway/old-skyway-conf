@@ -8,7 +8,7 @@ import {
   openSettings,
   castVideo,
   toggleAudioMuted,
-  toggleVideoMuted
+  toggleVideoMuted,
 } from "../effects/local-stream";
 
 const LocalStream: FunctionComponent<{}> = () => {

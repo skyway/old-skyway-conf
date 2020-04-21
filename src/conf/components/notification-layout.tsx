@@ -14,7 +14,7 @@ const wrapperStyle = css({
   position: "absolute",
   top: 8,
   left: 8,
-  zIndex: zIndex.notification
+  zIndex: zIndex.notification,
 });
 
 export default NotificationLayout;

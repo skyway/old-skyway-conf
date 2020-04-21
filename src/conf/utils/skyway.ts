@@ -6,8 +6,8 @@ export const initPeer = (forceTurn: boolean): Promise<Peer> => {
       key: "03ff6219-b58f-4310-9484-e9108e859cdd",
       debug: 2,
       config: {
-        iceTransportPolicy: forceTurn ? "relay" : "all"
-      }
+        iceTransportPolicy: forceTurn ? "relay" : "all",
+      },
     });
 
     peer.once("open", () => {

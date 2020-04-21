@@ -16,7 +16,7 @@ interface Props {
 const StatsLayout: FunctionComponent<Props> = ({
   isSfu,
   rtcStats,
-  onClickCloser
+  onClickCloser,
 }: Props) => (
   <Modal>
     <div css={wrapperStyle}>
@@ -51,20 +51,20 @@ const wrapperStyle = css({
   boxSizing: "border-box",
   margin: "32px auto 0",
   padding: 8,
-  backgroundColor: globalColors.white
+  backgroundColor: globalColors.white,
 });
 
 const headStyle = css({
-  textAlign: "right"
+  textAlign: "right",
 });
 
 const scrollerStyle = css({
   boxSizing: "border-box",
   overflow: "hidden",
   overflowY: "scroll",
-  overflowScrolling: "touch"
+  overflowScrolling: "touch",
 });
 
 const naStyle = css({
-  textAlign: "center"
+  textAlign: "center",
 });

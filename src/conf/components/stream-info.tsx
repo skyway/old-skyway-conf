@@ -30,14 +30,14 @@ const StreamInfo: FunctionComponent<Props> = ({ stream, browser }) => {
               trackId: vTrack.id,
               width: vSettings.width,
               height: vSettings.height,
-              frameRate: vSettings.frameRate
+              frameRate: vSettings.frameRate,
             }
           : {},
         audio: aTrack
           ? {
-              trackId: aTrack.id
+              trackId: aTrack.id,
             }
-          : {}
+          : {},
       });
     };
     timer = requestAnimationFrame(updateInfo);
@@ -60,5 +60,5 @@ const wrapperStyle = css({
   overflowScrolling: "touch",
   fontSize: ".8rem",
   backgroundColor: globalColors.black,
-  color: globalColors.white
+  color: globalColors.white,
 });

@@ -15,5 +15,5 @@ const wrapperStyle = css({
   right: 0,
   bottom: 0,
   margin: "auto",
-  width: 160
+  width: 160,
 });

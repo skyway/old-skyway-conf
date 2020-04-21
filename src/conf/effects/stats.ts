@@ -16,8 +16,8 @@ export const openStats = ({ ui, room }: RootStore) => () => {
     }
 
     pc.getStats()
-      .then(statsReport => (room.rtcStats = statsReport))
-      .catch(err => log("getStats() error", err));
+      .then((statsReport) => (room.rtcStats = statsReport))
+      .catch((err) => log("getStats() error", err));
   }, 1000);
 
   // wait for closer

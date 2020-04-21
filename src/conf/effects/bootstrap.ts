@@ -4,7 +4,7 @@ import debug from "debug";
 import {
   isValidRoomId,
   isValidRoomType,
-  roomIdRe
+  roomIdRe,
 } from "../../shared/validate";
 import { getUserDevices, getUserAudioTrack } from "../utils/webrtc";
 import { initPeer } from "../utils/skyway";
@@ -15,7 +15,7 @@ const log = debug("effect:bootstrap");
 
 export const checkRoomSetting = ({
   ui,
-  room
+  room,
 }: RootStore): EffectCallback => () => {
   log("checkRoomSetting()");
   const [, roomType, roomId] = location.hash.split("/");
@@ -35,7 +35,7 @@ export const checkRoomSetting = ({
   }
 
   (async () => {
-    const peer = await initPeer(params.has("turn")).catch(err => {
+    const peer = await initPeer(params.has("turn")).catch((err) => {
       throw ui.showError(err);
     });
     // just log it, do not trust them
@@ -44,7 +44,7 @@ export const checkRoomSetting = ({
       {
         mode: roomType as RoomInit["mode"],
         id: roomId,
-        useH264: params.has("h264")
+        useH264: params.has("h264"),
       },
       peer
     );
@@ -57,7 +57,7 @@ export const checkRoomSetting = ({
 export const initAudioDeviceAndClient = ({
   ui,
   client,
-  media
+  media,
 }: RootStore): EffectCallback => () => {
   log("ensureAudioDevice()");
 
@@ -65,8 +65,8 @@ export const initAudioDeviceAndClient = ({
     // check at least audio input exists
     const { videoInDevices, audioInDevices } = await getUserDevices({
       video: true,
-      audio: true
-    }).catch(err => {
+      audio: true,
+    }).catch((err) => {
       throw ui.showError(err);
     });
 
@@ -89,13 +89,13 @@ export const initAudioDeviceAndClient = ({
 
     // keep audio track
     const [{ deviceId }] = audioInDevices;
-    const audioTrack = await getUserAudioTrack(deviceId).catch(err => {
+    const audioTrack = await getUserAudioTrack(deviceId).catch((err) => {
       throw ui.showError(err);
     });
     media.setAudioTrack(audioTrack, deviceId);
 
     // and get valid labels...
-    const devices = await getUserDevices({ audio: true }).catch(err => {
+    const devices = await getUserDevices({ audio: true }).catch((err) => {
       throw ui.showError(err);
     });
     media.setAudioDevices(devices);
@@ -107,7 +107,7 @@ export const initAudioDeviceAndClient = ({
       hasUserVideoDevice: videoInDevices.length !== 0,
       hasGetDisplayMedia:
         typeof navigator.mediaDevices.getDisplayMedia === "function",
-      name: (localStorage.getItem("SkyWayConf.dispName") || "").trim()
+      name: (localStorage.getItem("SkyWayConf.dispName") || "").trim(),
     });
     log("client loaded", toJS(client));
   })();
@@ -117,33 +117,34 @@ export const listenStoreChanges = ({
   client,
   media,
   room,
-  notification
+  notification,
 }: RootStore): EffectCallback => () => {
   log("listenStoreChanges()");
 
   const disposers = [
     reaction(
       () => room.isJoined,
-      isJoined =>
+      (isJoined) =>
         isJoined && notification.showInfo(`You joined the room ${room.name}`)
     ),
     reaction(
       () => media.isAudioTrackMuted,
-      muted =>
+      (muted) =>
         notification.showInfo(`Mic input was ${muted ? "muted" : "unmuted"}`)
     ),
     reaction(
       () => media.isVideoTrackMuted,
-      muted => notification.showInfo(`Video was ${muted ? "muted" : "unmuted"}`)
+      (muted) =>
+        notification.showInfo(`Video was ${muted ? "muted" : "unmuted"}`)
     ),
-    observe(media, "audioDeviceId", change => {
+    observe(media, "audioDeviceId", (change) => {
       if (change.oldValue === null) {
         // skip initial value
         return;
       }
       notification.showInfo("Mic input was changed");
     }),
-    observe(media, "videoDeviceId", change => {
+    observe(media, "videoDeviceId", (change) => {
       if (change.oldValue === null) {
         notification.showInfo("Video input was enabled");
         return;
@@ -160,26 +161,26 @@ export const listenStoreChanges = ({
     ),
     reaction(
       () => room.myLastReaction,
-      reaction =>
+      (reaction) =>
         reaction &&
         notification.showInfo(`You reacted with ${reaction.reaction}`)
     ),
     reaction(
       () => client.displayName,
-      name => {
+      (name) => {
         localStorage.setItem("SkyWayConf.dispName", name.trim());
         notification.showInfo("Display name saved");
       },
       { delay: 2000 }
-    )
+    ),
   ];
 
-  return () => disposers.forEach(d => d());
+  return () => disposers.forEach((d) => d());
 };
 
 export const listenGlobalEvents = ({
   media,
-  ui
+  ui,
 }: RootStore): EffectCallback => () => {
   log("listenGlobalEvents()");
 
@@ -188,8 +189,8 @@ export const listenGlobalEvents = ({
     log("devicechange event fired");
     const { audioInDevices, videoInDevices } = await getUserDevices({
       video: true,
-      audio: true
-    }).catch(err => {
+      audio: true,
+    }).catch((err) => {
       throw ui.showError(err);
     });
 

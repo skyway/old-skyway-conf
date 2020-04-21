@@ -48,7 +48,7 @@ class App extends React.Component<{}, State> {
               <ChatOpener key="chat" />,
               <ReactionOpener key="reaction" />,
               <StatsOpener key="stats" />,
-              <ExitOpener key="exit" />
+              <ExitOpener key="exit" />,
             ]}
           >
             <RemoteStreams />

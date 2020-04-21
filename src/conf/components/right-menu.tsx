@@ -52,14 +52,14 @@ const wrapperStyle = css({
   willChange: "transform",
 
   [`&.${visibleClass}`]: {
-    transform: "translateX(0)"
-  }
+    transform: "translateX(0)",
+  },
 });
 
 const scrollerStyle = css({
   height: "100%",
   overflowY: "scroll",
-  overflowScrolling: "touch"
+  overflowScrolling: "touch",
 });
 
 const knobStyle = css({
@@ -73,8 +73,8 @@ const knobStyle = css({
   alignItems: "center",
   backgroundColor: "inherit",
   cursor: "pointer",
-  borderBottom: `1px solid ${globalColors.white}`
+  borderBottom: `1px solid ${globalColors.white}`,
 });
 const togglerStyle = css({
-  top: rightMenuTogglerHeight * 0
+  top: rightMenuTogglerHeight * 0,
 });

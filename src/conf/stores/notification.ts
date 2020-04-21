@@ -45,7 +45,7 @@ decorate(NotificationStore, {
   showReaction: action,
   showJoin: action,
   showLeave: action,
-  show: action
+  show: action,
 });
 
 export default NotificationStore;

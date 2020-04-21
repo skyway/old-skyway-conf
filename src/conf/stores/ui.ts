@@ -29,7 +29,7 @@ decorate(UiStore, {
   isReactionOpen: observable,
   isStatsOpen: observable,
   isReEntering: observable,
-  showError: action
+  showError: action,
 });
 
 export default UiStore;

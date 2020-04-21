@@ -19,11 +19,11 @@ const wrapperStyle = css({
   top: 0,
   left: 0,
   bottom: 0,
-  zIndex: zIndex.base
+  zIndex: zIndex.base,
 });
 
 const bottomStyle = css({
   position: "absolute",
   left: 8,
-  bottom: 8
+  bottom: 8,
 });

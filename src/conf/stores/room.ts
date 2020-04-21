@@ -71,7 +71,7 @@ class RoomStore {
       time: Date.now(),
       isMine: true,
       from,
-      text
+      text,
     };
     this.chats.push(chat);
     // this triggers reaction to send chat for remotes
@@ -112,8 +112,8 @@ class RoomStore {
       throw new Error("Room is null!");
     }
 
-    [...this.streams.values()].forEach(stream =>
-      stream.getTracks().forEach(track => track.stop())
+    [...this.streams.values()].forEach((stream) =>
+      stream.getTracks().forEach((track) => track.stop())
     );
     this.streams.clear();
     this.stats.clear();
@@ -144,7 +144,7 @@ decorate(RoomStore, {
   addRemoteChat: action,
   removeStream: action,
   getPeerConnection: action,
-  cleanUp: action
+  cleanUp: action,
 });
 
 export default RoomStore;

@@ -26,7 +26,7 @@ const wrapperStyle = css({
   borderRadius: 2,
   backgroundColor: globalColors.white,
   willChange: "transform",
-  animation: `${keyframes`from { transform: translateX(-200%); }`} .2s ease`
+  animation: `${keyframes`from { transform: translateX(-200%); }`} .2s ease`,
 });
 
 const textStyle = css({
@@ -34,5 +34,5 @@ const textStyle = css({
   width: 200,
   overflow: "hidden",
   whiteSpace: "nowrap",
-  textOverflow: "ellipsis"
+  textOverflow: "ellipsis",
 });

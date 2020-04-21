@@ -14,7 +14,7 @@ interface Props {
 const Video: FunctionComponent<Props> = ({
   stream,
   isReverse = false,
-  isVideoOnly = false
+  isVideoOnly = false,
 }) => {
   const isNoAudio = stream.getAudioTracks().length === 0;
   const isNoVideo = stream.getVideoTracks().length === 0;
@@ -64,7 +64,7 @@ const Video: FunctionComponent<Props> = ({
 export default memo(Video);
 
 const audioStyle = css({
-  display: "none"
+  display: "none",
 });
 
 const videoStyle = css({
@@ -72,9 +72,9 @@ const videoStyle = css({
   height: "100%",
   maxWidth: "100%",
   maxHeight: "100%",
-  pointerEvents: "none"
+  pointerEvents: "none",
 });
 
 const reverseVideoStyle = css({
-  transform: "scaleX(-1)"
+  transform: "scaleX(-1)",
 });

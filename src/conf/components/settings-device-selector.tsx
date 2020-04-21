@@ -10,14 +10,14 @@ interface Props {
 export const SettingsDeviceSelector: FunctionComponent<Props> = ({
   deviceId,
   inDevices,
-  onChangeDeviceId
+  onChangeDeviceId,
 }: Props) => (
   <select
     value={deviceId || ""}
-    onChange={ev => onChangeDeviceId(ev.target.value)}
+    onChange={(ev) => onChangeDeviceId(ev.target.value)}
     css={formStyle}
   >
-    {inDevices.map(device => (
+    {inDevices.map((device) => (
       <option key={device.deviceId} value={device.deviceId}>
         {device.label}
       </option>
@@ -33,7 +33,7 @@ interface TogglerProps {
 export const SettingsDeviceToggler: FunctionComponent<TogglerProps> = ({
   label,
   disabled,
-  onClick
+  onClick,
 }: TogglerProps) => (
   <button css={formStyle} disabled={disabled ? true : false} onClick={onClick}>
     {label}
@@ -43,5 +43,5 @@ export const SettingsDeviceToggler: FunctionComponent<TogglerProps> = ({
 const formStyle = css({
   boxSizing: "border-box",
   width: "100%",
-  height: "100%"
+  height: "100%",
 });

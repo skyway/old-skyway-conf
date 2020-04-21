@@ -26,14 +26,14 @@ const wrapperStyle = css({
   marginBottom: 8,
   wordBreak: "break-word",
   borderRadius: 2,
-  border: `1px solid ${globalColors.gray}`
+  border: `1px solid ${globalColors.gray}`,
 });
 
 const mineStyle = css({
   marginLeft: "15%",
-  backgroundColor: globalColors.gray
+  backgroundColor: globalColors.gray,
 });
 
 const headStyle = css({
-  fontSize: ".8rem"
+  fontSize: ".8rem",
 });

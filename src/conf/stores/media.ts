@@ -51,7 +51,7 @@ class MediaStore {
     return {
       isVideoDisabled: this.videoType === null,
       isAudioMuted: this.isAudioTrackMuted,
-      isVideoMuted: this.isVideoTrackMuted
+      isVideoMuted: this.isVideoTrackMuted,
     };
   }
 
@@ -130,7 +130,7 @@ decorate(MediaStore, {
   deleteVideoTrack: action,
   setAudioDevices: action,
   setVideoDevices: action,
-  toggleMuted: action
+  toggleMuted: action,
 });
 
 export default MediaStore;

@@ -6,14 +6,14 @@ import { globalColors } from "../../shared/global-style";
 import {
   maxRoomIdLength,
   roomIdRe,
-  isValidRoomId
+  isValidRoomId,
 } from "../../shared/validate";
 import { RoomInit } from "../utils/types";
 
 interface Props {
   onSubmit: (init: RoomInit) => void;
 }
-const RoomCreate: FunctionComponent<Props> = props => {
+const RoomCreate: FunctionComponent<Props> = (props) => {
   const [roomId, setRoomId] = useState("");
   const [roomType, setRoomType] = useState("sfu");
   const [isRoomIdValid, setRoomIdValid] = useState(true);
@@ -21,7 +21,7 @@ const RoomCreate: FunctionComponent<Props> = props => {
   return (
     <form
       css={wrapperStyle}
-      onSubmit={ev => {
+      onSubmit={(ev) => {
         ev.preventDefault();
         props.onSubmit({ mode: roomType as RoomInit["mode"], id: roomId });
       }}
@@ -32,7 +32,7 @@ const RoomCreate: FunctionComponent<Props> = props => {
           type="text"
           value={roomId}
           placeholder="room-name"
-          onChange={ev => setRoomId(ev.target.value)}
+          onChange={(ev) => setRoomId(ev.target.value)}
           onBlur={() => setRoomIdValid(isValidRoomId(roomId))}
           required
           maxLength={maxRoomIdLength}
@@ -47,7 +47,7 @@ const RoomCreate: FunctionComponent<Props> = props => {
       <div css={itemStyle}>
         <div>ROOM TYPE</div>
         <div>
-          {["sfu", "mesh"].map(type => (
+          {["sfu", "mesh"].map((type) => (
             <label key={type} css={roomTypeStyle}>
               <input
                 type="radio"
@@ -81,7 +81,7 @@ const wrapperStyle = css({
   backgroundColor: globalColors.white,
   border: `1px solid ${globalColors.gray}`,
   padding: 16,
-  borderRadius: 2
+  borderRadius: 2,
 });
 
 const itemStyle = css({
@@ -89,7 +89,7 @@ const itemStyle = css({
   alignItems: "center",
   gridTemplateColumns: "88px 1fr",
   height: 40,
-  marginBottom: 4
+  marginBottom: 4,
 });
 
 const roomIdStyle = css({
@@ -101,25 +101,25 @@ const roomIdStyle = css({
   fontSize: "1.2rem",
   padding: "4px 8px",
   "&:focus": {
-    borderColor: globalColors.blue
-  }
+    borderColor: globalColors.blue,
+  },
 });
 
 const tipStyle = css({
   color: globalColors.red,
-  fontSize: ".8rem"
+  fontSize: ".8rem",
 });
 
 const roomTypeStyle = css({
   margin: "0 8px",
   fontSize: "1.2rem",
   "& > input": {
-    verticalAlign: "middle"
-  }
+    verticalAlign: "middle",
+  },
 });
 
 const buttonWrapStyle = css({
-  marginTop: 24
+  marginTop: 24,
 });
 
 const createButtonStyle = css({
@@ -133,6 +133,6 @@ const createButtonStyle = css({
   borderRadius: 2,
   "&:disabled": {
     backgroundColor: globalColors.gray,
-    cursor: "not-allowed"
-  }
+    cursor: "not-allowed",
+  },
 });

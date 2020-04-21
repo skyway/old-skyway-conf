@@ -12,7 +12,7 @@ interface Props {
 const SettingsNameEdit: FunctionComponent<Props> = ({
   defaultDispName,
   isInvalid,
-  onChangeDispName
+  onChangeDispName,
 }: Props) => {
   const [dispName, setDispName] = useState(defaultDispName);
 
@@ -23,7 +23,7 @@ const SettingsNameEdit: FunctionComponent<Props> = ({
         value={dispName}
         maxLength={10}
         placeholder="Enter your name"
-        onChange={ev => {
+        onChange={(ev) => {
           // ignore while IME compositing
           if (ev.target.value.length > 10) {
             return;
@@ -49,10 +49,10 @@ const nameStyle = css({
   borderBottom: `1px solid ${globalColors.gray}`,
   fontSize: "1.1rem",
   "&:focus": {
-    borderColor: globalColors.blue
-  }
+    borderColor: globalColors.blue,
+  },
 });
 
 const invalidStyle = css({
-  borderColor: globalColors.red
+  borderColor: globalColors.red,
 });

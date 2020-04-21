@@ -6,7 +6,7 @@ import {
   RoomStat,
   RoomChat,
   RoomReaction,
-  RoomCast
+  RoomCast,
 } from "../utils/types";
 import RootStore from "../stores";
 
@@ -27,7 +27,7 @@ export const joinRoom = (store: RootStore) => {
     mode: room.mode,
     stream: media.stream,
     // this app requires audio, but video is optional
-    videoReceiveEnabled: true
+    videoReceiveEnabled: true,
   };
   if (room.useH264) {
     Object.assign(roomOptions, { videoCodec: "H264" });
@@ -54,14 +54,14 @@ export const joinRoom = (store: RootStore) => {
   const disposers = [
     reaction(
       () => ({ ...media.stat, ...client.stat }),
-      stat => {
+      (stat) => {
         log("reaction:send(stat)");
         confRoom.send({ type: "stat", payload: stat });
       }
     ),
     reaction(
       () => room.myLastChat,
-      chat => {
+      (chat) => {
         if (chat === null) {
           return;
         }
@@ -71,7 +71,7 @@ export const joinRoom = (store: RootStore) => {
     ),
     reaction(
       () => room.myLastReaction,
-      reaction => {
+      (reaction) => {
         if (reaction === null) {
           return;
         }
@@ -86,7 +86,7 @@ export const joinRoom = (store: RootStore) => {
         confRoom.send({ type: "cast", payload: { from: client.displayName } });
       }
     ),
-    observe(media, "videoDeviceId", change => {
+    observe(media, "videoDeviceId", (change) => {
       log("observe(media.videoDeviceId)");
       if (!room.isJoined) {
         log("do nothing before room join");
@@ -110,7 +110,7 @@ export const joinRoom = (store: RootStore) => {
       ui.isReEntering = true;
       room.room.close();
       notification.showInfo("Re-enter the room to add/remove video");
-    })
+    }),
   ];
 
   confRoom.on("stream", (stream: RoomStream) => {
@@ -120,7 +120,7 @@ export const joinRoom = (store: RootStore) => {
     // send back stat as welcome message
     confRoom.send({
       type: "stat",
-      payload: { ...client.stat, ...media.stat }
+      payload: { ...client.stat, ...media.stat },
     });
   });
 
@@ -180,7 +180,7 @@ export const joinRoom = (store: RootStore) => {
     log("on('close')");
     notification.showInfo("room closed! trying re-connect..");
 
-    disposers.forEach(d => d());
+    disposers.forEach((d) => d());
 
     try {
       confRoom.removeAllListeners();

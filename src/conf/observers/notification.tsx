@@ -14,7 +14,7 @@ const Notification: FunctionComponent<{}> = () => {
     <Observer>
       {() => (
         <NotificationLayout>
-          {notification.items.slice().map(item => (
+          {notification.items.slice().map((item) => (
             <Toast key={item.id} {...item} />
           ))}
         </NotificationLayout>

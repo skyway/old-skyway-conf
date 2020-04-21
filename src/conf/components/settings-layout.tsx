@@ -11,7 +11,7 @@ import { SettingsItemName, SettingsItemDevice } from "./settings-item";
 import SettingsNameEdit from "./settings-name-edit";
 import {
   SettingsDeviceSelector,
-  SettingsDeviceToggler
+  SettingsDeviceToggler,
 } from "./settings-device-selector";
 import StreamController from "./stream-controller";
 import VADetector from "./va-detector";
@@ -70,7 +70,7 @@ const SettingsLayout: FunctionComponent<Props> = ({
   onClickDisableDisplayVideo,
   onChangeDispName,
   onClickCloseSettings,
-  onClickJoinConference
+  onClickJoinConference,
 }: Props) => (
   <Modal>
     <div css={wrapperStyle}>
@@ -195,14 +195,14 @@ const wrapperStyle = css({
   width: modalContentWidth,
   margin: "32px auto 0",
   boxSizing: "border-box",
-  backgroundColor: globalColors.white
+  backgroundColor: globalColors.white,
 });
 
 const videoStyle = css({
   position: "relative",
   width: "100%",
   height: (modalContentWidth / 4) * 3,
-  backgroundColor: globalColors.black
+  backgroundColor: globalColors.black,
 });
 
 const controllerStyle = css({
@@ -210,7 +210,7 @@ const controllerStyle = css({
   left: 0,
   right: 0,
   bottom: 0,
-  zIndex: 1
+  zIndex: 1,
 });
 
 const noteStyle = css({
@@ -222,16 +222,16 @@ const noteStyle = css({
   color: globalColors.white,
   willChange: "opacity",
   animation: `${animation.blink} 1s linear infinite`,
-  fontSize: ".8rem"
+  fontSize: ".8rem",
 });
 
 const settingsStyle = css({
-  margin: 16
+  margin: 16,
 });
 
 const buttonWrapStyle = css({
   padding: 16,
-  textAlign: "center"
+  textAlign: "center",
 });
 
 const doneButtonStyle = css({
@@ -247,6 +247,6 @@ const doneButtonStyle = css({
   borderRadius: 2,
   "&:disabled": {
     cursor: "not-allowed",
-    backgroundColor: globalColors.gray
-  }
+    backgroundColor: globalColors.gray,
+  },
 });

@@ -22,7 +22,7 @@ const RemoteStreamLayout: FunctionComponent<Props> = ({
   stream,
   stat,
   isPinned,
-  onClickSetPinned
+  onClickSetPinned,
 }: Props) => {
   const isVideoDisabled = stat && stat.isVideoDisabled ? true : false;
   const [isInfoShown, setInfoShown] = useState(false);
@@ -83,7 +83,7 @@ export default RemoteStreamLayout;
 const videoStyle = css({
   position: "relative",
   height: (rightMenuWidth / 4) * 3,
-  backgroundColor: globalColors.black
+  backgroundColor: globalColors.black,
 });
 
 const infoStyle = css({
@@ -92,7 +92,7 @@ const infoStyle = css({
   right: 0,
   top: 0,
   bottom: 0,
-  zIndex: 10
+  zIndex: 10,
 });
 
 const controllerStyle = css({
@@ -100,7 +100,7 @@ const controllerStyle = css({
   left: 0,
   right: 0,
   bottom: 0,
-  zIndex: 1
+  zIndex: 1,
 });
 
 const actionStyle = css({
@@ -110,5 +110,5 @@ const actionStyle = css({
   zIndex: 100,
   display: "flex",
   alignItems: "center",
-  color: globalColors.white
+  color: globalColors.white,
 });

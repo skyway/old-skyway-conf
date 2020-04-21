@@ -13,5 +13,5 @@ export default Layout;
 
 const wrapperStyle = css({
   height: "100vh",
-  position: "relative"
+  position: "relative",
 });

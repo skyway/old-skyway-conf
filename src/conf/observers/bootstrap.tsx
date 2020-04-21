@@ -7,7 +7,7 @@ import {
   checkRoomSetting,
   initAudioDeviceAndClient,
   listenStoreChanges,
-  listenGlobalEvents
+  listenGlobalEvents,
 } from "../effects/bootstrap";
 import ErrorDetail from "../components/error-detail";
 import Loader from "../components/loader";

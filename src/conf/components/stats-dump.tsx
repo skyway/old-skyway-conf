@@ -17,7 +17,7 @@ const StatsDump: FunctionComponent<Props> = ({ rtcStats }: Props) => {
         type="text"
         placeholder="filter stat reports"
         value={searchKey}
-        onChange={ev => setSearchKey(ev.target.value)}
+        onChange={(ev) => setSearchKey(ev.target.value)}
         css={inputStyle}
       />
       <pre css={statsStyle}>
@@ -56,7 +56,7 @@ const filterStats = (stats: RTCStatsReport, searchKey: string) => {
 
 const inputStyle = css({
   boxSizing: "border-box",
-  width: "100%"
+  width: "100%",
 });
 
 const statsStyle = css({
@@ -64,5 +64,5 @@ const statsStyle = css({
   padding: 4,
   fontSize: ".8rem",
   whiteSpace: "pre-wrap",
-  wordBreak: "break-all"
+  wordBreak: "break-all",
 });

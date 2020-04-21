@@ -26,7 +26,7 @@ class ClientStore {
   get stat() {
     return {
       displayName: this.displayName,
-      browser: this.browser
+      browser: this.browser,
     };
   }
 
@@ -35,13 +35,13 @@ class ClientStore {
     if (parsedBrowser === null) {
       return {
         name: "N/A",
-        version: "0.0.0"
+        version: "0.0.0",
       };
     }
 
     return {
       name: parsedBrowser.browser.name || "unknown",
-      version: parsedBrowser.browser.version || "0.0.0"
+      version: parsedBrowser.browser.version || "0.0.0",
     };
   }
 
@@ -63,7 +63,7 @@ decorate(ClientStore, {
   isDisplayNameValid: computed,
   stat: computed,
   browser: computed,
-  load: action
+  load: action,
 });
 
 export default ClientStore;

@@ -19,7 +19,7 @@ export const getUserDevices = async (
 
   const ret: UserDevices = {
     videoInDevices: null,
-    audioInDevices: null
+    audioInDevices: null,
   };
 
   if (options.video) {
@@ -40,7 +40,7 @@ export const getUserAudioTrack = async (
 
   return navigator.mediaDevices
     .getUserMedia({ audio: constraints })
-    .then(stream => stream.getAudioTracks()[0]);
+    .then((stream) => stream.getAudioTracks()[0]);
 };
 
 export const getUserVideoTrack = async (
@@ -51,11 +51,11 @@ export const getUserVideoTrack = async (
 
   return navigator.mediaDevices
     .getUserMedia({ video: constraints })
-    .then(stream => stream.getVideoTracks()[0]);
+    .then((stream) => stream.getVideoTracks()[0]);
 };
 
 export const getDisplayVideoTrack = async (): Promise<MediaStreamTrack> => {
   return navigator.mediaDevices
     .getDisplayMedia({ video: true })
-    .then(stream => stream.getVideoTracks()[0]);
+    .then((stream) => stream.getVideoTracks()[0]);
 };
