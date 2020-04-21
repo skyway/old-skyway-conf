@@ -8,6 +8,7 @@
     "lint": "eslint --ext .ts,.tsx . && tsc --project . --noEmit"
   },
   "author": "NTT Communications Corp.",
+  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/preset-react": "^7.9.4",
