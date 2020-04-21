@@ -1,3 +1,7 @@
+# 2.9.2
+
+- Update dev/prod dependencies
+
 # 2.9.1
 
 - Fix bug: camera devices are not shonw on Safari 13.1
