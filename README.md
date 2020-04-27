@@ -2,6 +2,8 @@
 
 [SkyWay](https://webrtc.ecl.ntt.com/)を利用した[Web会議アプリ「SkyWay Conference」](https://conf.webrtc.ecl.ntt.com/)のソースコードです。
 
+![SkyWay Conf](https://webrtc.ecl.ntt.com/img/conf/useimage1.png)
+
 利用するには、SkyWayのへの登録とアプリケーション作成が必要です。   
 SkyWayにまだアカウントを持っていない方は、以下のサイトから登録を行って下さい。  
 https://console-webrtc-free.ecl.ntt.com/users/registration
