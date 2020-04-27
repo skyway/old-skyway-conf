@@ -21,7 +21,7 @@ class MediaStore {
     this.audioDeviceId = null;
     this.videoDeviceId = null;
     this.isVideoTrackMuted = false;
-    this.isAudioTrackMuted = true;
+    this.isAudioTrackMuted = false;
     this.videoType = null;
     this.audioTrack = null;
     this.videoTrack = null;

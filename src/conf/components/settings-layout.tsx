@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FunctionComponent } from "react";
 import { css } from "@emotion/core";
-import { globalColors, animation } from "../../shared/global-style";
+import { globalColors } from "../../shared/global-style";
 import { VideoType, ClientBrowser } from "../utils/types";
 import { modalContentWidth } from "../utils/style";
 import Modal from "./modal";
@@ -14,7 +14,6 @@ import {
   SettingsDeviceToggler,
 } from "./settings-device-selector";
 import StreamController from "./stream-controller";
-import VADetector from "./va-detector";
 
 interface Props {
   stream: MediaStream;
@@ -81,7 +80,6 @@ const SettingsLayout: FunctionComponent<Props> = ({
           isVideoOnly={true}
         />
         <div css={controllerStyle}>
-          <VADetector stream={stream} />
           <StreamController
             displayName={`v${browser.version}`}
             browser={browser}
@@ -103,9 +101,6 @@ const SettingsLayout: FunctionComponent<Props> = ({
             }
           />
         </div>
-        {!isJoined && isAudioTrackMuted ? (
-          <div css={noteStyle}>Click here to unmute your mic.👇</div>
-        ) : null}
       </div>
 
       <div css={settingsStyle}>
@@ -211,18 +206,6 @@ const controllerStyle = css({
   right: 0,
   bottom: 0,
   zIndex: 1,
-});
-
-const noteStyle = css({
-  position: "absolute",
-  right: 0,
-  bottom: 24,
-  zIndex: 1,
-  padding: 4,
-  color: globalColors.white,
-  willChange: "opacity",
-  animation: `${animation.blink} 1s linear infinite`,
-  fontSize: ".8rem",
 });
 
 const settingsStyle = css({

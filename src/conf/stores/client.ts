@@ -14,7 +14,7 @@ class ClientStore {
     this.hasGetDisplayMedia = false;
     this.hasUserVideoDevice = false;
     this.isReady = false;
-    this.displayName = "";
+    this.displayName = "YOUR_NAME";
     this.parsedBrowser = null;
   }
 
@@ -49,7 +49,7 @@ class ClientStore {
     this.hasGetDisplayMedia = hasGetDisplayMedia;
     this.hasUserVideoDevice = hasUserVideoDevice;
     this.isReady = true;
-    this.displayName = name;
+    if (name.length !== 0) this.displayName = name;
     this.parsedBrowser = parse(ua);
   }
 }
