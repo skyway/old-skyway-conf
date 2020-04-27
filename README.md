@@ -3,7 +3,7 @@
 [SkyWay](https://webrtc.ecl.ntt.com/)を利用した[Web会議アプリ「SkyWay Conference」](https://conf.webrtc.ecl.ntt.com/)のソースコードです。
 
 利用するには、SkyWayのへの登録とアプリケーション作成が必要です。   
-SkyWayにまだアカウントを持っていない方は、以下のサイトから登録を行って下さい。
+SkyWayにまだアカウントを持っていない方は、以下のサイトから登録を行って下さい。  
 https://console-webrtc-free.ecl.ntt.com/users/registration
 
 アプリケーション作成時は、利用可能ドメインに **localhost** を追加して下さい。
@@ -86,10 +86,6 @@ vendor.bundle.js
 
 Android Chrome、Mobile Safari(iOS,iPadOS)でも利用可能ですが、画面UIはモバイルデバイスに最適化されていないため使いにくい場合があります。Android Firefoxについてはデバイスの選択がうまく動作しない不具合があるためご利用はお控えください。
 
-# 使い方
-
-SkyWayの公式サイト[「SkyWay Conferenceの使い方」](https://webrtc.ecl.ntt.com/conf-man.html)をご覧下さい。
-
 # サポート
 
 ビルド方法やWebサーバへの設置、カスタマイズに関するテクニカルサポートは提供していません。
@@ -98,7 +94,7 @@ SkyWayの公式サイト[「SkyWay Conferenceの使い方」](https://webrtc.ecl
 
 原則対応致しません。不具合修正や機能追加を行いたい場合は、ご自身でリポジトリをForkして行って下さい。
 
-# License / コピーライト
+# License / Copyright
 
 [MIT License](./LICENSE)  
 Copyright (c) 2020 NTT Communications Corp.
