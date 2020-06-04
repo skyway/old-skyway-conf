@@ -1,3 +1,12 @@
+# 3.0.0
+
+- Publish as OSS
+  - Make mic. is NOT muted by default
+  - Set default user name
+  - Fix author name and license
+  - Fix and prepare README for japanese
+  - Remove API key in src/conf/utils/skyway.ts
+
 # 2.9.2
 
 - Update dev/prod dependencies
