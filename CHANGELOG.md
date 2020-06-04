@@ -1,3 +1,7 @@
+# 3.0.1
+
+- Update `skyway-js` from 2.0.5 to 3.0.1
+
 # 3.0.0
 
 - Publish as OSS
