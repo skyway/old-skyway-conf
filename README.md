@@ -1,5 +1,12 @@
 # SkyWay Conference
 
+
+**これは旧SkyWayのリポジトリです。[新しいSkyWay](<https://skyway.ntt.com>)への移行をご検討ください。**
+
+**This is the old SkyWay repository.  Please consider migrating to the [new SkyWay](<https://skyway.ntt.com>).**
+
+---
+
 [SkyWay](https://webrtc.ecl.ntt.com/)を利用した[Web会議アプリ「SkyWay Conference」](https://conf.webrtc.ecl.ntt.com/)のソースコードです。
 
 ![SkyWay Conf](https://webrtc.ecl.ntt.com/img/conf/useimage1.png)
